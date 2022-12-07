@@ -1,0 +1,302 @@
+package com.minervasoft.backend.service.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.minervasoft.backend.dao.DpmDAO;
+import com.minervasoft.backend.service.DpmService;
+import com.minervasoft.backend.vo.AgentAssignVO;
+import com.minervasoft.backend.vo.BizStatsTodayVO;
+import com.minervasoft.backend.vo.BizStatsVO;
+import com.minervasoft.backend.vo.ChrrGroupAuthVO;
+import com.minervasoft.backend.vo.ChrrVO;
+import com.minervasoft.backend.vo.CodeVO;
+import com.minervasoft.backend.vo.DailyStatsVO;
+import com.minervasoft.backend.vo.GroupAuthVO;
+import com.minervasoft.backend.vo.ImageVerifyVO;
+import com.minervasoft.backend.vo.LoginChrrVO;
+import com.minervasoft.backend.vo.MaskingHistoryVO;
+import com.minervasoft.backend.vo.MenuAuthVO;
+import com.minervasoft.backend.vo.MenuVO;
+import com.minervasoft.backend.vo.MonthlyStatsVO;
+import com.minervasoft.backend.vo.StepStatsVO;
+import com.minervasoft.backend.vo.XtromDailyStatsVO;
+
+@Service("DpmService")
+public class DpmServiceImpl implements DpmService {
+    /********************************************* 
+     * 로그인 및 공통  
+     *********************************************/	
+    @Resource(name = "DpmDAO")
+    private DpmDAO dpmDao;
+
+    @Override
+    public LoginChrrVO selOneLoginChrr(LoginChrrVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selOneLoginChrr(paramVO);
+    }    
+    
+    @Override
+    public List<MenuAuthVO> selListMenuAuth(MenuAuthVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListMenuAuth(paramVO);
+    }
+
+    @Override
+    public List<CodeVO> selListCode(CodeVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListCode(paramVO);
+    }    
+    
+    
+    /********************************************* 
+     * 마스킹검증 
+     *********************************************/
+    @Override
+    public ImageVerifyVO selOneImageVerifyTotRowCnt(ImageVerifyVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selOneImageVerifyTotRowCnt(paramVO);
+    }    
+    
+    @Override
+    public List<ImageVerifyVO> selListImageVerify(ImageVerifyVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListImageVerify(paramVO);
+    }
+    
+    @Override
+    public int updFpMaskObj(ImageVerifyVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.updFpMaskObj(paramVO);
+    }
+    
+    @Override
+    public int insFpMaskHis(MaskingHistoryVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.insFpMaskHis(paramVO);
+    }     
+    
+    @Override
+    public List<AgentAssignVO> selListAgentAssign(AgentAssignVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListAgentAssign(paramVO);
+    }
+    
+    @Override
+    public int updAgentAssign(AgentAssignVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.updAgentAssign(paramVO);
+    }
+    
+    @Override
+    public int saveChrrForAgent(AgentAssignVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.saveChrrForAgent(paramVO);
+    }
+    
+	@Override
+	public int deleteAgent(AgentAssignVO paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.deleteAgent(paramVO);
+	}
+    
+    /********************************************* 
+     * 통계  
+     *********************************************/
+    @Override
+    public List<BizStatsVO> selListBizStats() throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListBizStats();
+    }
+
+    @Override
+    public List<BizStatsTodayVO> selListBizStatsToday() throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListBizStatsToday();
+    }
+    
+    @Override
+    public List<DailyStatsVO> selListDailyStats(DailyStatsVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListDailyStats(paramVO);
+    }
+
+    @Override
+    public List<MonthlyStatsVO> selListMonthlyStats(MonthlyStatsVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListMonthlyStats(paramVO);
+    }
+    
+    @Override
+    public MaskingHistoryVO selOneMaskingHistoryTotRowCnt(MaskingHistoryVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selOneMaskingHistoryTotRowCnt(paramVO);
+    }    
+    
+    @Override
+    public List<MaskingHistoryVO> selListMaskingHistory(MaskingHistoryVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListMaskingHistory(paramVO);
+    }
+    
+    @Override
+    public List<MaskingHistoryVO> selListMaskingHistoryDetail(MaskingHistoryVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListMaskingHistoryDetail(paramVO);
+    }    
+    
+    
+    /********************************************* 
+     * 관리
+     *********************************************/
+    @Override
+    public List<CodeVO> selListCodeForManagement(CodeVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListCodeForManagement(paramVO);
+    }
+
+    @Override
+    public List<CodeVO> selListCodeDetailForManagement(CodeVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListCodeDetailForManagement(paramVO);
+    }
+    
+    @Override
+    public int saveCode(CodeVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.saveCode(paramVO);
+    }
+    
+	@Override
+	public int deleteCode(CodeVO paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.deleteCode(paramVO);
+	}
+    
+    @Override
+    public int saveDetailCode(CodeVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.saveDetailCode(paramVO);
+    }
+    
+	@Override
+	public int deleteDetailCode(CodeVO paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.deleteDetailCode(paramVO);
+	}
+    
+    @Override
+    public List<ChrrVO> selListChrrForManagement(ChrrVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListChrrForManagement(paramVO);
+    }
+    
+    @Override
+    public int saveChrrForMng(ChrrVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+    	return dpmDao.saveChrrForMng(paramVO);
+    	
+    }
+    
+    @Override
+    public List<ChrrVO> selListChrr() throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListChrr();
+    }    
+    
+    @Override
+    public List<GroupAuthVO> selListGroupAuth() throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListGroupAuth();
+    }
+
+    @Override
+    public List<ChrrGroupAuthVO> selListChrrGroupAuth(ChrrGroupAuthVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListChrrGroupAuth(paramVO);
+    }
+    
+    @Override
+    public int saveGroupAuth(GroupAuthVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.saveGroupAuth(paramVO);
+    }
+    
+    @Override
+    public int saveChrrGroupAuth(ChrrGroupAuthVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.saveChrrGroupAuth(paramVO);
+    }
+    
+    @Override
+    public List<GroupAuthVO> selListAuth(GroupAuthVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListAuth(paramVO);
+    }    
+    
+    @Override
+    public List<MenuAuthVO> selListMenuAuthForManagement(MenuAuthVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListMenuAuthForManagement(paramVO);
+    }
+    
+    @Override
+    public int saveMenuAuth(MenuAuthVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.saveMenuAuth(paramVO);
+    }     
+    
+    @Override
+    public List<MenuVO> selListMenu(MenuVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListMenu(paramVO);
+    }
+    
+    @Override
+    public List<MenuVO> selListMenuForManagement(MenuVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListMenuForManagement(paramVO);
+    }
+    
+    @Override
+    public int saveMenu(MenuVO paramVO) throws Exception {
+    	// TODO Auto-generated method stub
+        return dpmDao.saveMenu(paramVO);
+    } 
+    
+    
+    /********************************************* 
+     * 기타
+     *********************************************/         
+
+    @Override
+    public ChrrVO selOneChrr(ChrrVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selOneChrr(paramVO);
+    }
+
+    @Override
+    public List<MenuVO> selListChrrMenu(ChrrVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListChrrMenu(paramVO);
+    }
+
+    @Override
+    public List<StepStatsVO> selListStepStats() throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListStepStats();
+    }
+
+    @Override
+    public List<XtromDailyStatsVO> selListXtormDailyStats(XtromDailyStatsVO paramVO) throws Exception {
+        // TODO Auto-generated method stub
+        return dpmDao.selListXtormDailyStats(paramVO);
+    }
+
+
+
+
+}

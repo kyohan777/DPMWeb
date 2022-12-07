@@ -1,0 +1,304 @@
+
+/**
+  * @File Name : dpm3020.js
+  * @Description : 담당자관리
+  * @Modification Information
+  * 
+  *   수정일       수정자                   수정내용
+  *  -------    --------    ---------------------------
+  *  2019.04.01             최초 생성
+  *
+  *  
+  *  ------------------------------------------------
+  *  jqGrid 4.7.0  jQuery Grid
+  *  Copyright (c) 2008, Tony Tomov, tony@trirand.com
+  *  Dual licensed under the MIT and GPL licenses
+  *  http://www.opensource.org/licenses/mit-license.php
+  *  http://www.gnu.org/licenses/gpl-2.0.html
+  *  Date: 2014-12-08  
+  *  ------------------------------------------------
+ */
+
+var modDpm3020 = (function(){	
+	
+	/**
+	 * 초기화
+	 */	
+	function init() {		
+		//담당자관리 그리드 초기화 시작
+		$("#jqGrid").jqGrid({
+	    	//jqGrid url 전송선언
+	        url: '/dpm/selListChrrForManagement.do',
+	        mtype: "POST",
+	        //styleUI: "Bootstrap",	        
+	        datatype: "local",
+	        postData: {},
+	        
+	        //jqGrid 양식선언부        
+	        colModel: [
+	            { label: 'ID', name: 'chrrId', width: 180, align: 'center' },
+	            { label: '성명', name: 'chrrNm', width: 200, align: 'center' },
+	            { label: '부서명', name: 'deptnm', width: 200, align: 'center' },
+	            { label: '사용여부', name: 'uyn', width: 100, align: 'center' },
+	            { label: '등록일시', name: 'rgDtm', width: 150, align: 'center', formatter:currencyFmatterDateTime}
+	        ],
+	        height: 350,
+	        autowidth:true, 
+	        //shrinkToFit:false,
+	        //forceFit:true,
+	        rowNum: -1,
+	        rownumbers: true,
+	        viewrecords: true,
+	        loadtext: "<img src='/images/loadinfo.net.gif' />",
+	        emptyrecords:"조회된 데이터가 없습니다.",	        
+	        
+	        //jqGrid 추가옵션영역
+
+	        //jsonReader 영역
+	        jsonReader : {
+	        	repeatitems: false,
+	        	root: function(data) {
+	        		if(data.rsYn == "N" && !modComm.isEmpty(data.rsMsg)) alert(data.rsMsg);
+	        		return data.selList;
+	        	}
+	        },
+	        //로드완료 시 (조회 시 reloadGrid 후에도 호출)  
+	        loadComplete: function() {
+	        	//console.log("그리드 load complete");
+	        	$("#spnTotCnt").text($("#jqGrid").getGridParam("reccount"));
+	        	
+	        	if($("#jqGrid").getGridParam("reccount") > 0) {
+	        		$("#jqGrid").jqGrid("setSelection", 1);
+	        		setMasterInfo(1);
+	        	} else {
+	        		setMasterInfo(-1);
+	        	}
+	        },
+	        //셀클릭 이벤트
+	        onCellSelect: function(rowid, iCol, data, event){
+	        	if(rowid > 0 && iCol >= 0) {
+	        		setMasterInfo(rowid);
+	        	} 
+	        }
+		});	
+		//그리드 초기화 종료
+
+		//그리드 resize 
+		modComm.resizeJqGridWidth("jqGrid","gridContainer",$("#gridContainer").width(), true);
+	};
+	
+    /**
+	 * 그리드항목 포맷정의 일시
+	 */    
+    function currencyFmatterDateTime(celval, opts , el) {
+    	return modComm.getGridDateFormat(celval,"date_time");
+    };	
+		
+    /**
+	 * 마스터 조회
+	 */  
+	function selList() {
+    	var objParam = {};
+    	var arrForm = $("#frm3020").serializeArray();
+    	//console.log(arrForm);
+    	if(arrForm) {
+    		arrForm.forEach(function(item) {
+    			objParam[item.name] = item.value;
+    		});
+    	}
+    	
+    	$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
+    	$("#jqGrid").trigger('reloadGrid');
+	};
+	
+    /**
+	 * 선택한 마스터정보 set
+	 */		
+	function setMasterInfo(rowid) {
+		var readonly;
+		if(rowid == -1) {
+			readonly = false;
+			
+			$("#txtChrrId").val("");
+			$("#txtChrrNm").val("");
+			$("#txtChrrDeptNm").val("");
+			$("#selChrrUYn").val("Y");
+			$("#txtChrrId").focus();
+		} else {
+			readonly = true;
+			
+			$("#txtChrrId").val($("#jqGrid").jqGrid('getRowData',rowid).chrrId);
+			$("#txtChrrNm").val($("#jqGrid").jqGrid('getRowData',rowid).chrrNm);
+			$("#txtChrrDeptNm").val($("#jqGrid").jqGrid('getRowData',rowid).deptnm);
+			$("#selChrrUYn").val($("#jqGrid").jqGrid('getRowData',rowid).uyn);
+		}
+		
+		$("#txtChrrId").attr("readonly", readonly);
+	};
+	
+
+	function getUserInfoSSO() {
+		var objChrr;
+		
+		if(modComm.isEmpty($("#txtChrrId").val())) {
+			alert("담당자ID를 입력하십시오.");
+			$("#txtChrrId").focus();
+			return;
+		}
+		
+		var objParam = {"chrrId" : $("#txtChrrId").val()};
+		var objResult;
+		
+		modAjax.request("/login/getUserInfoSSO.do", objParam,  {
+			async: false,
+			success: function(data) {				
+				if(!modComm.isEmpty(data) && data.rsYn == "Y" && data.hasOwnProperty("selOne")) {
+					objResult = data.selOne;	
+				}							
+			},
+            error: function(response) {
+                console.log(response);
+            }
+    	});					
+		
+		return objResult;
+		
+		
+	};
+	
+	return {
+		init: init,
+		selList: selList,		
+		setMasterInfo: setMasterInfo,
+		getUserInfoSSO: getUserInfoSSO
+	};
+
+})();
+
+/**
+ * 조회버튼 클릭
+ */
+$("#btnSearch").on("click", function() {
+	modDpm3020.selList();
+});
+
+/**
+ * 초기화버튼 클릭
+ */
+$("#btnChrrInit").on("click", function() {
+	modDpm3020.setMasterInfo(-1);
+});
+
+
+//$("#btnChrrInit").on("blur", function() {
+//	modDpm3020.getUserInfoSSO();
+//});
+
+/**
+ * 저장버튼 클릭
+ */
+$("#btnChrrSave").on("click", function() {
+	var chrrId = $("#txtChrrId").val();
+	var chrrNm = $("#txtChrrNm").val();
+	var deptnm = $("#txtChrrDeptNm").val();
+	var uyn = $("#selChrrUYn").val();	
+	
+	if(modComm.isEmpty(chrrId)) {
+		alert("담당자ID 입력이 누락 되었습니다");
+		$("#txtChrrId").focus();
+		return;
+	}
+	
+	if(modComm.isEmpty(chrrNm)) {
+		alert("담당자명 입력이 누락 되었습니다.");
+		$("#txtChrrNm").focus();
+		return;
+	}
+	
+	if(modComm.isEmpty(deptnm)) {
+		alert("담당자 부서명 입력이 누락 되었습니다.");
+		$("#txtChrrDeptNm").focus();
+		return;
+	}	
+	
+	var objParam = {
+			"chrrId": chrrId,
+			"chrrNm": chrrNm,
+			"deptnm": deptnm,
+			"uyn": uyn,			
+			"chgEno": $("#txtLoginchrrId").val(),
+			"rgEno": $("#txtLoginchrrId").val()
+	};
+	
+	modAjax.request("/dpm/saveChrrForMng.do", objParam,  {
+		//async: false,
+		success: function(cnt) {
+			alert("담당자 저장이 완료되었습니다.");
+			modDpm3020.selList();
+		},
+        error: function(cnt) {
+            console.log(cnt);
+        }
+	});
+});
+
+
+/**
+ * 삭제버튼 클릭
+ */
+$("#btnChrrDel").on("click", function() {
+	var chrrId = $("#txtChrrId").val();
+	var chrrNm = $("#txtChrrNm").val();
+	var deptnm = $("#txtChrrDeptNm").val();
+	var uyn = $("#selChrrUYn").val();	
+	
+	if(modComm.isEmpty(chrrId)) {
+		alert("담당자ID를 선택해주세요.");
+		$("#txtChrrId").focus();
+		return;
+	}
+	
+	if(modComm.isEmpty(chrrNm)) {
+		alert("담당자명 입력이 누락 되었습니다.");
+		$("#txtChrrNm").focus();
+		return;
+	}
+	
+	if(modComm.isEmpty(deptnm)) {
+		alert("담당자 부서명 입력이 누락 되었습니다.");
+		$("#txtChrrDeptNm").focus();
+		return;
+	}	
+	
+	if (!confirm("담당자를 삭제 하시겠습니까?")) {
+		return;
+	}
+	
+	
+	var objParam = {
+			"chrrId": chrrId,
+			"chrrNm": chrrNm,
+			"deptnm": deptnm,
+			"uyn": uyn,			
+			"chgEno": $("#txtLoginchrrId").val(),
+			"rgEno": $("#txtLoginchrrId").val()
+	};
+	
+	modAjax.request("/dpm/deleteChrrForMng.do", objParam,  {
+		//async: false,
+		success: function(cnt) {
+			alert("담당자 삭제가 완료되었습니다.");
+			modDpm3020.selList();
+		},
+        error: function(cnt) {
+            console.log(cnt);
+        }
+	});
+});
+/**
+ * DOM  load 완료 시 실행
+ */
+$(document).ready(function() {
+	modDpm3020.init();
+	
+});

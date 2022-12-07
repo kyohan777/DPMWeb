@@ -1,0 +1,1108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="db2">
+    <!-- 로그인 및 공통 -->
+    <!-- 로그인 및 공통 :: 로그인 담당자 정보조회 -->
+    <select id="selOneLoginChrr"
+        parameterType="com.minervasoft.backend.vo.LoginChrrVO"
+        resultType="com.minervasoft.backend.vo.LoginChrrVO"
+        >
+        SELECT 
+               CHRR_ID
+             , CHRR_NM
+             , UYN
+             , DEPTNM
+          FROM TB_EM_PC_CHRR
+         WHERE CHRR_ID = #{chrrId}
+           AND UYN = 'Y' 
+    </select>
+    
+    <!-- 로그인 및 공통 ::권한에 따른 메뉴목록 조회 -->
+    <select id="selListMenuAuth" 
+        parameterType="com.minervasoft.backend.vo.MenuAuthVO"
+        resultType="com.minervasoft.backend.vo.MenuAuthVO"
+        >
+        SELECT DISTINCT
+               A.UP_MENU_SQNO 
+             , B.MENU_SQNO
+             , A.MNNM
+             , A.MENU_MRK_SQ
+          FROM TB_EM_PC_MENU A
+    INNER JOIN TB_EM_PC_MENUAUTH B
+            ON B.MENU_SQNO = A.MENU_SQNO
+         WHERE 1 = 1         
+           AND B.AUTH_GRP_ID IN (SELECT AUTH_GRP_ID
+                                   FROM TB_EM_PC_CHRRAUTH
+                                  WHERE CHRR_ID = #{chrrId}
+                                    AND UYN = 'Y')
+           AND B.AUTH_UYN = 'Y'
+         ORDER BY A.UP_MENU_SQNO, A.MENU_MRK_SQ ASC
+    </select>
+    
+    <!-- 로그인 및 공통 ::코드목록조회(SELECT BOX 생성) -->
+    <select id="selListCode" 
+        parameterType="com.minervasoft.backend.vo.CodeVO" 
+        resultType="com.minervasoft.backend.vo.CodeVO"
+        >
+        SELECT UP_C_ID
+             , C_ID
+             , CNM
+          FROM TB_EM_PC_CODE
+         WHERE 1 = 1 
+           AND UP_C_ID = #{upCId}
+           AND UYN = 'Y'
+         ORDER BY SCRN_MRK_SQ ASC
+    </select>    
+    
+    
+    <!-- 마스킹검증 -->
+    <!-- 마스킹검증 :: 이미지검증 :: 이미지검증 전체건수 조회 -->
+    <select id="selOneImageVerifyTotRowCnt"
+        parameterType="com.minervasoft.backend.vo.ImageVerifyVO"
+        resultType="com.minervasoft.backend.vo.ImageVerifyVO"
+        >
+        SELECT /*+ INDEX(A IX_TB_EM_FP_MASK_OBJ_N2) */
+               COUNT(*) TOT_ROW_CNT
+          FROM TB_EM_FP_MASK_OBJ A
+             , TB_EM_PC_CODE B
+             , TB_EM_PC_CODE C
+         WHERE B.UP_C_ID = 'BPR_BSN_DSC'
+           AND A.BPR_BSN_DSC = B.C_ID
+           AND C.UP_C_ID = 'IMG_STYL_ID'
+           AND A.IMG_STYL_ID = C.C_ID
+           AND A.PRC_DT BETWEEN REPLACE(#{startDt},'-','') AND REPLACE(#{endDt},'-','')
+           AND ( '0000000' = #{imgStylId}  OR A.IMG_STYL_ID = #{imgStylId} )
+           AND ( 'AL' = #{bprBsnDsc} OR A.BPR_BSN_DSC = #{bprBsnDsc} )
+           <if test='fpExistYn == "9"'>
+           AND ( (A.MASK_PRG_STSC IN ('10','60', '70') AND A.FP_CN = 0) OR ( A.MASK_PRG_STSC IN ('10','60', '70') AND ( A.FP_CN <![CDATA[>]]> 0 ) ) )
+           </if>
+           <if test='fpExistYn == "1"'>
+           AND ( A.MASK_PRG_STSC IN ('10','60', '70') AND ( A.FP_CN <![CDATA[>]]> 0 ) )
+           </if>
+           <if test='fpExistYn == "0"'>
+           AND (A.MASK_PRG_STSC IN ('10','60', '70') AND A.FP_CN = 0)
+           </if>
+           <if test='fpScore != "0"'>
+           AND A.FP_SCORE <![CDATA[<=]]> #{fpScore}
+           </if>
+           
+    </select>
+    
+    <!-- 마스킹검증 :: 이미지검증 :: 이미지검증현황 조회 -->
+    <select id="selListImageVerify"
+        parameterType="com.minervasoft.backend.vo.ImageVerifyVO"
+        resultType="com.minervasoft.backend.vo.ImageVerifyVO"
+        >
+        SELECT *
+          FROM
+             (
+               SELECT TA.*
+                    , ROWNUM RNUM
+                 FROM
+                    (
+                      SELECT /*+ INDEX(A IX_TB_EM_FP_MASK_OBJ_N2) */
+                             A.BPR_BSN_DSC
+                             <choose>
+                                 <when test='excelDownYn == "Y"' >
+                                 , TO_CHAR(TO_DATE(PRC_DT, 'YYYYMMDD'),'YYYY-MM-DD') AS PRC_DT
+                                 </when>
+                                 <otherwise>
+                                 , PRC_DT
+                                 </otherwise>
+                             </choose>
+                           , B.CNM AS BIZ_BSN_NM
+                           , A.IMG_STYL_ID
+                           , A.ETC4
+                           , A.ETC5
+                           , C.CNM AS IMG_STYL_NM
+                           , NVL(A.FP_CN, 0) FP_CN
+                           , A.FP_SCORE
+                           , A.IMG_COUNT_INFO
+                           , A.IDX_ID
+                           , A.ELEMENTID
+                           , A.MASK_PRG_STSC
+                           , A.MASK_SVRNM
+                           , A.MASK_AGENT
+                           , A.IMG_PATH
+                        FROM TB_EM_FP_MASK_OBJ A
+                           , TB_EM_PC_CODE B
+                           , TB_EM_PC_CODE C
+                       WHERE B.UP_C_ID = 'BPR_BSN_DSC'
+                         AND A.BPR_BSN_DSC = B.C_ID
+                         AND C.UP_C_ID = 'IMG_STYL_ID'
+                         AND A.IMG_STYL_ID = C.C_ID
+                         AND A.PRC_DT BETWEEN REPLACE(#{startDt},'-','') AND REPLACE(#{endDt},'-','')
+                         AND ( '0000000' = #{imgStylId}  OR A.IMG_STYL_ID = #{imgStylId} )
+                         AND ( 'AL' = #{bprBsnDsc} OR A.BPR_BSN_DSC = #{bprBsnDsc} )
+                         <if test='fpExistYn == "9"'>
+                         AND ( (A.MASK_PRG_STSC IN ('10','60', '70') AND A.FP_CN = 0) OR ( A.MASK_PRG_STSC IN ('10','60', '70') AND ( A.FP_CN <![CDATA[>]]> 0 ) ) )
+                         </if>
+                         <if test='fpExistYn == "1"'>
+                         AND ( A.MASK_PRG_STSC IN ('10','60', '70') AND ( A.FP_CN <![CDATA[>]]> 0 ) )
+                         </if>
+                         <if test='fpExistYn == "0"'>
+                         AND (A.MASK_PRG_STSC IN ('10','60', '70') AND A.FP_CN = 0)
+                         </if>
+                         <if test='fpScore != "0"'>
+                         AND A.FP_SCORE <![CDATA[<=]]> #{fpScore}
+                         </if>
+                       ORDER BY A.BPR_BSN_DSC,  A.ELEMENTID             
+                    ) TA             
+                WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+             )
+         WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+    </select>
+    
+    <!-- 마스킹검증 :: 이미지검증 :: 지문마스킹대상 수정(이미지조회 팝업) -->
+    <update id="updFpMaskObj"
+        parameterType="com.minervasoft.backend.vo.ImageVerifyVO"
+        >
+        UPDATE TB_EM_FP_MASK_OBJ
+           SET MASK_PRG_STSC = #{maskPrgStsc}
+             , ETC4 = #{etc4}
+             , ETC5 = #{etc5}
+             , FP_CN = #{fpCn}
+             , IMG_MASK_COUNT_INFO = #{imgCountInfo}
+             , CHG_DTM = SYSDATE
+             , CHG_ENO = #{chgEno}
+         WHERE BPR_BSN_DSC = #{bprBsnDsc}
+           AND ELEMENTID = #{elementid}
+    </update>
+    
+    <!-- 마스킹검증 :: 이미지검증 :: 지문마스킹이력 등록(이미지조회 팝업) -->
+    <insert id="insFpMaskHis"
+        parameterType="com.minervasoft.backend.vo.MaskingHistoryVO"
+        >
+        <selectKey resultType="int" keyProperty="sqno" order="BEFORE">
+        SELECT MAX(SQNO) + 1 AS SQNO
+          FROM TB_EM_FP_MASK_HIS
+         WHERE BPR_BSN_DSC = #{bprBsnDsc}
+           AND ELEMENTID = #{elementid}
+        </selectKey>
+        INSERT
+          INTO TB_EM_FP_MASK_HIS
+             (
+               BPR_BSN_DSC
+             , ELEMENTID
+             , SQNO
+             , MASK_PRG_STSC
+             , WK_DTM
+             , MASK_SVRNM
+             , MASK_AGENT
+             , PRCMN_ENO
+             )
+        VALUES
+             (
+               #{bprBsnDsc}
+             , #{elementid}
+             , #{sqno}
+             , #{maskPrgStsc}
+             , TO_CHAR(SYSDATE, 'YYYYMMDDHH24HHSS')
+             , #{maskSvrnm}
+             , #{maskAgent}
+             , #{prcmnEno}
+             )
+    </insert>    
+    
+    <!-- 마스킹검증 :: AGENT할당 :: AGENT별 할당현황 조회 -->
+    <select id="selListAgentAssign"
+        parameterType="com.minervasoft.backend.vo.AgentAssignVO"
+        resultType="com.minervasoft.backend.vo.AgentAssignVO"
+        >
+        SELECT /*+ GATHER_PLAN_STATISTICS FULL(A) PARALLEL(A 4) GBY_PUSHDOWN */ MASK_SVRNM
+             , MASK_AGENT
+             , COUNT(ELEMENTID) AS CNT_ALL
+             , SUM( CASE WHEN MASK_PRG_STSC = '10' THEN 1  ELSE 0 END ) AS CNT_10
+             , SUM( CASE WHEN MASK_PRG_STSC = '20' THEN 1  ELSE 0 END ) AS CNT_20
+             , SUM( CASE WHEN MASK_PRG_STSC = '30' THEN 1  ELSE 0 END ) AS CNT_30
+             , SUM( CASE WHEN MASK_PRG_STSC = '40' THEN 1  ELSE 0 END ) AS CNT_40
+             , SUM( CASE WHEN MASK_PRG_STSC = '50' THEN 1  ELSE 0 END ) AS CNT_50
+             , SUM( CASE WHEN MASK_PRG_STSC = '60' THEN 1  ELSE 0 END ) AS CNT_60
+             , SUM( CASE WHEN MASK_PRG_STSC = '70' THEN 1  ELSE 0 END ) AS CNT_70
+          FROM TB_EM_FP_MASK_OBJ
+         WHERE 1 = 1
+           <choose>
+               <when test='bprBsnDsc == null'>
+           AND BPR_BSN_DSC = ''
+               </when>
+               <when test='bprBsnDsc.equals("AL")'>
+           AND 1 = 1
+               </when>
+               <otherwise>
+           AND BPR_BSN_DSC = #{bprBsnDsc}
+               </otherwise>
+           </choose>
+         GROUP BY MASK_SVRNM, MASK_AGENT
+         ORDER BY MASK_SVRNM, MASK_AGENT
+    </select>
+    
+    <!-- 마스킹검증 :: AGENT할당 :: AGENT 할당 -->
+    <update id="updAgentAssign"
+        parameterType="com.minervasoft.backend.vo.AgentAssignVO"
+        >
+        MERGE INTO TB_EM_FP_MASK_OBJ A
+        USING (  SELECT ROWNUM
+                      , BPR_BSN_DSC
+                      <choose>
+                          <when test='maskSvrnm != "000"' >
+                          , #{maskSvrnm} SERVRNAME
+                          </when>
+                          <otherwise>
+                          , 'M' || LPAD(FLOOR(MOD(ROWNUM-1,#{svrCn} * #{agentCn})/#{agentCn}) + 1, 2, '0') SERVRNAME
+                          </otherwise>
+                      </choose>
+                      , 'A' || LPAD(MOD(ROWNUM-1, #{agentCn}) +1,  2, '0') AGENTNAME
+                      , ELEMENTID 
+                      , IDX_ID
+                   FROM TB_EM_FP_MASK_OBJ
+                  WHERE MASK_PRG_STSC = '10'
+                    AND ( 'AL' = #{bprBsnDsc} OR BPR_BSN_DSC = #{bprBsnDsc} ) 
+              ) B
+           ON (A.BPR_BSN_DSC = B.BPR_BSN_DSC AND A.ELEMENTID = B.ELEMENTID AND A.IDX_ID = B.IDX_ID )
+         WHEN MATCHED THEN
+       UPDATE 
+          SET A.MASK_SVRNM = B.SERVRNAME
+            , A.MASK_AGENT = B.AGENTNAME
+            , A.CHG_DTM    = SYSDATE
+            , A.CHG_ENO    = #{chgEno}
+    </update>
+    
+    
+    <!-- 통계 -->
+    <!-- 통계 :: 업무별현황 :: 전일기준 업무별현황 조회 -->
+    <select id="selListBizStats" 
+        resultType="com.minervasoft.backend.vo.BizStatsVO"
+        >
+        SELECT BSN_STP.BAS_DT
+             , BSN_STP.BPR_BSN_DSC
+             , CODE.CNM AS BIZ_BSN_NM
+             , BSN_STP.ALL_CN
+             , BSN_STP.PRC_CN
+             , TO_CHAR(ROUND(DECODE(BSN_STP.ALL_CN, 0, 0, BSN_STP.PRC_CN/BSN_STP.ALL_CN) , 1)) || '%' AS PRC_RATIO
+             , BSN_STP.MASK_CN
+             , TO_CHAR(ROUND(DECODE(BSN_STP.PRC_CN, 0, 0, BSN_STP.MASK_CN/BSN_STP.PRC_CN), 1)) || '%' AS MASK_RATIO
+          FROM TB_EM_FP_MASK_BSN_DTP BSN_STP
+    LEFT OUTER JOIN TB_EM_PC_CODE CODE
+            ON CODE.C_ID = BSN_STP.BPR_BSN_DSC
+          JOIN (
+                SELECT BAS_DT
+                  FROM (
+                        SELECT ROW_NUMBER() OVER(ORDER BY BAS_DT DESC, BPR_BSN_DSC DESC) ROW_NUM
+                             , BAS_DT
+                          FROM TB_EM_FP_MASK_BSN_DTP
+                       )
+                 WHERE ROW_NUM = 1
+               ) DT
+            ON DT.BAS_DT = BSN_STP.BAS_DT
+         WHERE 1 = 1
+           AND CODE.UP_C_ID = 'BPR_BSN_DSC'
+         ORDER BY CODE.SCRN_MRK_SQ ASC
+    </select>
+    
+    <!-- 통계 :: 업무별현황 :: 당일 업무별 진행현황 조회 -->
+    <select id="selListBizStatsToday" 
+        resultType="com.minervasoft.backend.vo.BizStatsTodayVO"
+        >
+        SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') AS BAS_DT
+             , MASK_OBJ.BPR_BSN_DSC
+             , CODE.CNM AS BIZ_BSN_NM
+             , MASK_OBJ.PRC_CN
+             , MASK_OBJ.MASK_CN
+          FROM (
+                SELECT MASK_OBJ.BPR_BSN_DSC
+                     , SUM(CASE WHEN MASK_OBJ.MASK_PRG_STSC <![CDATA[>=]]> '30' THEN 1
+                                ELSE 0
+                           END) AS PRC_CN
+                     , SUM(CASE WHEN MASK_OBJ.MASK_PRG_STSC <![CDATA[>=]]> '30' AND MASK_OBJ.CGN_RZT = 1 THEN 1
+                                ELSE 0
+                           END) AS MASK_CN
+                  FROM TB_EM_FP_MASK_OBJ MASK_OBJ
+                 WHERE 1 = 1
+                   AND MASK_OBJ.PRC_DT = TO_CHAR(SYSDATE, 'YYYYMMDD')
+                 GROUP BY MASK_OBJ.BPR_BSN_DSC
+               ) MASK_OBJ
+      LEFT OUTER JOIN TB_EM_PC_CODE CODE
+              ON CODE.C_ID = MASK_OBJ.BPR_BSN_DSC
+             AND CODE.UP_C_ID = 'BPR_BSN_DSC'
+           ORDER BY MASK_OBJ.BPR_BSN_DSC ASC
+    </select>    
+    
+    <!-- 통계 :: 일별현황 :: 일별현황 조회 -->
+    <select id="selListDailyStats" 
+        parameterType="com.minervasoft.backend.vo.DailyStatsVO" 
+        resultType="com.minervasoft.backend.vo.DailyStatsVO"
+        >
+        SELECT 
+           <choose>
+               <when test='excelDownYn == "Y"' >
+               TO_CHAR(TO_DATE(A.BAS_DT, 'YYYYMMDD'),'YYYY-MM-DD') AS BAS_DT
+               </when>
+               <otherwise>
+               A.BAS_DT
+               </otherwise>
+           </choose> 	    
+             , A.ALL_CN
+             , A.ACM_PRC_CN
+             , A.ACM_MASK_CN
+             , TO_CHAR(DECODE(A.ALL_CN, 0, 0,  ROUND((A.ACM_PRC_CN/A.ALL_CN), 2))) || '%' ACC_PRC_RATIO
+             , A.ACM_PRC_DDS
+             , A.XPC_PRC_CN
+             , TO_CHAR(DECODE(A.ALL_CN, 0, 0,  ROUND((A.XPC_PRC_CN/A.ALL_CN), 2))) || '%' XPC_PRC_RATIO
+             , A.PRC_CN
+             , A.MASK_CN
+             , TO_CHAR(DECODE(A.ALL_CN, 0, 0,  ROUND((A.PRC_CN/A.ALL_CN) * 100, 2))) || '%'  PRC_RATIO
+             , TO_CHAR(DECODE(A.XPC_PRC_CN, 0, 0, ROUND((A.PRC_CN/A.XPC_PRC_CN), 2))) || '%' XPC_REAL_PRC_RATIO
+          FROM TB_EM_FP_MASK_DTP A
+         WHERE 1 = 1
+           AND BAS_DT BETWEEN REPLACE(#{startBasDt},'-','') AND REPLACE(#{endBasDt},'-','')
+         ORDER BY BAS_DT ASC
+    </select>
+    
+    <!-- 통계 :: 월별현황 :: 월별현황 조회 -->
+    <select id="selListMonthlyStats" 
+        parameterType="com.minervasoft.backend.vo.MonthlyStatsVO" 
+        resultType="com.minervasoft.backend.vo.MonthlyStatsVO"
+        >
+        SELECT 
+           <choose>
+               <when test='excelDownYn == "Y"' >
+               TO_CHAR(TO_DATE(A.BAS_MM, 'YYYYMM'),'YYYY-MM') AS BAS_MM
+               </when>
+               <otherwise>
+               A.BAS_MM
+               </otherwise>
+           </choose>        
+             , A.ALL_CN
+             , A.ACM_PRC_CN
+             , A.ACM_MASK_CN
+             , TO_CHAR(DECODE(A.ALL_CN, 0, 0,  ROUND((A.ACM_PRC_CN/A.ALL_CN), 2))) || '%' ACC_PRC_RATIO
+             , A.ACM_PRC_MMS
+             , A.XPC_PRC_CN
+             , TO_CHAR(DECODE(A.ALL_CN, 0, 0,  ROUND((A.XPC_PRC_CN/A.ALL_CN), 2))) || '%' XPC_PRC_RATIO
+             , A.PRC_CN
+             , A.MASK_CN
+             , TO_CHAR(DECODE(A.ALL_CN, 0, 0,  ROUND((A.PRC_CN/A.ALL_CN) * 100, 2))) || '%'  PRC_RATIO
+             , TO_CHAR(DECODE(A.XPC_PRC_CN, 0, 0, ROUND((A.PRC_CN/A.XPC_PRC_CN), 2))) || '%' XPC_REAL_PRC_RATIO
+          FROM TB_EM_FP_MASK_MTP A
+         WHERE 1 = 1
+           AND BAS_MM BETWEEN REPLACE(#{startBasMm},'-','') AND REPLACE(#{endBasMm},'-','')
+         ORDER BY BAS_MM ASC
+    </select>
+    
+    <!-- 통계 :: 마스킹이력조회 :: 마스킹이력 전체건수 조회 -->
+    <select id="selOneMaskingHistoryTotRowCnt"
+        parameterType="com.minervasoft.backend.vo.MaskingHistoryVO" 
+        resultType="com.minervasoft.backend.vo.MaskingHistoryVO"
+        >
+        SELECT /*+ INDEX(A IX_TB_EM_FP_MASK_OBJ_N2) */
+               COUNT(1) AS TOT_ROW_CNT
+          FROM TB_EM_FP_MASK_OBJ A 
+             , TB_EM_PC_CODE B
+             , TB_EM_PC_CODE C  
+             , TB_EM_PC_CODE D  
+        WHERE B.UP_C_ID = 'BPR_BSN_DSC'
+          AND A.BPR_BSN_DSC = B.C_ID
+          AND C.UP_C_ID = 'IMG_STYL_ID'
+          AND A.IMG_STYL_ID = C.C_ID
+          AND D.UP_C_ID = 'MASK_PRG_STSC'
+          AND A.MASK_PRG_STSC = D.C_ID
+      <choose>
+          <when test='elementid != null and elementid != ""' >
+          AND A.ELEMENTID = #{elementid}
+          </when>
+          <otherwise>
+          <choose>
+              <when test='maskPrgStsc == "00" or maskPrgStsc == "10"'>
+              AND A.RG_DTM BETWEEN TO_DATE(REPLACE(#{startDt},'-','') || '000000', 'YYYYMMDDHH24MISS') AND  TO_DATE(REPLACE(#{endDt},'-','') || '235959', 'YYYYMMDDHH24MISS')
+              </when>
+              <otherwise>
+              AND A.PRC_DT BETWEEN REPLACE(#{startDt},'-','') AND REPLACE(#{endDt},'-','')
+              </otherwise>
+          </choose>
+          AND ( '99' = #{maskPrgStsc}  OR A.MASK_PRG_STSC = #{maskPrgStsc} )
+          AND ( 'AL' = #{bprBsnDsc} OR A.BPR_BSN_DSC = #{bprBsnDsc})
+          </otherwise>
+      </choose>                
+    </select>      
+    
+    <!-- 통계 :: 마스킹이력조회 :: 마스킹이력목록 조회 -->
+    <select id="selListMaskingHistory"
+        parameterType="com.minervasoft.backend.vo.MaskingHistoryVO" 
+        resultType="com.minervasoft.backend.vo.MaskingHistoryVO"
+        >
+        SELECT *
+          FROM
+             (
+               SELECT TA.*
+                    , ROWNUM RNUM
+                 FROM
+                    (
+                      SELECT /*+ INDEX(A IX_TB_EM_FP_MASK_OBJ_N2) */ A.BPR_BSN_DSC
+                           , B.CNM AS BIZ_BSN_NM
+                           , A.ELEMENTID            
+                           , A.IDX_ID               
+                           , A.IMG_STYL_ID
+                           , C.CNM AS IMG_STYL_NM
+                           , A.CRT_DT            
+                           , A.MASK_PRG_STSC
+                           , D.CNM AS  MASK_PRG_STS_NM
+                           <choose>
+                               <when test='excelDownYn == "Y"' >
+                               , TO_CHAR(TO_DATE(PRC_DT, 'YYYYMMDD'),'YYYY-MM-DD') AS PRC_DT
+                               </when>
+                               <otherwise>
+                               , PRC_DT
+                               </otherwise>
+                           </choose>
+                           , A.CGN_RZT              
+                           , A.FP_CN                
+                           , A.IMG_MASK_COUNT_INFO  
+                           , A.MASK_SVRNM           
+                           , A.MASK_AGENT           
+                           , A.FP_SCORE
+                           <choose>
+                               <when test='excelDownYn == "Y"' >
+                                , TO_CHAR(A.RG_DTM, 'YYYY-MM-DD HH24:MI:SS') AS RG_DTM
+                               </when>
+                               <otherwise>
+                                , TO_CHAR(A.RG_DTM, 'YYYYMMDDHH24MISS') AS RG_DTM
+                               </otherwise>
+                           </choose>
+                        FROM TB_EM_FP_MASK_OBJ A 
+                           , TB_EM_PC_CODE B 
+                           , TB_EM_PC_CODE C  
+                           , TB_EM_PC_CODE D  
+                       WHERE B.UP_C_ID = 'BPR_BSN_DSC'
+                         AND A.BPR_BSN_DSC = B.C_ID
+                         AND C.UP_C_ID = 'IMG_STYL_ID'
+                         AND A.IMG_STYL_ID = C.C_ID
+                         AND D.UP_C_ID = 'MASK_PRG_STSC'
+                         AND A.MASK_PRG_STSC = D.C_ID
+                         <choose>
+                             <when test='elementid != null and elementid != ""' >
+                             AND A.ELEMENTID = #{elementid}
+                             </when>
+                             <otherwise>
+                             <choose>
+                                 <when test='maskPrgStsc == "00" or maskPrgStsc == "10"'>
+                                     AND A.RG_DTM BETWEEN TO_DATE(REPLACE(#{startDt},'-','') || '000000', 'YYYYMMDDHH24MISS') AND  TO_DATE(REPLACE(#{endDt},'-','') || '235959', 'YYYYMMDDHH24MISS')
+                                 </when>
+                                 <otherwise>
+                                     AND A.PRC_DT BETWEEN REPLACE(#{startDt},'-','') AND REPLACE(#{endDt},'-','')
+                                 </otherwise>
+                             </choose>
+                             AND ( '99' = #{maskPrgStsc}  OR A.MASK_PRG_STSC = #{maskPrgStsc} )
+                             AND ( 'AL' = #{bprBsnDsc} OR A.BPR_BSN_DSC = #{bprBsnDsc} )
+                             </otherwise>
+                         </choose> 
+                       ORDER BY A.BPR_BSN_DSC,  A.ELEMENTID                                     
+                    ) TA
+                WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+             )
+         WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)                
+    </select>     
+    
+    <!-- 통계 :: 마스킹이력조회 ::마스킹이력 상세 조회 -->
+    <select id="selListMaskingHistoryDetail"
+        parameterType="com.minervasoft.backend.vo.MaskingHistoryVO" 
+        resultType="com.minervasoft.backend.vo.MaskingHistoryVO"
+        >
+        SELECT 
+               A.BPR_BSN_DSC
+             , A.ELEMENTID
+             , A.SQNO
+             , A.MASK_PRG_STSC
+             , B.CNM AS  MASK_PRG_STS_NM
+             , TO_DATE(A.WK_DTM, 'YYYYMMDDHH24MISS') WK_DTM
+             , A.MASK_SVRNM
+             , A.MASK_AGENT
+          FROM TB_EM_FP_MASK_HIS A
+             , TB_EM_PC_CODE B
+         WHERE B.UP_C_ID = 'MASK_PRG_STSC'
+           AND A.MASK_PRG_STSC = B.C_ID
+           AND A.BPR_BSN_DSC = #{bprBsnDsc}
+           AND A.ELEMENTID = #{elementid}            
+         ORDER BY WK_DTM DESC, SQNO DESC            
+    </select>    
+
+
+    <!-- 관리 -->
+    <!-- 관리 :: 코드관리 :: 분류코드 조회 -->
+    <select id="selListCodeForManagement" 
+        parameterType="com.minervasoft.backend.vo.CodeVO" 
+        resultType="com.minervasoft.backend.vo.CodeVO">
+        SELECT CODE.C_ID
+             , CODE.CNM
+             , CODE.UP_C_ID
+             , CODE.UYN
+             , CODE.RG_ENO
+             , CODE.RG_DTM
+             , CODE.CHG_ENO
+             , CODE.CHG_DTM
+             , RG_CHRR.CHRR_NM AS RG_ENNM
+             , CHG_CHRR.CHRR_NM AS CHG_ENNM
+          FROM TB_EM_PC_CODE CODE
+    LEFT OUTER JOIN TB_EM_PC_CHRR RG_CHRR
+            ON RG_CHRR.CHRR_ID = CODE.RG_ENO
+    LEFT OUTER JOIN TB_EM_PC_CHRR CHG_CHRR
+            ON CHG_CHRR.CHRR_ID = CODE.CHG_ENO
+         WHERE 1 = 1
+           AND CODE.UP_C_ID = #{upCId}
+         ORDER BY CODE.SCRN_MRK_SQ ASC, CODE.C_ID ASC
+    </select>
+    
+    <!-- 관리 :: 코드관리 :: 상세분류코드 조회 -->
+    <select id="selListCodeDetailForManagement" 
+        parameterType="com.minervasoft.backend.vo.CodeVO" 
+        resultType="com.minervasoft.backend.vo.CodeVO">
+        SELECT CODE.C_ID
+             , CODE.CNM
+             , UP_CODE.CNM AS UP_CNM
+             , CODE.UP_C_ID
+             , CODE.SCRN_MRK_SQ
+             , CODE.UYN
+             , CODE.RG_ENO
+             , CODE.RG_DTM
+             , CODE.CHG_ENO
+             , CODE.CHG_DTM
+             , RG_CHRR.CHRR_NM AS RG_ENNM
+             , CHG_CHRR.CHRR_NM AS CHG_ENNM
+          FROM  TB_EM_PC_CODE CODE
+    LEFT OUTER JOIN TB_EM_PC_CODE UP_CODE
+            ON UP_CODE.C_ID = CODE.UP_C_ID
+    LEFT OUTER JOIN TB_EM_PC_CHRR RG_CHRR
+            ON RG_CHRR.CHRR_ID = CODE.RG_ENO
+    LEFT OUTER JOIN TB_EM_PC_CHRR CHG_CHRR
+            ON CHG_CHRR.CHRR_ID = CODE.CHG_ENO
+         WHERE 1 = 1
+           AND CODE.UP_C_ID = #{upCId}
+         ORDER BY CODE.SCRN_MRK_SQ ASC, CODE.C_ID ASC
+    </select>
+    
+    <!-- 관리 :: 코드관리 :: 분류코드 저장 -->
+    <update id="saveCode"
+        parameterType="com.minervasoft.backend.vo.CodeVO"
+        >
+        MERGE INTO TB_EM_PC_CODE
+        USING DUAL
+           ON (C_ID = #{cId} AND UP_C_ID = '0')
+         WHEN MATCHED THEN
+       UPDATE SET CNM = #{cnm}
+            , CHG_ENO = #{chgEno}
+            , CHG_DTM = SYSDATE
+         WHEN NOT MATCHED THEN
+       INSERT 
+            (
+              C_ID
+            , UP_C_ID
+            , CNM
+            , SCRN_MRK_SQ
+            , UYN
+            , RG_DTM
+            , RG_ENO
+            , CHG_DTM
+            , CHG_ENO
+            )
+       VALUES
+            (
+              #{cId}
+            , '0'
+            , #{cnm}
+            , NULL
+            , 'Y'
+            , SYSDATE
+            , #{rgEno}
+            , SYSDATE
+            , #{chgEno}
+            )
+    </update>
+    
+    <!-- 관리 :: 코드관리 :: 상세분류코드 저장 -->
+    <update id="saveDetailCode"
+        parameterType="com.minervasoft.backend.vo.CodeVO"
+        >
+        MERGE INTO TB_EM_PC_CODE
+        USING DUAL
+           ON (C_ID = #{cId} AND UP_C_ID = #{upCId})
+         WHEN MATCHED THEN
+       UPDATE SET CNM = #{cnm}
+            , SCRN_MRK_SQ = #{scrnMrkSq}
+            , CHG_ENO = #{chgEno}
+            , CHG_DTM = SYSDATE
+         WHEN NOT MATCHED THEN
+       INSERT 
+            (
+              C_ID
+            , UP_C_ID
+            , CNM
+            , SCRN_MRK_SQ
+            , UYN
+            , RG_DTM
+            , RG_ENO
+            , CHG_DTM
+            , CHG_ENO
+            )
+       VALUES
+            (
+              #{cId}
+            , #{upCId}
+            , #{cnm}
+            , #{scrnMrkSq}
+            , #{uyn}
+            , SYSDATE
+            , #{rgEno}
+            , SYSDATE
+            , #{chgEno}
+            )
+    </update>
+    
+    <!-- 관리 :: 담당자관리 :: 담당자목록 조회 -->
+    <select id="selListChrrForManagement" 
+        parameterType="com.minervasoft.backend.vo.ChrrVO"
+        resultType="com.minervasoft.backend.vo.ChrrVO"
+        >
+        SELECT CHRR_ID
+             , CHRR_NM
+             , DEPTNM
+             , UYN
+             , RG_DTM
+          FROM TB_EM_PC_CHRR
+         WHERE 1 = 1
+       <if test='chrrId != null and chrrId != ""'>
+           AND CHRR_ID LIKE ('%' || #{chrrId} || '%')
+       </if>
+       <if test='chrrNm != null and chrrNm != ""'>
+           AND CHRR_NM LIKE ('%' || #{chrrNm} || '%')
+       </if>
+       <if test='deptnm != null and deptnm != ""'>
+           AND DEPTNM  LIKE ('%' || #{deptnm} || '%')
+       </if>
+       <choose>
+           <when test='uyn == "9"'>
+           AND 1 = 1
+           </when>
+           <otherwise>
+           AND UYN = #{uyn}
+           </otherwise>
+       </choose>
+         ORDER BY CHRR_ID ASC
+    </select>
+    
+    <!-- 관리 :: 담당자관리 :: 담당자 저장 -->
+    <update id="saveChrrForMng"
+        parameterType="com.minervasoft.backend.vo.ChrrVO"
+        >
+        MERGE INTO TB_EM_PC_CHRR  
+        USING DUAL  
+           ON ( CHRR_ID = #{chrrId} )  
+         WHEN MATCHED THEN  
+       UPDATE 
+          SET CHRR_NM = #{chrrNm}  
+            , DEPTNM = #{deptnm}  
+            , UYN = #{uyn}
+            , CHG_ENO =#{chgEno}
+            , CHG_DTM = SYSDATE
+         WHEN NOT MATCHED THEN  
+       INSERT
+            ( 
+              CHRR_ID   
+            , CHRR_NM   
+            , DEPTNM   
+            , UYN   
+            , RG_DTM   
+            , RG_ENO   
+            , CHG_DTM   
+            , CHG_ENO   
+            )  
+       VALUES  
+            (  
+              #{chrrId}   
+            , #{chrrNm}   
+            , #{deptnm}   
+            , #{uyn}   
+            , SYSDATE   
+            , #{rgEno}   
+            , SYSDATE   
+            , #{chgEno}   
+            )  
+    </update>
+    
+    <!-- 관리 :: 그룹관리 :: 담당자목록(SELECT BOX용) 조회 -->
+    <select id="selListChrr" 
+        resultType="com.minervasoft.backend.vo.ChrrVO"
+        >
+        SELECT CHRR_ID
+             , CHRR_NM
+          FROM TB_EM_PC_CHRR
+         WHERE 1 = 1
+           AND UYN = 'Y'
+         ORDER BY CHRR_NM ASC
+    </select>    
+    
+    <!-- 관리 :: 그룹관리 :: 그룹목록 조회 -->
+    <select id="selListGroupAuth" 
+        resultType="com.minervasoft.backend.vo.GroupAuthVO"
+        >
+        SELECT AUTH.AUTH_GRP_ID
+             , AUTH.AUTH_GRPNM
+             , AUTH.RG_ENO
+             , AUTH.RG_DTM
+             , AUTH.CHG_ENO
+             , AUTH.CHG_DTM
+             , RG_CHRR.CHRR_NM AS RG_ENNM
+             , CHG_CHRR.CHRR_NM AS CHG_ENNM
+          FROM TB_EM_PC_AUTH AUTH
+    LEFT OUTER JOIN TB_EM_PC_CHRR RG_CHRR
+            ON RG_CHRR.CHRR_ID = AUTH.RG_ENO
+    LEFT OUTER JOIN TB_EM_PC_CHRR CHG_CHRR
+            ON CHG_CHRR.CHRR_ID = AUTH.CHG_ENO
+         WHERE 1 = 1
+         ORDER BY AUTH.AUTH_GRP_ID ASC
+    </select>
+    
+    <!-- 관리 :: 그룹관리 :: 사용자목록 조회 -->
+    <select id="selListChrrGroupAuth" 
+        parameterType="com.minervasoft.backend.vo.ChrrGroupAuthVO"
+        resultType="com.minervasoft.backend.vo.ChrrGroupAuthVO"
+        >
+        SELECT AUTH.AUTH_GRP_ID
+             , AUTH.AUTH_GRPNM
+             , CHRR_AUTH.CHRR_ID
+             , CHRR.CHRR_NM
+             , CHRR.DEPTNM
+             , CHRR_AUTH.UYN
+             , RG_CHRR.CHRR_NM AS RG_ENNM
+             , CHRR_AUTH.RG_ENO
+             , CHRR_AUTH.RG_DTM
+             , CHG_CHRR.CHRR_NM AS CHG_ENNM
+             , CHRR_AUTH.CHG_ENO
+             , CHRR_AUTH.CHG_DTM
+          FROM TB_EM_PC_AUTH AUTH
+    INNER JOIN TB_EM_PC_CHRRAUTH CHRR_AUTH
+            ON CHRR_AUTH.AUTH_GRP_ID = AUTH.AUTH_GRP_ID
+    LEFT OUTER JOIN TB_EM_PC_CHRR CHRR
+            ON CHRR.CHRR_ID = CHRR_AUTH.CHRR_ID
+    LEFT OUTER JOIN TB_EM_PC_CHRR RG_CHRR
+            ON RG_CHRR.CHRR_ID = CHRR_AUTH.RG_ENO
+    LEFT OUTER JOIN TB_EM_PC_CHRR CHG_CHRR
+            ON CHG_CHRR.CHRR_ID = CHRR_AUTH.CHG_ENO
+         WHERE 1 = 1
+           AND AUTH.AUTH_GRP_ID = #{authGrpId}
+         ORDER BY CHRR.CHRR_NM ASC
+    </select>
+    
+    <!-- 관리 :: 그룹관리 :: 권한그룹 저장 -->
+    <update id="saveGroupAuth"
+        parameterType="com.minervasoft.backend.vo.GroupAuthVO"
+        >
+        MERGE INTO TB_EM_PC_AUTH
+        USING DUAL
+           ON ( AUTH_GRP_ID = #{authGrpId})
+         WHEN MATCHED THEN
+       UPDATE 
+          SET AUTH_GRPNM = #{authGrpnm}
+            , CHG_ENO = #{chgEno}
+            , CHG_DTM = SYSDATE
+         WHEN NOT MATCHED THEN
+       INSERT 
+            ( 
+              AUTH_GRP_ID
+            , AUTH_GRPNM
+            , RG_DTM
+            , RG_ENO
+            , CHG_DTM
+            , CHG_ENO
+            )
+       VALUES
+            (
+              #{authGrpId}
+            , #{authGrpnm}
+            , SYSDATE
+            , #{rgEno}
+            , SYSDATE
+            , #{chgEno}
+            )
+    </update>
+    
+    <!-- 관리 :: 그룹관리 :: 사용자권한그룹 저장 -->
+    <update id="saveChrrGroupAuth"
+        parameterType="com.minervasoft.backend.vo.ChrrGroupAuthVO"
+        >
+        MERGE INTO TB_EM_PC_CHRRAUTH
+        USING DUAL
+           ON ( AUTH_GRP_ID = #{authGrpId} AND CHRR_ID = #{chrrId})
+         WHEN MATCHED THEN
+       UPDATE 
+          SET UYN = #{uyn}
+            , CHG_ENO = #{chgEno}
+            , CHG_DTM = SYSDATE
+         WHEN NOT MATCHED THEN
+       INSERT 
+            ( 
+              AUTH_GRP_ID
+            , CHRR_ID
+            , UYN
+            , RG_DTM
+            , RG_ENO
+            , CHG_DTM
+            , CHG_ENO
+            )
+       VALUES
+            (
+              #{authGrpId}
+            , #{chrrId}
+            , #{uyn}
+            , SYSDATE
+            , #{rgEno}
+            , SYSDATE
+            , #{chgEno}
+            )
+    </update>
+    
+    <!-- 관리 :: 권한관리 :: 권한그룹 조회 -->
+    <select id="selListAuth" 
+        parameterType="com.minervasoft.backend.vo.GroupAuthVO"
+        resultType="com.minervasoft.backend.vo.GroupAuthVO"
+        >
+        SELECT A.AUTH_GRP_ID
+             , A.AUTH_GRPNM
+          FROM TB_EM_PC_AUTH A
+         WHERE 1 = 1
+       <if test='authGrpId != null'>
+           AND A.AUTH_GRP_ID = #{authGrpId}
+       </if>
+         ORDER BY A.AUTH_GRP_ID ASC
+    </select>
+    
+    <!-- 관리 :: 권한관리 :: 권한메뉴목록 조회 -->
+    <select id="selListMenuAuthForManagement" 
+        parameterType="com.minervasoft.backend.vo.MenuAuthVO"
+        resultType="com.minervasoft.backend.vo.MenuAuthVO"
+        >
+        SELECT A.MENU_SQNO
+             , A.MNNM
+             , NVL(B.AUTH_GRP_ID, #{authGrpId}) AUTH_GRP_ID
+             , NVL(B.AUTH_UYN, 'N') AUTH_UYN
+             , C.CHRR_NM RG_ENNM
+             , B.RG_ENO
+             , B.RG_DTM
+             , D.CHRR_NM CHG_ENNM
+             , B.CHG_ENO
+             , B.CHG_DTM
+         FROM  TB_EM_PC_MENU A
+             , TB_EM_PC_MENUAUTH B
+             , TB_EM_PC_CHRR C
+             , TB_EM_PC_CHRR D
+         WHERE A.MENU_SQNO = B.MENU_SQNO(+)
+           AND B.RG_ENO = C.CHRR_ID(+)
+           AND B.CHG_ENO = D.CHRR_ID(+)
+           AND B.AUTH_GRP_ID(+) = #{authGrpId}
+           AND A.UP_MENU_SQNO = #{upMenuSqno}
+         ORDER BY MENU_MRK_SQ ASC
+    </select>
+    
+    <!-- 관리 :: 권한관리 :: 메뉴권한 저장 -->
+    <update id="saveMenuAuth"
+        parameterType="com.minervasoft.backend.vo.MenuAuthVO"
+        >
+        MERGE INTO TB_EM_PC_MENUAUTH
+        USING DUAL
+           ON ( MENU_SQNO = #{menuSqno} AND AUTH_GRP_ID = #{authGrpId} )
+         WHEN MATCHED THEN
+       UPDATE 
+          SET AUTH_UYN = #{authUyn}
+            , CHG_ENO = #{chgEno}
+            , CHG_DTM = SYSDATE
+         WHEN NOT MATCHED THEN
+       INSERT 
+            ( 
+              MENU_SQNO
+            , AUTH_GRP_ID
+            , AUTH_UYN
+            , INQ_YN
+            , RG_DTM
+            , RG_ENO
+            , CHG_DTM
+            , CHG_ENO
+            )
+       VALUES
+            (
+              #{menuSqno}
+            , #{authGrpId}
+            , #{authUyn}
+            , NULL
+            , SYSDATE
+            , #{rgEno}
+            , SYSDATE
+            , #{chgEno}
+            )
+    </update>
+    
+        
+    <!-- 관리 :: 메뉴관리 :: 상위메뉴 조회 -->
+    <select id="selListMenu"
+        parameterType="com.minervasoft.backend.vo.MenuVO"
+        resultType="com.minervasoft.backend.vo.MenuVO"
+        >
+        SELECT MENU_SQNO
+             , MNNM             
+          FROM TB_EM_PC_MENU
+         WHERE 1 = 1
+           AND UP_MENU_SQNO = #{upMenuSqno}
+         ORDER BY MENU_MRK_SQ ASC
+    </select>
+    
+    <!-- 관리 :: 메뉴관리 :: 하위메뉴 조회 -->
+    <select id="selListMenuForManagement"
+        parameterType="com.minervasoft.backend.vo.MenuVO"
+        resultType="com.minervasoft.backend.vo.MenuVO"
+        >
+        SELECT MENU.UP_MENU_SQNO
+             , UP_MENU.MNNM AS UP_MNNM
+             , MENU.MENU_SQNO
+             , MENU.MNNM
+             , MENU.MENU_MRK_SQ
+             , RG_CHRR.CHRR_NM AS RG_ENNM
+             , MENU.RG_ENO
+             , MENU.RG_DTM
+             , CHG_CHRR.CHRR_NM AS CHG_ENNM
+             , MENU.CHG_ENO
+             , MENU.CHG_DTM
+          FROM TB_EM_PC_MENU MENU
+    LEFT OUTER JOIN TB_EM_PC_MENU UP_MENU
+            ON UP_MENU.MENU_SQNO = MENU.UP_MENU_SQNO
+    LEFT OUTER JOIN TB_EM_PC_CHRR RG_CHRR
+            ON RG_CHRR.CHRR_ID = MENU.RG_ENO
+    LEFT OUTER JOIN TB_EM_PC_CHRR CHG_CHRR
+            ON CHG_CHRR.CHRR_ID = MENU.CHG_ENO
+         WHERE 1 = 1
+           AND MENU.UP_MENU_SQNO = #{upMenuSqno}
+         ORDER BY MENU.MENU_MRK_SQ ASC
+    </select>     
+    
+    <!-- 관리 :: 메뉴관리 :: 메뉴저장 -->
+    <update id="saveMenu"
+        parameterType="com.minervasoft.backend.vo.MenuVO"
+        >
+        MERGE INTO TB_EM_PC_MENU
+        USING DUAL
+           ON ( UP_MENU_SQNO = #{upMenuSqno} AND MENU_SQNO = #{menuSqno} )
+         WHEN MATCHED THEN
+       UPDATE 
+          SET MNNM = #{mnnm}
+            , MENU_MRK_SQ = #{menuMrkSq}
+            , CHG_ENO = #{chgEno}
+            , CHG_DTM = SYSDATE
+         WHEN NOT MATCHED THEN
+       INSERT 
+            ( 
+              MENU_SQNO
+            , UP_MENU_SQNO
+            , MNNM
+            , MENU_MRK_SQ
+            , RG_DTM
+            , RG_ENO
+            , CHG_DTM
+            , CHG_ENO
+            )
+       VALUES
+            (
+              #{menuSqno}
+            , #{upMenuSqno}
+            , #{mnnm}
+            , #{menuMrkSq}
+            , SYSDATE
+            , #{rgEno}
+            , SYSDATE
+            , #{chgEno}
+            )
+    </update>    
+    
+    <!-- 기타 -->
+
+
+    
+    <select id="selOneChrr"
+        parameterType="com.minervasoft.backend.vo.ChrrVO"
+        resultType="com.minervasoft.backend.vo.ChrrVO"
+        >
+        SELECT CHRR_ID
+        , CHRR_NM
+        , UYN
+        FROM TB_EM_PC_CHRR
+        WHERE 1 = 1
+        AND CHRR_ID = #{chrrId}
+        AND UYN = 'Y'
+    </select>
+       
+    
+    <select id="selListChrrMenu"
+        parameterType="com.minervasoft.backend.vo.ChrrVO"
+        resultType="com.minervasoft.backend.vo.MenuVO"
+        >
+        SELECT DISTINCT MENU_AUTH.MENU_SQNO
+        FROM TB_EM_PC_CHRR CHRR
+        LEFT OUTER JOIN TB_EM_PC_CHRRAUTH CHRR_AUTH
+        ON CHRR_AUTH.CHRR_ID = CHRR.CHRR_ID
+        LEFT OUTER JOIN TB_EM_PC_MENUAUTH MENU_AUTH
+        ON MENU_AUTH.AUTH_GRP_ID = CHRR_AUTH.AUTH_GRP_ID
+        WHERE 1 = 1
+        AND CHRR.CHRR_ID = #{chrrId}
+        AND CHRR.UYN = 'Y'
+        AND CHRR_AUTH.UYN = 'Y'
+        AND MENU_AUTH.AUTH_UYN = 'Y'
+        ORDER BY MENU_AUTH.MENU_SQNO ASC
+    </select>
+    
+    
+    <select id="selListStepStats"
+        resultType="com.minervasoft.backend.vo.StepStatsVO"
+        >
+        SELECT MASK_PRG_DTP.BAS_DT
+        , MASK_PRG_DTP.MASK_PRG_STSC
+        , CODE.CNM AS MASK_PRG_STS_NM
+        , MASK_PRG_DTP.ALL_CN
+        , MASK_PRG_DTP.PRC_CN
+        , TO_CHAR(ROUND(DECODE(MASK_PRG_DTP.ALL_CN, 0, 0, MASK_PRG_DTP.PRC_CN/MASK_PRG_DTP.ALL_CN)  , 1)) AS PRG_RATIO
+        FROM TB_EM_FP_MASK_PRG_DTP MASK_PRG_DTP
+        LEFT OUTER JOIN TB_EM_PC_CODE CODE
+        ON CODE.C_ID = MASK_PRG_DTP.MASK_PRG_STSC
+        JOIN (
+            SELECT BAS_DT
+            FROM (
+                SELECT ROW_NUMBER() OVER(ORDER BY BAS_DT DESC, MASK_PRG_STSC DESC) ROW_NUM
+                , BAS_DT
+                FROM TB_EM_FP_MASK_PRG_DTP
+            )
+            WHERE ROW_NUM = 1
+        ) DT
+        ON DT.BAS_DT = MASK_PRG_DTP.BAS_DT
+        WHERE 1 = 1
+        AND CODE.UP_C_ID = 'MASK_PRG_STSC'
+        ORDER BY MASK_PRG_DTP.MASK_PRG_STSC ASC
+    </select>
+    
+    <select id="selListXtormDailyStats" 
+        parameterType="com.minervasoft.backend.vo.XtromDailyStatsVO" 
+        resultType="com.minervasoft.backend.vo.XtromDailyStatsVO"
+        >
+        SELECT MASK_BSN_DTP.BAS_DT
+        , MASK_BSN_DTP.BPR_BSN_DSC
+        , CODE.CNM AS BIZ_BSN_NM
+        , MASK_BSN_DTP.OBJ_TTCN
+        , MASK_BSN_DTP.MASK_OBJ_TRF_CPL_CN
+        , MASK_BSN_DTP.XTORM_RG_CPL_CN
+        , MASK_BSN_DTP.IMG_TRF_CPL_CN
+        , MASK_BSN_DTP.IMG_MASK_UP_CPL_CN
+        , MASK_BSN_DTP.IMG_OPR_APL_CPL_CN
+        FROM  TB_EM_XTORM_FP_MASK_BSN_DTP MASK_BSN_DTP
+        LEFT OUTER JOIN TB_EM_PC_CODE CODE
+        ON CODE.C_ID = MASK_BSN_DTP.BPR_BSN_DSC
+        WHERE 1 = 1
+        AND CODE.UP_C_ID = 'BPR_BSN_DSC'
+        AND MASK_BSN_DTP.BAS_DT BETWEEN #{startDt} AND #{endDt}
+        ORDER BY MASK_BSN_DTP.BAS_DT ASC
+        , CODE.SCRN_MRK_SQ ASC
+    </select>
+       
+</mapper>
