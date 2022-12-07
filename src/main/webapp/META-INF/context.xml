@@ -11,16 +11,21 @@
                  maxIdle="1" 
                  maxWait="10000" 
                  maxActive="5"
-                 validationQuery="select 1 from dual" /> 	
+                 validationQuery="select 1 from dual" />
+                 192.168.0.157
+                 url="jdbc:log4jdbc:oracle:thin:@127.0.0.1:15210/XE"
+                 driverClassName="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
+                 driverClassName="oracle.jdbc.driver.OracleDriver" 	
+                                  
   		 -->
   		 
   		 <Resource  auth="Container" 
                  name="jdbc/dpmdb" 
                  type="javax.sql.DataSource" 
-                 driverClassName="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" 
+                 driverClassName="oracle.jdbc.driver.OracleDriver" 
                  username="MINERVASOFT" 
                  password="q1w2e3r4"                  
-                 url="jdbc:log4jdbc:oracle:thin:@192.168.0.157:15210/XE"
+                 url="jdbc:oracle:thin:@127.0.0.1:15210/XE"
                  maxIdle="1" 
                  maxWait="10000" 
                  maxActive="5"
