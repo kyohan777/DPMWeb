@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
  <Context docBase="" path="" reloadable="true" >
-                 
+        <!--          
 		<Resource  auth="Container" 
                  name="jdbc/dpmdb" 
                  type="javax.sql.DataSource" 
@@ -12,5 +12,18 @@
                  maxWait="10000" 
                  maxActive="5"
                  validationQuery="select 1 from dual" /> 	
-  
+  		 -->
+  		 
+  		 <Resource  auth="Container" 
+                 name="jdbc/dpmdb" 
+                 type="javax.sql.DataSource" 
+                 driverClassName="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" 
+                 username="MINERVASOFT" 
+                 password="q1w2e3r4"                  
+                 url="jdbc:log4jdbc:oracle:thin:@192.168.0.157:15210/XE"
+                 maxIdle="1" 
+                 maxWait="10000" 
+                 maxActive="5"
+                 validationQuery="select 1 from dual" />
+                 
   </Context>
