@@ -25,7 +25,7 @@
                  driverClassName="oracle.jdbc.driver.OracleDriver" 
                  username="MINERVASOFT" 
                  password="q1w2e3r4"                  
-                 url="jdbc:oracle:thin:@127.0.0.1:15210/XE"
+                 url="jdbc:oracle:thin:@192.168.0.157:15210/XE"
                  maxIdle="1" 
                  maxWait="10000" 
                  maxActive="5"
