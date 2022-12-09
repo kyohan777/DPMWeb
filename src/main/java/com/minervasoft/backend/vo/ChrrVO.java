@@ -5,6 +5,8 @@ import java.util.Date;
 public class ChrrVO extends AbstractVO {
 	
 
+	
+	
     private String chrrId = null;
 
     private String chrrNm = null;
