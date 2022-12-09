@@ -5,18 +5,13 @@ import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.SimpleTimeZone;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.apache.ibatis.type.TypeException;
 import org.slf4j.Logger;
@@ -60,6 +55,8 @@ import com.minervasoft.backend.vo.ResponseSelListStepStatsVO;
 import com.minervasoft.backend.vo.ResponseSelListXtromDailyStatsVO;
 import com.minervasoft.backend.vo.ResponseSelOneChrrVO;
 import com.minervasoft.backend.vo.ResponseSelOneLoginChrrVO;
+import com.minervasoft.backend.vo.ResponseStatisticsVo;
+import com.minervasoft.backend.vo.StatisticsVO;
 import com.minervasoft.backend.vo.StepStatsVO;
 import com.minervasoft.backend.vo.XtromDailyStatsVO;
 
@@ -91,69 +88,6 @@ public class DpmController {
         
         try {
         	LoginChrrVO one = dpmService.selOneLoginChrr(paramVO);
-            response.setSelOne(one);
-        } catch(Exception e) {
-            e.printStackTrace();
-            response.setRsYn("N");
-        }
-        
-        return response;
-    }    
-    
-    
-    /**
-     * 로그인ID 검사
-     * @param paramVO
-     * @return
-     */
-    @RequestMapping(value = "/login/loginCheckByCookie.do")
-    @ResponseBody
-    public ResponseSelOneLoginChrrVO selectLoginChkInfoByCookie(LoginChrrVO paramVO, HttpServletRequest request, ModelMap modelMap) {
-        
-    	ResponseSelOneLoginChrrVO response = new ResponseSelOneLoginChrrVO();
-    	String sRemoteAddr = request.getRemoteAddr();
-    	String sApiKey = "368B184727E89AB69FAF";
-    	String sToken = "";
-    	String userId = "";
-    	int nResult = -1;
-    	//SSO sso = new SSO(sApiKey)	;
-    	InetAddress inetAddress;
-		try {
-			inetAddress = InetAddress.getLocalHost();
-			String ip = inetAddress.toString();
-			HttpSession ss = request.getSession();
-
-			if (ip.contains("KISESVT2N") || ip.contains("KISESVP1N")) {
-				Cookie[] cs = request.getCookies();
-				if(cs != null) {
-					for(int i=0; i<cs.length; i++) {
-						//logger.debug("cs[i].getName() : " + cs[i].getName());
-						if(cs[i].getName().equals("ssotoken")) {
-							if(cs[i].getValue()!="") {
-								//logger.debug("cs[i].getValue() : " + cs[i].getValue());
-								//nResult = sso.verifyToken(cs[i].getValue());
-								//logger.debug("nResult: " + nResult);
-								if(nResult >= 0) {
-									//userId  = sso.getValueUserID();
-									//logger.debug("userId : " + userId);
-								}
-							}
-						}
-					}
-				}	
-			}
-			
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			response.setRsYn("N");
-		}
-    	
-        
-        try {
-        	paramVO.setChrrId(userId);
-        	LoginChrrVO one = dpmService.selOneLoginChrr(paramVO);
-        	
             response.setSelOne(one);
         } catch(Exception e) {
             e.printStackTrace();
@@ -274,67 +208,17 @@ public class DpmController {
     	String returnPage = "dpm/login";
     	
         try {
-        	
-
-        	String sRemoteAddr = request.getRemoteAddr();
-        	InetAddress inetAddress = InetAddress.getLocalHost();
-        	String ip = inetAddress.toString();
-        	//logger.debug("ip : " + ip);
-        	if (ip.contains("KISESVT2N") || ip.contains("KISESVP1N")) {
-        		String sID = "";
-        		String sPwd = "";
-        		String sApiKey = "368B184727E89AB69FAF";
-        		int nResult = -1;
-        		//SSO sso = new SSO(sApiKey)	;	
-        		
         		LoginChrrVO loginInfoVO = dpmService.selOneLoginChrr(paramVO);
-        		sID = paramVO.getChrrId();
-        		sPwd = paramVO.getChrrPwd();
-        		//SsoAuthInfo authInfo = new SsoAuthInfo();
-        		if (!sID.equals("keytool")) {
-        			//authInfo = sso.authID(sID, sPwd, true, sRemoteAddr);
-            		//nResult = sso.getLastError();
-        		}
-        		
-        		
-        		if (nResult >= 0 || sID.equals("keytool")) {
-        			//세션정보저장후 메인페이지로 이동
-                	if(loginInfoVO != null && !"".equals(loginInfoVO.getChrrId())) {
-                		request.getSession().setAttribute("loginInfo", loginInfoVO);
-                		request.getSession().setMaxInactiveInterval(60*300);
-                		
-                		modelMap.addAttribute("loginResult", "로그인에 성공하였습니다.");
-                		modelMap.addAttribute("chrrId", loginInfoVO.getChrrId());
-                		modelMap.addAttribute("chrrNm", loginInfoVO.getChrrNm());
-                		modelMap.addAttribute("contentPage", "firstView.jsp");
-                		
-                		returnPage = "dpm/main";
-                	} else {
-                		modelMap.addAttribute("loginResult", "로그인에 실패하였습니다.");
-                	}
-        		}
-        		else {
-        			modelMap.addAttribute("loginResult", "로그인에 실패하였습니다.");
-        		}
-        	}else {
-        		LoginChrrVO loginInfoVO = dpmService.selOneLoginChrr(paramVO);
-
             	//세션정보저장후 메인페이지로 이동
             	if(loginInfoVO != null && !"".equals(loginInfoVO.getChrrId())) {
             		request.getSession().setAttribute("loginInfo", loginInfoVO);
             		request.getSession().setMaxInactiveInterval(60*300);
             		
             		modelMap.addAttribute("loginResult", "로그인에 성공하였습니다.");
-            		modelMap.addAttribute("chrrId", loginInfoVO.getChrrId());
-            		modelMap.addAttribute("chrrNm", loginInfoVO.getChrrNm());
-            		modelMap.addAttribute("contentPage", "firstView.jsp");
-            		
-            		returnPage = "dpm/main";
+            		returnPage = "dpm/firstView";
             	} else {
             		modelMap.addAttribute("loginResult", "로그인에 실패하였습니다.");
             	}
-        		
-        	}
         	
         } catch(Exception e) {
             e.printStackTrace();
@@ -367,9 +251,8 @@ public class DpmController {
             		modelMap.addAttribute("loginResult", "로그인에 성공하였습니다.");
             		modelMap.addAttribute("chrrId", loginInfoVO.getChrrId());
             		modelMap.addAttribute("chrrNm", loginInfoVO.getChrrNm());
-            		modelMap.addAttribute("contentPage", "firstView.jsp");
             		
-            		returnPage = "dpm/main";
+            		returnPage = "dpm/dpmDayPro";
             	} else {
             		//modelMap.addAttribute("loginResult", "로그인에 실패하였습니다.");
             	}
@@ -1743,5 +1626,105 @@ public class DpmController {
     /********************************************* 
      * 분리보관
      *********************************************/
+    
+    /**
+     *  [IMR] 일별 통계:: 일별 통계 전체 cnt 조회
+     *  2022.12.08 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getDpmDayProInfoTotRowCnt.do")
+    @ResponseBody
+    public ResponseStatisticsVo getDpmDayProInfoTotRowCnt(StatisticsVO paramVO) {
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+        
+        try {
+        	StatisticsVO one = dpmService.getDpmDayProInfoTotRowCnt(paramVO);
+            response.setTotRowCnt(one.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+        }
+        
+        return response;
+    }    
+    
+    /**
+     *  [IMR] 일별 통계:: 일별 통계 현황 조회
+     *  2022.12.08 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getDpmDayProInfo.do")
+    @ResponseBody
+    public ResponseStatisticsVo getDpmDayProInfo(StatisticsVO paramVO) {
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+        
+        try {
+            List<StatisticsVO> list = dpmService.getDpmDayProInfo(paramVO);
+            response.setSelList(list);
+            response.setPageNumber(paramVO.getPageNumber());
+            response.setTotPageCnt(paramVO.getTotPageCnt());
+            response.setTotRowCnt(paramVO.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+            response.setSelList(new ArrayList<StatisticsVO>());
+        }
+        
+        return response;
+    }
+    
+    /**
+     *  [IMR] 월별 통계:: 월별 통계 전체 cnt 조회
+     *  2022.12.08 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getDpmMonthProInfoTotRowCnt.do")
+    @ResponseBody
+    public ResponseStatisticsVo getDpmMonthProInfoTotRowCnt(StatisticsVO paramVO) {
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+        
+        try {
+        	StatisticsVO one = dpmService.getDpmMonthProInfoTotRowCnt(paramVO);
+            response.setTotRowCnt(one.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+        }
+        
+        return response;
+    }    
+    
+    /**
+     *  [IMR] 일별 통계:: 일별 통계 현황 조회
+     *  2022.12.08 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getDpmMonthProInfo.do")
+    @ResponseBody
+    public ResponseStatisticsVo getDpmMonthProInfo(StatisticsVO paramVO) {
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+        
+        try {
+            List<StatisticsVO> list = dpmService.getDpmMonthProInfo(paramVO);
+            response.setSelList(list);
+            response.setPageNumber(paramVO.getPageNumber());
+            response.setTotPageCnt(paramVO.getTotPageCnt());
+            response.setTotRowCnt(paramVO.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+            response.setSelList(new ArrayList<StatisticsVO>());
+        }
+        
+        return response;
+    }
      
 }

@@ -11,6 +11,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.minervasoft.backend.vo.LoginChrrVO;
+
 @Controller
 public class WebController {
     
@@ -331,6 +333,57 @@ public class WebController {
         }
         
         return "dpm/dpm3050";
-    }     
+    } 
+    
+    
+    /**
+     * dpmDailyPro 일일 처리 현황
+     * Kimsangmin
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/dpm/dpmDailyPro.do")
+    public String dpmDailyPro(LoginChrrVO loginInfoVO,ModelMap modelMap) {
+        try {   
+    		modelMap.addAttribute("chrrId", loginInfoVO.getChrrId());
+    		modelMap.addAttribute("chrrNm", loginInfoVO.getChrrNm());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "dpm/dpmDailyPro";
+    }
+    
+    /**
+     * dpmDailyPro 일별 처리 현황
+     * Kimsangmin
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/dpm/dpmDayPro.do")
+    public String dpmDayPro(LoginChrrVO loginInfoVO,ModelMap modelMap) {
+        try {        	
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "dpm/dpmDayPro";
+    }
+    /**
+     * dpmDailyPro 월별 처리 현황
+     * Kimsangmin
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/dpm/dpmMonthPro.do")
+    public String dpmMonthPro(LoginChrrVO loginInfoVO,ModelMap modelMap) {
+        try {        	
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "dpm/dpmDayPro";
+    }
+
     
 }

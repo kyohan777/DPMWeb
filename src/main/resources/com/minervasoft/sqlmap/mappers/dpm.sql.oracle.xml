@@ -14,6 +14,7 @@
              , DEPTNM
           FROM TB_EM_PC_CHRR
          WHERE CHRR_ID = #{chrrId}
+         AND   CHRR_PWD = #{chrrPwd}
            AND UYN = 'Y' 
     </select>
     
@@ -1104,5 +1105,149 @@
         ORDER BY MASK_BSN_DTP.BAS_DT ASC
         , CODE.SCRN_MRK_SQ ASC
     </select>
+    
+    
+   <!-- 2022.12 신규 개발 쿼리 by KSM -->
+   
+   <!-- 통계 :: 일별 통계 :: 일별 통계 현황 조회 -->
+    <select id="getDpmDayProInfo"
+        parameterType="com.minervasoft.backend.vo.StatisticsVO"
+        resultType="com.minervasoft.backend.vo.StatisticsVO"
+        >
+	SELECT *
+	FROM
+	(
+  		SELECT TA.*
+     		,ROWNUM RNUM
+  		FROM
+  	(   
+      SELECT 
+		TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY/MM/DD') AS PRC_DT, --기준일자(처리일자)
+		PRC_DT_CNT,							 						--대상
+		PRC_CN-ERR_CN AS PRC_CN,									--처리현황 > 정상
+		ERR_CN,														--처리현황 > 오류
+		CONCAT((ERR_CN/PRC_DT_CNT)*100,'%')		AS  ERR_RAT,		--오류율
+		CONCAT((PRC_CN/PRC_DT_CNT)*100,'%') 	AS  PRC_RAT,    	--처리율
+		VERIFY_UPDATE_CN, 											--검증건수 > 수정
+		PRC_CN-VERIFY_UPDATE_CN AS MAINTAIN_CN, 					--검증건수 > 유지
+		ETC1_YES_CN  AS ETC1_Y,									--ETC1 > 동의
+		ETC2_YES_CN  AS ETC2_Y,									--ETC2 > 동의
+		ETC3_YES_CN  AS ETC3_Y,									--ETC3 > 동의
+		ETC10_YES_CN AS ETC10_Y,									--ETC10> 동의
+		ETC1_NO_CN   AS ETC1_N,										--ETC1 > 미동의
+		ETC2_NO_CN   AS ETC2_N,										--ETC2 > 미동의
+		ETC3_NO_CN   AS ETC3_N,										--ETC3 > 미동의
+		ETC10_NO_CN  AS ETC10_N										--ETC10> 미동의
+	FROM MINERVASOFT.TB_EM_IMR_DAILY_STATICS
+	WHERE MAJOR_CLASS ='TOTAL'
+	<if test='prcDt != null and prcDt !=""'>
+	AND PRC_DT = REPLACE(#{prcDt},'-','')
+	</if>
+	ORDER BY PRC_DT 
+ 	) TA             
+    WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+ 	)
+	WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+    </select> 
+    
+    <!-- 일별 전체 cnt 값  -->
+    <select id="getDpmDayProInfoTotRowCnt"
+    	 parameterType="com.minervasoft.backend.vo.StatisticsVO"
+        resultType="com.minervasoft.backend.vo.StatisticsVO"
+        >
+        SELECT 
+			COUNT(*) TOT_ROW_CNT
+		FROM MINERVASOFT.TB_EM_IMR_DAILY_STATICS
+		WHERE MAJOR_CLASS ='TOTAL'
+		<if test='prcDt != null and prcDt !=""'>
+		AND PRC_DT = REPLACE(#{prcDt},'-','')
+		</if>
+    </select>
+    
+     <!-- 월별 전체 cnt 값  -->
+    <select id="getDpmMonthProInfoTotRowCnt"
+    	parameterType="com.minervasoft.backend.vo.StatisticsVO"
+        resultType="com.minervasoft.backend.vo.StatisticsVO"
+        >
+        SELECT 
+			COUNT(*) TOT_ROW_CNT
+ 		from(SELECT 
+				TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT
+			FROM MINERVASOFT.TB_EM_IMR_DAILY_STATICS
+			WHERE MAJOR_CLASS ='TOTAL'
+			<if test='prcDt != null and prcDt !=""'>
+			AND PRC_DT = REPLACE(#{prcDt},'-','')
+			</if>
+		) T GROUP BY T.PRC_DT
+    </select>
+    
+    
+    
+       <!-- 통계 :: 일별 통계 :: 일별 통계 현황 조회 -->
+    <select id="getDpmMonthProInfo"
+     parameterType="com.minervasoft.backend.vo.StatisticsVO"
+        resultType="com.minervasoft.backend.vo.StatisticsVO"
+        >
+SELECT *
+FROM
+	(
+  		SELECT TA.*
+     		,ROWNUM RNUM
+  		FROM
+  	(   
+      SELECT 
+			TO_CHAR(TO_DATE(T.PRC_DT,'YYYYMM'),'YYYY/MM') 			   AS PRC_DT, 
+			SUM(T.PRC_DT_CNT) 						 				   AS PRC_DT_CNT,
+			SUM(T.PRC_CN) 							 				   AS PRC_CN,
+			SUM(T.ERR_CN) 							 				   AS ERR_CN,
+			CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_DT_CNT))*100,1),'%') AS ERR_RAT,						--오류율
+			CONCAT(ROUND((SUM(T.PRC_CN)/SUM(T.PRC_DT_CNT))*100,1),'%') AS PRC_RAT,    					--처리율
+			SUM(T.VERIFY_UPDATE_CN) 				 				   AS VERIFY_UPDATE_CN,
+			SUM(T. MAINTAIN_CN) 					 				   AS MAINTAIN_CN,
+			SUM(T.ETC1_Y) 							 				   AS ETC1_Y,
+			SUM(T.ETC2_Y) 							 				   AS ETC2_Y,
+			SUM(T.ETC3_Y) 							 				   AS ETC3_Y,
+			SUM(T.ETC10_Y)							 	  	 	 	   AS ETC10_Y,
+			SUM(T.ETC1_N) 							 			       AS ETC1_N,
+			SUM(T.ETC2_N) 							 				   AS ETC2_N,
+			SUM(T.ETC3_N) 							 				   AS ETC3_N,
+			SUM(T.ETC10_N)							 			       AS ETC10_N
+ 	from(SELECT 
+			TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT, 
+			PRC_DT_CNT,							 						
+			PRC_CN-ERR_CN AS PRC_CN,									
+			ERR_CN,														
+			VERIFY_UPDATE_CN, 											
+			PRC_CN-VERIFY_UPDATE_CN AS MAINTAIN_CN, 					
+			ETC1_YES_CN  AS ETC1_Y,										
+			ETC2_YES_CN  AS ETC2_Y,										
+			ETC3_YES_CN  AS ETC3_Y,										
+			ETC10_YES_CN AS ETC10_Y,									
+			ETC1_NO_CN   AS ETC1_N,										
+			ETC2_NO_CN   AS ETC2_N,										
+			ETC3_NO_CN   AS ETC3_N,										
+			ETC10_NO_CN  AS ETC10_N										
+		FROM MINERVASOFT.TB_EM_IMR_DAILY_STATICS
+		WHERE MAJOR_CLASS ='TOTAL'
+		<if test='prcDt != null and prcDt !=""'>
+		AND PRC_DT = REPLACE(#{prcDt},'-','')
+		</if>
+		ORDER BY PRC_DT  
+	) T GROUP BY T.PRC_DT
+ ) TA             
+ WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+ )
+WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+    </select> 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
        
 </mapper>

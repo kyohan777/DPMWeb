@@ -18,6 +18,7 @@ import com.minervasoft.backend.vo.MaskingHistoryVO;
 import com.minervasoft.backend.vo.MenuAuthVO;
 import com.minervasoft.backend.vo.MenuVO;
 import com.minervasoft.backend.vo.MonthlyStatsVO;
+import com.minervasoft.backend.vo.StatisticsVO;
 import com.minervasoft.backend.vo.StepStatsVO;
 import com.minervasoft.backend.vo.XtromDailyStatsVO;
 
@@ -226,7 +227,28 @@ public class DpmDAO extends AbstractDpmDAO {
     /********************************************* 
      * 분리보관
      *********************************************/
-
+    
+    
+    
+    /**********************************************
+     * 2022.12 신규 개발 KSM
+     **********************************************/
+    //일별 통계 조회
+    public List<StatisticsVO> getDpmDayProInfo(StatisticsVO paramVO) throws Exception {
+        return (List<StatisticsVO>) selectList("getDpmDayProInfo", paramVO);
+    }
+    //일별 통계 전체 cnt 조회
+    public StatisticsVO getDpmDayProInfoTotRowCnt(StatisticsVO paramVO) throws Exception {
+        return (StatisticsVO) selectOne("getDpmDayProInfoTotRowCnt",paramVO);
+    }    
+    //월별 통계 조회
+    public List<StatisticsVO> getDpmMonthProInfo(StatisticsVO paramVO) throws Exception {
+        return (List<StatisticsVO>) selectList("getDpmMonthProInfo",paramVO);
+    }
+    //월별 통계 전체 cnt 조회
+    public StatisticsVO getDpmMonthProInfoTotRowCnt(StatisticsVO paramVO) throws Exception {
+        return (StatisticsVO) selectOne("getDpmMonthProInfoTotRowCnt",paramVO);
+    }    
     
     
 }

@@ -22,6 +22,7 @@ import com.minervasoft.backend.vo.MaskingHistoryVO;
 import com.minervasoft.backend.vo.MenuAuthVO;
 import com.minervasoft.backend.vo.MenuVO;
 import com.minervasoft.backend.vo.MonthlyStatsVO;
+import com.minervasoft.backend.vo.StatisticsVO;
 import com.minervasoft.backend.vo.StepStatsVO;
 import com.minervasoft.backend.vo.XtromDailyStatsVO;
 
@@ -313,10 +314,38 @@ public class DpmServiceImpl implements DpmService {
         return dpmDao.selListXtormDailyStats(paramVO);
     }
 
+
     /********************************************* 
      * 분리보관
      *********************************************/
+    
+    
+    /************************************************
+     * 2022.12 신규 개발 KSM
+     ************************************************/
+    //일별 통계 조회
+    @Override
+	public List<StatisticsVO> getDpmDayProInfo(StatisticsVO paramVO) throws Exception {
+		  // TODO Auto-generated method stub
+        return dpmDao.getDpmDayProInfo(paramVO);
+	}
+    //일별 통계 전체 cnt 조회
+	@Override
+	public StatisticsVO getDpmDayProInfoTotRowCnt(StatisticsVO paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.getDpmDayProInfoTotRowCnt(paramVO);
+	}
 
+	@Override
+	public List<StatisticsVO> getDpmMonthProInfo(StatisticsVO paramVO) throws Exception {
+		 // TODO Auto-generated method stub
+         return dpmDao.getDpmMonthProInfo(paramVO);
+	}
 
+	@Override
+	public StatisticsVO getDpmMonthProInfoTotRowCnt(StatisticsVO paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.getDpmMonthProInfoTotRowCnt(paramVO);
+	}
 
 }
