@@ -3,6 +3,8 @@ package com.minervasoft.backend.vo;
 import java.util.Date;
 
 public class ChrrVO extends AbstractVO {
+	
+	
 
     private String chrrId = null;
 
