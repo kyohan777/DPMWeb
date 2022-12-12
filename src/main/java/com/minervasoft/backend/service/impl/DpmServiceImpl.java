@@ -11,6 +11,7 @@ import com.minervasoft.backend.service.DpmService;
 import com.minervasoft.backend.vo.AgentAssignVO;
 import com.minervasoft.backend.vo.BizStatsTodayVO;
 import com.minervasoft.backend.vo.BizStatsVO;
+import com.minervasoft.backend.vo.CalibVerifiVo;
 import com.minervasoft.backend.vo.ChrrGroupAuthVO;
 import com.minervasoft.backend.vo.ChrrVO;
 import com.minervasoft.backend.vo.CodeVO;
@@ -24,6 +25,7 @@ import com.minervasoft.backend.vo.MenuVO;
 import com.minervasoft.backend.vo.MonthlyStatsVO;
 import com.minervasoft.backend.vo.StatisticsVO;
 import com.minervasoft.backend.vo.StepStatsVO;
+import com.minervasoft.backend.vo.UserManageVo;
 import com.minervasoft.backend.vo.XtromDailyStatsVO;
 
 @Service("DpmService")
@@ -346,6 +348,48 @@ public class DpmServiceImpl implements DpmService {
 	public StatisticsVO getDpmMonthProInfoTotRowCnt(StatisticsVO paramVO) throws Exception {
 		// TODO Auto-generated method stub
 		return dpmDao.getDpmMonthProInfoTotRowCnt(paramVO);
+	}
+
+	@Override
+	public List<CalibVerifiVo> getdpmImrResViewerInfo(CalibVerifiVo paramVO) throws Exception {
+		// TODO Auto-generated method stub
+				return dpmDao.getdpmImrResViewerInfo(paramVO);
+	}
+
+	@Override
+	public CalibVerifiVo getdpmImrResViewerInfoTotRowCnt(CalibVerifiVo paramVO) throws Exception {
+		// TODO Auto-generated method stub
+				return dpmDao.getdpmImrResViewerInfoTotRowCnt(paramVO);
+	}
+	
+	@Override
+	public List<UserManageVo> getdpmUserManageInfo(UserManageVo paramVO) throws Exception {
+		// TODO Auto-generated method stub
+				return dpmDao.getdpmUserManageInfo(paramVO);
+	}
+
+	@Override
+	public UserManageVo getdpmUserManageInfoTotRowCnt(UserManageVo paramVO) throws Exception {
+		// TODO Auto-generated method stub
+				return dpmDao.getdpmUserManageInfoTotRowCnt(paramVO);
+	}
+
+	@Override
+	public int insertUserInfo(UserManageVo paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.insertUserInfo(paramVO);
+	}
+
+	@Override
+	public int updateUserInfo(UserManageVo paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.updateUserInfo(paramVO);
+	}
+
+	@Override
+	public int dleeteUserInfo(UserManageVo paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.dleeteUserInfo(paramVO);
 	}
 
 }

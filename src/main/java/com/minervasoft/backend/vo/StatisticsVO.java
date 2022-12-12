@@ -1,11 +1,8 @@
 package com.minervasoft.backend.vo;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter @Setter
 public class StatisticsVO extends AbstractVO{
 	private String  prcDt;
+	private String textPrcDt;
 	private Integer prcDtCnt;
 	private Integer prcCn;
 	private Integer errCn;
@@ -146,6 +143,12 @@ public class StatisticsVO extends AbstractVO{
 	}
 	public void setPrcRat(String prcRat) {
 		this.prcRat = prcRat;
+	}
+	public String getTextPrcDt() {
+		return textPrcDt;
+	}
+	public void setTextPrcDt(String textPrcDt) {
+		this.textPrcDt = textPrcDt;
 	}
 	
 	

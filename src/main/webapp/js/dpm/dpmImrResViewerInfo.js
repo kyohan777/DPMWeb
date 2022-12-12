@@ -1,12 +1,12 @@
 
 /**
-  * @File Name : dpmDayPro.js
-  * @Description : 일별 통계
+  * @File Name : dpmImrResViewerInfo.js
+  * @Description : IMR 결과 열람자 이력 조회
   * @Modification Information
   * 
   *   수정일       수정자                   수정내용
   *  -------    --------    ---------------------------
-  *  2022.12.06             최초 생성
+  *  2022.12.09             최초 생성
   *
   *  
   *  ------------------------------------------------
@@ -23,41 +23,34 @@ var gridEventFlag;
 var selectByGrid;
 var onSelistfinger;
 var serverDate = modComm.getServerDate();
-var modDpmDayPro = (function(){    
+var modDpmImrResViewerInfo = (function(){    
     var totRowCnt = 0;
     var gridHeight = 600;
 	/**
 	 * 초기화
 	 */	
 	function init() {
-		modComm.setDatepicker("textPrcDt","imgStartDt");
+		modComm.setDatepicker("startPrcDt","imgStartDt");
+		modComm.setDatepicker("endtPrcDt","imgEndtDt");
 		//마스터 그리드 초기화 시작
 		//$("#txtStartDt").val(modComm.getGridDateFormat(serverDate));
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언
-	        url: '/dpm/getDpmDayProInfo.do',
+	        url: '/dpm/getdpmImrResViewerInfo.do',
 	        mtype: "POST",
 	        datatype: "local",
-	        postData: {"textPrcDt" : $("#textPrcDt").val()},
+	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: 'YYYY/MM/DD', name: 'prcDt',    	   width: 200,align: 'center'},
-	            { label: '대상(A)', 	   name: 'prcDtCnt', 	   width: 100,align: 'center'},
-	            { label: '정상', 		   name: 'prcCn',    	   width: 80, align: 'center'},
-	            { label: '오류', 		   name: 'errCn',    	   width: 80, align: 'center'},
-	            { label: '오류율', 	   name: 'errRat',   	   width: 80, align: 'center'},
-	            { label: '처리율', 	   name: 'prcRat',         width: 80, align: 'center'},	  
-	            { label: '수정', 		   name: 'verifyUpdateCn', width: 80, align: 'center'},
-	            { label: '유지', 		   name: 'maintainCn',     width: 80, align: 'center'},
-	            { label: '동의', 	  	   name: 'etc1Y', 		   width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'etc1N', 		   width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'etc2Y', 		   width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'etc2N',          width: 80, align: 'center'},
-	            { label: '동의', 	  	   name: 'etc3Y', 		   width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'etc3N', 		   width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'etc10Y', 		   width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'etc10N', 		   width: 80, align: 'center'}
-	            
+	            { label: '연번',    	   name: 'idNo',    	     align: 'center'},
+	            { label: '열람자 ID',    name: 'prcDt',    	     align: 'center'},
+	            { label: '성명', 	       name: 'prcDtCnt', 	     align: 'center'},
+	            { label: '소속', 		   name: 'prcCn',    	     align: 'center'},
+	            { label: 'ELEMENT ID', name: 'errCn',    	     align: 'center'},
+	            { label: '조회 일자', 	   name: 'errRat',   	     align: 'center'},
+	            { label: '고객번호', 	   name: 'prcRat',           align: 'center'},	  
+	            { label: '조회 사유', 	   name: 'verifyUpdateCn',   align: 'center'},
+	            { label: '조회시간', 	   name: 'maintainCn',       align: 'center'}
 	        ],
 	       
 	        height: gridHeight,
@@ -139,19 +132,6 @@ var modDpmDayPro = (function(){
 	        },
 	        
 		});
-		
-		jQuery("#jqGrid").jqGrid('setGroupHeaders', {
-  			useColSpanStyle: true, 
-  			groupHeaders:[
- 				{startColumnName: 'prcCn',  		numberOfColumns: 3, titleText: '<center>처리 현황</center>'},
- 				{startColumnName: 'verifyUpdateCn', numberOfColumns: 2, titleText: '<center>검증 건수</center>'},
- 				{startColumnName: 'etc1Y',		    numberOfColumns: 2, titleText: '<center>ETC1</center>'},
- 				{startColumnName: 'etc2Y',		    numberOfColumns: 2, titleText: '<center>ETC2</center>'},
- 				{startColumnName: 'etc3Y',		    numberOfColumns: 2, titleText: '<center>ETC3</center>'},
- 				{startColumnName: 'etc10Y',		    numberOfColumns: 2, titleText: '<center>ETC10</center>'}
-  			] 
-  			
-		});
 
 		//그리드 초기화 종료
 		//그리드 resize 
@@ -173,11 +153,12 @@ var modDpmDayPro = (function(){
 		
 		//전체건수 조회
     	var objParam = {};
-    	var arrForm = $("#frmDayPro").serializeArray();
+    	var arrForm = $("#frmImrResViewerInfo").serializeArray();
     	//console.log(arrForm);
     	if(arrForm) {
     		arrForm.forEach(function(item) {
     			objParam[item.name] = item.value;
+    			console.log(item.value);  
     		});
     	}
     	
@@ -200,7 +181,7 @@ var modDpmDayPro = (function(){
 	 */  	
 	function selTotalCount(objParam) {
 		totRowCnt = 0;
-		modAjax.request("/dpm/getDpmDayProInfoTotRowCnt.do", objParam,  {
+		modAjax.request("/dpm/getdpmImrResViewerInfoTotRowCnt.do", objParam,  {
 			async: false,
 			success: function(data) {				
 				if(!modComm.isEmpty(data) && data.rsYn == "Y" && data.hasOwnProperty("totRowCnt")) {
@@ -241,7 +222,7 @@ var modDpmDayPro = (function(){
 		
 		//조회조건
 		var objParam = {};
-		var arrForm = $("#frmDayPro").serializeArray();
+		var arrForm = $("#frmImrResViewerInfo").serializeArray();
 		if(arrForm) {
 			arrForm.forEach(function(item) {
 				objParam[item.name] = item.value;
@@ -255,7 +236,7 @@ var modDpmDayPro = (function(){
 			alert("엑셀출력할 데이터가 없습니다.");
 			return;
 		} else {			
-			var frmLogin = $("#frmDayPro")[0];
+			var frmLogin = $("#frmImrResViewerInfo")[0];
 			frmLogin.action = "/dpm/selListImageVerifyExcel.do";
 			frmLogin.method = "post";
 			frmLogin.submit();			
@@ -274,22 +255,23 @@ var modDpmDayPro = (function(){
  * 조회버튼 클릭
  */
 $("#searchBtn").on("click", function() {
-	modDpmDayPro.selList();
+	modDpmImrResViewerInfo.selList();
 });
 
 /**
  * 엑셀버튼 클릭
  */
 $("#btnExcel").on("click", function() {
-	modDpmDayPro.excelWrite();
+	//console.log("엑셀버튼 클릭");
+	modDpmImrResViewerInfo.excelWrite();
 });
 
 /**
  * DOM  load 완료 시 실행
  */
 $(document).ready(function() {
-	modDpmDayPro.init();
-	modDpmDayPro.selList();
+	modDpmImrResViewerInfo.init();
+	//modDpmImrResViewerInfo.selList();
 });
 
 //# sourceURL=dpm1010.js

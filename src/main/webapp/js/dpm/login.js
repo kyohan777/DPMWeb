@@ -111,8 +111,8 @@ var modLogin = (function(){
 	 * 담당자ID 유무 검사 
 	 */	
 	function userLoginCheck(userId,userPw) {
-		var objParam = {"chrrId" : $("#txtUserId").val(),
-						"chrrPwd" : $("#txtPassword").val() };
+		var objParam = {"chrrId" : userId,
+						"chrrPwd" : userPw};
 		var objResult;
 		
 		modAjax.request("/login/loginCheck.do", objParam,  {

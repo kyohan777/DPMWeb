@@ -2,9 +2,7 @@ package com.minervasoft.backend.vo;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-public class ResponseStatisticsVo extends AbstractResponseVO{
+public class ResponseCalibVerifiVo extends AbstractResponseVO{
 	
 	private Integer pageNumber = 0;
 	
@@ -14,7 +12,7 @@ public class ResponseStatisticsVo extends AbstractResponseVO{
 	
 	private Integer totRowCnt = 0;
 	
-	private List<StatisticsVO> selList = null;
+	private List<CalibVerifiVo> selList = null;
 
 	public Integer getPageNumber() {
 		return pageNumber;
@@ -48,14 +46,13 @@ public class ResponseStatisticsVo extends AbstractResponseVO{
 		this.totRowCnt = totRowCnt;
 	}
 
-	public List<StatisticsVO> getSelList() {
+	public List<CalibVerifiVo> getSelList() {
 		return selList;
 	}
 
-	public void setSelList(List<StatisticsVO> selList) {
+	public void setSelList(List<CalibVerifiVo> selList) {
 		this.selList = selList;
 	}
-	
 	
 
 }

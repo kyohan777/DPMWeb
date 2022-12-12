@@ -10,11 +10,14 @@
         SELECT 
                CHRR_ID
              , CHRR_NM
+             , COMPANY_ID
              , UYN
              , DEPTNM
           FROM TB_EM_PC_CHRR
          WHERE CHRR_ID = #{chrrId}
+         <if test='chrrPwd != "" and chrrPwd != null'>
          AND   CHRR_PWD = #{chrrPwd}
+         </if>
            AND UYN = 'Y' 
     </select>
     
@@ -1138,10 +1141,10 @@
 		ETC2_NO_CN   AS ETC2_N,										--ETC2 > 미동의
 		ETC3_NO_CN   AS ETC3_N,										--ETC3 > 미동의
 		ETC10_NO_CN  AS ETC10_N										--ETC10> 미동의
-	FROM MINERVASOFT.TB_EM_IMR_DAILY_STATICS
+	FROM TB_EM_IMR_DAILY_STATICS
 	WHERE MAJOR_CLASS ='TOTAL'
-	<if test='prcDt != null and prcDt !=""'>
-	AND PRC_DT = REPLACE(#{prcDt},'-','')
+	<if test='textPrcDt != null and textPrcDt !=""'>
+	AND PRC_DT = REPLACE(#{textPrcDt},'-','')
 	</if>
 	ORDER BY PRC_DT 
  	) TA             
@@ -1157,10 +1160,10 @@
         >
         SELECT 
 			COUNT(*) TOT_ROW_CNT
-		FROM MINERVASOFT.TB_EM_IMR_DAILY_STATICS
+		FROM TB_EM_IMR_DAILY_STATICS
 		WHERE MAJOR_CLASS ='TOTAL'
-		<if test='prcDt != null and prcDt !=""'>
-		AND PRC_DT = REPLACE(#{prcDt},'-','')
+		<if test='textPrcDt != null and textPrcDt !=""'>
+		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
 		</if>
     </select>
     
@@ -1173,10 +1176,10 @@
 			COUNT(*) TOT_ROW_CNT
  		from(SELECT 
 				TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT
-			FROM MINERVASOFT.TB_EM_IMR_DAILY_STATICS
+			FROM TB_EM_IMR_DAILY_STATICS
 			WHERE MAJOR_CLASS ='TOTAL'
-			<if test='prcDt != null and prcDt !=""'>
-			AND PRC_DT = REPLACE(#{prcDt},'-','')
+			<if test='textPrcDt != null and textPrcDt !=""'>
+			AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
 			</if>
 		) T GROUP BY T.PRC_DT
     </select>
@@ -1227,10 +1230,10 @@ FROM
 			ETC2_NO_CN   AS ETC2_N,										
 			ETC3_NO_CN   AS ETC3_N,										
 			ETC10_NO_CN  AS ETC10_N										
-		FROM MINERVASOFT.TB_EM_IMR_DAILY_STATICS
+		FROM TB_EM_IMR_DAILY_STATICS
 		WHERE MAJOR_CLASS ='TOTAL'
-		<if test='prcDt != null and prcDt !=""'>
-		AND PRC_DT = REPLACE(#{prcDt},'-','')
+		<if test='textPrcDt != null and textPrcDt !=""'>
+		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
 		</if>
 		ORDER BY PRC_DT  
 	) T GROUP BY T.PRC_DT
@@ -1241,13 +1244,137 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     </select> 
     
     
+    <select id="getdpmImrResViewerInfoTotRowCnt"
+    	parameterType="com.minervasoft.backend.vo.CalibVerifiVo"
+        resultType="com.minervasoft.backend.vo.CalibVerifiVo"
+        >
+        select count(1) from dual
+    </select>
     
     
     
+    <select id="getdpmImrResViewerInfo"
+     parameterType="com.minervasoft.backend.vo.CalibVerifiVo"
+        resultType="com.minervasoft.backend.vo.CalibVerifiVo"
+        >
+		select * from dual
+    </select>
+    
+     
+    <select id="getdpmUserManageInfoTotRowCnt"
+    	parameterType="com.minervasoft.backend.vo.UserManageVo"
+        resultType="com.minervasoft.backend.vo.UserManageVo"
+        >
+        SELECT 
+    		COUNT(*) TOT_ROW_CNT
+    	FROM TB_EM_PC_CHRR
+    	WHERE UYN ='Y'
+    	<if test='chrrId != null and chrrId !=""'>
+    	AND CHRR_ID = #{chrrId}
+    	</if>
+    	<if test='chrrNm != null and chrrNm !=""'>
+    	AND CHRR_NM = #{chrrNm}
+    	</if>
+    	<if test='deptnm != null and deptnm !=""'>
+    	AND DEPTNM = #{deptnm}
+    	</if>
+    </select>
     
     
+    <select id="getdpmUserManageInfo"
+     parameterType="com.minervasoft.backend.vo.UserManageVo"
+        resultType="com.minervasoft.backend.vo.UserManageVo"
+        >
+SELECT *
+FROM
+	(
+  		SELECT TA.*
+     		,ROWNUM RNUM
+  		FROM
+  	(   
+     	SELECT 
+    		ID_NO,
+    		CHRR_ID,
+    		COMPANY_ID,
+    		CHRR_PWD,
+    		CHRR_NM,
+    		DEPTNM,
+    		UYN,
+    		TO_CHAR(RG_DTM,'YYYY/MM/DD') AS RG_DT,
+    		RG_ENO  AS RG_ID,
+    		(SELECT CHRR_NM FROM TB_EM_PC_CHRR WHERE UYN='Y' AND CHRR_ID= A.RG_ENO)   AS RG_NM,
+    		TO_CHAR(RG_DTM,'HH24:MI')  AS RG_TM
+    	FROM TB_EM_PC_CHRR A
+    	WHERE UYN ='Y'
+    	<if test='chrrId != null and chrrId !=""'>
+    	AND A.CHRR_ID = #{chrrId}
+    	</if>
+    	<if test='chrrNm != null and chrrNm !=""'>
+    	AND A.CHRR_NM = #{chrrNm}
+    	</if>
+    	<if test='deptnm != null and deptnm !=""'>
+    	AND A.DEPTNM = #{deptnm}
+    	</if>
+    	ORDER BY RG_DTM
+ ) TA             
+ WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+ )
+WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+    </select>
+    
+    <!-- 사용자 등록 -->
+    <insert id="insertUserInfo"
+        parameterType="com.minervasoft.backend.vo.UserManageVo"
+        >
+      	INSERT INTO TB_EM_PC_CHRR
+		(
+			ID_NO,
+			CHRR_ID, 
+			COMPANY_ID, 
+			CHRR_NM, 
+			DEPTNM, 
+			UYN, 
+			RG_DTM,
+			RG_ENO, 
+			CHRR_PWD
+		)
+		VALUES
+		(
+			TB_EM_PC_CHRR_SEQ.NEXTVAL,
+			#{chrrId}, 
+			#{companyId}, 
+			#{chrrNm},
+			#{deptnm}, 
+			#{uyn}, 
+			SYSDATE, 
+			#{rgId}, 
+			#{chrrPwd}
+		)
+    </insert>
+    
+    <update  id="updateUserInfo"
+        parameterType="com.minervasoft.backend.vo.UserManageVo"
+        >
+    	UPDATE TB_EM_PC_CHRR
+		SET 
+			COMPANY_ID = #{companyId}, 
+			CHRR_NM	   = #{chrrNm}, 
+			DEPTNM     = #{deptnm},
+			CHRR_PWD   = #{chrrPwd}	
+		WHERE ID_NO = #{idNo}
+    
+    </update>
     
     
+     <update  id="dleeteUserInfo"
+        parameterType="com.minervasoft.backend.vo.UserManageVo"
+        >
+    	UPDATE TB_EM_PC_CHRR
+		SET 
+			UYN   = 'N'	
+		WHERE ID_NO = #{idNo}
     
+    </update>
+
        
 </mapper>

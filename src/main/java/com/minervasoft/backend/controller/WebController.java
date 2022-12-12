@@ -3,6 +3,7 @@ package com.minervasoft.backend.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -345,8 +346,6 @@ public class WebController {
     @RequestMapping(value = "/dpm/dpmDailyPro.do")
     public String dpmDailyPro(LoginChrrVO loginInfoVO,ModelMap modelMap) {
         try {   
-    		modelMap.addAttribute("chrrId", loginInfoVO.getChrrId());
-    		modelMap.addAttribute("chrrNm", loginInfoVO.getChrrNm());
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -382,7 +381,47 @@ public class WebController {
             e.printStackTrace();
         }
         
-        return "dpm/dpmDayPro";
+        return "dpm/dpmMonthPro";
+    }
+    
+    /**
+     * dpmImrResViewerInfo IMR 결과 열람자 이력 조회 
+     * Kimsangmin
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/dpm/dpmImrResViewerInfo.do")
+    public String dpmImrResViewerInfo(LoginChrrVO loginInfoVO,ModelMap modelMap,HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+    	try {
+    		modelMap.addAttribute("companyId", loginVO.getCompanyId());
+    		modelMap.addAttribute("chrrNm", loginVO.getChrrNm());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "dpm/dpmImrResViewerInfo";
+    }
+    
+    /**
+     * dpmUserManageInfo 사용자 관리 화면 조회 
+     * Kimsangmin
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/dpm/dpmUserManageInfo.do")
+    public String dpmUserManageInfo(LoginChrrVO loginInfoVO,ModelMap modelMap,HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+    	try {
+    		modelMap.addAttribute("companyId", loginVO.getCompanyId());
+    		modelMap.addAttribute("chrrNm", loginVO.getChrrNm());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "dpm/dpmUserManageInfo";
     }
 
     

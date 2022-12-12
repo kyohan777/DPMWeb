@@ -32,15 +32,14 @@ var modDpmMonthPro = (function(){
 	 */	
 	function init() {
 		//마스터 그리드 초기화 시작
-		modComm.setDatepicker("txtStartDt","imgStartDt");
-		$("#txtStartDt").val(modComm.getGridDateFormat(modComm.addDate(serverDate,-7)));
+		modComm.setMonthpicker("textPrcDt","imgStartDt");
 		//마스터 그리드 초기화 시작
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언
 	        url: '/dpm/getDpmMonthProInfo.do',
 	        mtype: "POST",
 	        datatype: "local",
-	        postData: {},
+	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
 	            { label: 'YYYY/MM',    name: 'prcDt',    	   width: 300,align: 'center'},
@@ -62,21 +61,17 @@ var modDpmMonthPro = (function(){
 	            
 	        ],
 	       
-	        height: "100%",
+	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
 	        rownumbers: false,
 	        rownumWidth : 40,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
-	        //emptyrecords:"조회된 데이터가 없습니다.",
-	        //emptyrecords:"",
-	        //viewrecords : false,
 	        scrollrows: true,
 	        shrinkToFit:false,
 	        forceFit:true,
 	        multiselect: false,
-
 	        
 	        //jqGrid 추가옵션영역
 	        pager: $("#jqGridPager"),

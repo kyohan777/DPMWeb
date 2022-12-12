@@ -1,19 +1,31 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<html>
+<html  lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=10"> 
+     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMBC 전자문서 관리시스템</title>
 </head>
 <body>
- <form id="frmMonthPro" role="form"  method="post"> 
+     <div class="smbc-wrap">
+        <div class="smbc-main-wrap">
+            <div class="smbc-main-box">
+            	<!-- 메뉴바 영역 -->
+                <header class="smbc-header">
+                    <jsp:include page="header.jsp" />
+                </header>
+                <!-- 메뉴바 영역 -->
+                <div class="smbc-content-wrap">
+                   <div class="smbc-main-content-wrap" id= "contentPage">
                         <div class="smbc-top-search-wrap">
+                        <form id="frmMonthPro" role="form"  method="post"> 
                             <ul class="smbc-top-search">
                                 <li>
                                     <label>생성일자</label>
                                     <div class="datepicker-wrap">
-										<input id="txtStartDt" name="startDt" type="text" class="form-control "
+										<input id="textPrcDt" name="textPrcDt" type="text" class="form-control "
 									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
 										maxlength="10"> 
 										<span class="icon-calendar">
@@ -22,8 +34,14 @@
                                     </div>
                                 </li>
                             </ul>
+                       <!-- 엑셀출력을 위한 컬럼정보 -->
+						<input id="gridLabelList" type="hidden" name="gridLabels"> 
+						<input id="gridNameList"  type="hidden" name="gridNames"> 
+						<input id="gridWidthList" type="hidden" name="gridWidths"> 
+						<input id="gridAlignList" type="hidden" name="gridAligns">
+   					</form>
                             <ul class="smbc-top-btn-wrap">
-                                <li class="search-btn"><button>조회</button></li>
+                                <li class="search-btn"><button onclick="modDpmMonthPro.selList();">조회</button></li>
                             </ul>
                         </div>
                         <div class="smbc-data-wrap">
@@ -40,12 +58,12 @@
 							</div>
                             </div>
                         </div>
-                          <!-- 엑셀출력을 위한 컬럼정보 -->
-						<input id="gridLabelList" type="hidden" name="gridLabels"> 
-						<input id="gridNameList"  type="hidden" name="gridNames"> 
-						<input id="gridWidthList" type="hidden" name="gridWidths"> 
-						<input id="gridAlignList" type="hidden" name="gridAligns">
-   </form>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <jsp:include page="/WEB-INF/jsp/include/script.jsp" /> 
     <script type="text/javascript" src="/js/dpm/dpmMonthPro.js"></script>
 </body>
 </html>

@@ -20,25 +20,38 @@
                 <div class="smbc-content-wrap">
                    <div class="smbc-main-content-wrap" id= "contentPage">
                         <div class="smbc-top-search-wrap">
-                        <form id="frmDayPro" role="form"  method="post"> 
+                        <form id="frmImrResViewerInfo" role="form"  method="post"> 
                             <ul class="smbc-top-search">
+                             	<li>
+                                    <input type="text" class="input-st01" id="custId" name="custId" style ="background: #E3FFF0" placeholder="고객번호">
+                                </li>
                                 <li>
-                                    <label>생성일자</label>
                                     <div class="datepicker-wrap">
-										<input id="textPrcDt" name="textPrcDt" type="text" class="form-control "
+										<input id="startPrcDt" name="textPrcDt" type="text" class="form-control "
 									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
-										maxlength="10"> 
+										maxlength="10" placeholder="시작일"> 
 										<span class="icon-calendar">
 										<img id="imgStartDt" img src="../images/icon-calendar.png" alt="달력">
 										</span>
                                     </div>
                                 </li>
+                                 <li>
+                                    <div class="datepicker-wrap">
+										<input id="endtPrcDt" name="textPrcDt" type="text" class="form-control "
+									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
+										maxlength="10" placeholder="종료일"> 
+										<span class="icon-calendar">
+										<img id="imgEndtDt" img src="../images/icon-calendar.png" alt="달력">
+										</span>
+                                    </div>
+                                </li>
+                                
+                                <li>
+                        			<label>접속자 정보</label>
+                        			<input type="text" value="사번 : ${companyId}" disabled style ="color:white">
+                        			<input type="text" value="성명 : ${chrrNm}" disabled style ="color:white"> 
+                    			</li>
                             </ul>
-                       <!-- 엑셀출력을 위한 컬럼정보 -->
-						<input id="gridLabelList" type="hidden" name="gridLabels"> 
-						<input id="gridNameList"  type="hidden" name="gridNames"> 
-						<input id="gridWidthList" type="hidden" name="gridWidths"> 
-						<input id="gridAlignList" type="hidden" name="gridAligns">
    					</form>
                             <ul class="smbc-top-btn-wrap">
                                 <li class="search-btn"><button onclick="modDpmDayPro.selList();">조회</button></li>
@@ -46,10 +59,10 @@
                         </div>
                         <div class="smbc-data-wrap">
                             <div class="smbc-data-title">
-                                <h3>일별 통계</h3>
-                                <ul class="smbc-data-top-menu">
+                                <h3>IMR 결과 열람자 이력 조회</h3>
+                                <!-- <ul class="smbc-data-top-menu">
                                     <li><button>엑섹다운로드</button></li>
-                                </ul>
+                                </ul> -->
                             </div>
                             <div class="smbc-data-con-wrap">
                              <div id="gridContainer">
@@ -64,6 +77,6 @@
         </div>
     </div>
     <jsp:include page="/WEB-INF/jsp/include/script.jsp" />  
-    <script type="text/javascript" src="/js/dpm/dpmDayPro.js"></script>
+    <script type="text/javascript" src="/js/dpm/dpmImrResViewerInfo.js"></script>
 </body>
 </html>

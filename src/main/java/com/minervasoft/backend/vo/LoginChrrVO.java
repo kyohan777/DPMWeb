@@ -5,6 +5,8 @@ public class LoginChrrVO extends AbstractVO {
     private String chrrId = "";
 
     private String chrrNm = "";
+    
+    private String companyId = "";
 
     private String deptnm = "";
 
@@ -50,6 +52,14 @@ public class LoginChrrVO extends AbstractVO {
 
 	public void setUyn(String uyn) {
 		this.uyn = uyn;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 

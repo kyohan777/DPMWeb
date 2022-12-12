@@ -2,13 +2,11 @@ package com.minervasoft.backend.controller;
 
 import java.net.InetAddress;
 import java.net.URLEncoder;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,6 +24,7 @@ import com.minervasoft.backend.service.DpmService;
 import com.minervasoft.backend.vo.AgentAssignVO;
 import com.minervasoft.backend.vo.BizStatsTodayVO;
 import com.minervasoft.backend.vo.BizStatsVO;
+import com.minervasoft.backend.vo.CalibVerifiVo;
 import com.minervasoft.backend.vo.ChrrGroupAuthVO;
 import com.minervasoft.backend.vo.ChrrVO;
 import com.minervasoft.backend.vo.CodeVO;
@@ -38,6 +37,7 @@ import com.minervasoft.backend.vo.MaskingHistoryVO;
 import com.minervasoft.backend.vo.MenuAuthVO;
 import com.minervasoft.backend.vo.MenuVO;
 import com.minervasoft.backend.vo.MonthlyStatsVO;
+import com.minervasoft.backend.vo.ResponseCalibVerifiVo;
 import com.minervasoft.backend.vo.ResponseSelListAgentAssignVO;
 import com.minervasoft.backend.vo.ResponseSelListAuthVO;
 import com.minervasoft.backend.vo.ResponseSelListBizStatsTodayVO;
@@ -56,8 +56,10 @@ import com.minervasoft.backend.vo.ResponseSelListXtromDailyStatsVO;
 import com.minervasoft.backend.vo.ResponseSelOneChrrVO;
 import com.minervasoft.backend.vo.ResponseSelOneLoginChrrVO;
 import com.minervasoft.backend.vo.ResponseStatisticsVo;
+import com.minervasoft.backend.vo.ResponseUserManageVo;
 import com.minervasoft.backend.vo.StatisticsVO;
 import com.minervasoft.backend.vo.StepStatsVO;
+import com.minervasoft.backend.vo.UserManageVo;
 import com.minervasoft.backend.vo.XtromDailyStatsVO;
 
 //import SafeSignOn.SSO;
@@ -1726,5 +1728,171 @@ public class DpmController {
         
         return response;
     }
+    
+    
+    
+    /**
+     *  [IMR] 월별 통계:: 월별 통계 전체 cnt 조회
+     *  2022.12.08 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getdpmImrResViewerInfoTotRowCnt.do")
+    @ResponseBody
+    public ResponseCalibVerifiVo getdpmImrResViewerInfoTotRowCnt(CalibVerifiVo paramVO) {
+    	ResponseCalibVerifiVo response = new ResponseCalibVerifiVo();
+        
+        try {
+        	CalibVerifiVo one = dpmService.getdpmImrResViewerInfoTotRowCnt(paramVO);
+            response.setTotRowCnt(one.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+        }
+        
+        return response;
+    }    
+    
+    /**
+     *  [IMR] 일별 통계:: 일별 통계 현황 조회
+     *  2022.12.08 신규 개발 
+     * @param CalibVerifiVo
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getdpmImrResViewerInfo.do")
+    @ResponseBody
+    public ResponseCalibVerifiVo getdpmImrResViewerInfo(CalibVerifiVo paramVO) {
+    	ResponseCalibVerifiVo response = new ResponseCalibVerifiVo();
+        
+        try {
+            List<CalibVerifiVo> list = dpmService.getdpmImrResViewerInfo(paramVO);
+            response.setSelList(list);
+            response.setPageNumber(paramVO.getPageNumber());
+            response.setTotPageCnt(paramVO.getTotPageCnt());
+            response.setTotRowCnt(paramVO.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+            response.setSelList(new ArrayList<CalibVerifiVo>());
+        }
+        
+        return response;
+    }
+    
+    
+    /**
+     *  사용자 관리  전체 cnt 조회
+     *  2022.12.12 신규 개발 
+     * @param CalibVerifiVo
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getdpmUserManageInfoTotRowCnt.do")
+    @ResponseBody
+    public ResponseUserManageVo getdpmUserManageInfoTotRowCnt(UserManageVo paramVO) {
+    	ResponseUserManageVo response = new ResponseUserManageVo();
+        
+        try {
+        	UserManageVo one = dpmService.getdpmUserManageInfoTotRowCnt(paramVO);
+            response.setTotRowCnt(one.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+        }
+        
+        return response;
+    }    
+    
+    /**
+     *  사용자 관리 조회
+     *  2022.12.12 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getdpmUserManageInfo.do")
+    @ResponseBody
+    public ResponseUserManageVo getdpmUserManageInfo(UserManageVo paramVO) {
+    	ResponseUserManageVo response = new ResponseUserManageVo();
+        
+        try {
+            List<UserManageVo> list = dpmService.getdpmUserManageInfo(paramVO);
+            response.setSelList(list);
+            response.setPageNumber(paramVO.getPageNumber());
+            response.setTotPageCnt(paramVO.getTotPageCnt());
+            response.setTotRowCnt(paramVO.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+            response.setSelList(new ArrayList<UserManageVo>());
+        }
+        
+        return response;
+    }
+    
+    /**
+     * 사용자 정보 등록
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/insertUserInfo.do")
+    @ResponseBody
+    public ResponseUserManageVo insertUserInfo(UserManageVo paramVO,HttpServletRequest request) {
+    	ResponseUserManageVo response = new ResponseUserManageVo();
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+        paramVO.setRgId(loginVO.getChrrId());
+        try {
+        	dpmService.insertUserInfo(paramVO);
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+        }
+        
+        return response;
+    }    
+    
+    /**
+     * 사용자 정보 수정
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/updateUserInfo.do")
+    @ResponseBody
+    public ResponseUserManageVo updateUserInfo(UserManageVo paramVO,HttpServletRequest request) {
+    	ResponseUserManageVo response = new ResponseUserManageVo();
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+        paramVO.setRgId(loginVO.getChrrId());
+        try {
+        	dpmService.updateUserInfo(paramVO);
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+        }
+        
+        return response;
+    }    
+    
+    /**
+     * 사용자 정보 삭제
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/dleeteUserInfo.do")
+    @ResponseBody
+    public ResponseUserManageVo dleeteUserInfo(UserManageVo paramVO,HttpServletRequest request) {
+    	ResponseUserManageVo response = new ResponseUserManageVo();
+        try {
+        	dpmService.dleeteUserInfo(paramVO);
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+        }
+        
+        return response;
+    }    
      
 }

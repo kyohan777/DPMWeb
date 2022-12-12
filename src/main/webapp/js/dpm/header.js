@@ -1,8 +1,9 @@
 //페이지 이동 
 function goPage(data){
 	var frmHeader = $("#frmHeader")[0];
-	
+	console.log(data);
 	switch (data){
+		
 		case 'Daily':
 		frmHeader.action = "/dpm/dpmDailyPro.do";
 		break;
@@ -13,6 +14,14 @@ function goPage(data){
 		
 		case 'Month':
 		frmHeader.action = "/dpm/dpmMonthPro.do";
+		break;
+		
+		case 'IMRReader':
+		frmHeader.action = "/dpm/dpmImrResViewerInfo.do";
+		break;
+		
+		case 'UserManage':
+		frmHeader.action = "/dpm/dpmUserManageInfo.do";
 		break;
 	}
 		

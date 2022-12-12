@@ -67,14 +67,13 @@
 		<li><a href="#">교정/검증</a>
 			<ul>
 				<li><a href="#">교청/검증 처리</a></li>
-				<li><a href="#">IMR 결과 조회</a></li>
-				<li><a href="#">열람자 이력 조회</a></li>
+				<li><a href="#" onclick="goPage('IMRReader');">열람자 이력 조회</a></li>
+				<li><a href="#" >IMR 결과 조회</a></li>
 			</ul>
 		</li>
 		<li><a href="#">관리</a>
 			<ul>
-				<li><a href="#">사용자 등록</a></li>
-				<li><a href="#">사용자 변경/삭제</a></li>
+				<li><a href="#"  onclick ="goPage('UserManage');">사용자 관리</a></li>
 			</ul>
 		</li>
 		<li><a href="#">기타</a>

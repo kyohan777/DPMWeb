@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.minervasoft.backend.vo.AgentAssignVO;
 import com.minervasoft.backend.vo.BizStatsTodayVO;
 import com.minervasoft.backend.vo.BizStatsVO;
+import com.minervasoft.backend.vo.CalibVerifiVo;
 import com.minervasoft.backend.vo.ChrrGroupAuthVO;
 import com.minervasoft.backend.vo.ChrrVO;
 import com.minervasoft.backend.vo.CodeVO;
@@ -20,6 +21,7 @@ import com.minervasoft.backend.vo.MenuVO;
 import com.minervasoft.backend.vo.MonthlyStatsVO;
 import com.minervasoft.backend.vo.StatisticsVO;
 import com.minervasoft.backend.vo.StepStatsVO;
+import com.minervasoft.backend.vo.UserManageVo;
 import com.minervasoft.backend.vo.XtromDailyStatsVO;
 
 
@@ -248,6 +250,34 @@ public class DpmDAO extends AbstractDpmDAO {
     //월별 통계 전체 cnt 조회
     public StatisticsVO getDpmMonthProInfoTotRowCnt(StatisticsVO paramVO) throws Exception {
         return (StatisticsVO) selectOne("getDpmMonthProInfoTotRowCnt",paramVO);
+    }    
+    //IMR 결과 열람자 이력 조회
+    public List<CalibVerifiVo> getdpmImrResViewerInfo(CalibVerifiVo paramVO) throws Exception {
+        return (List<CalibVerifiVo>) selectList("getdpmImrResViewerInfo",paramVO);
+    }
+    //IMR 결과 열람자 이력 조회 전체 cnt 조회
+    public CalibVerifiVo getdpmImrResViewerInfoTotRowCnt(CalibVerifiVo paramVO) throws Exception {
+        return (CalibVerifiVo) selectOne("getdpmImrResViewerInfoTotRowCnt",paramVO);
+    }    
+    //사용자 관리 조회
+    public List<UserManageVo> getdpmUserManageInfo(UserManageVo paramVO) throws Exception {
+        return (List<UserManageVo>) selectList("getdpmUserManageInfo",paramVO);
+    }
+    //사용자 관리  조회 전체 cnt 조회
+    public UserManageVo getdpmUserManageInfoTotRowCnt(UserManageVo paramVO) throws Exception {
+        return (UserManageVo) selectOne("getdpmUserManageInfoTotRowCnt",paramVO);
+    }    
+    //사용자 등록
+    public int insertUserInfo(UserManageVo paramVO) throws Exception {
+        return (int) update("insertUserInfo",paramVO);
+    }    
+    //사용자 정보 수정
+    public int updateUserInfo(UserManageVo paramVO) throws Exception {
+        return (int) update("updateUserInfo",paramVO);
+    }    
+  //사용자 정보 수정
+    public int dleeteUserInfo(UserManageVo paramVO) throws Exception {
+        return (int) update("dleeteUserInfo",paramVO);
     }    
     
     
