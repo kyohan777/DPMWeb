@@ -42,23 +42,38 @@ var modDpmMonthPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: 'YYYY/MM',    name: 'prcDt',    	   width: 300,align: 'center'},
-	            { label: '대상(A)', 	   name: 'prcDtCnt', 	   width: 100,align: 'center'},
-	            { label: '정상', 		   name: 'prcCn',    	   width: 100, align: 'center'},
-	            { label: '오류', 		   name: 'errCn',    	   width: 100, align: 'center'},
-	            { label: '오류율', 	   name: 'errRat',   	   width: 100, align: 'center'},
-	            { label: '처리율', 	   name: 'prcRat',         width: 100, align: 'center'},	  
-	            { label: '수정', 		   name: 'verifyUpdateCn', width: 100, align: 'center'},
-	            { label: '유지', 		   name: 'maintainCn',     width: 100, align: 'center'},
-	            { label: '동의', 	  	   name: 'etc1Y', 		   width: 100, align: 'center'},
-	            { label: '미동의', 	   name: 'etc1N', 		   width: 100, align: 'center'},
-	            { label: '동의', 		   name: 'etc2Y', 		   width: 100, align: 'center'},
-	            { label: '미동의', 	   name: 'etc2N',          width: 100, align: 'center'},
-	            { label: '동의', 	  	   name: 'etc3Y', 		   width: 100, align: 'center'},
-	            { label: '미동의', 	   name: 'etc3N', 		   width: 100, align: 'center'},
-	            { label: '동의', 		   name: 'etc10Y', 		   width: 100, align: 'center'},
-	            { label: '미동의', 	   name: 'etc10N', 		   width: 100, align: 'center'}
-	            
+	            { label: 'YYYY/MM/DD', name: 'prcDt',    	   width: 200,align: 'center'},
+	            { label: '대상', 	       name: 'prcDtCnt', 	   width: 100,align: 'center'},
+	            { label: '정상', 		   name: 'prcCn',    	   width: 80, align: 'center'},
+	            { label: '오류', 		   name: 'errCn',    	   width: 80, align: 'center'},
+	            { label: '오류율', 	   name: 'errRat',   	   width: 80, align: 'center'},
+	            { label: '처리율', 	   name: 'prcRat',         width: 80, align: 'center'},	  
+	            { label: '수정', 		   name: 'verifyUpdateCn', width: 80, align: 'center'},
+	            { label: '유지', 		   name: 'maintainCn',     width: 80, align: 'center'},
+	            { label: '동의', 	  	   name: 'aY', 		   	   width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'aN', 		  	   width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'bY', 		   	   width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'bN',         	   width: 80, align: 'center'},
+	            { label: '동의', 	  	   name: 'cY', 		   	   width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'cN', 		   	   width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'dY', 		       width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'dN', 		       width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'eY', 		       width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'eN', 		       width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'tmRecvAgrY', 	   width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'tmRecvAgrN', 	   width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'smsRecvAgrY',    width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'smsRecvAgrN',    width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'dmRecvAgrY', 	   width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'dmRecvAgrN', 	   width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'emailRecvAgrY',  width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'emailRecvAgrN',  width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'tmOfferAgrY',    width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'tmOfferAgrN',    width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'dmOfferAgrY',    width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'dmOfferAgrN',    width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'emailOfferAgrY', width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'emailOfferAgrN', width: 80, align: 'center'}
 	        ],
 	       
 	        height: gridHeight,
@@ -148,10 +163,18 @@ var modDpmMonthPro = (function(){
   			groupHeaders:[
  				{startColumnName: 'prcCn',  		numberOfColumns: 3, titleText: '<center>처리 현황</center>'},
  				{startColumnName: 'verifyUpdateCn', numberOfColumns: 2, titleText: '<center>검증 건수</center>'},
- 				{startColumnName: 'etc1Y',		    numberOfColumns: 2, titleText: '<center>ETC1</center>'},
- 				{startColumnName: 'etc2Y',		    numberOfColumns: 2, titleText: '<center>ETC2</center>'},
- 				{startColumnName: 'etc3Y',		    numberOfColumns: 2, titleText: '<center>ETC3</center>'},
- 				{startColumnName: 'etc10Y',		    numberOfColumns: 2, titleText: '<center>ETC10</center>'}
+ 				{startColumnName: 'aY',		    	numberOfColumns: 2, titleText: '<center>금융안내</center>'},
+ 				{startColumnName: 'bY',		    	numberOfColumns: 2, titleText: '<center>금융이외</center>'},
+ 				{startColumnName: 'cY',		    	numberOfColumns: 2, titleText: '<center>보험제공</center>'},
+ 				{startColumnName: 'dY',		    	numberOfColumns: 2, titleText: '<center>딜러제공</center>'},
+ 				{startColumnName: 'eY',		    	numberOfColumns: 2, titleText: '<center>KB제공</center>'},
+ 				{startColumnName: 'tmRecvAgrY',		numberOfColumns: 2, titleText: '<center>수집-전화</center>'},
+ 				{startColumnName: 'smsRecvAgrY',	numberOfColumns: 2, titleText: '<center>수집-문자</center>'},
+ 				{startColumnName: 'dmRecvAgrY',		numberOfColumns: 2, titleText: '<center>수집-DM</center>'},
+ 				{startColumnName: 'emailRecvAgrY',	numberOfColumns: 2, titleText: '<center>수집-메일</center>'},
+ 				{startColumnName: 'tmOfferAgrY',	numberOfColumns: 2, titleText: '<center>제공-전화</center>'},
+ 				{startColumnName: 'dmOfferAgrY',	numberOfColumns: 2, titleText: '<center>제공-DM</center>'},
+ 				{startColumnName: 'emailOfferAgrY',	numberOfColumns: 2, titleText: '<center>제공-메일</center>'}
   			] 
   			
 		});
@@ -233,15 +256,11 @@ var modDpmMonthPro = (function(){
     			
 	};	
 	
-
-	
 	
     /**
 	 * 엑셀출력
 	 */ 	
 	function excelWrite() {		
-		//조회조건 확인
-		if(!getValidation()) return;	
 		
 		//조회조건
 		var objParam = {};
@@ -260,7 +279,7 @@ var modDpmMonthPro = (function(){
 			return;
 		} else {			
 			var frmLogin = $("#frmMonthPro")[0];
-			frmLogin.action = "/dpm/selListImageVerifyExcel.do";
+			frmLogin.action = "/dpm/selListDpmMonthProExcel.do";
 			frmLogin.method = "post";
 			frmLogin.submit();			
 		}		
@@ -280,7 +299,6 @@ var modDpmMonthPro = (function(){
  * 엑셀버튼 클릭
  */
 $("#btnExcel").on("click", function() {
-	//console.log("엑셀버튼 클릭");
 	modDpmMonthPro.excelWrite();
 });
 

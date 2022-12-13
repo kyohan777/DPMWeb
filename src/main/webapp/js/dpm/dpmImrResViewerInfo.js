@@ -31,7 +31,7 @@ var modDpmImrResViewerInfo = (function(){
 	 */	
 	function init() {
 		modComm.setDatepicker("startPrcDt","imgStartDt");
-		modComm.setDatepicker("endtPrcDt","imgEndtDt");
+		modComm.setDatepicker("endPrcDt","imgEndtDt");
 		//마스터 그리드 초기화 시작
 		//$("#txtStartDt").val(modComm.getGridDateFormat(serverDate));
 		$("#jqGrid").jqGrid({
@@ -42,15 +42,15 @@ var modDpmImrResViewerInfo = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '연번',    	   name: 'idNo',    	     align: 'center'},
-	            { label: '열람자 ID',    name: 'prcDt',    	     align: 'center'},
-	            { label: '성명', 	       name: 'prcDtCnt', 	     align: 'center'},
-	            { label: '소속', 		   name: 'prcCn',    	     align: 'center'},
-	            { label: 'ELEMENT ID', name: 'errCn',    	     align: 'center'},
-	            { label: '조회 일자', 	   name: 'errRat',   	     align: 'center'},
-	            { label: '고객번호', 	   name: 'prcRat',           align: 'center'},	  
-	            { label: '조회 사유', 	   name: 'verifyUpdateCn',   align: 'center'},
-	            { label: '조회시간', 	   name: 'maintainCn',       align: 'center'}
+	            { label: '연번',    	   name: 'idNo',    	align: 'center'},
+	            { label: '열람자 ID',    name: 'chrrId',    	align: 'center'},
+	            { label: '성명', 	       name: 'chrrNm', 	    align: 'center'},
+	            { label: '소속', 		   name: 'deptnm',    	align: 'center'},
+	            { label: '고유 ID', 	   name: 'elementId',   align: 'center', width :400},
+	            { label: '조회 일자', 	   name: 'prcDt',   	align: 'center'},
+	            { label: '고객번호', 	   name: 'custId',      align: 'center'},	  
+	            { label: '조회 사유', 	   name: 'queryReason', align: 'center', width :400},
+	            { label: '조회시간', 	   name: 'prcTm',       align: 'center'}
 	        ],
 	       
 	        height: gridHeight,
@@ -217,9 +217,6 @@ var modDpmImrResViewerInfo = (function(){
 	 * 엑셀출력
 	 */ 	
 	function excelWrite() {		
-		//조회조건 확인
-		if(!getValidation()) return;	
-		
 		//조회조건
 		var objParam = {};
 		var arrForm = $("#frmImrResViewerInfo").serializeArray();
@@ -237,7 +234,7 @@ var modDpmImrResViewerInfo = (function(){
 			return;
 		} else {			
 			var frmLogin = $("#frmImrResViewerInfo")[0];
-			frmLogin.action = "/dpm/selListImageVerifyExcel.do";
+			frmLogin.action = "/dpm/selListDpmImrResViewerInfoExcel.do";
 			frmLogin.method = "post";
 			frmLogin.submit();			
 		}		
@@ -262,7 +259,6 @@ $("#searchBtn").on("click", function() {
  * 엑셀버튼 클릭
  */
 $("#btnExcel").on("click", function() {
-	//console.log("엑셀버튼 클릭");
 	modDpmImrResViewerInfo.excelWrite();
 });
 
@@ -271,7 +267,5 @@ $("#btnExcel").on("click", function() {
  */
 $(document).ready(function() {
 	modDpmImrResViewerInfo.init();
-	//modDpmImrResViewerInfo.selList();
+	modDpmImrResViewerInfo.selList();
 });
-
-//# sourceURL=dpm1010.js

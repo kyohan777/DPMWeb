@@ -38,6 +38,11 @@
                         			<input type="text" value="성명 : ${chrrNm}" disabled style ="color:white"> 
                     			</li>
                             </ul>
+                            <!-- 엑셀출력을 위한 컬럼정보 -->
+							<input id="gridLabelList" type="hidden" name="gridLabels"> 
+							<input id="gridNameList"  type="hidden" name="gridNames"> 
+							<input id="gridWidthList" type="hidden" name="gridWidths"> 
+							<input id="gridAlignList" type="hidden" name="gridAligns">
    						</form>
                             <ul class="smbc-top-btn-wrap">
                                 <li class="search-btn"><button onclick="modDpmUserManageInfo.selList();">조회</button></li>
@@ -48,7 +53,7 @@
                                 <h3>사용자 관리</h3>
                                  <ul class="smbc-data-top-menu">
                                  	<li><button onclick="newUser();">신규등록</button></li>
-                                    <li><button>엑섹다운로드</button></li>
+                                    <li><button id="btnExcel">엑섹다운로드</button></li>
                                 </ul>
                             </div>
                             <div class="smbc-data-con-wrap">

@@ -223,9 +223,6 @@ var modDpmUserManageInfo = (function(){
 	 * 엑셀출력
 	 */ 	
 	function excelWrite() {		
-		//조회조건 확인
-		if(!getValidation()) return;	
-		
 		//조회조건
 		var objParam = {};
 		var arrForm = $("#frmUserManageInfo").serializeArray();
@@ -243,7 +240,7 @@ var modDpmUserManageInfo = (function(){
 			return;
 		} else {			
 			var frmLogin = $("#frmUserManageInfo")[0];
-			frmLogin.action = "/dpm/selListImageVerifyExcel.do";
+			frmLogin.action = "/dpm/selListUserInfoExcel.do";
 			frmLogin.method = "post";
 			frmLogin.submit();			
 		}		
@@ -269,7 +266,6 @@ $("#searchBtn").on("click", function() {
  * 엑셀버튼 클릭
  */
 $("#btnExcel").on("click", function() {
-	//console.log("엑셀버튼 클릭");
 	modDpmUserManageInfo.excelWrite();
 });
 	

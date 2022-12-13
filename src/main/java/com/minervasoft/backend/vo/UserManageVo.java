@@ -13,6 +13,12 @@ public class UserManageVo  extends AbstractVO{
 	private String rgTm;			//등록일시
 	private String rgId;			//등록자 id
 	private String rgNm;			//등록자명
+	private String  gridLabels = "";
+	private String  gridNames = "";
+	private String  gridWidths = "";
+	private String  gridAligns = "";
+	private String  excelDownYn = "";
+	private Integer cgnRzt = 0;
 	private Integer pageNumber = 0;
 	private Integer totPageCnt = 0;
 	private Integer totRowCnt  = 0;
@@ -112,6 +118,42 @@ public class UserManageVo  extends AbstractVO{
 	}
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
+	}
+	public String getGridLabels() {
+		return gridLabels;
+	}
+	public void setGridLabels(String gridLabels) {
+		this.gridLabels = gridLabels;
+	}
+	public String getGridNames() {
+		return gridNames;
+	}
+	public void setGridNames(String gridNames) {
+		this.gridNames = gridNames;
+	}
+	public String getGridWidths() {
+		return gridWidths;
+	}
+	public void setGridWidths(String gridWidths) {
+		this.gridWidths = gridWidths;
+	}
+	public String getGridAligns() {
+		return gridAligns;
+	}
+	public void setGridAligns(String gridAligns) {
+		this.gridAligns = gridAligns;
+	}
+	public String getExcelDownYn() {
+		return excelDownYn;
+	}
+	public void setExcelDownYn(String excelDownYn) {
+		this.excelDownYn = excelDownYn;
+	}
+	public Integer getCgnRzt() {
+		return cgnRzt;
+	}
+	public void setCgnRzt(Integer cgnRzt) {
+		this.cgnRzt = cgnRzt;
 	}
 
 }

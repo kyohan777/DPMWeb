@@ -29,32 +29,60 @@
     <title>지문정보 마스킹처리 공정관리 시스템</title>
 </head>
 <body>
-    <form id="frmMain" role="form"  method="post">
-    <div class="system clearfix search-container">
-        <div class="">
-           <jsp:include page="header.jsp" />
-            <div id="contentPage"">
-                <!-- content페이지 start-->
-				<div class="info-container" >
-					<div class="data-container" >
-						<div class="leftframe_02" style="width: 100%; height: 100%; min-height: 580px">
-						<div class="data-container"  style="width: 100%; height: 100%;">
-                     		<div id="gridContainer">
+    <div class="smbc-wrap">
+        <div class="smbc-main-wrap">
+            <div class="smbc-main-box">
+            	<!-- 메뉴바 영역 -->
+                <header class="smbc-header">
+                    <jsp:include page="header.jsp" />
+                </header>
+                <!-- 메뉴바 영역 -->
+                <div class="smbc-content-wrap">
+                   <div class="smbc-main-content-wrap" id= "contentPage">
+                        <div class="smbc-top-search-wrap">
+                        <form id="frmDailyPro" role="form"  method="post"> 
+                            <ul class="smbc-top-search">
+                             	 <li>
+                                    <label>생성일자</label>
+                                    <div class="datepicker-wrap">
+										<input id="textPrcDt" name="textPrcDt" type="text" class="form-control "
+									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
+										maxlength="10"> 
+										<span class="icon-calendar">
+										<img id="imgStartDt" img src="../images/icon-calendar.png" alt="달력">
+										</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- 엑셀출력을 위한 컬럼정보 -->
+							<input id="gridLabelList" type="hidden" name="gridLabels"> 
+							<input id="gridNameList"  type="hidden" name="gridNames"> 
+							<input id="gridWidthList" type="hidden" name="gridWidths"> 
+							<input id="gridAlignList" type="hidden" name="gridAligns">
+   						</form>
+                            <ul class="smbc-top-btn-wrap">
+                                <li class="search-btn"><button onclick="modDpmUserManageInfo.selList();">조회</button></li>
+                            </ul>
+                        </div>
+                        <div class="smbc-data-wrap">
+                            <div class="smbc-data-title">
+                                <h3>[IMR] 일일 처리 현황</h3>
+                                 <ul class="smbc-data-top-menu">
+                                    <li><button id="btnExcel">엑섹다운로드</button></li>
+                                </ul>
+                            </div>
+                            <div class="smbc-data-con-wrap">
+                             <div id="gridContainer">
 								<table id="jqGrid"></table>
 								<div id="jqGridPager"></div>
 							</div>
-						</div>
+                            </div>
+                        </div>
 					</div>
-				</div>
-			</div>
-			<!-- content페이지 end-->
-
+                </div>
             </div>
-            <!-- content페이지 end-->      
         </div>
     </div>
-    
-    </form>    
     <jsp:include page="/WEB-INF/jsp/include/script.jsp" />    
     <script type="text/javascript" src="/js/dpm/dpmDailyPro.js"></script>
    

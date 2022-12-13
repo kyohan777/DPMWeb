@@ -6,18 +6,40 @@ public class StatisticsVO extends AbstractVO{
 	private Integer prcDtCnt;
 	private Integer prcCn;
 	private Integer errCn;
-	private String   errRat;
-	private String   prcRat;
+	private String  errRat;
+	private String  prcRat;
 	private Integer verifyUpdateCn;
 	private Integer maintainCn;
-	private Integer etc1Y;
-	private Integer etc2Y;
-	private Integer etc3Y;
-	private Integer etc10Y;
-	private Integer etc1N;
-	private Integer etc2N;
-	private Integer etc3N;
-	private Integer etc10N;
+	private Integer aY;
+	private Integer aN;
+	private Integer bY;
+	private Integer bN;
+	private Integer cY;
+	private Integer cN;
+	private Integer dY;
+	private Integer dN;
+	private Integer eY;
+	private Integer eN;
+	private Integer tmRecvAgrY;
+	private Integer tmRecvAgrN;
+	private Integer smsRecvAgrY;
+	private Integer smsRecvAgrN;
+	private Integer dmRecvAgrY;
+	private Integer dmRecvAgrN;
+	private Integer emailRecvAgrY;
+	private Integer emailRecvAgrN;
+	private Integer tmOfferAgrY;
+	private Integer tmOfferAgrN;
+	private Integer dmOfferAgrY;
+	private Integer dmOfferAgrN;
+	private Integer emailOfferAgrY;
+	private Integer emailOfferAgrN;
+	private String  gridLabels = "";
+	private String  gridNames = "";
+	private String  gridWidths = "";
+	private String  gridAligns = "";
+	private String  excelDownYn = "";
+	private Integer cgnRzt = 0;
 	private Integer pageNumber = 0;
 	private Integer totPageCnt = 0;
 	private Integer totRowCnt  = 0;
@@ -60,54 +82,6 @@ public class StatisticsVO extends AbstractVO{
 	public void setMaintainCn(Integer maintainCn) {
 		this.maintainCn = maintainCn;
 	}
-	public Integer getEtc1Y() {
-		return etc1Y;
-	}
-	public void setEtc1Y(Integer etc1y) {
-		etc1Y = etc1y;
-	}
-	public Integer getEtc2Y() {
-		return etc2Y;
-	}
-	public void setEtc2Y(Integer etc2y) {
-		etc2Y = etc2y;
-	}
-	public Integer getEtc3Y() {
-		return etc3Y;
-	}
-	public void setEtc3Y(Integer etc3y) {
-		etc3Y = etc3y;
-	}
-	public Integer getEtc10Y() {
-		return etc10Y;
-	}
-	public void setEtc10Y(Integer etc10y) {
-		etc10Y = etc10y;
-	}
-	public Integer getEtc1N() {
-		return etc1N;
-	}
-	public void setEtc1N(Integer etc1n) {
-		etc1N = etc1n;
-	}
-	public Integer getEtc2N() {
-		return etc2N;
-	}
-	public void setEtc2N(Integer etc2n) {
-		etc2N = etc2n;
-	}
-	public Integer getEtc3N() {
-		return etc3N;
-	}
-	public void setEtc3N(Integer etc3n) {
-		etc3N = etc3n;
-	}
-	public Integer getEtc10N() {
-		return etc10N;
-	}
-	public void setEtc10N(Integer etc10n) {
-		etc10N = etc10n;
-	}
 	public Integer getPageNumber() {
 		return pageNumber;
 	}
@@ -149,6 +123,186 @@ public class StatisticsVO extends AbstractVO{
 	}
 	public void setTextPrcDt(String textPrcDt) {
 		this.textPrcDt = textPrcDt;
+	}
+	public String getGridLabels() {
+		return gridLabels;
+	}
+	public void setGridLabels(String gridLabels) {
+		this.gridLabels = gridLabels;
+	}
+	public String getGridNames() {
+		return gridNames;
+	}
+	public void setGridNames(String gridNames) {
+		this.gridNames = gridNames;
+	}
+	public String getGridWidths() {
+		return gridWidths;
+	}
+	public void setGridWidths(String gridWidths) {
+		this.gridWidths = gridWidths;
+	}
+	public String getGridAligns() {
+		return gridAligns;
+	}
+	public void setGridAligns(String gridAligns) {
+		this.gridAligns = gridAligns;
+	}
+	public String getExcelDownYn() {
+		return excelDownYn;
+	}
+	public void setExcelDownYn(String excelDownYn) {
+		this.excelDownYn = excelDownYn;
+	}
+	public Integer getCgnRzt() {
+		return cgnRzt;
+	}
+	public void setCgnRzt(Integer cgnRzt) {
+		this.cgnRzt = cgnRzt;
+	}
+	public Integer getaY() {
+		return aY;
+	}
+	public void setaY(Integer aY) {
+		this.aY = aY;
+	}
+	public Integer getaN() {
+		return aN;
+	}
+	public void setaN(Integer aN) {
+		this.aN = aN;
+	}
+	public Integer getbY() {
+		return bY;
+	}
+	public void setbY(Integer bY) {
+		this.bY = bY;
+	}
+	public Integer getbN() {
+		return bN;
+	}
+	public void setbN(Integer bN) {
+		this.bN = bN;
+	}
+	public Integer getcY() {
+		return cY;
+	}
+	public void setcY(Integer cY) {
+		this.cY = cY;
+	}
+	public Integer getcN() {
+		return cN;
+	}
+	public void setcN(Integer cN) {
+		this.cN = cN;
+	}
+	public Integer getdY() {
+		return dY;
+	}
+	public void setdY(Integer dY) {
+		this.dY = dY;
+	}
+	public Integer getdN() {
+		return dN;
+	}
+	public void setdN(Integer dN) {
+		this.dN = dN;
+	}
+	public Integer geteY() {
+		return eY;
+	}
+	public void seteY(Integer eY) {
+		this.eY = eY;
+	}
+	public Integer geteN() {
+		return eN;
+	}
+	public void seteN(Integer eN) {
+		this.eN = eN;
+	}
+	public Integer getTmRecvAgrY() {
+		return tmRecvAgrY;
+	}
+	public void setTmRecvAgrY(Integer tmRecvAgrY) {
+		this.tmRecvAgrY = tmRecvAgrY;
+	}
+	public Integer getTmRecvAgrN() {
+		return tmRecvAgrN;
+	}
+	public void setTmRecvAgrN(Integer tmRecvAgrN) {
+		this.tmRecvAgrN = tmRecvAgrN;
+	}
+	public Integer getSmsRecvAgrY() {
+		return smsRecvAgrY;
+	}
+	public void setSmsRecvAgrY(Integer smsRecvAgrY) {
+		this.smsRecvAgrY = smsRecvAgrY;
+	}
+	public Integer getSmsRecvAgrN() {
+		return smsRecvAgrN;
+	}
+	public void setSmsRecvAgrN(Integer smsRecvAgrN) {
+		this.smsRecvAgrN = smsRecvAgrN;
+	}
+	public Integer getDmRecvAgrY() {
+		return dmRecvAgrY;
+	}
+	public void setDmRecvAgrY(Integer dmRecvAgrY) {
+		this.dmRecvAgrY = dmRecvAgrY;
+	}
+	public Integer getDmRecvAgrN() {
+		return dmRecvAgrN;
+	}
+	public void setDmRecvAgrN(Integer dmRecvAgrN) {
+		this.dmRecvAgrN = dmRecvAgrN;
+	}
+	public Integer getEmailRecvAgrY() {
+		return emailRecvAgrY;
+	}
+	public void setEmailRecvAgrY(Integer emailRecvAgrY) {
+		this.emailRecvAgrY = emailRecvAgrY;
+	}
+	public Integer getEmailRecvAgrN() {
+		return emailRecvAgrN;
+	}
+	public void setEmailRecvAgrN(Integer emailRecvAgrN) {
+		this.emailRecvAgrN = emailRecvAgrN;
+	}
+	public Integer getTmOfferAgrY() {
+		return tmOfferAgrY;
+	}
+	public void setTmOfferAgrY(Integer tmOfferAgrY) {
+		this.tmOfferAgrY = tmOfferAgrY;
+	}
+	public Integer getTmOfferAgrN() {
+		return tmOfferAgrN;
+	}
+	public void setTmOfferAgrN(Integer tmOfferAgrN) {
+		this.tmOfferAgrN = tmOfferAgrN;
+	}
+	public Integer getDmOfferAgrY() {
+		return dmOfferAgrY;
+	}
+	public void setDmOfferAgrY(Integer dmOfferAgrY) {
+		this.dmOfferAgrY = dmOfferAgrY;
+	}
+	public Integer getDmOfferAgrN() {
+		return dmOfferAgrN;
+	}
+	public void setDmOfferAgrN(Integer dmOfferAgrN) {
+		this.dmOfferAgrN = dmOfferAgrN;
+	}
+	public Integer getEmailOfferAgrY() {
+		return emailOfferAgrY;
+	}
+	public void setEmailOfferAgrY(Integer emailOfferAgrY) {
+		this.emailOfferAgrY = emailOfferAgrY;
+	}
+	public Integer getEmailOfferAgrN() {
+		return emailOfferAgrN;
+	}
+	public void setEmailOfferAgrN(Integer emailOfferAgrN) {
+		this.emailOfferAgrN = emailOfferAgrN;
 	}
 	
 	

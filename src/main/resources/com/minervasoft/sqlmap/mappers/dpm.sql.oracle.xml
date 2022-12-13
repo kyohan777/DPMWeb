@@ -1126,21 +1126,37 @@
   	(   
       SELECT 
 		TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY/MM/DD') AS PRC_DT, --기준일자(처리일자)
-		PRC_DT_CNT,							 						--대상
+		PRC_DT_CNT,							 						--대상건수
 		PRC_CN-ERR_CN AS PRC_CN,									--처리현황 > 정상
 		ERR_CN,														--처리현황 > 오류
-		CONCAT((ERR_CN/PRC_DT_CNT)*100,'%')		AS  ERR_RAT,		--오류율
-		CONCAT((PRC_CN/PRC_DT_CNT)*100,'%') 	AS  PRC_RAT,    	--처리율
+		CONCAT((ERR_CN/PRC_CN)*100,'%')		AS  ERR_RAT,			--오류율
+		CONCAT((PRC_CN/PRC_DT_CNT)*100,'%') AS  PRC_RAT,    		--처리율
 		VERIFY_UPDATE_CN, 											--검증건수 > 수정
-		PRC_CN-VERIFY_UPDATE_CN AS MAINTAIN_CN, 					--검증건수 > 유지
-		ETC1_YES_CN  AS ETC1_Y,									--ETC1 > 동의
-		ETC2_YES_CN  AS ETC2_Y,									--ETC2 > 동의
-		ETC3_YES_CN  AS ETC3_Y,									--ETC3 > 동의
-		ETC10_YES_CN AS ETC10_Y,									--ETC10> 동의
-		ETC1_NO_CN   AS ETC1_N,										--ETC1 > 미동의
-		ETC2_NO_CN   AS ETC2_N,										--ETC2 > 미동의
-		ETC3_NO_CN   AS ETC3_N,										--ETC3 > 미동의
-		ETC10_NO_CN  AS ETC10_N										--ETC10> 미동의
+		VERIFY_CN -VERIFY_UPDATE_CN AS MAINTAIN_CN, 				--검증건수 > 유지
+		A 			 				  AS A_Y,
+		PRC_DT_CNT-A 				  AS A_N,
+		B 			 				  AS B_Y,
+		PRC_DT_CNT-B 				  AS B_N,
+		C 			 				  AS C_Y,
+		PRC_DT_CNT-C 				  AS C_N,
+		D 			 				  AS D_Y,
+		PRC_DT_CNT-D 				  AS D_N,
+		E 			 				  AS E_Y,
+		PRC_DT_CNT-E 				  AS E_N,
+		TM_RECV_AGR_YN 			      AS TM_RECV_AGR_Y,
+		PRC_DT_CNT-TM_RECV_AGR_YN     AS TM_RECV_AGR_N,
+		SMS_RECV_AGR_YN 		      AS SMS_RECV_AGR_Y,
+		PRC_DT_CNT-SMS_RECV_AGR_YN    AS SMS_RECV_AGR_N,
+		DM_RECV_AGR_YN 			  	  AS DM_RECV_AGR_Y,
+		PRC_DT_CNT-DM_RECV_AGR_YN 	  AS DM_RECV_AGR_N,
+		EMAIL_RECV_AGR_YN 			  AS EMAIL_RECV_AGR_Y,
+		PRC_DT_CNT-EMAIL_RECV_AGR_YN  AS EMAIL_RECV_AGR_N,
+		TM_OFFER_AGR_YN 			  AS TM_OFFER_AGR_Y,
+		PRC_DT_CNT-TM_OFFER_AGR_YN    AS TM_OFFER_AGR_N,
+		DM_OFFER_AGR_YN 			  AS DM_OFFER_AGR_Y,
+		PRC_DT_CNT-DM_OFFER_AGR_YN 	  AS DM_OFFER_AGR_N,
+		EMAIL_OFFER_AGR_YN 			  AS EMAIL_OFFER_AGR_Y,
+		PRC_DT_CNT-EMAIL_OFFER_AGR_YN AS EMAIL_OFFER_AGR_N
 	FROM TB_EM_IMR_DAILY_STATICS
 	WHERE MAJOR_CLASS ='TOTAL'
 	<if test='textPrcDt != null and textPrcDt !=""'>
@@ -1203,18 +1219,34 @@ FROM
 			SUM(T.PRC_DT_CNT) 						 				   AS PRC_DT_CNT,
 			SUM(T.PRC_CN) 							 				   AS PRC_CN,
 			SUM(T.ERR_CN) 							 				   AS ERR_CN,
-			CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_DT_CNT))*100,1),'%') AS ERR_RAT,						--오류율
-			CONCAT(ROUND((SUM(T.PRC_CN)/SUM(T.PRC_DT_CNT))*100,1),'%') AS PRC_RAT,    					--처리율
+			CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_CN))*100,1),'%')     AS ERR_RAT,						
+			CONCAT(ROUND((SUM(T.PRC_CN)/SUM(T.PRC_DT_CNT))*100,1),'%') AS PRC_RAT,    					
 			SUM(T.VERIFY_UPDATE_CN) 				 				   AS VERIFY_UPDATE_CN,
 			SUM(T. MAINTAIN_CN) 					 				   AS MAINTAIN_CN,
-			SUM(T.ETC1_Y) 							 				   AS ETC1_Y,
-			SUM(T.ETC2_Y) 							 				   AS ETC2_Y,
-			SUM(T.ETC3_Y) 							 				   AS ETC3_Y,
-			SUM(T.ETC10_Y)							 	  	 	 	   AS ETC10_Y,
-			SUM(T.ETC1_N) 							 			       AS ETC1_N,
-			SUM(T.ETC2_N) 							 				   AS ETC2_N,
-			SUM(T.ETC3_N) 							 				   AS ETC3_N,
-			SUM(T.ETC10_N)							 			       AS ETC10_N
+			SUM(T.A_Y) 							 				   	   AS A_Y,
+			SUM(T.A_N) 							 				       AS A_N,
+			SUM(T.B_Y) 							 				       AS B_Y,
+			SUM(T.B_N) 							 				       AS B_N,
+			SUM(T.C_Y) 							 				       AS C_Y,
+			SUM(T.C_N) 							 				       AS C_N,
+			SUM(T.D_Y) 							 				       AS D_Y,
+			SUM(T.D_N) 							 				       AS D_N,
+			SUM(T.E_Y) 							 				       AS E_Y,
+			SUM(T.E_N) 							 				       AS E_N,
+			SUM(T.TM_RECV_AGR_Y) 							 		   AS TM_RECV_AGR_Y,
+			SUM(T.TM_RECV_AGR_N) 							 		   AS TM_RECV_AGR_N,
+			SUM(T.SMS_RECV_AGR_Y) 							 		   AS SMS_RECV_AGR_Y,
+			SUM(T.SMS_RECV_AGR_N) 							 		   AS SMS_RECV_AGR_N,
+			SUM(T.DM_RECV_AGR_Y) 							 		   AS DM_RECV_AGR_Y,
+			SUM(T.DM_RECV_AGR_N) 							 		   AS DM_RECV_AGR_N,
+			SUM(T.EMAIL_RECV_AGR_Y) 							 	   AS EMAIL_RECV_AGR_Y,
+			SUM(T.EMAIL_RECV_AGR_N) 							 	   AS EMAIL_RECV_AGR_N,
+			SUM(T.TM_OFFER_AGR_Y) 							 		   AS TM_OFFER_AGR_Y,
+			SUM(T.TM_OFFER_AGR_N) 							 		   AS TM_OFFER_AGR_N,
+			SUM(T.DM_OFFER_AGR_Y) 							 		   AS DM_OFFER_AGR_Y,
+			SUM(T.DM_OFFER_AGR_N) 							 		   AS DM_OFFER_AGR_N,
+			SUM(T.EMAIL_OFFER_AGR_Y) 							 	   AS EMAIL_OFFER_AGR_Y,
+			SUM(T.EMAIL_OFFER_AGR_N) 							 	   AS EMAIL_OFFER_AGR_N
  	from(SELECT 
 			TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT, 
 			PRC_DT_CNT,							 						
@@ -1222,15 +1254,31 @@ FROM
 			ERR_CN,														
 			VERIFY_UPDATE_CN, 											
 			PRC_CN-VERIFY_UPDATE_CN AS MAINTAIN_CN, 					
-			ETC1_YES_CN  AS ETC1_Y,										
-			ETC2_YES_CN  AS ETC2_Y,										
-			ETC3_YES_CN  AS ETC3_Y,										
-			ETC10_YES_CN AS ETC10_Y,									
-			ETC1_NO_CN   AS ETC1_N,										
-			ETC2_NO_CN   AS ETC2_N,										
-			ETC3_NO_CN   AS ETC3_N,										
-			ETC10_NO_CN  AS ETC10_N										
-		FROM TB_EM_IMR_DAILY_STATICS
+			A 			 				  AS A_Y,
+			PRC_DT_CNT-A 				  AS A_N,
+			B 			 				  AS B_Y,
+			PRC_DT_CNT-B 				  AS B_N,
+			C 			 				  AS C_Y,
+			PRC_DT_CNT-C 				  AS C_N,
+			D 			 				  AS D_Y,
+			PRC_DT_CNT-D 				  AS D_N,
+			E 			 				  AS E_Y,
+			PRC_DT_CNT-E 				  AS E_N,
+			TM_RECV_AGR_YN 			      AS TM_RECV_AGR_Y,
+			PRC_DT_CNT-TM_RECV_AGR_YN     AS TM_RECV_AGR_N,
+			SMS_RECV_AGR_YN 		      AS SMS_RECV_AGR_Y,
+			PRC_DT_CNT-SMS_RECV_AGR_YN    AS SMS_RECV_AGR_N,
+			DM_RECV_AGR_YN 			  	  AS DM_RECV_AGR_Y,
+			PRC_DT_CNT-DM_RECV_AGR_YN 	  AS DM_RECV_AGR_N,
+			EMAIL_RECV_AGR_YN 			  AS EMAIL_RECV_AGR_Y,
+			PRC_DT_CNT-EMAIL_RECV_AGR_YN  AS EMAIL_RECV_AGR_N,
+			TM_OFFER_AGR_YN 			  AS TM_OFFER_AGR_Y,
+			PRC_DT_CNT-TM_OFFER_AGR_YN    AS TM_OFFER_AGR_N,
+			DM_OFFER_AGR_YN 			  AS DM_OFFER_AGR_Y,
+			PRC_DT_CNT-DM_OFFER_AGR_YN 	  AS DM_OFFER_AGR_N,
+			EMAIL_OFFER_AGR_YN 			  AS EMAIL_OFFER_AGR_Y,
+			PRC_DT_CNT-EMAIL_OFFER_AGR_YN AS EMAIL_OFFER_AGR_N								
+			FROM TB_EM_IMR_DAILY_STATICS
 		WHERE MAJOR_CLASS ='TOTAL'
 		<if test='textPrcDt != null and textPrcDt !=""'>
 		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
@@ -1248,7 +1296,21 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     	parameterType="com.minervasoft.backend.vo.CalibVerifiVo"
         resultType="com.minervasoft.backend.vo.CalibVerifiVo"
         >
-        select count(1) from dual
+       SELECT 
+			COUNT(*) TOT_ROW_CNT
+	   FROM TB_EM_IMR_QUERY_HISTORY A
+	   INNER JOIN TB_EM_PC_CHRR B
+	   ON A.CHRR_ID = B.CHRR_ID
+	   WHERE 1=1
+		<if test='custId != null and custId !=""'>
+    	AND A.CUST_ID = #{custId}
+    	</if>
+		<if test='startPrcDt != null and startPrcDt !=""'>
+    	AND A.PRC_DT <![CDATA[>=]]> REPLACE(#{startPrcDt},'-','')
+    	</if> 
+    	<if test='endPrcDt != null and endPrcDt !=""'>
+    	AND A.PRC_DT <![CDATA[<=]]> REPLACE(#{endPrcDt},'-','')
+    	</if>  
     </select>
     
     
@@ -1257,7 +1319,29 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
      parameterType="com.minervasoft.backend.vo.CalibVerifiVo"
         resultType="com.minervasoft.backend.vo.CalibVerifiVo"
         >
-		select * from dual
+		SELECT 
+			A.ID_NO,
+			A.CHRR_ID,
+			B.CHRR_NM,
+			B.DEPTNM,
+			A.ELEMENTID AS ELEMENT_ID ,
+			A.PRC_DT,
+			A.CUST_ID ,
+			A.QUERY_REASON ,
+			TO_CHAR(A.IPDT_TIME,'HH24:MI') AS PRC_TM  
+		FROM TB_EM_IMR_QUERY_HISTORY A
+		INNER JOIN TB_EM_PC_CHRR B
+		ON A.CHRR_ID = B.CHRR_ID
+		WHERE 1=1
+		<if test='custId != null and custId !=""'>
+    	AND A.CUST_ID = #{custId}
+    	</if>
+		<if test='startPrcDt != null and startPrcDt !=""'>
+    	AND A.PRC_DT <![CDATA[>=]]> REPLACE(#{startPrcDt},'-','')
+    	</if> 
+    	<if test='endPrcDt != null and endPrcDt !=""'>
+    	AND A.PRC_DT <![CDATA[<=]]> REPLACE(#{endPrcDt},'-','')
+    	</if> 
     </select>
     
      

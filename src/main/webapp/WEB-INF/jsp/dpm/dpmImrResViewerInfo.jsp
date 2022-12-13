@@ -23,13 +23,13 @@
                         <form id="frmImrResViewerInfo" role="form"  method="post"> 
                             <ul class="smbc-top-search">
                              	<li>
-                                    <input type="text" class="input-st01" id="custId" name="custId" style ="background: #E3FFF0" placeholder="고객번호">
+                                    <input type="text" class="input-st01" id="custId" name="custId" style ="background: #E3FFF0; color:black" placeholder="고객번호">
                                 </li>
                                 <li>
                                     <div class="datepicker-wrap">
-										<input id="startPrcDt" name="textPrcDt" type="text" class="form-control "
+										<input id="startPrcDt" name=startPrcDt  type="text" class="form-control "
 									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
-										maxlength="10" placeholder="시작일"> 
+										maxlength="10" placeholder="시작일" autocomplete="off"> 
 										<span class="icon-calendar">
 										<img id="imgStartDt" img src="../images/icon-calendar.png" alt="달력">
 										</span>
@@ -37,9 +37,9 @@
                                 </li>
                                  <li>
                                     <div class="datepicker-wrap">
-										<input id="endtPrcDt" name="textPrcDt" type="text" class="form-control "
+										<input id="endPrcDt" name="endPrcDt" type="text" class="form-control "
 									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
-										maxlength="10" placeholder="종료일"> 
+										maxlength="10" placeholder="종료일" autocomplete="off"> 
 										<span class="icon-calendar">
 										<img id="imgEndtDt" img src="../images/icon-calendar.png" alt="달력">
 										</span>
@@ -54,7 +54,7 @@
                             </ul>
    					</form>
                             <ul class="smbc-top-btn-wrap">
-                                <li class="search-btn"><button onclick="modDpmDayPro.selList();">조회</button></li>
+                                <li class="search-btn"><button onclick="modDpmImrResViewerInfo.selList();">조회</button></li>
                             </ul>
                         </div>
                         <div class="smbc-data-wrap">

@@ -11,7 +11,7 @@ public class CalibVerifiVo extends AbstractVO{
 	private String startPrcDt;		//조회조건 > 시작
 	private String endPrcDt;		//조회조건 > 종료
 	private String prcTm;			//조회 시간
-	private String deprNm;			//부서명
+	private String deptnm;			//부서명
 	private Integer pageNumber = 0;
 	private Integer totPageCnt = 0;
 	private Integer totRowCnt  = 0;
@@ -77,11 +77,12 @@ public class CalibVerifiVo extends AbstractVO{
 	public void setPrcTm(String prcTm) {
 		this.prcTm = prcTm;
 	}
-	public String getDeprNm() {
-		return deprNm;
+
+	public String getDeptnm() {
+		return deptnm;
 	}
-	public void setDeprNm(String deprNm) {
-		this.deprNm = deprNm;
+	public void setDeptnm(String deptnm) {
+		this.deptnm = deptnm;
 	}
 	public Integer getPageNumber() {
 		return pageNumber;

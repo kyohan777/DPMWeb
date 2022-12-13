@@ -12,6 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.type.TypeException;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -1755,7 +1763,7 @@ public class DpmController {
     }    
     
     /**
-     *  [IMR] 일별 통계:: 일별 통계 현황 조회
+     *  [IMR] 결과 열람자 이력 조회 화면
      *  2022.12.08 신규 개발 
      * @param CalibVerifiVo
      * @return
@@ -1893,6 +1901,337 @@ public class DpmController {
         }
         
         return response;
-    }    
+    }
+    
+    
+    /**
+     * 일별 통계 > 엑셀 출력
+     * @param paramVO
+     * @param modelMap
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/dpm/selListDpmDayProExcel.do")
+    public void selListDpmDayProExcel(StatisticsVO paramVO, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) throws Exception {    	
+    	
+    	List<StatisticsVO> list  = new ArrayList<>();    	
+    	CommonVO commonVO 		 = getServerDateTime();
+    	String filename 		 = commonVO.getServerTime().concat("_일별 통계.xlsx");    	
+    	setExcelDownloadHeader(request, response, filename);
+
+        try(Workbook workbook = new XSSFWorkbook()) {
+        	StatisticsVO one = dpmService.getDpmDayProInfoTotRowCnt(paramVO);
+        	
+        	int pageSize   = 10000;
+	    	int totRowCnt  = one.getTotRowCnt() ;
+	    	int totPageCnt = (int) Math.floor(totRowCnt/pageSize)+1;
+	    	paramVO.setPageSize(pageSize);
+	    	
+        	for(int pageNumber = 1; pageNumber <= totPageCnt; pageNumber++) {
+        		paramVO.setPageNumber(pageNumber);
+        		List<StatisticsVO> listPage = dpmService.getDpmDayProInfo(paramVO);
+        		list.addAll(listPage);
+        	}
+        	
+        	Sheet sheet = workbook.createSheet("일별 통계");
+            int rowNo = 0;
+            int headNo= 0;
+            String gridNames  = paramVO.getGridLabels();
+            String gridWidths = paramVO.getGridWidths();
+            String[] nameList = gridNames.split(",");
+            Row headerRow = sheet.createRow(rowNo++);
+            String title = "YYYY/MM/DD,대상,처리현황,'','',처리율,검증건수,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,''";
+            String[] titleList = title.split(",");
+            String[] widthList = gridWidths.split(",");
+            
+            for(int i=0; i<widthList.length; i++) {
+            	sheet.setColumnWidth(i, Integer.parseInt(widthList[i]) * 50);
+            }
+            //셀 병합
+            sheet.addMergedRegion(new CellRangeAddress(0,1,0,0)); //YYYY-MM-DD
+            sheet.addMergedRegion(new CellRangeAddress(0,1,1,1)); //대상
+            sheet.addMergedRegion(new CellRangeAddress(0,0,2,4)); //처리현황
+            sheet.addMergedRegion(new CellRangeAddress(0,1,5,5)); //처리율
+            sheet.addMergedRegion(new CellRangeAddress(0,0,6,7)); //검증건수
+            sheet.addMergedRegion(new CellRangeAddress(0,0,8,9)); //금융안내
+            sheet.addMergedRegion(new CellRangeAddress(0,0,10,11));//금융이외
+            sheet.addMergedRegion(new CellRangeAddress(0,0,12,13));//보험제공
+            sheet.addMergedRegion(new CellRangeAddress(0,0,14,15));//딜러제공
+            sheet.addMergedRegion(new CellRangeAddress(0,0,16,17));//KB제공
+            sheet.addMergedRegion(new CellRangeAddress(0,0,18,19));//수집-전화
+            sheet.addMergedRegion(new CellRangeAddress(0,0,20,21));//수집-문자
+            sheet.addMergedRegion(new CellRangeAddress(0,0,22,23));//수집-DM
+            sheet.addMergedRegion(new CellRangeAddress(0,0,24,25));//수집-메일
+            sheet.addMergedRegion(new CellRangeAddress(0,0,26,27));//제공-전화
+            sheet.addMergedRegion(new CellRangeAddress(0,0,28,29));//제공-DM
+            sheet.addMergedRegion(new CellRangeAddress(0,0,30,31));//제공-메일
+            
+            //head colum name 생성
+            for(String name : titleList) {
+            	if(name != "") {
+            		headerRow.createCell(headNo).setCellValue(name);
+            	}else {
+            		headerRow.createCell(headNo);
+            	}
+            	headNo++;
+            }
+            headerRow = sheet.createRow(rowNo++);
+            headNo=0;
+            for(String name : nameList) {
+            	headerRow.createCell(headNo).setCellValue(name);
+            	headNo++;
+            }
+            //DB DATA SET
+            for (StatisticsVO info : list) {
+                Row row = sheet.createRow(rowNo++);
+                row.createCell(0).setCellValue(info.getPrcDt());
+                row.createCell(1).setCellValue(info.getPrcDtCnt());
+                row.createCell(2).setCellValue(info.getPrcCn());
+                row.createCell(3).setCellValue(info.getErrCn());
+                row.createCell(4).setCellValue(info.getErrRat());
+                row.createCell(5).setCellValue(info.getPrcRat());
+                row.createCell(6).setCellValue(info.getVerifyUpdateCn());
+                row.createCell(7).setCellValue(info.getMaintainCn());
+                row.createCell(8).setCellValue(info.getaY());
+                row.createCell(9).setCellValue(info.getaN());
+                row.createCell(10).setCellValue(info.getbY());
+                row.createCell(11).setCellValue(info.getbN());
+                row.createCell(12).setCellValue(info.getcY());
+                row.createCell(13).setCellValue(info.getcN());
+                row.createCell(14).setCellValue(info.getdY());
+                row.createCell(15).setCellValue(info.getdN());
+                row.createCell(16).setCellValue(info.geteY());
+                row.createCell(17).setCellValue(info.geteN());
+                row.createCell(18).setCellValue(info.getTmRecvAgrY());
+                row.createCell(19).setCellValue(info.getTmRecvAgrN());
+                row.createCell(20).setCellValue(info.getSmsRecvAgrN());
+                row.createCell(21).setCellValue(info.getSmsRecvAgrN());
+                row.createCell(22).setCellValue(info.getDmRecvAgrY());
+                row.createCell(23).setCellValue(info.getDmRecvAgrN());
+                row.createCell(24).setCellValue(info.getEmailRecvAgrY());
+                row.createCell(25).setCellValue(info.getEmailRecvAgrN());
+                row.createCell(26).setCellValue(info.getTmOfferAgrY());
+                row.createCell(27).setCellValue(info.getTmOfferAgrN());
+                row.createCell(28).setCellValue(info.getDmOfferAgrY());
+                row.createCell(29).setCellValue(info.getDmOfferAgrN());
+                row.createCell(30).setCellValue(info.getEmailOfferAgrY());
+                row.createCell(31).setCellValue(info.getEmailOfferAgrN());
+                
+            }
+     
+            workbook.write(response.getOutputStream());
+            workbook.close();
+        } catch(TypeException e) {
+        	e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    
+    
+    /**
+     * 사용자 관리 > 엑셀 출력
+     * @param paramVO
+     * @param modelMap
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/dpm/selListUserInfoExcel.do")
+    public void selListUserInfoExcel(UserManageVo paramVO, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) throws Exception {    	
+    	
+    	List<UserManageVo> list = new ArrayList<>();    	
+    	CommonVO commonVO 		 = getServerDateTime();
+    	String filename 		 = commonVO.getServerTime().concat("_사용자 정보.xlsx");    	
+    	setExcelDownloadHeader(request, response, filename);
+
+        try(Workbook workbook = new XSSFWorkbook()) {
+        	UserManageVo one = dpmService.getdpmUserManageInfoTotRowCnt(paramVO);
+        	
+        	int pageSize   = 10000;
+	    	int totRowCnt  = one.getTotRowCnt() ;
+	    	int totPageCnt = (int) Math.floor(totRowCnt/pageSize)+1;	    	
+	    	paramVO.setPageSize(pageSize);
+	    	
+        	for(int pageNumber = 1; pageNumber <= totPageCnt; pageNumber++) {
+        		paramVO.setPageNumber(pageNumber);
+        		List<UserManageVo> listPage = dpmService.getdpmUserManageInfo(paramVO);
+        		list.addAll(listPage);
+        	}
+        	
+            Sheet sheet = workbook.createSheet("사용자 관리");
+            int rowNo = 0;
+            int headNo= 0;
+            String gridNames  = paramVO.getGridLabels();
+            String gridWidths = paramVO.getGridWidths();
+            String[] nameList = gridNames.split(",");
+            Row headerRow = sheet.createRow(rowNo++);
+            
+            String[] widthList = gridWidths.split(",");
+            for(int i=0; i<widthList.length; i++) {
+            	sheet.setColumnWidth(i, Integer.parseInt(widthList[i]) * 50);
+            }
+            
+            for(String name : nameList) {
+            	headerRow.createCell(headNo).setCellValue(name);
+            	headNo++;
+            }
+     
+            for (UserManageVo info : list) {
+                Row row = sheet.createRow(rowNo++);
+                row.createCell(0).setCellValue(info.getIdNo());
+                row.createCell(1).setCellValue(info.getChrrId());
+                row.createCell(2).setCellValue(info.getChrrNm());
+                row.createCell(3).setCellValue(info.getDeptnm());
+                row.createCell(4).setCellValue(info.getUyn());
+                row.createCell(5).setCellValue(info.getRgDt());
+                row.createCell(6).setCellValue(info.getRgId());
+                row.createCell(7).setCellValue(info.getRgNm());
+                row.createCell(8).setCellValue(info.getRgTm());
+                
+            }
+     
+            workbook.write(response.getOutputStream());
+            workbook.close();
+        } catch(TypeException e) {
+        	e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    
+    /**
+     * 월별 통계 > 엑셀 출력
+     * @param paramVO
+     * @param modelMap
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/dpm/selListDpmMonthProExcel.do")
+    public void selListDpmMonthProExcel(StatisticsVO paramVO, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) throws Exception {    	
+    	
+    	List<StatisticsVO> list  = new ArrayList<>();    	
+    	CommonVO commonVO 		 = getServerDateTime();
+    	String filename 		 = commonVO.getServerTime().concat("_월별 통계.xlsx");    	
+    	setExcelDownloadHeader(request, response, filename);
+
+        try(Workbook workbook = new XSSFWorkbook()) {
+        	StatisticsVO one = dpmService.getDpmMonthProInfoTotRowCnt(paramVO);
+        	
+        	int pageSize   = 10000;
+	    	int totRowCnt  = one.getTotRowCnt() ;
+	    	int totPageCnt = (int) Math.floor(totRowCnt/pageSize)+1;
+	    	paramVO.setPageSize(pageSize);
+	    	
+        	for(int pageNumber = 1; pageNumber <= totPageCnt; pageNumber++) {
+        		paramVO.setPageNumber(pageNumber);
+        		List<StatisticsVO> listPage = dpmService.getDpmMonthProInfo(paramVO);
+        		list.addAll(listPage);
+        	}
+        	
+        	Sheet sheet = workbook.createSheet("월별 통계");
+            int rowNo = 0;
+            int headNo= 0;
+            String gridNames  = paramVO.getGridLabels();
+            String gridWidths = paramVO.getGridWidths();
+            String[] nameList = gridNames.split(",");
+            Row headerRow = sheet.createRow(rowNo++);
+            String title = "YYYY/MM,대상,처리현황,'','',처리율,검증건수,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,''";
+            String[] titleList = title.split(",");
+            String[] widthList = gridWidths.split(",");
+            
+            for(int i=0; i<widthList.length; i++) {
+            	sheet.setColumnWidth(i, Integer.parseInt(widthList[i]) * 50);
+            }
+            //셀 병합
+            sheet.addMergedRegion(new CellRangeAddress(0,1,0,0));  //YYYY-MM
+            sheet.addMergedRegion(new CellRangeAddress(0,1,1,1));  //대상
+            sheet.addMergedRegion(new CellRangeAddress(0,0,2,4));  //처리현황
+            sheet.addMergedRegion(new CellRangeAddress(0,1,5,5));  //처리율
+            sheet.addMergedRegion(new CellRangeAddress(0,0,6,7));  //검증건수
+            sheet.addMergedRegion(new CellRangeAddress(0,0,8,9));  //금융안내
+            sheet.addMergedRegion(new CellRangeAddress(0,0,10,11));//금융이외
+            sheet.addMergedRegion(new CellRangeAddress(0,0,12,13));//보험제공
+            sheet.addMergedRegion(new CellRangeAddress(0,0,14,15));//딜러제공
+            sheet.addMergedRegion(new CellRangeAddress(0,0,16,17));//KB제공
+            sheet.addMergedRegion(new CellRangeAddress(0,0,18,19));//수집-전화
+            sheet.addMergedRegion(new CellRangeAddress(0,0,20,21));//수집-문자
+            sheet.addMergedRegion(new CellRangeAddress(0,0,22,23));//수집-DM
+            sheet.addMergedRegion(new CellRangeAddress(0,0,24,25));//수집-메일
+            sheet.addMergedRegion(new CellRangeAddress(0,0,26,27));//제공-전화
+            sheet.addMergedRegion(new CellRangeAddress(0,0,28,29));//제공-DM
+            sheet.addMergedRegion(new CellRangeAddress(0,0,30,31));//제공-메일
+            
+            //head colum name 생성
+            for(String name : titleList) {
+            	if(name != "") {
+            		headerRow.createCell(headNo).setCellValue(name);
+            	}else {
+            		headerRow.createCell(headNo);
+            	}
+            	headNo++;
+            }
+            headerRow = sheet.createRow(rowNo++);
+            headNo=0;
+            for(String name : nameList) {
+            	headerRow.createCell(headNo).setCellValue(name);
+            	headNo++;
+            }
+            //DB DATA SET
+            for (StatisticsVO info : list) {
+                Row row = sheet.createRow(rowNo++);
+                row.createCell(0).setCellValue(info.getPrcDt());
+                row.createCell(1).setCellValue(info.getPrcDtCnt());
+                row.createCell(2).setCellValue(info.getPrcCn());
+                row.createCell(3).setCellValue(info.getErrCn());
+                row.createCell(4).setCellValue(info.getErrRat());
+                row.createCell(5).setCellValue(info.getPrcRat());
+                row.createCell(6).setCellValue(info.getVerifyUpdateCn());
+                row.createCell(7).setCellValue(info.getMaintainCn());
+                row.createCell(8).setCellValue(info.getaY());
+                row.createCell(9).setCellValue(info.getaN());
+                row.createCell(10).setCellValue(info.getbY());
+                row.createCell(11).setCellValue(info.getbN());
+                row.createCell(12).setCellValue(info.getcY());
+                row.createCell(13).setCellValue(info.getcN());
+                row.createCell(14).setCellValue(info.getdY());
+                row.createCell(15).setCellValue(info.getdN());
+                row.createCell(16).setCellValue(info.geteY());
+                row.createCell(17).setCellValue(info.geteN());
+                row.createCell(18).setCellValue(info.getTmRecvAgrY());
+                row.createCell(19).setCellValue(info.getTmRecvAgrN());
+                row.createCell(20).setCellValue(info.getSmsRecvAgrN());
+                row.createCell(21).setCellValue(info.getSmsRecvAgrN());
+                row.createCell(22).setCellValue(info.getDmRecvAgrY());
+                row.createCell(23).setCellValue(info.getDmRecvAgrN());
+                row.createCell(24).setCellValue(info.getEmailRecvAgrY());
+                row.createCell(25).setCellValue(info.getEmailRecvAgrN());
+                row.createCell(26).setCellValue(info.getTmOfferAgrY());
+                row.createCell(27).setCellValue(info.getTmOfferAgrN());
+                row.createCell(28).setCellValue(info.getDmOfferAgrY());
+                row.createCell(29).setCellValue(info.getDmOfferAgrN());
+                row.createCell(30).setCellValue(info.getEmailOfferAgrY());
+                row.createCell(31).setCellValue(info.getEmailOfferAgrN());
+                
+            }
+     
+            workbook.write(response.getOutputStream());
+            workbook.close();
+        } catch(TypeException e) {
+        	e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
      
 }
