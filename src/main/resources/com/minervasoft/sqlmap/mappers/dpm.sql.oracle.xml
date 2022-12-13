@@ -1162,6 +1162,9 @@
 	<if test='textPrcDt != null and textPrcDt !=""'>
 	AND PRC_DT = REPLACE(#{textPrcDt},'-','')
 	</if>
+	<if test='prcDt != null and prcDt !=""'>
+	AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{prcDt},'/','')
+	</if>
 	ORDER BY PRC_DT 
  	) TA             
     WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
@@ -1181,6 +1184,10 @@
 		<if test='textPrcDt != null and textPrcDt !=""'>
 		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
 		</if>
+		<if test='prcDt != null and prcDt !=""'>
+		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{prcDt},'/','')
+		</if>
+		
     </select>
     
      <!-- 월별 전체 cnt 값  -->

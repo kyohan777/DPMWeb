@@ -9,10 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.minervasoft.backend.vo.LoginChrrVO;
+import com.minervasoft.backend.vo.StatisticsVO;
 
 @Controller
 public class WebController {
@@ -344,8 +346,11 @@ public class WebController {
      * @return
      */
     @RequestMapping(value = "/dpm/dpmDailyPro.do")
-    public String dpmDailyPro(LoginChrrVO loginInfoVO,ModelMap modelMap) {
+    public String dpmDailyPro(StatisticsVO loginInfoVO,ModelMap modelMap,HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
         try {   
+        	modelMap.addAttribute("chrrId", loginVO.getChrrId());
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -360,8 +365,17 @@ public class WebController {
      * @return
      */
     @RequestMapping(value = "/dpm/dpmDayPro.do")
-    public String dpmDayPro(LoginChrrVO loginInfoVO,ModelMap modelMap) {
-        try {        	
+    public String dpmDayPro(StatisticsVO pramVo,ModelMap modelMap,HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+        try {
+        	modelMap.addAttribute("chrrId", loginVO.getChrrId());
+        	//월별 통계 row 클릭시 prcDt 전달 값 셋팅
+        	if(pramVo.getPrcDt() != "" && pramVo.getPrcDt() != null) 
+        	{
+        		modelMap.addAttribute("prcDt",pramVo.getPrcDt());
+        	}	
+        		
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -375,8 +389,11 @@ public class WebController {
      * @return
      */
     @RequestMapping(value = "/dpm/dpmMonthPro.do")
-    public String dpmMonthPro(LoginChrrVO loginInfoVO,ModelMap modelMap) {
-        try {        	
+    public String dpmMonthPro(LoginChrrVO loginInfoVO,ModelMap modelMap,HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+        try {        
+        	modelMap.addAttribute("chrrId", loginVO.getChrrId());
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -396,6 +413,7 @@ public class WebController {
         LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
     	try {
     		modelMap.addAttribute("companyId", loginVO.getCompanyId());
+    		modelMap.addAttribute("chrrId", loginVO.getChrrId());
     		modelMap.addAttribute("chrrNm", loginVO.getChrrNm());
         } catch(Exception e) {
             e.printStackTrace();
@@ -416,6 +434,7 @@ public class WebController {
         LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
     	try {
     		modelMap.addAttribute("companyId", loginVO.getCompanyId());
+    		modelMap.addAttribute("chrrId", loginVO.getChrrId());
     		modelMap.addAttribute("chrrNm", loginVO.getChrrNm());
         } catch(Exception e) {
             e.printStackTrace();

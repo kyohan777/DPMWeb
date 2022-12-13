@@ -39,6 +39,7 @@
 						<input id="gridNameList"  type="hidden" name="gridNames"> 
 						<input id="gridWidthList" type="hidden" name="gridWidths"> 
 						<input id="gridAlignList" type="hidden" name="gridAligns">
+						<input id="prcDt" type="hidden" name="prcDt">
    					</form>
                             <ul class="smbc-top-btn-wrap">
                                 <li class="search-btn"><button onclick="modDpmMonthPro.selList();">조회</button></li>

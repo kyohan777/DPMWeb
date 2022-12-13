@@ -275,10 +275,10 @@ var modDpmDayPro = (function(){
 			alert("엑셀출력할 데이터가 없습니다.");
 			return;
 		} else {			
-			var frmLogin = $("#frmDayPro")[0];
-			frmLogin.action = "/dpm/selListDpmDayProExcel.do";
-			frmLogin.method = "post";
-			frmLogin.submit();			
+			var frmDayPro = $("#frmDayPro")[0];
+			frmDayPro.action = "/dpm/dpm/dpmDayPro.do";
+			frmDayPro.method = "post";
+			frmDayPro.submit();			
 		}		
 	};
 	
@@ -294,6 +294,7 @@ var modDpmDayPro = (function(){
  * 조회버튼 클릭
  */
 $("#searchBtn").on("click", function() {
+	$("#prcDt").val();
 	modDpmDayPro.selList();
 });
 

@@ -35,13 +35,14 @@
                                 </li>
                             </ul>
                        <!-- 엑셀출력을 위한 컬럼정보 -->
+                       	<input id="prcDt" type="hidden" name="prcDt" value="${prcDt}">
 						<input id="gridLabelList" type="hidden" name="gridLabels"> 
 						<input id="gridNameList"  type="hidden" name="gridNames"> 
 						<input id="gridWidthList" type="hidden" name="gridWidths"> 
 						<input id="gridAlignList" type="hidden" name="gridAligns">
    					</form>
                             <ul class="smbc-top-btn-wrap">
-                                <li class="search-btn"><button onclick="modDpmDayPro.selList();">조회</button></li>
+                                <li class="search-btn"><button id="searchBtn">조회</button></li>
                             </ul>
                         </div>
                         <div class="smbc-data-wrap">

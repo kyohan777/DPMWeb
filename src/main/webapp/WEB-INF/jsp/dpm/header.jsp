@@ -71,11 +71,13 @@
 				<li><a href="#" >IMR 결과 조회</a></li>
 			</ul>
 		</li>
+		<c:if test="${chrrId == 'admin' or chrrId == 'minerva'}">
 		<li><a href="#">관리</a>
 			<ul>
 				<li><a href="#"  onclick ="goPage('UserManage');">사용자 관리</a></li>
 			</ul>
 		</li>
+		</c:if>
 		<li><a href="#">기타</a>
 			<ul>
 				<li><a href="#">일 배치(실행)</a></li>

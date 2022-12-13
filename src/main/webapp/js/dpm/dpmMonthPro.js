@@ -42,7 +42,7 @@ var modDpmMonthPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: 'YYYY/MM/DD', name: 'prcDt',    	   width: 200,align: 'center'},
+	            { label: 'YYYY/MM',    name: 'prcDt',    	   width: 200,align: 'center'},
 	            { label: '대상', 	       name: 'prcDtCnt', 	   width: 100,align: 'center'},
 	            { label: '정상', 		   name: 'prcCn',    	   width: 80, align: 'center'},
 	            { label: '오류', 		   name: 'errCn',    	   width: 80, align: 'center'},
@@ -148,8 +148,14 @@ var modDpmMonthPro = (function(){
 	        	}
 	        	
 	        },
-	      //Row클릭 이벤트
+	        //Row클릭 이벤트 일별 통계 화면으로 이동 
 	        onSelectRow: function(rowid) {
+				var rowdata = 	$("#jqGrid").getRowData(rowid);
+				$("#prcDt").val(rowdata.prcDt);
+				var frmMonthPro = $("#frmMonthPro")[0];
+				frmMonthPro.action = "/dpm/dpmDayPro.do";
+				frmMonthPro.method = "post";
+				frmMonthPro.submit();			
 
 	        },
 	        //셀더블클릭 이벤트 - deprecated
@@ -278,10 +284,10 @@ var modDpmMonthPro = (function(){
 			alert("엑셀출력할 데이터가 없습니다.");
 			return;
 		} else {			
-			var frmLogin = $("#frmMonthPro")[0];
-			frmLogin.action = "/dpm/selListDpmMonthProExcel.do";
-			frmLogin.method = "post";
-			frmLogin.submit();			
+			var frmMonthPro = $("#frmMonthPro")[0];
+			frmMonthPro.action = "/dpm/selListDpmMonthProExcel.do";
+			frmMonthPro.method = "post";
+			frmMonthPro.submit();			
 		}		
 	};
 	
