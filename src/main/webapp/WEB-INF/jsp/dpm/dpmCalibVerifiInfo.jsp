@@ -10,16 +10,13 @@
     <style>
     #box-left {
  		 flex: 1;
- 		 overflow:scroll;
 	}
 	#box-center {
   		flex: 1;
-  		border:1px solid black;
   		
 	}
 	#box-right {
 		flex: 1;
-		border:1px solid black;
 	}
 	#mkTable > tr{
 	height : 50px
