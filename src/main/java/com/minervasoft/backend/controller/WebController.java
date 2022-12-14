@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.minervasoft.backend.vo.CalibVerifiVo;
 import com.minervasoft.backend.vo.LoginChrrVO;
 import com.minervasoft.backend.vo.StatisticsVO;
 
@@ -441,6 +442,25 @@ public class WebController {
         }
         
         return "dpm/dpmUserManageInfo";
+    }
+    
+    /**
+     * dpmCalibVerifiInfo 교정/검증 처리
+     * Kimsangmin
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/dpm/dpmCalibVerifiInfo.do")
+    public String dpmCalibVerifiInfo(CalibVerifiVo loginInfoVO,ModelMap modelMap,HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+        try {        
+        	modelMap.addAttribute("chrrId", loginVO.getChrrId());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "dpm/dpmCalibVerifiInfo";
     }
 
     

@@ -23,6 +23,10 @@ function goPage(data){
 		case 'UserManage':
 		frmHeader.action = "/dpm/dpmUserManageInfo.do";
 		break;
+		
+		case 'CalibVerfi':
+		frmHeader.action = "/dpm/dpmCalibVerifiInfo.do";
+		break;
 	}
 		
 		frmHeader.method = "post";
