@@ -87,7 +87,7 @@ var modLogin = (function(){
 				$("#txtUserId").focus();				
 			}
 		} else {
-			alert("담당자ID " + $("#txtUserId").val() + "는 등록되지 않은 담당자입니다.");
+			alert("담당자 ID 또는 패스워드가 틀립니다.");
 			$("#txtUserId").focus();
 			return;			
 		}
@@ -159,12 +159,9 @@ $("#txtUserId").keydown(function(key){
  * DOM  load 완료 시 실행
  */
 $(document).ready(function() {
-	console.log("로그인 페이지");
-	
 	if ($("#loginResult").val() != undefined && $("#loginResult").val() != ""){
 		alert($("#loginResult").val());
 	}
-
 	var lastLoginId = modLogin.getCookie("lastLoginId");
 	if(lastLoginId != null){
 		$("#txtUserId").val(lastLoginId);

@@ -34,11 +34,31 @@ public class StatisticsVO extends AbstractVO{
 	private Integer dmOfferAgrN;
 	private Integer emailOfferAgrY;
 	private Integer emailOfferAgrN;
+	private Integer idNo;
+	private String  elementId;
+	private String  imgFileName;
+	private String  imgFormatType;
+	private String  maskPrgStsc;
+	private String  userConfirm;
+	private String  userUpdateYn;
 	private String  gridLabels = "";
 	private String  gridNames = "";
 	private String  gridWidths = "";
 	private String  gridAligns = "";
 	private String  excelDownYn = "";
+	private String  aYn;
+	private String  bYn;
+	private String  cYn;
+	private String  dYn;
+	private String  eYn;
+	private String  tmRecvAgrYn;
+	private String  smsRecvAgrYn;
+	private String  dmRecvAgrYn;
+	private String  emailRecvAgrYn;
+	private String  tmOfferAgrYn;
+	private String  dmOfferAgrYn;
+	private String  emailOfferAgrYn;
+	private String  intvisionImr;
 	private Integer cgnRzt = 0;
 	private Integer pageNumber = 0;
 	private Integer totPageCnt = 0;
@@ -303,6 +323,126 @@ public class StatisticsVO extends AbstractVO{
 	}
 	public void setEmailOfferAgrN(Integer emailOfferAgrN) {
 		this.emailOfferAgrN = emailOfferAgrN;
+	}
+	public Integer getIdNo() {
+		return idNo;
+	}
+	public void setIdNo(Integer idNo) {
+		this.idNo = idNo;
+	}
+	public String getElementId() {
+		return elementId;
+	}
+	public void setElementId(String elementId) {
+		this.elementId = elementId;
+	}
+	public String getImgFileName() {
+		return imgFileName;
+	}
+	public void setImgFileName(String imgFileName) {
+		this.imgFileName = imgFileName;
+	}
+	public String getImgFormatType() {
+		return imgFormatType;
+	}
+	public void setImgFormatType(String imgFormatType) {
+		this.imgFormatType = imgFormatType;
+	}
+	public String getMaskPrgStsc() {
+		return maskPrgStsc;
+	}
+	public void setMaskPrgStsc(String maskPrgStsc) {
+		this.maskPrgStsc = maskPrgStsc;
+	}
+	public String getUserConfirm() {
+		return userConfirm;
+	}
+	public void setUserConfirm(String userConfirm) {
+		this.userConfirm = userConfirm;
+	}
+	public String getUserUpdateYn() {
+		return userUpdateYn;
+	}
+	public void setUserUpdateYn(String userUpdateYn) {
+		this.userUpdateYn = userUpdateYn;
+	}
+	public String getaYn() {
+		return aYn;
+	}
+	public void setaYn(String aYn) {
+		this.aYn = aYn;
+	}
+	public String getbYn() {
+		return bYn;
+	}
+	public void setbYn(String bYn) {
+		this.bYn = bYn;
+	}
+	public String getcYn() {
+		return cYn;
+	}
+	public void setcYn(String cYn) {
+		this.cYn = cYn;
+	}
+	public String getdYn() {
+		return dYn;
+	}
+	public void setdYn(String dYn) {
+		this.dYn = dYn;
+	}
+	public String geteYn() {
+		return eYn;
+	}
+	public void seteYn(String eYn) {
+		this.eYn = eYn;
+	}
+	public String getTmRecvAgrYn() {
+		return tmRecvAgrYn;
+	}
+	public void setTmRecvAgrYn(String tmRecvAgrYn) {
+		this.tmRecvAgrYn = tmRecvAgrYn;
+	}
+	public String getSmsRecvAgrYn() {
+		return smsRecvAgrYn;
+	}
+	public void setSmsRecvAgrYn(String smsRecvAgrYn) {
+		this.smsRecvAgrYn = smsRecvAgrYn;
+	}
+	public String getDmRecvAgrYn() {
+		return dmRecvAgrYn;
+	}
+	public void setDmRecvAgrYn(String dmRecvAgrYn) {
+		this.dmRecvAgrYn = dmRecvAgrYn;
+	}
+	public String getEmailRecvAgrYn() {
+		return emailRecvAgrYn;
+	}
+	public void setEmailRecvAgrYn(String emailRecvAgrYn) {
+		this.emailRecvAgrYn = emailRecvAgrYn;
+	}
+	public String getTmOfferAgrYn() {
+		return tmOfferAgrYn;
+	}
+	public void setTmOfferAgrYn(String tmOfferAgrYn) {
+		this.tmOfferAgrYn = tmOfferAgrYn;
+	}
+	public String getDmOfferAgrYn() {
+		return dmOfferAgrYn;
+	}
+	public void setDmOfferAgrYn(String dmOfferAgrYn) {
+		this.dmOfferAgrYn = dmOfferAgrYn;
+	}
+	public String getEmailOfferAgrYn() {
+		return emailOfferAgrYn;
+	}
+	public void setEmailOfferAgrYn(String emailOfferAgrYn) {
+		this.emailOfferAgrYn = emailOfferAgrYn;
+	}
+	public String getIntvisionImr() {
+		return intvisionImr;
+	}
+	public void setIntvisionImr(String intvisionImr) {
+		this.intvisionImr = intvisionImr;
 	}
 	
 	

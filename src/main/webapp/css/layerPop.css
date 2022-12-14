@@ -23,7 +23,7 @@
   width: 500px;
   height: auto;
   background-color: #fff;
-  border: 5px solid #3571B5;
+  border: 5px solid #1E4731;
   z-index: 10;
 }
 
@@ -57,8 +57,8 @@ a.btn-layerClose {
   display: inline-block;
   height: 25px;
   padding: 0 14px 0;
-  border: 1px solid #304a8a;
-  background-color: #3f5a9d;
+  border: 1px solid #399262;
+  background-color: #399262;
   font-size: 13px;
   color: #fff;
   line-height: 25px;

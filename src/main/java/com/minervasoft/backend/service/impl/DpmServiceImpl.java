@@ -392,4 +392,16 @@ public class DpmServiceImpl implements DpmService {
 		return dpmDao.dleeteUserInfo(paramVO);
 	}
 
+	@Override
+	public List<StatisticsVO> getDpmDailyProInfo(StatisticsVO paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.getDpmDailyProInfo(paramVO);
+	}
+
+	@Override
+	public StatisticsVO getDpmDailyProInfoTotRowCnt(StatisticsVO paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.getDpmDailyProInfoTotRowCnt(paramVO);
+	}
+
 }

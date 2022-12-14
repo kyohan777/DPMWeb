@@ -235,6 +235,14 @@ public class DpmDAO extends AbstractDpmDAO {
     /**********************************************
      * 2022.12 신규 개발 KSM
      **********************************************/
+    //일일 처리 현황 조회
+    public List<StatisticsVO> getDpmDailyProInfo(StatisticsVO paramVO) throws Exception {
+        return (List<StatisticsVO>) selectList("getDpmDailyProInfo", paramVO);
+    }
+    //일일 처리 현황 전체 cnt 조회
+    public StatisticsVO getDpmDailyProInfoTotRowCnt(StatisticsVO paramVO) throws Exception {
+        return (StatisticsVO) selectOne("getDpmDailyProInfoTotRowCnt",paramVO);
+    }    
     //일별 통계 조회
     public List<StatisticsVO> getDpmDayProInfo(StatisticsVO paramVO) throws Exception {
         return (List<StatisticsVO>) selectList("getDpmDayProInfo", paramVO);

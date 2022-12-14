@@ -41,7 +41,7 @@
 	}
 	#menu > ul > li:hover > ul {
 		display:block;
-		
+		 z-index:1;
 	}
 	#menu > ul > li > ul > li:hover {
 		background: #f3f3f3;
@@ -60,8 +60,9 @@
 	<ul>
 		<li><a href="#">통계</a>
 			<ul>
-				<li><a href="#" onclick="goPage('Month');">월별 통계</a></li>
+				<li><a href="#" onclick="goPage('Daily');">일일 처리 현황</a></li>
 				<li><a href="#" onclick="goPage('Day');">일별 통계</a></li>
+				<li><a href="#" onclick="goPage('Month');">월별 통계</a></li>
 			</ul>
 		</li>
 		<li><a href="#">교정/검증</a>

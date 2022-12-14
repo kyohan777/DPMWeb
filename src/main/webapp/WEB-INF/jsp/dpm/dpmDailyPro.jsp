@@ -43,7 +43,7 @@
                         <form id="frmDailyPro" role="form"  method="post"> 
                             <ul class="smbc-top-search">
                              	 <li>
-                                    <label>생성일자</label>
+                                    <label>수행일자</label>
                                     <div class="datepicker-wrap">
 										<input id="textPrcDt" name="textPrcDt" type="text" class="form-control "
 									     style="width: 130px; margin-right: 0px; padding-right: 30px;"

@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.type.TypeException;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -1633,9 +1630,73 @@ public class DpmController {
     
 
 
-    /********************************************* 
+    /******************************************************************************************
+     * 
+     * 
      * 분리보관
-     *********************************************/
+     * 
+     * 
+     ******************************************************************************************/
+    
+    
+    
+    /**
+     *  [IMR] 일일 처리 현황:: 일일 처리 현황 전체 cnt 조회
+     *  2022.12.08 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getDpmDailyProInfoTotRowCnt.do")
+    @ResponseBody
+    public ResponseStatisticsVo getDpmDailyProInfoTotRowCnt(StatisticsVO paramVO) {
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+        
+        try {
+        	StatisticsVO one = dpmService.getDpmDailyProInfoTotRowCnt(paramVO);
+            response.setTotRowCnt(one.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+        }
+        
+        return response;
+    }    
+    
+    /**
+     *  [IMR] 일일 처리 현황:: 일일 처리 현황 조회
+     *  2022.12.08 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getDpmDailyProInfo.do")
+    @ResponseBody
+    public ResponseStatisticsVo getDpmDailyProInfo(StatisticsVO paramVO) {
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+        
+        try {
+            List<StatisticsVO> list = dpmService.getDpmDailyProInfo(paramVO);
+//            for(StatisticsVO vo : list) {
+//                if(vo.getIntvisionImr() != null) {
+//                	JSONParser parser = new JSONParser();
+//                	Object obj = parser.parse( vo.getIntvisionImr() );
+//                	JSONObject jsonObj = (JSONObject) obj;
+//                } 
+//                
+//            }
+            response.setSelList(list);
+            response.setPageNumber(paramVO.getPageNumber());
+            response.setTotPageCnt(paramVO.getTotPageCnt());
+            response.setTotRowCnt(paramVO.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+            response.setSelList(new ArrayList<StatisticsVO>());
+        }
+        
+        return response;
+    }
     
     /**
      *  [IMR] 일별 통계:: 일별 통계 전체 cnt 조회

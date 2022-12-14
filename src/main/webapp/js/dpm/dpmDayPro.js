@@ -25,7 +25,7 @@ var onSelistfinger;
 var serverDate = modComm.getServerDate();
 var modDpmDayPro = (function(){    
     var totRowCnt = 0;
-    var gridHeight = 600;
+    var gridHeight = '100%';
 	/**
 	 * 초기화
 	 */	
@@ -256,9 +256,7 @@ var modDpmDayPro = (function(){
 	 * 엑셀출력
 	 */ 	
 	function excelWrite() {		
-		//조회조건 확인
-		//if(!getValidation()) return;	
-		
+
 		//조회조건
 		var objParam = {};
 		var arrForm = $("#frmDayPro").serializeArray();
@@ -276,7 +274,7 @@ var modDpmDayPro = (function(){
 			return;
 		} else {			
 			var frmDayPro = $("#frmDayPro")[0];
-			frmDayPro.action = "/dpm/dpm/dpmDayPro.do";
+			frmDayPro.action = "/dpm/selListDpmDayProExcel.do";
 			frmDayPro.method = "post";
 			frmDayPro.submit();			
 		}		

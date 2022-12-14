@@ -25,7 +25,7 @@ var onSelistfinger;
 var serverDate = modComm.getServerDate();
 var modDpmImrResViewerInfo = (function(){    
     var totRowCnt = 0;
-    var gridHeight = 600;
+    var gridHeight = '100%';
 	/**
 	 * 초기화
 	 */	

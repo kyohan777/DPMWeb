@@ -1466,6 +1466,64 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		WHERE ID_NO = #{idNo}
     
     </update>
+    
+    
+      <select id="getDpmDailyProInfo"
+        parameterType="com.minervasoft.backend.vo.StatisticsVO"
+        resultType="com.minervasoft.backend.vo.StatisticsVO"
+        >
+	SELECT *
+	FROM
+	(
+  		SELECT TA.*
+     		,ROWNUM RNUM
+  		FROM
+  	(   
+     	SELECT 
+			ELEMENTID AS ELEMENT_ID,
+			IMG_FILE_NAME ,
+			IMG_FORMAT_TYPE ,
+			CASE 
+				WHEN MASK_PRG_STSC ='10' THEN 'IMR 미처리'
+				WHEN MASK_PRG_STSC ='20' THEN 'IMR 진행중'
+				WHEN MASK_PRG_STSC ='80' THEN 'IMR 없음'
+				WHEN MASK_PRG_STSC ='90' THEN 'IMR 반영완료'
+			END AS MASK_PRG_STSC,
+			CASE 
+				WHEN USER_CONFIRM  = '01' THEN 'IMR 값 변동 없음'
+				WHEN USER_CONFIRM  = '90' THEN 'IMR 값 변동 있음'
+			END AS USER_CONFIRM,
+			CASE 
+				WHEN USER_UPDATE_YN  = '00' THEN '미검증'
+				WHEN USER_UPDATE_YN  = '90' THEN '검증'
+			END AS USER_UPDATE_YN ,
+			INTVISION_IMR 
+		FROM TB_EM_IMR_MASK_OBJ
+		WHERE 1=1
+		<if test='textPrcDt != null and textPrcDt !=""'>
+		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
+		</if>
+	ORDER BY PRC_DT 
+ 	) TA             
+    WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+ 	)
+	WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+    </select> 
+    
+    <!-- 일일 처리 현황 전체 cnt 값  -->
+    <select id="getDpmDailyProInfoTotRowCnt"
+    	 parameterType="com.minervasoft.backend.vo.StatisticsVO"
+        resultType="com.minervasoft.backend.vo.StatisticsVO"
+        >
+        SELECT 
+			COUNT(*) TOT_ROW_CNT
+		FROM TB_EM_IMR_MASK_OBJ
+		WHERE 1=1
+		<if test='textPrcDt != null and textPrcDt !=""'>
+		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
+		</if>
+		
+    </select>
 
        
 </mapper>
