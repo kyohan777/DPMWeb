@@ -67,7 +67,7 @@
                                 </ul>
                             </div>
                             <div class="smbc-data-wrap">
-                            <div class="smbc-data-con-wrap" style="display: flex; height: calc(100% - 10px);">
+                            <div class="smbc-data-con-wrap" style="display: flex; height: calc(100%);">
                            		 <div id='box-left'>
                            			 <div id="gridContainer">
 									<table id="jqGrid"></table>

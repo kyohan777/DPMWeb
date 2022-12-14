@@ -47,7 +47,7 @@
                                     <div class="datepicker-wrap">
 										<input id="textPrcDt" name="textPrcDt" type="text" class="form-control "
 									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
-										maxlength="10"> 
+										maxlength="10" autocomplete="off"> 
 										<span class="icon-calendar">
 										<img id="imgStartDt" img src="../images/icon-calendar.png" alt="달력">
 										</span>
