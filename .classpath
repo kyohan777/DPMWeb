@@ -30,5 +30,17 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/common-image-3.8.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/imageio-core-3.8.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/imageio-jpeg-3.8.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/imageio-metadata-3.8.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/imageio-tiff-3.8.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/jai-imageio-core-1.4.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/jai-imageio-jpeg2000-1.4.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/jbig2-imageio-3.0.4.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/sfviewer-4.1.8.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/tiff-2.0.5.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/common-io-3.8.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib_viewer/common-lang-3.8.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
