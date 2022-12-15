@@ -106,7 +106,7 @@
 .smbc-main-wrap .smbc-main-box .smbc-content-wrap {
   display: flex;
   width: 100%;
-  height: calc(100% - 78px);
+  height: calc(100% - 120px);
   padding: 0 10px;
   box-sizing: border-box;
 }
