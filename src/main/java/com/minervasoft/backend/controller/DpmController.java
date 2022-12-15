@@ -15,13 +15,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.type.TypeException;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -1682,14 +1682,30 @@ public class DpmController {
         
         try {
             List<StatisticsVO> list = dpmService.getDpmDailyProInfo(paramVO);
-//            for(StatisticsVO vo : list) {
-//                if(vo.getIntvisionImr() != null) {
-//                	JSONParser parser = new JSONParser();
-//                	Object obj = parser.parse( vo.getIntvisionImr() );
-//                	JSONObject jsonObj = (JSONObject) obj;
-//                } 
-//                
-//            }
+            for(StatisticsVO vo : list) {
+                if(vo.getIntvisionImr() != null) {
+                	//json string data 파싱하기
+                	String json = vo.getIntvisionImr(); 
+                	JSONParser parser = new JSONParser();
+                	Object obj = parser.parse(json);
+                	JSONObject jsonObj = (JSONObject) obj;
+                	System.out.println(jsonObj);
+                	
+                	vo.setAyn((String)jsonObj.get("A"));
+                	vo.setByn((String)jsonObj.get("B"));
+                	vo.setCyn((String)jsonObj.get("C"));
+                	vo.setDyn((String)jsonObj.get("D"));
+                	vo.setEyn((String)jsonObj.get("E"));
+                	vo.setTmRecvYn((String)jsonObj.get("TM_RECV_YN"));
+                	vo.setSmsRecvYn((String)jsonObj.get("SMS_RECV_YN"));
+                	vo.setDmRecvYn((String)jsonObj.get("DM_RECV_YN"));
+                	vo.setEmailRecvYn((String)jsonObj.get("EMAIL_RECV_YN"));
+                	vo.setTmOfferYn((String)jsonObj.get("TM_OFFER_YN"));
+                	vo.setDmOfferYn((String)jsonObj.get("DM_OFFER_YN"));
+                	vo.setEmailOfferYn((String)jsonObj.get("EMAIL_OFFER_YN"));
+                } 
+                
+            }
             response.setSelList(list);
             response.setPageNumber(paramVO.getPageNumber());
             response.setTotPageCnt(paramVO.getTotPageCnt());

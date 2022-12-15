@@ -61,7 +61,7 @@
 							<input id="gridAlignList" type="hidden" name="gridAligns">
    						</form>
                             <ul class="smbc-top-btn-wrap">
-                                <li class="search-btn"><button onclick="modDpmUserManageInfo.selList();">조회</button></li>
+                                <li class="search-btn"><button id="searchBtn">조회</button></li>
                             </ul>
                         </div>
                         <div class="smbc-data-wrap">

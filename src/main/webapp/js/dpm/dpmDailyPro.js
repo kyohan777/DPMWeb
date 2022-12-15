@@ -48,18 +48,18 @@ var modDpmDailyPro = (function(){
 	            { label: '마스킹 진행 상태', name: 'maskPrgStsc',      width: 120, align: 'center'},
 	            { label: '사용자 확인',     name: 'userConfirm',     width: 80, align: 'center'},	  
 	            { label: '수정/유지', 		 name: 'userUpdateYn',    width: 80, align: 'center'},
-	            { label: '금융안내', 	  	 name: 'aYn', 		   	  width: 80, align: 'center'},
-	            { label: '금융이외', 		 name: 'bYn', 		   	  width: 80, align: 'center'},
-	            { label: '보험제공', 	  	 name: 'cYn', 		   	  width: 80, align: 'center'},
-	            { label: '딜러제공', 		 name: 'dYn', 		      width: 80, align: 'center'},
-	            { label: 'KB제공', 		 name: 'eYn', 		      width: 80, align: 'center'},
-	            { label: '수집-전화', 		 name: 'tmRecvAgrYn', 	  width: 80, align: 'center'},
-	            { label: '수집-문자', 		 name: 'smsRecvAgrYn',    width: 80, align: 'center'},
-	            { label: '수집-DM', 		 name: 'dmRecvAgrYn', 	  width: 80, align: 'center'},
-	            { label: '수집-메일', 		 name: 'emailRecvAgrYn',  width: 80, align: 'center'},
-	            { label: '제공-전화', 		 name: 'tmOfferAgrYn',    width: 80, align: 'center'},
-	            { label: '제공-DM', 		 name: 'dmOfferAgrYn',    width: 80, align: 'center'},
-	            { label: '제공-메일', 		 name: 'emailOfferAgrYn', width: 80, align: 'center'}
+	            { label: '금융안내', 	  	 name: 'ayn', 		   	  width: 80, align: 'center'},
+	            { label: '금융이외', 		 name: 'byn', 		   	  width: 80, align: 'center'},
+	            { label: '보험제공', 	  	 name: 'cyn', 		   	  width: 80, align: 'center'},
+	            { label: '딜러제공', 		 name: 'dyn', 		      width: 80, align: 'center'},
+	            { label: 'KB제공', 		 name: 'eyn', 		      width: 80, align: 'center'},
+	            { label: '수집-전화', 		 name: 'tmRecvYn', 	      width: 80, align: 'center'},
+	            { label: '수집-문자', 		 name: 'smsRecvYn',       width: 80, align: 'center'},
+	            { label: '수집-DM', 		 name: 'dmRecvYn', 	      width: 80, align: 'center'},
+	            { label: '수집-메일', 		 name: 'emailRecvYn',     width: 80, align: 'center'},
+	            { label: '제공-전화', 		 name: 'tmOfferYn',       width: 80, align: 'center'},
+	            { label: '제공-DM', 		 name: 'dmOfferYn',       width: 80, align: 'center'},
+	            { label: '제공-메일', 		 name: 'emailOfferYn',    width: 80, align: 'center'}
 	        ],
 	       
 	        height: gridHeight,
@@ -267,11 +267,16 @@ $("#btnExcel").on("click", function() {
 	modDpmDailyPro.excelWrite();
 });
 
+$("#searchBtn").on("click", function() {
+	$("#prcDt").val();
+	modDpmDailyPro.selList();
+});
+
 /**
  * DOM  load 완료 시 실행
  */
 $(document).ready(function() {
 	modDpmDailyPro.init();
-	//modDpmDailyPro.selList();
+	modDpmDailyPro.selList();
 });
 //# sourceURL=dpm1010.js
