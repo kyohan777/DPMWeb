@@ -403,5 +403,13 @@ public class DpmServiceImpl implements DpmService {
 		// TODO Auto-generated method stub
 		return dpmDao.getDpmDailyProInfoTotRowCnt(paramVO);
 	}
+	
+	
+	@Override
+	public List<StatisticsVO> getDpmCalibVerifiInfo(StatisticsVO paramVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dpmDao.getDpmDailyProInfo(paramVO);
+	}
+	
 
 }

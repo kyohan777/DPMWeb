@@ -31,6 +31,9 @@ var modDpmCalibVerifiInfo = (function(){
 	 */	
 	function init() {
 		modComm.setDatepicker("textPrcDt","imgStartDt");
+		
+		console.log("init~~~~~");
+		
 		//마스터 그리드 초기화 시작
 		//$("#txtStartDt").val(modComm.getGridDateFormat(serverDate));
 		$("#jqGrid").jqGrid({
@@ -41,8 +44,8 @@ var modDpmCalibVerifiInfo = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: 'YYYY/MM/DD', name: 'prcDt',    	   align: 'center'},
-	            { label: '대상', 	       name: 'prcDtCnt', 	   align: 'center'},
+	            { label: 'elId', 	name: 'elementId',    	   align: 'center'},
+	            { label: '파일명',      name: 'imgFileName', 	   align: 'center'},
 	            { label: '정상', 		   name: 'prcCn',    	   align: 'center'},
 	            { label: '오류', 		   name: 'errCn',    	   align: 'center'},
 	            { label: '오류율', 	   name: 'errRat',   	   align: 'center'},
@@ -122,7 +125,11 @@ var modDpmCalibVerifiInfo = (function(){
 	        },
 	      //Row클릭 이벤트
 	        onSelectRow: function(rowid) {
-
+				var selRowData = $("#jqGrid").getRowData(rowid);
+				$thumbnails.setImg("/sfview/show_file.jsp?filename=" + selRowData.imgFileName);
+				
+				//$("#box-center").load("/sfview/example/viewer.html");
+				//alert(selRowData.imgFileName);
 	        },
 	        //셀더블클릭 이벤트 - deprecated
 	        ondblClickRow: function(rowid, iRow, iCol) {
@@ -176,7 +183,7 @@ var modDpmCalibVerifiInfo = (function(){
 	 */  	
 	function selTotalCount(objParam) {
 		totRowCnt = 0;
-		modAjax.request("/dpm/getDpmDayProInfoTotRowCnt.do", objParam,  {
+		modAjax.request("/dpm/getDpmDailyProInfoTotRowCnt.do", objParam,  {
 			async: false,
 			success: function(data) {				
 				if(!modComm.isEmpty(data) && data.rsYn == "Y" && data.hasOwnProperty("totRowCnt")) {
@@ -255,12 +262,37 @@ $("#btnExcel").on("click", function() {
 	modDpmCalibVerifiInfo.excelWrite();
 });
 
+
+
+var $thumbnails = null; 
+var $view = null; 
+
+    
+    
 /**
  * DOM  load 완료 시 실행
  */
 $(document).ready(function() {
+	console.log("ready~~~~~");
+	
+		
 	modDpmCalibVerifiInfo.init();
-	//modDpmCalibVerifiInfo.selList();
+	modDpmCalibVerifiInfo.selList();
+	
+	
+	$('#light').prop('disabled', false);
+	initViewer(function(_thumbnails, _view){
+            $thumbnails = _thumbnails;
+            $view = _view;
+            
+            //$.get('/sfview/list_file.jsp', { 'folder': '/' }, function(data){
+               // $thumbnails.setImg(data);
+            //});            
+        });
+        
 });
+
+
+
 
 //# sourceURL=dpm1010.js

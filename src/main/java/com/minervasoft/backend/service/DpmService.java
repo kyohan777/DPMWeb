@@ -165,6 +165,8 @@ public interface DpmService {
     //사용자 정보 삭제
     public int dleeteUserInfo(UserManageVo paramVO) throws Exception;
 
+    // 교정/검증 화면용 조회
+    public List<StatisticsVO> getDpmCalibVerifiInfo(StatisticsVO paramVO) throws Exception;
     
     
 }
