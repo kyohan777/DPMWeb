@@ -32,7 +32,7 @@ var modDpmDailyPro = (function(){
 	 */	
 	function init() {
 		//마스터 그리드 초기화 시작
-		modComm.setMonthpicker("textPrcDt","imgStartDt");
+		modComm.setDatepicker("textPrcDt","imgStartDt");
 		//마스터 그리드 초기화 시작
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언

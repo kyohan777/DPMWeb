@@ -10,30 +10,30 @@ public class StatisticsVO extends AbstractVO{
 	private String  prcRat;
 	private Integer verifyUpdateCn;
 	private Integer maintainCn;
-	private Integer aY;
-	private Integer aN;
-	private Integer bY;
-	private Integer bN;
-	private Integer cY;
-	private Integer cN;
-	private Integer dY;
-	private Integer dN;
-	private Integer eY;
-	private Integer eN;
-	private Integer tmRecvAgrY;
-	private Integer tmRecvAgrN;
-	private Integer smsRecvAgrY;
-	private Integer smsRecvAgrN;
-	private Integer dmRecvAgrY;
-	private Integer dmRecvAgrN;
-	private Integer emailRecvAgrY;
-	private Integer emailRecvAgrN;
-	private Integer tmOfferAgrY;
-	private Integer tmOfferAgrN;
-	private Integer dmOfferAgrY;
-	private Integer dmOfferAgrN;
-	private Integer emailOfferAgrY;
-	private Integer emailOfferAgrN;
+	private Integer ay;
+	private Integer an;
+	private Integer by;
+	private Integer bn;
+	private Integer cy;
+	private Integer cn;
+	private Integer dy;
+	private Integer dn;
+	private Integer ey;
+	private Integer en;
+	private Integer tmRecvY;
+	private Integer tmRecvN;
+	private Integer smsRecvY;
+	private Integer smsRecvN;
+	private Integer dmRecvY;
+	private Integer dmRecvN;
+	private Integer emailRecvY;
+	private Integer emailRecvN;
+	private Integer tmOfferY;
+	private Integer tmOfferN;
+	private Integer dmOfferY;
+	private Integer dmOfferN;
+	private Integer emailOfferY;
+	private Integer emailOfferN;
 	private Integer idNo;
 	private String  elementId;
 	private String  imgFileName;
@@ -46,18 +46,18 @@ public class StatisticsVO extends AbstractVO{
 	private String  gridWidths = "";
 	private String  gridAligns = "";
 	private String  excelDownYn = "";
-	private String  aYn;
-	private String  bYn;
-	private String  cYn;
-	private String  dYn;
-	private String  eYn;
-	private String  tmRecvAgrYn;
-	private String  smsRecvAgrYn;
-	private String  dmRecvAgrYn;
-	private String  emailRecvAgrYn;
-	private String  tmOfferAgrYn;
-	private String  dmOfferAgrYn;
-	private String  emailOfferAgrYn;
+	private String  ayn;
+	private String  byn;
+	private String  cyn;
+	private String  dyn;
+	private String  eyn;
+	private String  tmRecvYn;
+	private String  smsRecvYn;
+	private String  dmRecvYn;
+	private String  emailRecvYn;
+	private String  tmOfferYn;
+	private String  dmOfferYn;
+	private String  emailOfferYn;
 	private String  intvisionImr;
 	private Integer cgnRzt = 0;
 	private Integer pageNumber = 0;
@@ -180,150 +180,7 @@ public class StatisticsVO extends AbstractVO{
 	public void setCgnRzt(Integer cgnRzt) {
 		this.cgnRzt = cgnRzt;
 	}
-	public Integer getaY() {
-		return aY;
-	}
-	public void setaY(Integer aY) {
-		this.aY = aY;
-	}
-	public Integer getaN() {
-		return aN;
-	}
-	public void setaN(Integer aN) {
-		this.aN = aN;
-	}
-	public Integer getbY() {
-		return bY;
-	}
-	public void setbY(Integer bY) {
-		this.bY = bY;
-	}
-	public Integer getbN() {
-		return bN;
-	}
-	public void setbN(Integer bN) {
-		this.bN = bN;
-	}
-	public Integer getcY() {
-		return cY;
-	}
-	public void setcY(Integer cY) {
-		this.cY = cY;
-	}
-	public Integer getcN() {
-		return cN;
-	}
-	public void setcN(Integer cN) {
-		this.cN = cN;
-	}
-	public Integer getdY() {
-		return dY;
-	}
-	public void setdY(Integer dY) {
-		this.dY = dY;
-	}
-	public Integer getdN() {
-		return dN;
-	}
-	public void setdN(Integer dN) {
-		this.dN = dN;
-	}
-	public Integer geteY() {
-		return eY;
-	}
-	public void seteY(Integer eY) {
-		this.eY = eY;
-	}
-	public Integer geteN() {
-		return eN;
-	}
-	public void seteN(Integer eN) {
-		this.eN = eN;
-	}
-	public Integer getTmRecvAgrY() {
-		return tmRecvAgrY;
-	}
-	public void setTmRecvAgrY(Integer tmRecvAgrY) {
-		this.tmRecvAgrY = tmRecvAgrY;
-	}
-	public Integer getTmRecvAgrN() {
-		return tmRecvAgrN;
-	}
-	public void setTmRecvAgrN(Integer tmRecvAgrN) {
-		this.tmRecvAgrN = tmRecvAgrN;
-	}
-	public Integer getSmsRecvAgrY() {
-		return smsRecvAgrY;
-	}
-	public void setSmsRecvAgrY(Integer smsRecvAgrY) {
-		this.smsRecvAgrY = smsRecvAgrY;
-	}
-	public Integer getSmsRecvAgrN() {
-		return smsRecvAgrN;
-	}
-	public void setSmsRecvAgrN(Integer smsRecvAgrN) {
-		this.smsRecvAgrN = smsRecvAgrN;
-	}
-	public Integer getDmRecvAgrY() {
-		return dmRecvAgrY;
-	}
-	public void setDmRecvAgrY(Integer dmRecvAgrY) {
-		this.dmRecvAgrY = dmRecvAgrY;
-	}
-	public Integer getDmRecvAgrN() {
-		return dmRecvAgrN;
-	}
-	public void setDmRecvAgrN(Integer dmRecvAgrN) {
-		this.dmRecvAgrN = dmRecvAgrN;
-	}
-	public Integer getEmailRecvAgrY() {
-		return emailRecvAgrY;
-	}
-	public void setEmailRecvAgrY(Integer emailRecvAgrY) {
-		this.emailRecvAgrY = emailRecvAgrY;
-	}
-	public Integer getEmailRecvAgrN() {
-		return emailRecvAgrN;
-	}
-	public void setEmailRecvAgrN(Integer emailRecvAgrN) {
-		this.emailRecvAgrN = emailRecvAgrN;
-	}
-	public Integer getTmOfferAgrY() {
-		return tmOfferAgrY;
-	}
-	public void setTmOfferAgrY(Integer tmOfferAgrY) {
-		this.tmOfferAgrY = tmOfferAgrY;
-	}
-	public Integer getTmOfferAgrN() {
-		return tmOfferAgrN;
-	}
-	public void setTmOfferAgrN(Integer tmOfferAgrN) {
-		this.tmOfferAgrN = tmOfferAgrN;
-	}
-	public Integer getDmOfferAgrY() {
-		return dmOfferAgrY;
-	}
-	public void setDmOfferAgrY(Integer dmOfferAgrY) {
-		this.dmOfferAgrY = dmOfferAgrY;
-	}
-	public Integer getDmOfferAgrN() {
-		return dmOfferAgrN;
-	}
-	public void setDmOfferAgrN(Integer dmOfferAgrN) {
-		this.dmOfferAgrN = dmOfferAgrN;
-	}
-	public Integer getEmailOfferAgrY() {
-		return emailOfferAgrY;
-	}
-	public void setEmailOfferAgrY(Integer emailOfferAgrY) {
-		this.emailOfferAgrY = emailOfferAgrY;
-	}
-	public Integer getEmailOfferAgrN() {
-		return emailOfferAgrN;
-	}
-	public void setEmailOfferAgrN(Integer emailOfferAgrN) {
-		this.emailOfferAgrN = emailOfferAgrN;
-	}
+	
 	public Integer getIdNo() {
 		return idNo;
 	}
@@ -366,84 +223,229 @@ public class StatisticsVO extends AbstractVO{
 	public void setUserUpdateYn(String userUpdateYn) {
 		this.userUpdateYn = userUpdateYn;
 	}
-	public String getaYn() {
-		return aYn;
-	}
-	public void setaYn(String aYn) {
-		this.aYn = aYn;
-	}
-	public String getbYn() {
-		return bYn;
-	}
-	public void setbYn(String bYn) {
-		this.bYn = bYn;
-	}
-	public String getcYn() {
-		return cYn;
-	}
-	public void setcYn(String cYn) {
-		this.cYn = cYn;
-	}
-	public String getdYn() {
-		return dYn;
-	}
-	public void setdYn(String dYn) {
-		this.dYn = dYn;
-	}
-	public String geteYn() {
-		return eYn;
-	}
-	public void seteYn(String eYn) {
-		this.eYn = eYn;
-	}
-	public String getTmRecvAgrYn() {
-		return tmRecvAgrYn;
-	}
-	public void setTmRecvAgrYn(String tmRecvAgrYn) {
-		this.tmRecvAgrYn = tmRecvAgrYn;
-	}
-	public String getSmsRecvAgrYn() {
-		return smsRecvAgrYn;
-	}
-	public void setSmsRecvAgrYn(String smsRecvAgrYn) {
-		this.smsRecvAgrYn = smsRecvAgrYn;
-	}
-	public String getDmRecvAgrYn() {
-		return dmRecvAgrYn;
-	}
-	public void setDmRecvAgrYn(String dmRecvAgrYn) {
-		this.dmRecvAgrYn = dmRecvAgrYn;
-	}
-	public String getEmailRecvAgrYn() {
-		return emailRecvAgrYn;
-	}
-	public void setEmailRecvAgrYn(String emailRecvAgrYn) {
-		this.emailRecvAgrYn = emailRecvAgrYn;
-	}
-	public String getTmOfferAgrYn() {
-		return tmOfferAgrYn;
-	}
-	public void setTmOfferAgrYn(String tmOfferAgrYn) {
-		this.tmOfferAgrYn = tmOfferAgrYn;
-	}
-	public String getDmOfferAgrYn() {
-		return dmOfferAgrYn;
-	}
-	public void setDmOfferAgrYn(String dmOfferAgrYn) {
-		this.dmOfferAgrYn = dmOfferAgrYn;
-	}
-	public String getEmailOfferAgrYn() {
-		return emailOfferAgrYn;
-	}
-	public void setEmailOfferAgrYn(String emailOfferAgrYn) {
-		this.emailOfferAgrYn = emailOfferAgrYn;
-	}
 	public String getIntvisionImr() {
 		return intvisionImr;
 	}
 	public void setIntvisionImr(String intvisionImr) {
 		this.intvisionImr = intvisionImr;
 	}
+	public Integer getAy() {
+		return ay;
+	}
+	public void setAy(Integer ay) {
+		this.ay = ay;
+	}
+	public Integer getAn() {
+		return an;
+	}
+	public void setAn(Integer an) {
+		this.an = an;
+	}
+	public Integer getBy() {
+		return by;
+	}
+	public void setBy(Integer by) {
+		this.by = by;
+	}
+	public Integer getBn() {
+		return bn;
+	}
+	public void setBn(Integer bn) {
+		this.bn = bn;
+	}
+	public Integer getCy() {
+		return cy;
+	}
+	public void setCy(Integer cy) {
+		this.cy = cy;
+	}
+	public Integer getCn() {
+		return cn;
+	}
+	public void setCn(Integer cn) {
+		this.cn = cn;
+	}
+	public Integer getDy() {
+		return dy;
+	}
+	public void setDy(Integer dy) {
+		this.dy = dy;
+	}
+	public Integer getDn() {
+		return dn;
+	}
+	public void setDn(Integer dn) {
+		this.dn = dn;
+	}
+	public Integer getEy() {
+		return ey;
+	}
+	public void setEy(Integer ey) {
+		this.ey = ey;
+	}
+	public Integer getEn() {
+		return en;
+	}
+	public void setEn(Integer en) {
+		this.en = en;
+	}
+	public Integer getTmRecvY() {
+		return tmRecvY;
+	}
+	public void setTmRecvY(Integer tmRecvY) {
+		this.tmRecvY = tmRecvY;
+	}
+	public Integer getTmRecvN() {
+		return tmRecvN;
+	}
+	public void setTmRecvN(Integer tmRecvN) {
+		this.tmRecvN = tmRecvN;
+	}
+	public Integer getSmsRecvY() {
+		return smsRecvY;
+	}
+	public void setSmsRecvY(Integer smsRecvY) {
+		this.smsRecvY = smsRecvY;
+	}
+	public Integer getSmsRecvN() {
+		return smsRecvN;
+	}
+	public void setSmsRecvN(Integer smsRecvN) {
+		this.smsRecvN = smsRecvN;
+	}
+	public Integer getDmRecvY() {
+		return dmRecvY;
+	}
+	public void setDmRecvY(Integer dmRecvY) {
+		this.dmRecvY = dmRecvY;
+	}
+	public Integer getDmRecvN() {
+		return dmRecvN;
+	}
+	public void setDmRecvN(Integer dmRecvN) {
+		this.dmRecvN = dmRecvN;
+	}
+	public Integer getEmailRecvY() {
+		return emailRecvY;
+	}
+	public void setEmailRecvY(Integer emailRecvY) {
+		this.emailRecvY = emailRecvY;
+	}
+	public Integer getEmailRecvN() {
+		return emailRecvN;
+	}
+	public void setEmailRecvN(Integer emailRecvN) {
+		this.emailRecvN = emailRecvN;
+	}
+	public Integer getTmOfferY() {
+		return tmOfferY;
+	}
+	public void setTmOfferY(Integer tmOfferY) {
+		this.tmOfferY = tmOfferY;
+	}
+	public Integer getTmOfferN() {
+		return tmOfferN;
+	}
+	public void setTmOfferN(Integer tmOfferN) {
+		this.tmOfferN = tmOfferN;
+	}
+	public Integer getDmOfferY() {
+		return dmOfferY;
+	}
+	public void setDmOfferY(Integer dmOfferY) {
+		this.dmOfferY = dmOfferY;
+	}
+	public Integer getDmOfferN() {
+		return dmOfferN;
+	}
+	public void setDmOfferN(Integer dmOfferN) {
+		this.dmOfferN = dmOfferN;
+	}
+	public Integer getEmailOfferY() {
+		return emailOfferY;
+	}
+	public void setEmailOfferY(Integer emailOfferY) {
+		this.emailOfferY = emailOfferY;
+	}
+	public Integer getEmailOfferN() {
+		return emailOfferN;
+	}
+	public void setEmailOfferN(Integer emailOfferN) {
+		this.emailOfferN = emailOfferN;
+	}
+	public String getAyn() {
+		return ayn;
+	}
+	public void setAyn(String ayn) {
+		this.ayn = ayn;
+	}
+	public String getByn() {
+		return byn;
+	}
+	public void setByn(String byn) {
+		this.byn = byn;
+	}
+	public String getCyn() {
+		return cyn;
+	}
+	public void setCyn(String cyn) {
+		this.cyn = cyn;
+	}
+	public String getDyn() {
+		return dyn;
+	}
+	public void setDyn(String dyn) {
+		this.dyn = dyn;
+	}
+	public String getEyn() {
+		return eyn;
+	}
+	public void setEyn(String eyn) {
+		this.eyn = eyn;
+	}
+	public String getTmRecvYn() {
+		return tmRecvYn;
+	}
+	public void setTmRecvYn(String tmRecvYn) {
+		this.tmRecvYn = tmRecvYn;
+	}
+	public String getSmsRecvYn() {
+		return smsRecvYn;
+	}
+	public void setSmsRecvYn(String smsRecvYn) {
+		this.smsRecvYn = smsRecvYn;
+	}
+	public String getDmRecvYn() {
+		return dmRecvYn;
+	}
+	public void setDmRecvYn(String dmRecvYn) {
+		this.dmRecvYn = dmRecvYn;
+	}
+	public String getEmailRecvYn() {
+		return emailRecvYn;
+	}
+	public void setEmailRecvYn(String emailRecvYn) {
+		this.emailRecvYn = emailRecvYn;
+	}
+	public String getTmOfferYn() {
+		return tmOfferYn;
+	}
+	public void setTmOfferYn(String tmOfferYn) {
+		this.tmOfferYn = tmOfferYn;
+	}
+	public String getDmOfferYn() {
+		return dmOfferYn;
+	}
+	public void setDmOfferYn(String dmOfferYn) {
+		this.dmOfferYn = dmOfferYn;
+	}
+	public String getEmailOfferYn() {
+		return emailOfferYn;
+	}
+	public void setEmailOfferYn(String emailOfferYn) {
+		this.emailOfferYn = emailOfferYn;
+	}
+	
 	
 	
 	
