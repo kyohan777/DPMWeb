@@ -1495,11 +1495,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 				WHEN USER_CONFIRM  = '90' THEN 'IMR 값 변동 있음'
 				ELSE ' ' 
 			END AS USER_CONFIRM,
-			CASE 
-				WHEN USER_UPDATE_YN  = '00' THEN '미검증'
-				WHEN USER_UPDATE_YN  = '90' THEN '검증'
-				ELSE ' '
-			END AS USER_UPDATE_YN ,
 			INTVISION_IMR 
 		FROM TB_EM_IMR_MASK_OBJ
 		WHERE 1=1
