@@ -7,15 +7,6 @@
   *   수정일       수정자                   수정내용
   *  -------    --------    ---------------------------
   *  2022.12.06             최초 생성
-  *
-  *  
-  *  ------------------------------------------------
-  *  jqGrid 4.7.0  jQuery Grid
-  *  Copyright (c) 2008, Tony Tomov, tony@trirand.com
-  *  Dual licensed under the MIT and GPL licenses
-  *  http://www.opensource.org/licenses/mit-license.php
-  *  http://www.gnu.org/licenses/gpl-2.0.html
-  *  Date: 2014-12-08  
   *  ------------------------------------------------
  */
 var currntPageIndex;
@@ -25,13 +16,12 @@ var onSelistfinger;
 var serverDate = modComm.getServerDate();
 
 var modDpmDailyPro = (function(){    
-    var totRowCnt = 0;
+    var totRowCnt  = 0;
     var gridHeight = '100%';
 	/**
 	 * 초기화
 	 */	
 	function init() {
-		//마스터 그리드 초기화 시작
 		modComm.setDatepicker("textPrcDt","imgStartDt");
 		//마스터 그리드 초기화 시작
 		$("#jqGrid").jqGrid({
@@ -42,31 +32,30 @@ var modDpmDailyPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '고유 ID', 	     name: 'elementId',  	  width: 150,align: 'center'},
-	            { label: '이미지 파일명',    name: 'imgFileName',     width: 100,align: 'center'},
-	            { label: '이미지 포맷',     name: 'imgFormatType',    width: 80, align: 'center'},
-	            { label: '마스킹 진행 상태', name: 'maskPrgStsc',      width: 120, align: 'center'},
-	            { label: '사용자 확인',     name: 'userConfirm',     width: 80, align: 'center'},	  
-	            { label: '수정/유지', 		 name: 'userUpdateYn',    width: 80, align: 'center'},
-	            { label: '금융안내', 	  	 name: 'ayn', 		   	  width: 80, align: 'center'},
-	            { label: '금융이외', 		 name: 'byn', 		   	  width: 80, align: 'center'},
-	            { label: '보험제공', 	  	 name: 'cyn', 		   	  width: 80, align: 'center'},
-	            { label: '딜러제공', 		 name: 'dyn', 		      width: 80, align: 'center'},
-	            { label: 'KB제공', 		 name: 'eyn', 		      width: 80, align: 'center'},
-	            { label: '수집-전화', 		 name: 'tmRecvYn', 	      width: 80, align: 'center'},
-	            { label: '수집-문자', 		 name: 'smsRecvYn',       width: 80, align: 'center'},
-	            { label: '수집-DM', 		 name: 'dmRecvYn', 	      width: 80, align: 'center'},
-	            { label: '수집-메일', 		 name: 'emailRecvYn',     width: 80, align: 'center'},
-	            { label: '제공-전화', 		 name: 'tmOfferYn',       width: 80, align: 'center'},
-	            { label: '제공-DM', 		 name: 'dmOfferYn',       width: 80, align: 'center'},
-	            { label: '제공-메일', 		 name: 'emailOfferYn',    width: 80, align: 'center'}
+	            { label: '고유 ID', 	     name: 'elementId',  	  align: 'center'},
+	            { label: '이미지 파일명',    name: 'imgFileName',     align: 'center'},
+	            { label: '이미지 포맷',     name: 'imgFormatType',   align: 'center'},
+	            { label: '마스킹 진행 상태', name: 'maskPrgStsc',     align: 'center'},
+	            { label: '사용자 확인',     name: 'userConfirm',     align: 'center'},	  
+	            { label: '수정/유지', 		 name: 'userUpdateYn',    align: 'center'},
+	            { label: '금융안내', 	  	 name: 'ayn', 		   	  align: 'center'},
+	            { label: '금융이외', 		 name: 'byn', 		   	  align: 'center'},
+	            { label: '보험제공', 	  	 name: 'cyn', 		   	  align: 'center'},
+	            { label: '딜러제공', 		 name: 'dyn', 		      align: 'center'},
+	            { label: 'KB제공', 		 name: 'eyn', 		      align: 'center'},
+	            { label: '수집-전화', 		 name: 'tmRecvYn', 	      align: 'center'},
+	            { label: '수집-문자', 		 name: 'smsRecvYn',       align: 'center'},
+	            { label: '수집-DM', 		 name: 'dmRecvYn', 	      align: 'center'},
+	            { label: '수집-메일', 		 name: 'emailRecvYn',     align: 'center'},
+	            { label: '제공-전화', 		 name: 'tmOfferYn',       align: 'center'},
+	            { label: '제공-DM', 		 name: 'dmOfferYn',       align: 'center'},
+	            { label: '제공-메일', 		 name: 'emailOfferYn',    align: 'center'}
 	        ],
 	       
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
 	        rownumbers: false,
-	        rownumWidth : 40,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,

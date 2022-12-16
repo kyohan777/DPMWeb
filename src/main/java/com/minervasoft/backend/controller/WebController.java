@@ -347,11 +347,16 @@ public class WebController {
      * @return
      */
     @RequestMapping(value = "/dpm/dpmDailyPro.do")
-    public String dpmDailyPro(StatisticsVO loginInfoVO,ModelMap modelMap,HttpServletRequest request) {
+    public String dpmDailyPro(StatisticsVO pramVo,ModelMap modelMap,HttpServletRequest request) {
     	HttpSession session = request.getSession();
         LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
         try {   
         	modelMap.addAttribute("chrrId", loginVO.getChrrId());
+        	//월별 통계 row 클릭시 prcDt 전달 값 셋팅
+        	if(pramVo.getPrcDt() != "" && pramVo.getPrcDt() != null) 
+        	{
+        		modelMap.addAttribute("prcDt",pramVo.getPrcDt());
+        	}	
         } catch(Exception e) {
             e.printStackTrace();
         }

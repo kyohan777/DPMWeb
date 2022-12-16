@@ -22,7 +22,7 @@
   *  ------------------------------------------------
   */
 %>
-<html  style="height: 99%;">
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=10"> 
@@ -55,6 +55,7 @@
                                 </li>
                             </ul>
                             <!-- 엑셀출력을 위한 컬럼정보 -->
+                            <input id="prcDt" type="hidden" name="prcDt" value="${prcDt}">
 							<input id="gridLabelList" type="hidden" name="gridLabels"> 
 							<input id="gridNameList"  type="hidden" name="gridNames"> 
 							<input id="gridWidthList" type="hidden" name="gridWidths"> 

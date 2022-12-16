@@ -7,15 +7,6 @@
   *   수정일       수정자                   수정내용
   *  -------    --------    ---------------------------
   *  2022.12.06             최초 생성
-  *
-  *  
-  *  ------------------------------------------------
-  *  jqGrid 4.7.0  jQuery Grid
-  *  Copyright (c) 2008, Tony Tomov, tony@trirand.com
-  *  Dual licensed under the MIT and GPL licenses
-  *  http://www.opensource.org/licenses/mit-license.php
-  *  http://www.gnu.org/licenses/gpl-2.0.html
-  *  Date: 2014-12-08  
   *  ------------------------------------------------
  */
 var currntPageIndex;
@@ -26,9 +17,6 @@ var serverDate = modComm.getServerDate();
 var modDpmDayPro = (function(){    
     var totRowCnt = 0;
     var gridHeight = '100%';
-	/**
-	 * 초기화
-	 */	
 	function init() {
 		modComm.setDatepicker("textPrcDt","imgStartDt");
 		//마스터 그리드 초기화 시작
@@ -61,18 +49,18 @@ var modDpmDayPro = (function(){
 	            { label: '미동의', 	   name: 'en', 		       width: 80, align: 'center'},
 	            { label: '동의', 		   name: 'tmRecvY', 	   width: 80, align: 'center'},
 	            { label: '미동의', 	   name: 'tmRecvN', 	   width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'smsRecvY',    width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'smsRecvN',    width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'smsRecvY',       width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'smsRecvN',       width: 80, align: 'center'},
 	            { label: '동의', 		   name: 'dmRecvY', 	   width: 80, align: 'center'},
 	            { label: '미동의', 	   name: 'dmRecvN', 	   width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'emailRecvY',  width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'emailRecvN',  width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'tmOfferY',    width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'tmOfferN',    width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'dmOfferY',    width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'dmOfferN',    width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'emailOfferY', width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'emailOfferN', width: 80, align: 'center'}
+	            { label: '동의', 		   name: 'emailRecvY',     width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'emailRecvN',     width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'tmOfferY',       width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'tmOfferN',       width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'dmOfferY',       width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'dmOfferN',       width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'emailOfferY',    width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'emailOfferN',    width: 80, align: 'center'}
 	            
 	        ],
 	       
@@ -148,7 +136,12 @@ var modDpmDayPro = (function(){
 	        },
 	      //Row클릭 이벤트
 	        onSelectRow: function(rowid) {
-
+				var rowdata = 	$("#jqGrid").getRowData(rowid);
+				$("#prcDt").val(rowdata.prcDt);
+				var frmDayPro = $("#frmDayPro")[0];
+				frmDayPro.action = "/dpm/dpmDailyPro.do";
+				frmDayPro.method = "post";
+				frmDayPro.submit();			
 	        },
 	        //셀더블클릭 이벤트 - deprecated
 	        ondblClickRow: function(rowid, iRow, iCol) {
