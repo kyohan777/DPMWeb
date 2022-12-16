@@ -32,8 +32,6 @@ var modDpmCalibVerifiInfo = (function(){
 	function init() {
 		modComm.setDatepicker("textPrcDt","imgStartDt");
 		
-		console.log("init~~~~~");
-		
 		//마스터 그리드 초기화 시작
 		//$("#txtStartDt").val(modComm.getGridDateFormat(serverDate));
 		$("#jqGrid").jqGrid({
@@ -44,13 +42,12 @@ var modDpmCalibVerifiInfo = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: 'elId', 	name: 'elementId',    	   align: 'center'},
-	            { label: '파일명',      name: 'imgFileName', 	   align: 'center'},
-	            { label: '정상', 		   name: 'prcCn',    	   align: 'center'},
-	            { label: '오류', 		   name: 'errCn',    	   align: 'center'},
-	            { label: '오류율', 	   name: 'errRat',   	   align: 'center'},
-	            { label: '처리율', 	   name: 'prcRat',         align: 'center'},	  
-	            { label: '수정', 		   name: 'verifyUpdateCn', align: 'center'}
+	            { label: '엘리먼트ID',   name: 'elementId',    	   align: 'center'},
+	            { label: '파일명',       name: 'imgFileName', 	   align: 'center'},
+	            { label: '최초탐지페이지', name: 'fstImrPage',    	   align: 'center'},
+	            { label: '검증여부', 	   name: 'userConfirm',    	   align: 'center'},
+	            { label: '수정/유지', 	   name: 'userUpdateYn',   	   align: 'center'},
+	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'center'}
 	        ],
 	       
 	        height: gridHeight,
@@ -127,7 +124,7 @@ var modDpmCalibVerifiInfo = (function(){
 	        onSelectRow: function(rowid) {
 				var selRowData = $("#jqGrid").getRowData(rowid);
 				
-				$("#viwerIframe").get(0).contentWindow.viewerSetImg('/' + selRowData.imgFileName);
+				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
 				
 				//$thumbnails.setImg("/sfview/show_file.jsp?filename=" + selRowData.imgFileName);
 				//$thumbnails.setImg("/showFile.do?filename=" + selRowData.imgFileName);

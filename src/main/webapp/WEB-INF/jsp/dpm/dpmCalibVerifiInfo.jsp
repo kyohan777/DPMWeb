@@ -23,18 +23,19 @@
     
     <style>
     #box-left {
- 		 flex: 1;
+ 		 flex: 3;
 	}
 	#box-center {
-  		flex: 1;
+  		flex: 3;
   		
 	}
 	#box-right {
-		flex: 1;
+		flex: 2;
 	}
 	#mkTable > tr{
-	height : 50px
+	height : 40px
 	}
+	
 
     </style>
 </head>
@@ -118,64 +119,64 @@
                                         </thead>
                                         <tbody id="mkTable">
                                             <tr>
-                                                <td>금융상품안내 및 이용권유를 위한 수집, 이용</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">금융상품안내 및 이용권유를 위한 수집, 이용</td>
+                                                <td><input type ="radio" name="A" value="N"></td>
+                                                <td><input type ="radio" name="A" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>금융상품 이외의 서비스 안내 및 이용권유를 위한 수집,이용</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">금융상품 이외의 서비스 안내 및 이용권유를 위한 수집,이용</td>
+                                                <td><input type ="radio" name="B" value="N"></td>
+                                                <td><input type ="radio" name="B" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>업무제휴계약을 체결한 제휴 보험사에 제공</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">업무제휴계약을 체결한 제휴 보험사에 제공</td>
+                                                <td><input type ="radio" name="C" value="N"></td>
+                                                <td><input type ="radio" name="C" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>업무제휴계약을 체결한 제휴 딜러사에 제공</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">업무제휴계약을 체결한 제휴 딜러사에 제공</td>
+                                                <td><input type ="radio" name="D" value="N"></td>
+                                                <td><input type ="radio" name="D" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>KB국민은행 등 KB금융 그룹 내 자회사에 제공</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">KB국민은행 등 KB금융 그룹 내 자회사에 제공</td>
+                                                <td><input type ="radio" name="E" value="N"></td>
+                                                <td><input type ="radio" name="E" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>[수집 마케팅] 전화 수신 동의</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">[수집 마케팅] 전화 수신 동의</td>
+                                                <td><input type ="radio" name="TM_RECV_YN" value="N"></td>
+                                                <td><input type ="radio" name="TM_RECV_YN" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>[수집 마케팅] 문자(SMS) 수신 동의</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">[수집 마케팅] 문자(SMS) 수신 동의</td>
+                                                <td><input type ="radio" name="SMS_RECV_YN" value="N"></td>
+                                                <td><input type ="radio" name="SMS_RECV_YN" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>[수집 마케팅] DM 수신 동의 (우편을 DM으로 인식)</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">[수집 마케팅] DM 수신 동의 (우편을 DM으로 인식)</td>
+                                                <td><input type ="radio" name="DM_RECV_YN" value="N"></td>
+                                                <td><input type ="radio" name="DM_RECV_YN" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>[수집 마케팅] 이메일 수신 동의</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">[수집 마케팅] 이메일 수신 동의</td>
+                                                <td><input type ="radio" name="EMAIL_RECV_YN" value="N"></td>
+                                                <td><input type ="radio" name="EMAIL_RECV_YN" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>[제공 마케팅] 전화 제공 동의</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">[제공 마케팅] 전화 제공 동의</td>
+                                                <td><input type ="radio" name="TM_OFFER_YN" value="N"></td>
+                                                <td><input type ="radio" name="TM_OFFER_YN" value="Y"></td>
                                             </tr>
                                              <tr>
-                                                <td>[제공 마케팅] 이메일 제공 동의</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">[제공 마케팅] 이메일 제공 동의</td>
+                                                <td><input type ="radio" name="EMAIL_OFFER_YN" value="N"></td>
+                                                <td><input type ="radio" name="EMAIL_OFFER_YN" value="Y"></td>
                                             </tr>
                                             <tr>
-                                                <td>[제공 마케팅] DM 제공 동의</td>
-                                                <td><input type ="checkbox"></td>
-                                                <td><input type ="checkbox"></td>
+                                                <td style="text-align: left">[제공 마케팅] DM 제공 동의</td>
+                                                <td><input type ="radio" name="DM_OFFER_YN" value="N"></td>
+                                                <td><input type ="radio" name="DM_OFFER_YN" value="Y"></td>
                                             </tr>
                                         </tbody>
                                     </table>

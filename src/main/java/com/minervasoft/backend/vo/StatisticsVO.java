@@ -64,8 +64,16 @@ public class StatisticsVO extends AbstractVO{
 	private Integer totPageCnt = 0;
 	private Integer totRowCnt  = 0;
 	private Integer pageSize   = 0;
+	private Integer fstImrPage  = 0;
 	
 	
+	
+	public Integer getFstImrPage() {
+		return fstImrPage;
+	}
+	public void setFstImrPage(Integer fstImrPage) {
+		this.fstImrPage = fstImrPage;
+	}
 	public String getPrcDt() {
 		return prcDt;
 	}
