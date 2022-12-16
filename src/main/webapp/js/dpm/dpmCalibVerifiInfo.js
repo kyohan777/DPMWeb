@@ -126,8 +126,21 @@ var modDpmCalibVerifiInfo = (function(){
 	      //Row클릭 이벤트
 	        onSelectRow: function(rowid) {
 				var selRowData = $("#jqGrid").getRowData(rowid);
-				$thumbnails.setImg("/sfview/show_file.jsp?filename=" + selRowData.imgFileName);
 				
+				$("#viwerIframe").get(0).contentWindow.viewerSetImg('/' + selRowData.imgFileName);
+				
+				//$thumbnails.setImg("/sfview/show_file.jsp?filename=" + selRowData.imgFileName);
+				//$thumbnails.setImg("/showFile.do?filename=" + selRowData.imgFileName);
+				
+				/*
+				var data = [
+					 ["/sfview/show_file.jsp?filename=/g4_no_ext", "ccitt g4"],
+					 ["/sfview/show_file.jsp?filename=/lzwc.tif", "lzwc.tif"],
+					 ["/sfview/show_file.jsp?filename=/jpeg_5page.tif", "jpeg_5page.tif"],
+					 ["/sfview/show_file.jsp?filename=/100.pdf","100.pdf"]
+				 ]; 
+				$thumbnails.setImg(data);
+				*/
 				//$("#box-center").load("/sfview/example/viewer.html");
 				//alert(selRowData.imgFileName);
 	        },
@@ -280,6 +293,9 @@ $(document).ready(function() {
 	modDpmCalibVerifiInfo.selList();
 	
 	
+	viwerIframe.src = '/sfview/viewer.jsp';
+	
+	/*
 	$('#light').prop('disabled', false);
 	initViewer(function(_thumbnails, _view){
             $thumbnails = _thumbnails;
@@ -289,7 +305,7 @@ $(document).ready(function() {
                // $thumbnails.setImg(data);
             //});            
         });
-        
+    */    
 });
 
 

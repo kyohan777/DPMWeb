@@ -7,6 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMBC 전자문서 관리시스템</title>
+    
+    <link rel="stylesheet alternative" href="/sfview/theme/dark/css/viewer.css" class="alternative" disabled id="dark">
+    <link rel="stylesheet alternative" href="/sfview/theme/light/css/viewer.css" class="alternative" disabled id="light">
+    <script src="/sfview/js/jquery-3.6.0.min.js"></script>
+    <script src="/sfview/js/jszip.min.js"></script>
+
+    <script src="/sfview/theme/js/toolbar.js"></script>
+    <script src="/sfview/theme/js/page_control.js"></script>
+
+    <script src="/sfview/js/event_map.js"></script>
+    <script src="/sfview/js/thumbnails.js"></script>
+    <script src="/sfview/js/view.js"></script>
+    
+    
     <style>
     #box-left {
  		 flex: 1;
@@ -21,6 +35,7 @@
 	#mkTable > tr{
 	height : 50px
 	}
+
     </style>
 </head>
 <body>
@@ -74,7 +89,17 @@
 									<div id="jqGridPager"></div>
 									</div>
                             	</div>
-                            	<div id='box-center'></div>
+                            	
+                            	<div id='box-center'>
+                            	<iframe src="" id="viwerIframe"
+                            			width="100%" 
+	  									height="100%" 
+							            frameborder="0" 
+							            allowfullscreen 
+							            >
+							    </iframe>
+                            	</div>
+                            	
                             	<div id='box-right'>
                             	 <div class="smbc-data-con-wrap">
                                 <div class="smbc-data-grid-wrap">
