@@ -44,9 +44,10 @@ var modDpmCalibVerifiInfo = (function(){
 	        colModel: [
 	            { label: '엘리먼트ID',   name: 'elementId',    	   align: 'center'},
 	            { label: '파일명',       name: 'imgFileName', 	   align: 'center'},
-	            { label: '최초탐지페이지', name: 'fstImrPage',    	   align: 'center'},
-	            { label: '검증여부', 	   name: 'userConfirm',    	   align: 'center'},
-	            { label: '수정/유지', 	   name: 'userUpdateYn',   	   align: 'center'},
+	            { label: '진행상태',     name: 'maskPrgStsc', 	   align: 'center', width: '80px'},
+	            { label: '최초탐지페이지', name: 'fstImrPage',    	   align: 'center', width: '60px'},
+	            { label: '검증여부', 	   name: 'userConfirm',    	   align: 'center', width: '90px'},
+	            { label: '수정/유지', 	   name: 'userUpdateYn',   	   align: 'center', width: '90px'},
 	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'center'}
 	        ],
 	       
@@ -123,23 +124,42 @@ var modDpmCalibVerifiInfo = (function(){
 	      //Row클릭 이벤트
 	        onSelectRow: function(rowid) {
 				var selRowData = $("#jqGrid").getRowData(rowid);
-				
 				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
 				
-				//$thumbnails.setImg("/sfview/show_file.jsp?filename=" + selRowData.imgFileName);
-				//$thumbnails.setImg("/showFile.do?filename=" + selRowData.imgFileName);
+				var intvisionImr = selRowData.intvisionImr;
+				if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
+					var jsonImr = JSON.parse(intvisionImr);
+					
+					$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
+					$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
+					$("input:radio[name='C']:radio[value='" + jsonImr.C + "']").prop('checked', true);
+					$("input:radio[name='D']:radio[value='" + jsonImr.D + "']").prop('checked', true);
+					$("input:radio[name='E']:radio[value='" + jsonImr.E + "']").prop('checked', true);
+					
+					$("input:radio[name='TM_RECV_YN']:radio[value='" + jsonImr.TM_RECV_YN + "']").prop('checked', true);
+					$("input:radio[name='SMS_RECV_YN']:radio[value='" + jsonImr.SMS_RECV_YN + "']").prop('checked', true);
+					$("input:radio[name='DM_RECV_YN']:radio[value='" + jsonImr.DM_RECV_YN + "']").prop('checked', true);
+					$("input:radio[name='EMAIL_RECV_YN']:radio[value='" + jsonImr.EMAIL_RECV_YN + "']").prop('checked', true);
+					$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
+					$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
+					$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
+					
+				} else {
+					$("input:radio[name='A']").prop('checked', false);
+					$("input:radio[name='B']").prop('checked', false);
+					$("input:radio[name='C']").prop('checked', false);
+					$("input:radio[name='D']").prop('checked', false);
+					$("input:radio[name='E']").prop('checked', false);
+					
+					$("input:radio[name='TM_RECV_YN']").prop('checked', false);
+					$("input:radio[name='SMS_RECV_YN']").prop('checked', false);
+					$("input:radio[name='DM_RECV_YN']").prop('checked', false);
+					$("input:radio[name='EMAIL_RECV_YN']").prop('checked', false);
+					$("input:radio[name='TM_OFFER_YN']").prop('checked', false);
+					$("input:radio[name='EMAIL_OFFER_YN']").prop('checked', false);
+					$("input:radio[name='DM_OFFER_YN']").prop('checked', false);
+				}
 				
-				/*
-				var data = [
-					 ["/sfview/show_file.jsp?filename=/g4_no_ext", "ccitt g4"],
-					 ["/sfview/show_file.jsp?filename=/lzwc.tif", "lzwc.tif"],
-					 ["/sfview/show_file.jsp?filename=/jpeg_5page.tif", "jpeg_5page.tif"],
-					 ["/sfview/show_file.jsp?filename=/100.pdf","100.pdf"]
-				 ]; 
-				$thumbnails.setImg(data);
-				*/
-				//$("#box-center").load("/sfview/example/viewer.html");
-				//alert(selRowData.imgFileName);
 	        },
 	        //셀더블클릭 이벤트 - deprecated
 	        ondblClickRow: function(rowid, iRow, iCol) {
@@ -290,22 +310,16 @@ $(document).ready(function() {
 	modDpmCalibVerifiInfo.selList();
 	
 	
-	viwerIframe.src = '/sfview/viewer.jsp';
+	//viwerIframe.src = '/sfview/viewer.jsp';
 	
-	/*
-	$('#light').prop('disabled', false);
-	initViewer(function(_thumbnails, _view){
-            $thumbnails = _thumbnails;
-            $view = _view;
-            
-            //$.get('/sfview/list_file.jsp', { 'folder': '/' }, function(data){
-               // $thumbnails.setImg(data);
-            //});            
-        });
-    */    
+	
 });
 
 
+
+String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g,"");
+}
 
 
 //# sourceURL=dpm1010.js

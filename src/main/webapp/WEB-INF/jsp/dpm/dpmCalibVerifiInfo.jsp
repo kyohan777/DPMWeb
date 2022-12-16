@@ -92,7 +92,7 @@
                             	</div>
                             	
                             	<div id='box-center'>
-                            	<iframe src="" id="viwerIframe"
+                            	<iframe src="/sfview/viewer.jsp" id="viwerIframe"
                             			width="100%" 
 	  									height="100%" 
 							            frameborder="0" 
@@ -120,23 +120,23 @@
                                         <tbody id="mkTable">
                                             <tr>
                                                 <td style="text-align: left">금융상품안내 및 이용권유를 위한 수집, 이용</td>
-                                                <td><input type ="radio" name="A" value="N"></td>
-                                                <td><input type ="radio" name="A" value="Y"></td>
+                                                <td><input type ="radio" name="A" id="A_N" value="N"></td>
+                                                <td><input type ="radio" name="A" id="A_Y" value="Y"></td>
                                             </tr>
                                              <tr>
                                                 <td style="text-align: left">금융상품 이외의 서비스 안내 및 이용권유를 위한 수집,이용</td>
-                                                <td><input type ="radio" name="B" value="N"></td>
-                                                <td><input type ="radio" name="B" value="Y"></td>
+                                                <td><input type ="radio" name="B" id="B_N" value="N"></td>
+                                                <td><input type ="radio" name="B" id="B_Y" value="Y"></td>
                                             </tr>
                                              <tr>
                                                 <td style="text-align: left">업무제휴계약을 체결한 제휴 보험사에 제공</td>
-                                                <td><input type ="radio" name="C" value="N"></td>
-                                                <td><input type ="radio" name="C" value="Y"></td>
+                                                <td><input type ="radio" name="C" id="C_N" value="N"></td>
+                                                <td><input type ="radio" name="C" id="C_Y" value="Y"></td>
                                             </tr>
                                              <tr>
                                                 <td style="text-align: left">업무제휴계약을 체결한 제휴 딜러사에 제공</td>
-                                                <td><input type ="radio" name="D" value="N"></td>
-                                                <td><input type ="radio" name="D" value="Y"></td>
+                                                <td><input type ="radio" name="D" id="D_N" value="N"></td>
+                                                <td><input type ="radio" name="D" id="D_Y" value="Y"></td>
                                             </tr>
                                              <tr>
                                                 <td style="text-align: left">KB국민은행 등 KB금융 그룹 내 자회사에 제공</td>
