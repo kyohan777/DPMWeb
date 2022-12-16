@@ -1143,24 +1143,24 @@
 		PRC_DT_CNT-D 				  AS DN,
 		E 			 				  AS EY,
 		PRC_DT_CNT-E 				  AS EN,
-		TM_RECV_AGR_YN 			      AS TM_RECV_Y,
-		PRC_DT_CNT-TM_RECV_AGR_YN     AS TM_RECV_N,
-		SMS_RECV_AGR_YN 		      AS SMS_RECV_Y,
-		PRC_DT_CNT-SMS_RECV_AGR_YN    AS SMS_RECV_N,
-		DM_RECV_AGR_YN 			  	  AS DM_RECV_Y,
-		PRC_DT_CNT-DM_RECV_AGR_YN 	  AS DM_RECV_N,
-		EMAIL_RECV_AGR_YN 			  AS EMAIL_RECV_Y,
-		PRC_DT_CNT-EMAIL_RECV_AGR_YN  AS EMAIL_RECV_N,
-		TM_OFFER_AGR_YN 			  AS TM_OFFER_Y,
-		PRC_DT_CNT-TM_OFFER_AGR_YN    AS TM_OFFER_N,
-		DM_OFFER_AGR_YN 			  AS DM_OFFER_Y,
-		PRC_DT_CNT-DM_OFFER_AGR_YN 	  AS DM_OFFER_N,
-		EMAIL_OFFER_AGR_YN 			  AS EMAIL_OFFER_Y,
-		PRC_DT_CNT-EMAIL_OFFER_AGR_YN AS EMAIL_OFFER_N
+		TM_RECV_YN 			      AS TM_RECV_Y,
+		PRC_DT_CNT-TM_RECV_YN     AS TM_RECV_N,
+		SMS_RECV_YN 		      AS SMS_RECV_Y,
+		PRC_DT_CNT-SMS_RECV_YN    AS SMS_RECV_N,
+		DM_RECV_YN 			  	  AS DM_RECV_Y,
+		PRC_DT_CNT-DM_RECV_YN 	  AS DM_RECV_N,
+		EMAIL_RECV_YN 			  AS EMAIL_RECV_Y,
+		PRC_DT_CNT-EMAIL_RECV_YN  AS EMAIL_RECV_N,
+		TM_OFFER_YN 			  AS TM_OFFER_Y,
+		PRC_DT_CNT-TM_OFFER_YN    AS TM_OFFER_N,
+		DM_OFFER_YN 			  AS DM_OFFER_Y,
+		PRC_DT_CNT-DM_OFFER_YN 	  AS DM_OFFER_N,
+		EMAIL_OFFER_YN 			  AS EMAIL_OFFER_Y,
+		PRC_DT_CNT-EMAIL_OFFER_YN AS EMAIL_OFFER_N
 	FROM TB_EM_IMR_DAILY_STATICS
 	WHERE MAJOR_CLASS ='TOTAL'
 	<if test='textPrcDt != null and textPrcDt !=""'>
-	AND PRC_DT = REPLACE(#{textPrcDt},'-','')
+	AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
 	</if>
 	<if test='prcDt != null and prcDt !=""'>
 	AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{prcDt},'/','')
@@ -1182,7 +1182,7 @@
 		FROM TB_EM_IMR_DAILY_STATICS
 		WHERE MAJOR_CLASS ='TOTAL'
 		<if test='textPrcDt != null and textPrcDt !=""'>
-		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
+		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
 		</if>
 		<if test='prcDt != null and prcDt !=""'>
 		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{prcDt},'/','')
@@ -1202,7 +1202,7 @@
 			FROM TB_EM_IMR_DAILY_STATICS
 			WHERE MAJOR_CLASS ='TOTAL'
 			<if test='textPrcDt != null and textPrcDt !=""'>
-			AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
+			AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY') = REPLACE(#{textPrcDt},'-','')
 			</if>
 		) T GROUP BY T.PRC_DT
     </select>
@@ -1260,7 +1260,7 @@ FROM
 			PRC_CN-ERR_CN AS PRC_CN,									
 			ERR_CN,														
 			VERIFY_UPDATE_CN, 											
-			PRC_CN-VERIFY_UPDATE_CN AS MAINTAIN_CN, 					
+			PRC_CN-VERIFY_UPDATE_CN       AS MAINTAIN_CN, 					
 			A 			 				  AS AY,
 			PRC_DT_CNT-A 				  AS AN,
 			B 			 				  AS B_Y,
@@ -1271,24 +1271,24 @@ FROM
 			PRC_DT_CNT-D 				  AS DN,
 			E 			 				  AS EY,
 			PRC_DT_CNT-E 				  AS EN,
-			TM_RECV_AGR_YN 			      AS TM_RECV_Y,
-			PRC_DT_CNT-TM_RECV_AGR_YN     AS TM_RECV_N,
-			SMS_RECV_AGR_YN 		      AS SMS_RECV_Y,
-			PRC_DT_CNT-SMS_RECV_AGR_YN    AS SMS_RECV_N,
-			DM_RECV_AGR_YN 			  	  AS DM_RECV_Y,
-			PRC_DT_CNT-DM_RECV_AGR_YN 	  AS DM_RECV_N,
-			EMAIL_RECV_AGR_YN 			  AS EMAIL_RECV_Y,
-			PRC_DT_CNT-EMAIL_RECV_AGR_YN  AS EMAIL_RECV_N,
-			TM_OFFER_AGR_YN 			  AS TM_OFFER_Y,
-			PRC_DT_CNT-TM_OFFER_AGR_YN    AS TM_OFFER_N,
-			DM_OFFER_AGR_YN 			  AS DM_OFFER_Y,
-			PRC_DT_CNT-DM_OFFER_AGR_YN 	  AS DM_OFFER_N,
-			EMAIL_OFFER_AGR_YN 			  AS EMAIL_OFFER_Y,
-			PRC_DT_CNT-EMAIL_OFFER_AGR_YN AS EMAIL_OFFER_N								
+			TM_RECV_YN 			      	  AS TM_RECV_Y,
+			PRC_DT_CNT-TM_RECV_YN     	  AS TM_RECV_N,
+			SMS_RECV_YN 		      	  AS SMS_RECV_Y,
+			PRC_DT_CNT-SMS_RECV_YN    	  AS SMS_RECV_N,
+			DM_RECV_YN 			  	  	  AS DM_RECV_Y,
+			PRC_DT_CNT-DM_RECV_YN 	      AS DM_RECV_N,
+			EMAIL_RECV_YN 			      AS EMAIL_RECV_Y,
+			PRC_DT_CNT-EMAIL_RECV_YN      AS EMAIL_RECV_N,
+			TM_OFFER_YN 			      AS TM_OFFER_Y,
+			PRC_DT_CNT-TM_OFFER_YN        AS TM_OFFER_N,
+			DM_OFFER_YN 			      AS DM_OFFER_Y,
+			PRC_DT_CNT-DM_OFFER_YN 	      AS DM_OFFER_N,
+			EMAIL_OFFER_YN 			      AS EMAIL_OFFER_Y,
+			PRC_DT_CNT-EMAIL_OFFER_YN     AS EMAIL_OFFER_N								
 			FROM TB_EM_IMR_DAILY_STATICS
 		WHERE MAJOR_CLASS ='TOTAL'
 		<if test='textPrcDt != null and textPrcDt !=""'>
-		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
+		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY') = REPLACE(#{textPrcDt},'-','')
 		</if>
 		ORDER BY PRC_DT  
 	) T GROUP BY T.PRC_DT
@@ -1313,10 +1313,10 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     	AND A.CUST_ID = #{custId}
     	</if>
 		<if test='startPrcDt != null and startPrcDt !=""'>
-    	AND A.PRC_DT <![CDATA[>=]]> REPLACE(#{startPrcDt},'-','')
+    	AND TO_CHAR(A.IPDT_TIME,'YYYYMMDD') <![CDATA[>=]]> REPLACE(#{startPrcDt},'-','')
     	</if> 
     	<if test='endPrcDt != null and endPrcDt !=""'>
-    	AND A.PRC_DT <![CDATA[<=]]> REPLACE(#{endPrcDt},'-','')
+    	AND TO_CHAR(A.IPDT_TIME,'YYYYMMDD') <![CDATA[<=]]> REPLACE(#{endPrcDt},'-','')
     	</if>  
     </select>
     
@@ -1332,7 +1332,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			B.CHRR_NM,
 			B.DEPTNM,
 			A.ELEMENTID AS ELEMENT_ID ,
-			A.PRC_DT,
+			TO_CHAR(A.IPDT_TIME,'YYYYMMDD') AS PRC_DT,
 			A.CUST_ID ,
 			A.QUERY_REASON ,
 			TO_CHAR(A.IPDT_TIME,'HH24:MI') AS PRC_TM  
@@ -1344,10 +1344,10 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     	AND A.CUST_ID = #{custId}
     	</if>
 		<if test='startPrcDt != null and startPrcDt !=""'>
-    	AND A.PRC_DT <![CDATA[>=]]> REPLACE(#{startPrcDt},'-','')
+    	AND TO_CHAR(A.IPDT_TIME,'YYYYMMDD') <![CDATA[>=]]> REPLACE(#{startPrcDt},'-','')
     	</if> 
     	<if test='endPrcDt != null and endPrcDt !=""'>
-    	AND A.PRC_DT <![CDATA[<=]]> REPLACE(#{endPrcDt},'-','')
+    	AND TO_CHAR(A.IPDT_TIME,'YYYYMMDD') <![CDATA[<=]]> REPLACE(#{endPrcDt},'-','')
     	</if> 
     </select>
     
@@ -1391,7 +1391,7 @@ FROM
     		CHRR_NM,
     		DEPTNM,
     		UYN,
-    		TO_CHAR(RG_DTM,'YYYY/MM/DD') AS RG_DT,
+    		TO_CHAR(RG_DTM,'YYYYMMDD') AS RG_DT,
     		RG_ENO  AS RG_ID,
     		(SELECT CHRR_NM FROM TB_EM_PC_CHRR WHERE UYN='Y' AND CHRR_ID= A.RG_ENO)   AS RG_NM,
     		TO_CHAR(RG_DTM,'HH24:MI')  AS RG_TM
