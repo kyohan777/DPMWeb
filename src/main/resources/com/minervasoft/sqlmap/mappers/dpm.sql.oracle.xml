@@ -1488,14 +1488,17 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 				WHEN MASK_PRG_STSC ='20' THEN 'IMR 진행중'
 				WHEN MASK_PRG_STSC ='80' THEN 'IMR 없음'
 				WHEN MASK_PRG_STSC ='90' THEN 'IMR 반영완료'
+				ELSE ' ' 
 			END AS MASK_PRG_STSC,
 			CASE 
 				WHEN USER_CONFIRM  = '01' THEN 'IMR 값 변동 없음'
 				WHEN USER_CONFIRM  = '90' THEN 'IMR 값 변동 있음'
+				ELSE ' ' 
 			END AS USER_CONFIRM,
 			CASE 
 				WHEN USER_UPDATE_YN  = '00' THEN '미검증'
 				WHEN USER_UPDATE_YN  = '90' THEN '검증'
+				ELSE ' '
 			END AS USER_UPDATE_YN ,
 			INTVISION_IMR 
 		FROM TB_EM_IMR_MASK_OBJ

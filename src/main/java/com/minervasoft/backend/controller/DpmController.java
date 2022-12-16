@@ -1703,8 +1703,7 @@ public class DpmController {
                 	vo.setTmOfferYn((String)jsonObj.get("TM_OFFER_YN"));
                 	vo.setDmOfferYn((String)jsonObj.get("DM_OFFER_YN"));
                 	vo.setEmailOfferYn((String)jsonObj.get("EMAIL_OFFER_YN"));
-                } 
-                
+                }
             }
             response.setSelList(list);
             response.setPageNumber(paramVO.getPageNumber());
@@ -2114,6 +2113,70 @@ public class DpmController {
     }
     
     
+    /**
+     * 일일 처리 현황 > 엑셀 출력
+     * @param paramVO
+     * @param modelMap
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/dpm/selListDpmDailyProExcel.do")
+    public void selListDpmDailyProExcel(StatisticsVO paramVO, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) throws Exception {    	
+    	
+    	List<StatisticsVO> list  = new ArrayList<>();    	
+    	CommonVO commonVO 		 = getServerDateTime();
+    	String filename 		 = commonVO.getServerTime().concat("_일일 처리 현황.xlsx");    	
+    	setExcelDownloadHeader(request, response, filename);
+    	StatisticsVO one = dpmService.getDpmDailyProInfoTotRowCnt(paramVO);
+    	int pageSize   = 10000;
+    	int totRowCnt  = one.getTotRowCnt() ;
+    	int totPageCnt = (int) Math.floor(totRowCnt/pageSize)+1;
+    	paramVO.setPageSize(pageSize);
+    	
+    	for(int pageNumber = 1; pageNumber <= totPageCnt; pageNumber++) {
+    		paramVO.setPageNumber(pageNumber);
+    		List<StatisticsVO> listPage = dpmService.getDpmDailyProInfo(paramVO);
+    		 for(StatisticsVO vo : listPage) {
+                 if(vo.getIntvisionImr() != null) {
+                 	//json string data 파싱하기
+                 	String json = vo.getIntvisionImr(); 
+                 	JSONParser parser = new JSONParser();
+                 	Object obj = parser.parse(json);
+                 	JSONObject jsonObj = (JSONObject) obj;
+                 	System.out.println(jsonObj);
+                 	
+                 	vo.setAyn((String)jsonObj.get("A"));
+                 	vo.setByn((String)jsonObj.get("B"));
+                 	vo.setCyn((String)jsonObj.get("C"));
+                 	vo.setDyn((String)jsonObj.get("D"));
+                 	vo.setEyn((String)jsonObj.get("E"));
+                 	vo.setTmRecvYn((String)jsonObj.get("TM_RECV_YN"));
+                 	vo.setSmsRecvYn((String)jsonObj.get("SMS_RECV_YN"));
+                 	vo.setDmRecvYn((String)jsonObj.get("DM_RECV_YN"));
+                 	vo.setEmailRecvYn((String)jsonObj.get("EMAIL_RECV_YN"));
+                 	vo.setTmOfferYn((String)jsonObj.get("TM_OFFER_YN"));
+                 	vo.setDmOfferYn((String)jsonObj.get("DM_OFFER_YN"));
+                 	vo.setEmailOfferYn((String)jsonObj.get("EMAIL_OFFER_YN"));
+                 }
+             }
+    		list.addAll(listPage);
+    	}
+    	
+    	modelMap.put("gridLabels", paramVO.getGridLabels());
+    	modelMap.put("gridNames",  paramVO.getGridNames());
+    	modelMap.put("gridWidths", paramVO.getGridWidths());
+    	modelMap.put("headerMergeYn","N");
+    	modelMap.put("VO", "StatisticsVO");
+    	modelMap.put("excelList", list);
+    	
+    	excelDownload(modelMap,request,response);
+    	
+        
+    }
+    
+    
     @SuppressWarnings("unchecked")
 	protected final void excelDownload(Map<String,Object> model, HttpServletRequest request , HttpServletResponse response) throws Exception {
     	logger.debug("excelDownload start!!!!");
@@ -2130,7 +2193,7 @@ public class DpmController {
         
         for(String name : nameList) {
         	String methodName = "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
-        		methodList.add(voClass.getMethod(methodName, null));
+        		methodList.add(voClass.getMethod(methodName,null));
         }
         
         try(Workbook workbook = new XSSFWorkbook()) {
@@ -2213,9 +2276,14 @@ public class DpmController {
      */
     private void setEachRow(Row aRow, Object vo, List<Method> methodList) throws Exception {
     	for(int i=0; i<methodList.size(); i++) {
-    		String val = methodList.get(i).invoke(vo).toString();
+    		System.out.println(methodList.get(i).toString());
     		Cell cell = aRow.createCell(i);
-    		cell.setCellValue(val);
+    		if(!methodList.get(i).invoke(vo).equals(null)) {
+    			String val = methodList.get(i).invoke(vo).toString();
+    			System.out.println(val);
+    			cell.setCellValue(val);
+    		}
+        		
     	}
     }	
     
