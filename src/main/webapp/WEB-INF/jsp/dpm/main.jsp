@@ -27,7 +27,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=10"> 
     <title>지문정보 마스킹처리 공정관리 시스템</title>
-    
 </head>
 <body>
     <form id="frmMain" role="form"  method="post">
@@ -49,10 +48,6 @@
                                 <i class="fas fa-unlock-alt text-muted"></i>&nbsp;
                                 <span id="spnLogout" style="cursor:pointer">로그아웃</span>
                             </div>
-<!--                             <div class="d-inline-block">
-                                <i class="fas fa-search text-muted"></i>&nbsp;
-                                <span id="spnChngInfo" style="cursor:pointer">정보변경</span>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -82,13 +77,7 @@
                         </ul>
                     </div>
                 </div>
-            </div> -->
-            <!-- content페이지 start-->
-            <div id="contentPage"">
-                <jsp:include page="${contentPage}" />
-
             </div>
-            <!-- content페이지 end-->      
         </div>
     </div>
     

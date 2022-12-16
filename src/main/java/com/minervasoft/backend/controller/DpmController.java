@@ -1971,12 +1971,12 @@ public class DpmController {
      * @param paramVO
      * @return
      */
-    @RequestMapping(value = "/dpm/dleeteUserInfo.do")
+    @RequestMapping(value = "/dpm/deleteUserInfo.do")
     @ResponseBody
-    public ResponseUserManageVo dleeteUserInfo(UserManageVo paramVO,HttpServletRequest request) {
+    public ResponseUserManageVo deleteUserInfo(UserManageVo paramVO,HttpServletRequest request) {
     	ResponseUserManageVo response = new ResponseUserManageVo();
         try {
-        	dpmService.dleeteUserInfo(paramVO);
+        	dpmService.deleteUserInfo(paramVO);
         } catch(Exception e) {
             e.printStackTrace();
             response.setRsYn("N");

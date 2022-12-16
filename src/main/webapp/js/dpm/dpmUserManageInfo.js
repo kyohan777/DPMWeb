@@ -7,16 +7,6 @@
   *   수정일       수정자                   수정내용
   *  -------    --------    ---------------------------
   *  2022.12.12             최초 생성
-  *
-  *  
-  *  ------------------------------------------------
-  *  jqGrid 4.7.0  jQuery Grid
-  *  Copyright (c) 2008, Tony Tomov, tony@trirand.com
-  *  Dual licensed under the MIT and GPL licenses
-  *  http://www.opensource.org/licenses/mit-license.php
-  *  http://www.gnu.org/licenses/gpl-2.0.html
-  *  Date: 2014-12-08  
-  *  ------------------------------------------------
  */
 var currntPageIndex;
 var gridEventFlag;
@@ -38,15 +28,16 @@ var modDpmUserManageInfo = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '연번',    	   name: 'idNo',   align: 'center'},
-	            { label: '담당자 ID',    name: 'chrrId', align: 'center'},
-	            { label: '담당자명', 	   name: 'chrrNm', align: 'center'},
-	            { label: '부서명', 	   name: 'deptnm', align: 'center'},
-	            { label: '사용여부', 	   name: 'uyn',    align: 'center'},
-	            { label: '등록 일자', 	   name: 'rgDt',   align: 'center'},
-	            { label: '등록자 ID',    name: 'rgId',   align: 'center'},	  
-	            { label: '등록자명', 	   name: 'rgNm',   align: 'center'},
-	            { label: '등록 시간', 	   name: 'rgTm',   align: 'center'},
+	            { label: '연번',    	   name: 'idNo',      align: 'center'},
+	            { label: '담당자 ID',    name: 'chrrId',    align: 'center'},
+	            { label: '담당자명', 	   name: 'chrrNm',    align: 'center'},
+	            { label: '부서명', 	   name: 'deptnm',    align: 'center'},
+	            { label: '사용여부', 	   name: 'uyn',       align: 'center'},
+	            { label: '등록 일자', 	   name: 'rgDt',      align: 'center'},
+	            { label: '등록자 ID',    name: 'rgId',      align: 'center'},	  
+	            { label: '등록자명', 	   name: 'rgNm',      align: 'center'},
+	            { label: '등록 시간', 	   name: 'rgTm',      align: 'center'},
+	            { label: '사유', 	       name: 'rgReason',  align: 'center'},
 	            { label: '회사 번호', 	   name: 'companyId', align: 'center', hidden:true },
 	            { label: '비밀번호', 	   name: 'chrrPwd',   align: 'center', hidden:true }
 	        ],
@@ -320,6 +311,7 @@ $("#btnExcel").on("click", function() {
 		$(".join_form #newChrrPwd").val('');
 		$(".join_form #newDeptnm").val('');
 		$(".join_form #idNo").val('');
+		$(".join_form #NewRgReason").val('');
 	}
 	
     //등록 버튼
@@ -352,6 +344,11 @@ $("#btnExcel").on("click", function() {
 		if(modComm.isEmpty($(".join_form #newDeptnm").val())) {
 			alert("부서명을 입력하십시오.");
 			$(".join_form #newDeptnm").focus();
+			return;
+		}
+		if(modComm.isEmpty($(".join_form #NewRgReason").val())) {
+			alert("사유를 입력하십시오.");
+			$(".join_form #NewRgReason").focus();
 			return;
 		}
 		//등록 아이디 유무 검사
@@ -416,6 +413,11 @@ $("#btnExcel").on("click", function() {
 			$(".join_form #newDeptnm").focus();
 			return;
 		}
+		if(modComm.isEmpty($(".join_form #NewRgReason").val())) {
+			alert("사유를 입력하십시오.");
+			$(".join_form #NewRgReason").focus();
+			return;
+		}
 
     		var objParam = {};
     		var arrForm = $("#frmUserInfo").serializeArray();
@@ -443,7 +445,7 @@ $("#btnExcel").on("click", function() {
 	
 	});
 	
-	 //변경 버튼
+	 //삭제 버튼
     $("#delete").on("click", function() {
 		if(confirm("삭제하시겠습니까?")){
 			
@@ -456,7 +458,7 @@ $("#btnExcel").on("click", function() {
     			});
     		}
     		
-    		modAjax.request("/dpm/dleeteUserInfo.do", objParam,  {
+    		modAjax.request("/dpm/deleteUserInfo.do", objParam,  {
 			async: false,
 			success: function(data) {				
 				if(!modComm.isEmpty(data) && data.rsYn == "Y") {

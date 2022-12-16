@@ -18,9 +18,9 @@ var modDpmDayPro = (function(){
     var totRowCnt = 0;
     var gridHeight = '100%';
 	function init() {
-		modComm.setDatepicker("textPrcDt","imgStartDt");
+		modComm.setMonthpicker("textPrcDt","imgStartDt");
 		//마스터 그리드 초기화 시작
-		//$("#txtStartDt").val(modComm.getGridDateFormat(serverDate));
+		$("#textPrcDt").val(modComm.getGridDateFormat(serverDate,'month'));
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언
 	        url: '/dpm/getDpmDayProInfo.do',
@@ -154,11 +154,11 @@ var modDpmDayPro = (function(){
   			groupHeaders:[
  				{startColumnName: 'prcCn',  		numberOfColumns: 3, titleText: '<center>처리 현황</center>'},
  				{startColumnName: 'verifyUpdateCn', numberOfColumns: 2, titleText: '<center>검증 건수</center>'},
- 				{startColumnName: 'aY',		    	numberOfColumns: 2, titleText: '<center>금융안내</center>'},
- 				{startColumnName: 'bY',		    	numberOfColumns: 2, titleText: '<center>금융이외</center>'},
- 				{startColumnName: 'cY',		    	numberOfColumns: 2, titleText: '<center>보험제공</center>'},
- 				{startColumnName: 'dY',		    	numberOfColumns: 2, titleText: '<center>딜러제공</center>'},
- 				{startColumnName: 'eY',		    	numberOfColumns: 2, titleText: '<center>KB제공</center>'},
+ 				{startColumnName: 'ay',		    	numberOfColumns: 2, titleText: '<center>금융안내</center>'},
+ 				{startColumnName: 'by',		    	numberOfColumns: 2, titleText: '<center>금융이외</center>'},
+ 				{startColumnName: 'cy',		    	numberOfColumns: 2, titleText: '<center>보험제공</center>'},
+ 				{startColumnName: 'dy',		    	numberOfColumns: 2, titleText: '<center>딜러제공</center>'},
+ 				{startColumnName: 'ey',		    	numberOfColumns: 2, titleText: '<center>KB제공</center>'},
  				{startColumnName: 'tmRecvY',		numberOfColumns: 2, titleText: '<center>수집-전화</center>'},
  				{startColumnName: 'smsRecvY',	    numberOfColumns: 2, titleText: '<center>수집-문자</center>'},
  				{startColumnName: 'dmRecvY',		numberOfColumns: 2, titleText: '<center>수집-DM</center>'},

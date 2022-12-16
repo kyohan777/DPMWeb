@@ -23,7 +23,6 @@
 		background: #f3f3f3;
 		color:black;
 		line-height: 50px; 
-		margin:0 auto;
 		text-align: center;
 	}
 
@@ -51,7 +50,7 @@
 <body>
  <h1>   
      <a href="#" onclick="goPage('Day');">
-          <img src="../images/sm-logo.png" alt="SMBC"/>
+          <img src="../images/minerva-Logo.png" alt="SMBC"/>
           <span>전자문서 관리시스템</span>
      </a>
 </h1>
@@ -67,12 +66,12 @@
 		</li>
 		<li><a href="#">교정/검증</a>
 			<ul>
-				<li><a href="#" onclick="goPage('CalibVerfi');">교청/검증 처리</a></li>
+				<li><a href="#" onclick="goPage('CalibVerfi');">교정/검증 처리</a></li>
 				<li><a href="#" onclick="goPage('IMRReader');">열람자 이력 조회</a></li>
 				<li><a href="#" >IMR 결과 조회</a></li>
 			</ul>
 		</li>
-		<c:if test="${chrrId == 'admin' or chrrId == 'minerva'}">
+		<c:if test="${chrrId == 'admin'}">
 		<li><a href="#">관리</a>
 			<ul>
 				<li><a href="#"  onclick ="goPage('UserManage');">사용자 관리</a></li>

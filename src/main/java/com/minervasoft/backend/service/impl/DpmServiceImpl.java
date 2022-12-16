@@ -387,9 +387,9 @@ public class DpmServiceImpl implements DpmService {
 	}
 
 	@Override
-	public int dleeteUserInfo(UserManageVo paramVO) throws Exception {
+	public int deleteUserInfo(UserManageVo paramVO) throws Exception {
 		// TODO Auto-generated method stub
-		return dpmDao.dleeteUserInfo(paramVO);
+		return dpmDao.deleteUserInfo(paramVO);
 	}
 
 	@Override

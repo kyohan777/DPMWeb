@@ -277,15 +277,15 @@ public class DpmDAO extends AbstractDpmDAO {
     }    
     //사용자 등록
     public int insertUserInfo(UserManageVo paramVO) throws Exception {
-        return (int) update("insertUserInfo",paramVO);
+        return (int) insert("insertUserInfo",paramVO);
     }    
     //사용자 정보 수정
     public int updateUserInfo(UserManageVo paramVO) throws Exception {
         return (int) update("updateUserInfo",paramVO);
     }    
   //사용자 정보 수정
-    public int dleeteUserInfo(UserManageVo paramVO) throws Exception {
-        return (int) update("dleeteUserInfo",paramVO);
+    public int deleteUserInfo(UserManageVo paramVO) throws Exception {
+        return (int) update("deleteUserInfo",paramVO);
     }    
     
     

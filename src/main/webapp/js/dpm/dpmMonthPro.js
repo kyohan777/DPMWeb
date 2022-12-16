@@ -31,8 +31,11 @@ var modDpmMonthPro = (function(){
 	 * 초기화
 	 */	
 	function init() {
-		//마스터 그리드 초기화 시작
-		modComm.setMonthpicker("textPrcDt","imgStartDt");
+		//년도 셀렉박스 생성
+		var data = new Date();
+		var selYear = data.getFullYear();
+		getYear(selYear);
+		$("#textPrcDt").val(selYear);
 		//마스터 그리드 초기화 시작
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언
@@ -290,6 +293,14 @@ var modDpmMonthPro = (function(){
 			frmMonthPro.submit();			
 		}		
 	};
+	
+	function getYear(getY){
+		$("#textPrcDt option").remove();
+		var stY = Number(getY)-10;
+		for(var y = stY; y<=getY;y++){
+			$("#textPrcDt").append("<option value='"+y+"'>"+y+"년</option>")	
+		}
+	}
 	
 	return {
 		init: init,

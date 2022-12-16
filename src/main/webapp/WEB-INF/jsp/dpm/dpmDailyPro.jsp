@@ -43,7 +43,7 @@
                         <form id="frmDailyPro" role="form"  method="post"> 
                             <ul class="smbc-top-search">
                              	 <li>
-                                    <label>수행일자</label>
+                                    <label>처리일자</label>
                                     <div class="datepicker-wrap">
 										<input id="textPrcDt" name="textPrcDt" type="text" class="form-control "
 									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
@@ -67,9 +67,9 @@
                         </div>
                         <div class="smbc-data-wrap">
                             <div class="smbc-data-title">
-                                <h3>[IMR] 일일 처리 현황</h3>
+                                <h3>일일 처리 현황</h3>
                                  <ul class="smbc-data-top-menu">
-                                    <li><button id="btnExcel">엑섹다운로드</button></li>
+                                    <li><button id="btnExcel">엑셀다운로드</button></li>
                                 </ul>
                             </div>
                             <div class="smbc-data-con-wrap">

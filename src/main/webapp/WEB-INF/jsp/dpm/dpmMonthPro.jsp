@@ -23,14 +23,11 @@
                         <form id="frmMonthPro" role="form"  method="post"> 
                             <ul class="smbc-top-search">
                                 <li>
-                                    <label>생성일자</label>
+                                    <label>(처리)년</label>
                                     <div class="datepicker-wrap">
-										<input id="textPrcDt" name="textPrcDt" type="text" class="form-control "
-									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
-										maxlength="10" autocomplete="off"> 
-										<span class="icon-calendar">
-										<img id="imgStartDt" img src="../images/icon-calendar.png" alt="달력">
-										</span>
+										<select id="textPrcDt" name="textPrcDt"class="form-control "
+									     style="width: 130px; margin-right: 0px; padding-right: 30px;">
+									     </select> 
                                     </div>
                                 </li>
                             </ul>
@@ -49,7 +46,7 @@
                             <div class="smbc-data-title">
                                 <h3>월별 통계</h3>
                                 <ul class="smbc-data-top-menu">
-                                    <li><button id="btnExcel">엑섹다운로드</button></li>
+                                    <li><button id="btnExcel">엑셀다운로드</button></li>
                                 </ul>
                             </div>
                             <div class="smbc-data-con-wrap">

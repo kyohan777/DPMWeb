@@ -23,6 +23,7 @@ var modDpmDailyPro = (function(){
 	 */	
 	function init() {
 		modComm.setDatepicker("textPrcDt","imgStartDt");
+		$("#textPrcDt").val(modComm.getGridDateFormat(serverDate));
 		//마스터 그리드 초기화 시작
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언
@@ -32,12 +33,11 @@ var modDpmDailyPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '고유 ID', 	     name: 'elementId',  	  align: 'center'},
-	            { label: '이미지 파일명',    name: 'imgFileName',     align: 'center'},
-	            { label: '이미지 포맷',     name: 'imgFormatType',   align: 'center'},
-	            { label: '마스킹 진행 상태', name: 'maskPrgStsc',     align: 'center'},
+	            { label: '엘리먼트 ID', 	 name: 'elementId',  	  align: 'center'},
+	            { label: '파일명',         name: 'imgFileName',     align: 'center'},
+	            { label: '포맷',          name: 'imgFormatType',   align: 'center'},
+	            { label: '상태코드', 		 name: 'maskPrgStsc',     align: 'center'},
 	            { label: '사용자 확인',     name: 'userConfirm',     align: 'center'},	  
-	            { label: '수정/유지', 		 name: 'userUpdateYn',    align: 'center'},
 	            { label: '금융안내', 	  	 name: 'ayn', 		   	  align: 'center'},
 	            { label: '금융이외', 		 name: 'byn', 		   	  align: 'center'},
 	            { label: '보험제공', 	  	 name: 'cyn', 		   	  align: 'center'},

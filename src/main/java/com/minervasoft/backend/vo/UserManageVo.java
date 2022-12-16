@@ -13,6 +13,7 @@ public class UserManageVo  extends AbstractVO{
 	private String rgTm;			//등록일시
 	private String rgId;			//등록자 id
 	private String rgNm;			//등록자명
+	private String rgReason;		//사유
 	private String  gridLabels = "";
 	private String  gridNames = "";
 	private String  gridWidths = "";
@@ -154,6 +155,12 @@ public class UserManageVo  extends AbstractVO{
 	}
 	public void setCgnRzt(Integer cgnRzt) {
 		this.cgnRzt = cgnRzt;
+	}
+	public String getRgReason() {
+		return rgReason;
+	}
+	public void setRgReason(String rgReason) {
+		this.rgReason = rgReason;
 	}
 
 }

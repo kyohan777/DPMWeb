@@ -1390,6 +1390,7 @@ FROM
     		CHRR_PWD,
     		CHRR_NM,
     		DEPTNM,
+    		RG_REASON,
     		UYN,
     		TO_CHAR(RG_DTM,'YYYYMMDD') AS RG_DT,
     		RG_ENO  AS RG_ID,

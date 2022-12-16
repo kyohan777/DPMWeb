@@ -259,6 +259,7 @@
   display: inline-block;
   background: url(../images/title-icon.png) no-repeat;
   padding-left: 20px;
+  font: bold 18px/17px malgun gothic;
 }
 .smbc-main-wrap .smbc-main-box .smbc-content-wrap .smbc-main-content-wrap .smbc-data-wrap .smbc-data-title ul.smbc-data-top-menu {
   display: inline-flex;

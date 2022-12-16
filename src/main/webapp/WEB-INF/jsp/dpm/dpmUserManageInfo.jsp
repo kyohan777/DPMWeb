@@ -110,6 +110,13 @@
                   			<th><span>사용여부</span></th>
                   			<td><input type="text"id="newUyn" name= "uyn" autocomplete="off" value="Y" disabled></td>
                 		</tr>
+                		<tr>
+                  			<th><span>사유</span></th>
+                  			<td>
+                  			<textarea id="NewRgReason" name="rgReason" rows="5" cols="45">
+							</textarea>
+							</td>
+                		</tr>
               			</tbody>
             		</table>
          	 </div><!-- join_form E  -->

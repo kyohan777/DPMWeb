@@ -12,7 +12,7 @@
     <div class="smbc-wrap">
         <div class="smbc-login-wrap">
             <div class="smbc-login-box">
-                <img src="/images/sm-login-visual.png" alt="전자문서 관리시스템"/>
+                <img src="/images/login-visual.png" alt="전자문서 관리시스템"/>
                 <form id="frmLogin" role="form"  method="post" name="loginForm">
                     <h2><span>Login Account</span></h2>
                     <ul class="input-form">
