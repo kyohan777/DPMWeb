@@ -167,6 +167,8 @@ public interface DpmService {
 
     // 교정/검증 화면용 조회
     public List<StatisticsVO> getDpmCalibVerifiInfo(StatisticsVO paramVO) throws Exception;
+    //일일 처리 배치
+    public StatisticsVO getDpmBatchInfo() throws Exception;
     
     
 }

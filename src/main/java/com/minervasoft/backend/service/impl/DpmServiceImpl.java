@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 
 import com.minervasoft.backend.dao.DpmDAO;
@@ -409,6 +411,65 @@ public class DpmServiceImpl implements DpmService {
 	public List<StatisticsVO> getDpmCalibVerifiInfo(StatisticsVO paramVO) throws Exception {
 		// TODO Auto-generated method stub
 		return dpmDao.getDpmDailyProInfo(paramVO);
+	}
+	
+	//배치 일일 처리 통계 처리
+	@Override
+	public StatisticsVO getDpmBatchInfo() throws Exception {
+		List<StatisticsVO> list = dpmDao.getDpmBatchInfo();
+		StatisticsVO statisticInfo = new StatisticsVO(); 
+		for(StatisticsVO vo : list) {
+            if(vo.getIntvisionImr() != null) {
+            	//json string data 파싱하기
+            	String json = vo.getIntvisionImr(); 
+            	JSONParser parser = new JSONParser();
+            	Object obj = parser.parse(json);
+            	JSONObject jsonObj = (JSONObject) obj;
+            	statisticInfo.setPrcDtCnt(statisticInfo.getPrcDtCnt()+1);  					//대상건수
+            	System.out.println("prcDtCnt="+statisticInfo.getPrcDtCnt());
+            	statisticInfo.setPrcCn(statisticInfo.getPrcCn()+(Integer) vo.getPrcCn());	//처리건수
+            	statisticInfo.setErrCn(statisticInfo.getErrCn()+(Integer) vo.getErrCn());	//오류건수
+            	statisticInfo.setVerifyCn(statisticInfo.getVerifyCn()+(Integer) vo.getVerifyCn());//검증건수
+            	statisticInfo.setVerifyUpdateCn(statisticInfo.getVerifyUpdateCn()+(Integer) vo.getVerifyUpdateCn());//수정건수
+            	if((String)jsonObj.get("A")=="Y") {
+            		statisticInfo.setAy(statisticInfo.getAy()+1);
+            	}
+            	if((String)jsonObj.get("B")=="Y") {
+            		statisticInfo.setBy(statisticInfo.getBy()+1);
+            	}
+            	if((String)jsonObj.get("C")=="Y") {
+            		statisticInfo.setCy(statisticInfo.getCy()+1);
+            	}
+            	if((String)jsonObj.get("D")=="Y") {
+            		statisticInfo.setDy(statisticInfo.getDy()+1);
+            	}
+            	if((String)jsonObj.get("E")=="Y") {
+            		statisticInfo.setEy(statisticInfo.getEy()+1);
+            	}
+            	if((String)jsonObj.get("TM_RECV_YN")=="Y") {
+            		statisticInfo.setTmRecvY(statisticInfo.getTmRecvY()+1);
+            	}
+            	if((String)jsonObj.get("SMS_RECV_YN")=="Y") {
+            		statisticInfo.setSmsRecvY(statisticInfo.getSmsRecvY()+1);	
+            	}
+            	if((String)jsonObj.get("DM_RECV_YN")=="Y") {
+            		statisticInfo.setDmRecvY(statisticInfo.getDmRecvY()+1);	
+            	}
+            	if((String)jsonObj.get("EMAIL_RECV_YN")=="Y") {
+            		statisticInfo.setEmailRecvY(statisticInfo.getEmailRecvY()+1);	
+            	}
+            	if((String)jsonObj.get("TM_OFFER_YN")=="Y") {
+            		statisticInfo.setTmOfferY(statisticInfo.getTmOfferY()+1);
+            	}
+            	if((String)jsonObj.get("DM_OFFER_YN")=="Y") {
+            		statisticInfo.setDmOfferY(statisticInfo.getDmOfferY()+1);	
+            	}
+            	if((String)jsonObj.get("EMAIL_OFFER_YN")=="Y") {
+            		statisticInfo.setEmailOfferY(statisticInfo.getEmailOfferY()+1);	
+            	}
+            }
+        }
+		return statisticInfo;
 	}
 	
 

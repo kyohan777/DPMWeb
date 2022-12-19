@@ -1464,7 +1464,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     </update>
     
     
-     <update  id="dleeteUserInfo"
+     <update  id="deleteUserInfo"
         parameterType="com.minervasoft.backend.vo.UserManageVo"
         >
     	UPDATE TB_EM_PC_CHRR
@@ -1544,6 +1544,25 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMMDD') = REPLACE(#{prcDt},'/','')
 		</if>
 		
+    </select>
+    
+    
+    <select id="getDpmBatchInfo"
+    resultType="com.minervasoft.backend.vo.StatisticsVO">
+    SELECT 
+		PRC_DT,									<!-- 대상건 -->
+		CASE WHEN MASK_PRG_STSC >= '20' THEN 1  
+		ELSE 0 END AS PRC_CN,					<!-- 처리건 -->
+		CASE WHEN MASK_PRG_STSC > '100' THEN 1
+		ELSE 0 END AS ERR_CN,					<!-- 오류건 -->
+		CASE WHEN USER_CONFIRM ='99' THEN 1
+		ELSE 0 END AS VERIFY_CN,				<!-- 검증건 -->
+		CASE WHEN USER_CONFIRM ='99' AND USER_UPDATE_YN ='01' THEN 1
+		ELSE 0 END AS VERIFY_UPDATE_CN,			<!-- 수정건 -->
+		INTVISION_IMR 							<!-- json data -->
+	FROM TB_EM_IMR_MASK_OBJ 
+    <!-- WHERE PRC_DT = TO_CHAR(SYSDATE-1,'YYYYMMDD') -->
+    WHERE PRC_DT ='20221214'
     </select>
 
        

@@ -9,6 +9,7 @@ public class StatisticsVO extends AbstractVO{
 	private String  errRat="";
 	private String  prcRat="";
 	private Integer verifyUpdateCn=0;
+	private Integer verifyCn=0;
 	private Integer maintainCn=0;
 	private Integer ay=0;
 	private Integer an=0;
@@ -452,6 +453,12 @@ public class StatisticsVO extends AbstractVO{
 	}
 	public void setEmailOfferYn(String emailOfferYn) {
 		this.emailOfferYn = emailOfferYn;
+	}
+	public Integer getVerifyCn() {
+		return verifyCn;
+	}
+	public void setVerifyCn(Integer verifyCn) {
+		this.verifyCn = verifyCn;
 	}
 	
 	
