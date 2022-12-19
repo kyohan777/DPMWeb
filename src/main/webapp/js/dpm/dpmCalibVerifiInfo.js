@@ -34,6 +34,8 @@ var modDpmCalibVerifiInfo = (function(){
 		
 		//마스터 그리드 초기화 시작
 		//$("#txtStartDt").val(modComm.getGridDateFormat(serverDate));
+			
+		
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언
 	        url: '/dpm/getDpmCalibVerifiInfo.do',
@@ -42,8 +44,8 @@ var modDpmCalibVerifiInfo = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '엘리먼트ID',   name: 'elementId',    	   align: 'center'},
-	            { label: '파일명',       name: 'imgFileName', 	   align: 'center'},
+				{ label: '엘리먼트ID',    name: 'elementId', 	   align: 'center', width:'0px'},
+	            { label: '파일명',       name: 'imgFileName',	   align: 'center'},
 	            { label: '진행상태',     name: 'maskPrgStsc', 	   align: 'center', width: '80px'},
 	            { label: '최초탐지페이지', name: 'fstImrPage',    	   align: 'center', width: '60px'},
 	            { label: '검증여부', 	   name: 'userConfirm',    	   align: 'center', width: '90px'},
@@ -126,9 +128,13 @@ var modDpmCalibVerifiInfo = (function(){
 				var selRowData = $("#jqGrid").getRowData(rowid);
 				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
 				
+				$("#elementId").val(selRowData.elementId);
+				
 				var intvisionImr = selRowData.intvisionImr;
 				if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
 					var jsonImr = JSON.parse(intvisionImr);
+					
+					$("#intvisionImr").val(intvisionImr);
 					
 					$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
 					$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
@@ -145,6 +151,9 @@ var modDpmCalibVerifiInfo = (function(){
 					$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
 					
 				} else {
+					
+					$("#intvisionImr").val("");
+									
 					$("input:radio[name='A']").prop('checked', false);
 					$("input:radio[name='B']").prop('checked', false);
 					$("input:radio[name='C']").prop('checked', false);
@@ -172,6 +181,9 @@ var modDpmCalibVerifiInfo = (function(){
 		
 		//엑셀출력을 위한 컬럼정보 생성
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
+		
+		//열 숨기기
+		$("#jqGrid").jqGrid("hideCol","elementId");
 	};
 		
 
@@ -293,6 +305,58 @@ $("#btnExcel").on("click", function() {
 });
 
 
+/**
+ * 확정버튼 클릭
+ */
+$("#btnConfirm").on("click", function() {
+	if(!confirm("확정하시겠습니까?")) {
+		return;
+	}
+	
+	
+	var imrObj = {};
+	
+	var arrForm = $("#frmImrInfo").serializeArray();
+	if(arrForm) {
+		arrForm.forEach(function(item) {
+			imrObj[item.name] = item.value;
+			console.log("name:" + item.name + ", value" + item.value);
+		});
+	}
+	
+	var strImr = JSON.stringify(imrObj);
+	console.log("strImr: ~~~" + strImr);				
+	/*
+	var objParam = {
+		"elementId" : $("#elementId").val(),
+		"intvisionImr" : $("#intvisionImr").val(),
+		"ayn" : strImr
+	};
+	*/
+	var objParam = {
+		"intvisionImr" : strImr,
+ 	};
+	
+	// 확정처리
+	modAjax.request("/dpm/imrConfirm.do", objParam, {
+		 async : false,
+		 success : function(cnt) {
+			//setTimeout(objCommUtil.LoadingBarClose, 1000);
+			console.log("success!!");			
+		},
+		error : function(cnt) {
+			console.log(cnt);
+			//setTimeout(objCommUtil.LoadingBarClose, 1000);
+
+		}
+	});
+	
+	
+});
+
+
+
+
 
 var $thumbnails = null; 
 var $view = null; 
@@ -303,15 +367,11 @@ var $view = null;
  * DOM  load 완료 시 실행
  */
 $(document).ready(function() {
-	console.log("ready~~~~~");
-	
 		
 	modDpmCalibVerifiInfo.init();
 	modDpmCalibVerifiInfo.selList();
 	
-	
 	//viwerIframe.src = '/sfview/viewer.jsp';
-	
 	
 });
 

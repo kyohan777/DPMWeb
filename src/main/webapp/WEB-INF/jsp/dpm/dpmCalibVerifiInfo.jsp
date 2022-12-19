@@ -23,10 +23,10 @@
     
     <style>
     #box-left {
- 		 flex: 3;
+ 		 flex: 2;
 	}
 	#box-center {
-  		flex: 3;
+  		flex: 4;
   		
 	}
 	#box-right {
@@ -51,7 +51,7 @@
                 <div class="smbc-content-wrap">
                    <div class="smbc-main-content-wrap" id= "contentPage">
                         <div class="smbc-top-search-wrap">
-                        <form id="frmCalibVerifiInfo" role="form"  method="post"> 
+                      <form id="frmCalibVerifiInfo" role="form"  method="post"> 
                             <ul class="smbc-top-search">
                                 <li>
                                     <label>처리일자</label>
@@ -79,7 +79,7 @@
                             <div class="smbc-data-title">
                                 <h3>교정/검증 처리</h3>
                                 <ul class="smbc-data-top-menu">
-                                    <li><button id="btnExcel">엑섹다운로드</button></li>
+                                    <li><button id="btnConfirm">확정</button></li>
                                 </ul>
                             </div>
                             <div class="smbc-data-wrap">
@@ -104,6 +104,10 @@
                             	<div id='box-right'>
                             	 <div class="smbc-data-con-wrap">
                                 <div class="smbc-data-grid-wrap">
+                                
+                                <form id="frmImrInfo" role="form"  method="post">
+                                	<input id="elementId" name="elementId" type="hidden">
+                                	<input id="intvisionImr" name="intvisionImr" type="hidden">
                                     <table>
                                         <colgroup>
                                             <col/>
@@ -120,23 +124,23 @@
                                         <tbody id="mkTable">
                                             <tr>
                                                 <td style="text-align: left">금융상품안내 및 이용권유를 위한 수집, 이용</td>
-                                                <td><input type ="radio" name="A" id="A_N" value="N"></td>
-                                                <td><input type ="radio" name="A" id="A_Y" value="Y"></td>
+                                                <td><input type ="radio" name="A" value="N"></td>
+                                                <td><input type ="radio" name="A" value="Y"></td>
                                             </tr>
                                              <tr>
                                                 <td style="text-align: left">금융상품 이외의 서비스 안내 및 이용권유를 위한 수집,이용</td>
-                                                <td><input type ="radio" name="B" id="B_N" value="N"></td>
-                                                <td><input type ="radio" name="B" id="B_Y" value="Y"></td>
+                                                <td><input type ="radio" name="B" value="N"></td>
+                                                <td><input type ="radio" name="B" value="Y"></td>
                                             </tr>
                                              <tr>
                                                 <td style="text-align: left">업무제휴계약을 체결한 제휴 보험사에 제공</td>
-                                                <td><input type ="radio" name="C" id="C_N" value="N"></td>
-                                                <td><input type ="radio" name="C" id="C_Y" value="Y"></td>
+                                                <td><input type ="radio" name="C" value="N"></td>
+                                                <td><input type ="radio" name="C" value="Y"></td>
                                             </tr>
                                              <tr>
                                                 <td style="text-align: left">업무제휴계약을 체결한 제휴 딜러사에 제공</td>
-                                                <td><input type ="radio" name="D" id="D_N" value="N"></td>
-                                                <td><input type ="radio" name="D" id="D_Y" value="Y"></td>
+                                                <td><input type ="radio" name="D" value="N"></td>
+                                                <td><input type ="radio" name="D" value="Y"></td>
                                             </tr>
                                              <tr>
                                                 <td style="text-align: left">KB국민은행 등 KB금융 그룹 내 자회사에 제공</td>
@@ -178,8 +182,20 @@
                                                 <td><input type ="radio" name="DM_OFFER_YN" value="N"></td>
                                                 <td><input type ="radio" name="DM_OFFER_YN" value="Y"></td>
                                             </tr>
+
+                                            
                                         </tbody>
                                     </table>
+                                    
+                                    </form>
+	                                <!-- 
+	                                <div class="smbc-data-title">
+		                                <ul class="smbc-data-top-menu">
+		                                    <li><button id="btn_confirm">확정</button></li>
+		                                </ul>
+		                            </div>
+                            		 -->
+                                    
                                 </div>
                             </div>
                             	</div>
