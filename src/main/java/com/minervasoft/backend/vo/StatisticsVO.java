@@ -35,6 +35,8 @@ public class StatisticsVO extends AbstractVO{
 	private Integer dmOfferN=0;
 	private Integer emailOfferY=0;
 	private Integer emailOfferN=0;
+	private Integer smsOfferY=0;
+	private Integer smsOfferN=0;
 	private Integer idNo=0;
 	private String  elementId="";
 	private String  imgFileName="";
@@ -59,6 +61,7 @@ public class StatisticsVO extends AbstractVO{
 	private String  tmOfferYn= "";
 	private String  dmOfferYn= "";
 	private String  emailOfferYn= "";
+	private String  smsOfferYn= "";
 	private String  intvisionImr;
 	private Integer cgnRzt = 0;
 	private Integer pageNumber = 0;
@@ -459,6 +462,24 @@ public class StatisticsVO extends AbstractVO{
 	}
 	public void setVerifyCn(Integer verifyCn) {
 		this.verifyCn = verifyCn;
+	}
+	public Integer getSmsOfferY() {
+		return smsOfferY;
+	}
+	public void setSmsOfferY(Integer smsOfferY) {
+		this.smsOfferY = smsOfferY;
+	}
+	public Integer getSmsOfferN() {
+		return smsOfferN;
+	}
+	public void setSmsOfferN(Integer smsOfferN) {
+		this.smsOfferN = smsOfferN;
+	}
+	public String getSmsOfferYn() {
+		return smsOfferYn;
+	}
+	public void setSmsOfferYn(String smsOfferYn) {
+		this.smsOfferYn = smsOfferYn;
 	}
 	
 	

@@ -1156,7 +1156,9 @@
 		DM_OFFER_YN 			  AS DM_OFFER_Y,
 		PRC_DT_CNT-DM_OFFER_YN 	  AS DM_OFFER_N,
 		EMAIL_OFFER_YN 			  AS EMAIL_OFFER_Y,
-		PRC_DT_CNT-EMAIL_OFFER_YN AS EMAIL_OFFER_N
+		PRC_DT_CNT-EMAIL_OFFER_YN AS EMAIL_OFFER_N,
+		SMS_OFFER_YN 			  AS SMS_OFFER_Y,
+		PRC_DT_CNT-SMS_OFFER_YN   AS SMS_OFFER_N
 	FROM TB_EM_IMR_DAILY_STATICS
 	WHERE MAJOR_CLASS ='TOTAL'
 	<if test='textPrcDt != null and textPrcDt !=""'>
@@ -1253,7 +1255,9 @@ FROM
 			SUM(T.DM_OFFER_Y) 							 		   		AS DM_OFFER_Y,
 			SUM(T.DM_OFFER_N) 							 		   		AS DM_OFFER_N,
 			SUM(T.EMAIL_OFFER_Y) 							 	   		AS EMAIL_OFFER_Y,
-			SUM(T.EMAIL_OFFER_N) 							 	   		AS EMAIL_OFFER_N
+			SUM(T.EMAIL_OFFER_N) 							 	   		AS EMAIL_OFFER_N,
+			SUM(T.SMS_OFFER_Y) 							 	   			AS SMS_OFFER_Y,
+			SUM(T.SMS_OFFER_N) 							 	   			AS SMS_OFFER_N
  	from(SELECT 
 			TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT, 
 			PRC_DT_CNT,							 						
@@ -1284,7 +1288,9 @@ FROM
 			DM_OFFER_YN 			      AS DM_OFFER_Y,
 			PRC_DT_CNT-DM_OFFER_YN 	      AS DM_OFFER_N,
 			EMAIL_OFFER_YN 			      AS EMAIL_OFFER_Y,
-			PRC_DT_CNT-EMAIL_OFFER_YN     AS EMAIL_OFFER_N								
+			PRC_DT_CNT-EMAIL_OFFER_YN     AS EMAIL_OFFER_N,
+			SMS_OFFER_YN 			      AS SMS_OFFER_Y,
+			PRC_DT_CNT-SMS_OFFER_YN       AS SMS_OFFER_N											
 			FROM TB_EM_IMR_DAILY_STATICS
 		WHERE MAJOR_CLASS ='TOTAL'
 		<if test='textPrcDt != null and textPrcDt !=""'>
@@ -1469,7 +1475,8 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
         >
     	UPDATE TB_EM_PC_CHRR
 		SET 
-			UYN   = 'N'	
+			UYN       = 'N',
+			IPDT_TIME = SYSDATE
 		WHERE ID_NO = #{idNo}
     
     </update>
@@ -1564,6 +1571,62 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     <!-- WHERE PRC_DT = TO_CHAR(SYSDATE-1,'YYYYMMDD') -->
     WHERE PRC_DT ='20221214'
     </select>
+    <insert id="insertDailyStatics"
+    parameterType="com.minervasoft.backend.vo.StatisticsVO">
+    INSERT INTO TB_EM_IMR_DAILY_STATICS
+	(
+		PRC_DT, 
+		MAJOR_CLASS, 
+		PRC_DT_CNT, 
+		PRC_CN, 
+		NO_CN, 
+		ERR_CN, 
+		VERIFY_CN, 
+		VERIFY_UPDATE_CN, 
+		A, 
+		B,
+		C, 
+		D, 
+		E, 
+		TM_RECV_YN, 
+		SMS_RECV_YN, 
+		DM_RECV_YN, 
+		EMAIL_RECV_YN, 
+		TM_OFFER_YN, 
+		EMAIL_OFFER_YN, 
+		DM_OFFER_YN,
+		SMS_OFFER_YN, 
+		RG_DTM, 
+		RG_ENO 
+	)
+	VALUES
+	(
+		#{prcDt},
+	 	'TOTAL', 
+	 	#{prcDtCnt}, 
+	 	#{prcCn}, 
+	 	#{prcDtCnt}-#{prcCn}, 
+	 	#{errCn}, 
+	 	#{verifyCn}, 
+	 	#{verifyUpdateCn}, 
+	 	#{ay}, 
+	 	#{by}, 
+	 	#{cy}, 
+	 	#{dy}, 
+	 	#{ey}, 
+	 	#{tmPecvY}, 
+	 	#{smsPecvY}, 
+	 	#{dmPecvY}, 
+	 	#{emailPecvY}, 
+	 	#{tmOfferY}, 
+	 	#{dmOfferY}, 
+	 	#{emailOfferY}, 
+	 	#{smsOfferY}, 
+	 	SYSDATE, 
+	 	'system'
+	 )
+    
+    </insert>
 
        
 </mapper>
