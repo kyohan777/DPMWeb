@@ -296,7 +296,7 @@ var modDpmMonthPro = (function(){
 	
 	function getYear(getY){
 		$("#textPrcDt option").remove();
-		var stY = Number(getY)-10;
+		var stY = Number(getY)-20;
 		for(var y = stY; y<=getY;y++){
 			$("#textPrcDt").append("<option value='"+y+"'>"+y+"년</option>")	
 		}

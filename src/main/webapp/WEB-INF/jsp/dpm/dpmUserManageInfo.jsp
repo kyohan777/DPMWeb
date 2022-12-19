@@ -53,7 +53,7 @@
                                 <h3>사용자 관리</h3>
                                  <ul class="smbc-data-top-menu">
                                  	<li><button onclick="newUser();">신규등록</button></li>
-                                    <li><button id="btnExcel">엑섹다운로드</button></li>
+                                    <li><button id="btnExcel">엑셀다운로드</button></li>
                                 </ul>
                             </div>
                             <div class="smbc-data-con-wrap">

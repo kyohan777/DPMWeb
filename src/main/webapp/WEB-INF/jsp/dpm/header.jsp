@@ -49,7 +49,7 @@
 	</style>
 <body>
  <h1>   
-     <a href="#" onclick="goPage('Day');">
+     <a href="#" onclick="goPage('Daily');">
           <img src="../images/minerva-Logo.png" alt="SMBC"/>
           <span>전자문서 관리시스템</span>
      </a>

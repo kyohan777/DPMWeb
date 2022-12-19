@@ -1428,19 +1428,23 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			UYN, 
 			RG_DTM,
 			RG_ENO, 
-			CHRR_PWD
+			CHRR_PWD,
+			IPDT_TIME,
+			RG_REASON
 		)
 		VALUES
 		(
 			TB_EM_PC_CHRR_SEQ.NEXTVAL,
 			#{chrrId}, 
-			#{companyId}, 
+			#{companyId},
 			#{chrrNm},
 			#{deptnm}, 
-			#{uyn}, 
+			'Y', 
 			SYSDATE, 
 			#{rgId}, 
-			#{chrrPwd}
+			#{chrrPwd},
+			SYSDATE,
+			#{rgReason}
 		)
     </insert>
     
@@ -1452,7 +1456,9 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			COMPANY_ID = #{companyId}, 
 			CHRR_NM	   = #{chrrNm}, 
 			DEPTNM     = #{deptnm},
-			CHRR_PWD   = #{chrrPwd}	
+			CHRR_PWD   = #{chrrPwd},
+			RG_REASON  = #{rgReason},
+			CHG_DTM    = SYSDATE	
 		WHERE ID_NO = #{idNo}
     
     </update>
