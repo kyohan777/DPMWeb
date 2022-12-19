@@ -1793,7 +1793,7 @@ public class DpmController {
     }    
     
     /**
-     *  [IMR] 일별 통계:: 일별 통계 현황 조회
+     *  [IMR] 월별 통계:: 일별 통계 현황 조회
      *  2022.12.08 신규 개발 
      * @param paramVO
      * @return
@@ -1805,6 +1805,7 @@ public class DpmController {
         
         try {
             List<StatisticsVO> list = dpmService.getDpmMonthProInfo(paramVO);
+            StatisticsVO test = dpmService.getDpmBatchInfo();
             response.setSelList(list);
             response.setPageNumber(paramVO.getPageNumber());
             response.setTotPageCnt(paramVO.getTotPageCnt());
