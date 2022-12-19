@@ -65,18 +65,20 @@ var modDpmMonthPro = (function(){
 	            { label: '미동의', 	   name: 'en', 		       width: 80, align: 'center'},
 	            { label: '동의', 		   name: 'tmRecvY', 	   width: 80, align: 'center'},
 	            { label: '미동의', 	   name: 'tmRecvN', 	   width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'smsRecvY',    width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'smsRecvN',    width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'smsRecvY',       width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'smsRecvN',       width: 80, align: 'center'},
 	            { label: '동의', 		   name: 'dmRecvY', 	   width: 80, align: 'center'},
 	            { label: '미동의', 	   name: 'dmRecvN', 	   width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'emailRecvY',  width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'emailRecvN',  width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'tmOfferY',    width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'tmOfferN',    width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'dmOfferY',    width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'dmOfferN',    width: 80, align: 'center'},
-	            { label: '동의', 		   name: 'emailOfferY', width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'emailOfferN', width: 80, align: 'center'}
+	            { label: '동의', 		   name: 'emailRecvY',     width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'emailRecvN',     width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'tmOfferY',       width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'tmOfferN',       width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'dmOfferY',       width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'dmOfferN',       width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'emailOfferY',    width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'emailOfferN',    width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'smsOfferY',      width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'smsOfferN',      width: 80, align: 'center'}
 	        ],
 	       
 	        height: gridHeight,
@@ -183,7 +185,8 @@ var modDpmMonthPro = (function(){
  				{startColumnName: 'emailRecvY',	    numberOfColumns: 2, titleText: '<center>수집-메일</center>'},
  				{startColumnName: 'tmOfferY',	    numberOfColumns: 2, titleText: '<center>제공-전화</center>'},
  				{startColumnName: 'dmOfferY',	    numberOfColumns: 2, titleText: '<center>제공-DM</center>'},
- 				{startColumnName: 'emailOfferY',	numberOfColumns: 2, titleText: '<center>제공-메일</center>'}
+ 				{startColumnName: 'emailOfferY',	numberOfColumns: 2, titleText: '<center>제공-메일</center>'},
+ 				{startColumnName: 'smsOfferY',	    numberOfColumns: 2, titleText: '<center>제공-문자</center>'}
   			] 
   			
 		});

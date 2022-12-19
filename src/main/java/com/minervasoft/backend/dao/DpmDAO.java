@@ -291,6 +291,10 @@ public class DpmDAO extends AbstractDpmDAO {
     public List<StatisticsVO> getDpmBatchInfo() throws Exception {
         return (List<StatisticsVO>) selectList("getDpmBatchInfo");
     }
+  //사용자 정보 수정
+    public int insertDailyStatics(StatisticsVO paramVO) throws Exception {
+        return (int) insert("insertDailyStatics",paramVO);
+    }    
     
     
 }

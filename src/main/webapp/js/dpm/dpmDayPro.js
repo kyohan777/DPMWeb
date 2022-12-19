@@ -60,7 +60,9 @@ var modDpmDayPro = (function(){
 	            { label: '동의', 		   name: 'dmOfferY',       width: 80, align: 'center'},
 	            { label: '미동의', 	   name: 'dmOfferN',       width: 80, align: 'center'},
 	            { label: '동의', 		   name: 'emailOfferY',    width: 80, align: 'center'},
-	            { label: '미동의', 	   name: 'emailOfferN',    width: 80, align: 'center'}
+	            { label: '미동의', 	   name: 'emailOfferN',    width: 80, align: 'center'},
+	            { label: '동의', 		   name: 'smsOfferY',      width: 80, align: 'center'},
+	            { label: '미동의', 	   name: 'smsOfferN',      width: 80, align: 'center'}
 	            
 	        ],
 	       
@@ -165,7 +167,8 @@ var modDpmDayPro = (function(){
  				{startColumnName: 'emailRecvY',	    numberOfColumns: 2, titleText: '<center>수집-메일</center>'},
  				{startColumnName: 'tmOfferY',	    numberOfColumns: 2, titleText: '<center>제공-전화</center>'},
  				{startColumnName: 'dmOfferY',	    numberOfColumns: 2, titleText: '<center>제공-DM</center>'},
- 				{startColumnName: 'emailOfferY',	numberOfColumns: 2, titleText: '<center>제공-메일</center>'}
+ 				{startColumnName: 'emailOfferY',	numberOfColumns: 2, titleText: '<center>제공-메일</center>'},
+ 				{startColumnName: 'smsOfferY',		numberOfColumns: 2, titleText: '<center>제공-문자</center>'}
   			] 
   			
 		});

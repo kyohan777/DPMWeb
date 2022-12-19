@@ -1805,7 +1805,6 @@ public class DpmController {
         
         try {
             List<StatisticsVO> list = dpmService.getDpmMonthProInfo(paramVO);
-            StatisticsVO test = dpmService.getDpmBatchInfo();
             response.setSelList(list);
             response.setPageNumber(paramVO.getPageNumber());
             response.setTotPageCnt(paramVO.getTotPageCnt());
@@ -2003,7 +2002,7 @@ public class DpmController {
     	CommonVO commonVO 		 = getServerDateTime();
     	String filename 		 = commonVO.getServerTime().concat("_일별 통계.xlsx");    	
     	setExcelDownloadHeader(request, response, filename);
-    	 String title = "YYYY/MM/DD,대상,처리현황,'','',처리율,검증건수,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,''";
+    	 String title = "YYYY/MM/DD,대상,처리현황,'','',처리율,검증건수,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
     	StatisticsVO one = dpmService.getDpmDayProInfoTotRowCnt(paramVO);
     	
     	int pageSize   = 10000;
@@ -2088,7 +2087,7 @@ public class DpmController {
     	String filename 		 = commonVO.getServerTime().concat("_월별 통계.xlsx");    	
     	setExcelDownloadHeader(request, response, filename);
     	StatisticsVO one = dpmService.getDpmMonthProInfoTotRowCnt(paramVO);
-    	String title = "YYYY/MM,대상,처리현황,'','',처리율,검증건수,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,''";
+    	String title = "YYYY/MM,대상,처리현황,'','',처리율,검증건수,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
     	int pageSize   = 10000;
     	int totRowCnt  = one.getTotRowCnt() ;
     	int totPageCnt = (int) Math.floor(totRowCnt/pageSize)+1;
@@ -2160,6 +2159,7 @@ public class DpmController {
                  	vo.setTmOfferYn((String)jsonObj.get("TM_OFFER_YN"));
                  	vo.setDmOfferYn((String)jsonObj.get("DM_OFFER_YN"));
                  	vo.setEmailOfferYn((String)jsonObj.get("EMAIL_OFFER_YN"));
+                 	vo.setSmsOfferYn((String)jsonObj.get("SMS_OFFER_YN"));
                  }
              }
     		list.addAll(listPage);
@@ -2229,6 +2229,7 @@ public class DpmController {
                 sheet.addMergedRegion(new CellRangeAddress(0,0,26,27));//제공-전화
                 sheet.addMergedRegion(new CellRangeAddress(0,0,28,29));//제공-DM
                 sheet.addMergedRegion(new CellRangeAddress(0,0,30,31));//제공-메일
+                sheet.addMergedRegion(new CellRangeAddress(0,0,32,33));//제공-문자
                 int headNo= 0;
                 //merge header 생성
                 for(String name : titleList) {

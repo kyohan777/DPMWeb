@@ -413,7 +413,7 @@ public class DpmServiceImpl implements DpmService {
 		return dpmDao.getDpmDailyProInfo(paramVO);
 	}
 	
-	//배치 일일 처리 통계 처리
+	//일일 처리 통계 배치 
 	@Override
 	public StatisticsVO getDpmBatchInfo() throws Exception {
 		List<StatisticsVO> list = dpmDao.getDpmBatchInfo();
@@ -425,8 +425,8 @@ public class DpmServiceImpl implements DpmService {
             	JSONParser parser = new JSONParser();
             	Object obj = parser.parse(json);
             	JSONObject jsonObj = (JSONObject) obj;
+            	statisticInfo.setPrcDt(vo.getPrcDt());
             	statisticInfo.setPrcDtCnt(statisticInfo.getPrcDtCnt()+1);  					//대상건수
-            	System.out.println("prcDtCnt="+statisticInfo.getPrcDtCnt());
             	statisticInfo.setPrcCn(statisticInfo.getPrcCn()+(Integer) vo.getPrcCn());	//처리건수
             	statisticInfo.setErrCn(statisticInfo.getErrCn()+(Integer) vo.getErrCn());	//오류건수
             	statisticInfo.setVerifyCn(statisticInfo.getVerifyCn()+(Integer) vo.getVerifyCn());//검증건수
@@ -467,9 +467,17 @@ public class DpmServiceImpl implements DpmService {
             	if((String)jsonObj.get("EMAIL_OFFER_YN")=="Y") {
             		statisticInfo.setEmailOfferY(statisticInfo.getEmailOfferY()+1);	
             	}
+            	if((String)jsonObj.get("SMS_OFFER_YN")=="Y") {
+            		statisticInfo.setSmsOfferY(statisticInfo.getSmsOfferY()+1);	
+            	}
             }
         }
 		return statisticInfo;
+	}
+
+	@Override
+	public int insertDailyStatics(StatisticsVO paramVO) throws Exception {
+		return dpmDao.insertDailyStatics(paramVO);
 	}
 	
 
