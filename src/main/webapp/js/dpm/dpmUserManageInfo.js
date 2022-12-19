@@ -121,6 +121,7 @@ var modDpmUserManageInfo = (function(){
 				$(".join_form #newChrrNm").val(rowdata.chrrNm);
 				$(".join_form #newChrrPwd").val(rowdata.chrrPwd);
 				$(".join_form #newDeptnm").val(rowdata.deptnm);
+				$(".join_form #NewRgReason").val(rowdata.rgReason);
 				$(".join_form #idNo").val(rowdata.idNo);
 				
 				$("#insert").hide();
@@ -350,6 +351,8 @@ $("#btnExcel").on("click", function() {
 			alert("사유를 입력하십시오.");
 			$(".join_form #NewRgReason").focus();
 			return;
+		}else{
+			$(".join_form #NewRgReason").val().split("\n").join("\\n");
 		}
 		//등록 아이디 유무 검사
 		objChrr = userLoginCheck($(".join_form #newChrrId").val());

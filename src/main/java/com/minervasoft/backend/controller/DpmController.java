@@ -2276,11 +2276,9 @@ public class DpmController {
      */
     private void setEachRow(Row aRow, Object vo, List<Method> methodList) throws Exception {
     	for(int i=0; i<methodList.size(); i++) {
-    		System.out.println(methodList.get(i).toString());
     		Cell cell = aRow.createCell(i);
     		if(!methodList.get(i).invoke(vo).equals(null)) {
     			String val = methodList.get(i).invoke(vo).toString();
-    			System.out.println(val);
     			cell.setCellValue(val);
     		}
         		

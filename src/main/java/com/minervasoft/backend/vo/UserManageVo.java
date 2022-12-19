@@ -1,24 +1,24 @@
 package com.minervasoft.backend.vo;
 
 public class UserManageVo  extends AbstractVO{
-	private String chrrId; 			//열람자ID
-	private String chrrNm; 			//성명
-	private String chrrPwd;			//비밀번호
-	private String companyId;		//사번
+	private String chrrId   =""; 			//열람자ID
+	private String chrrNm   =""; 			//성명
+	private String chrrPwd  ="";			//비밀번호
+	private String companyId="";		//사번
 	private Integer idNo;			//연번
-	private String prcDt;			//조회일자
-	private String deptnm;			//부서명
-	private String uyn;				//사용여부
-	private String rgDt;			//등록일자
-	private String rgTm;			//등록일시
-	private String rgId;			//등록자 id
-	private String rgNm;			//등록자명
-	private String rgReason;		//사유
-	private String  gridLabels = "";
+	private String prcDt    ="";			//조회일자
+	private String deptnm   ="";			//부서명
+	private String uyn		="";				//사용여부
+	private String rgDt		="";			//등록일자
+	private String rgTm		="";			//등록일시
+	private String rgId		="";			//등록자 id
+	private String rgNm		="";			//등록자명
+	private String rgReason = "";	//사유
+	private String  gridLabels= "";
 	private String  gridNames = "";
-	private String  gridWidths = "";
-	private String  gridAligns = "";
-	private String  excelDownYn = "";
+	private String  gridWidths= "";
+	private String  gridAligns= "";
+	private String  excelDownYn= "";
 	private Integer cgnRzt = 0;
 	private Integer pageNumber = 0;
 	private Integer totPageCnt = 0;
