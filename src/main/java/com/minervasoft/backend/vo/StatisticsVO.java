@@ -5,6 +5,7 @@ public class StatisticsVO extends AbstractVO{
 	private String textPrcDt="";
 	private Integer prcDtCnt=0;
 	private Integer prcCn=0;
+	private Integer noCn=0;
 	private Integer errCn=0;
 	private String  errRat="";
 	private String  prcRat="";
@@ -488,7 +489,34 @@ public class StatisticsVO extends AbstractVO{
 	public void setSmsOfferYn(String smsOfferYn) {
 		this.smsOfferYn = smsOfferYn;
 	}
-	
+	public Integer getNoCn() {
+		return noCn;
+	}
+	public void setNoCn(Integer noCn) {
+		this.noCn = noCn;
+	}
+	@Override
+	public String toString() {
+		return "StatisticsVO [prcDt=" + prcDt + ", textPrcDt=" + textPrcDt + ", prcDtCnt=" + prcDtCnt + ", prcCn="
+				+ prcCn + ", noCn=" + noCn + ", errCn=" + errCn + ", errRat=" + errRat + ", prcRat=" + prcRat
+				+ ", verifyUpdateCn=" + verifyUpdateCn + ", verifyCn=" + verifyCn + ", maintainCn=" + maintainCn
+				+ ", ay=" + ay + ", an=" + an + ", by=" + by + ", bn=" + bn + ", cy=" + cy + ", cn=" + cn + ", dy=" + dy
+				+ ", dn=" + dn + ", ey=" + ey + ", en=" + en + ", tmRecvY=" + tmRecvY + ", tmRecvN=" + tmRecvN
+				+ ", smsRecvY=" + smsRecvY + ", smsRecvN=" + smsRecvN + ", dmRecvY=" + dmRecvY + ", dmRecvN=" + dmRecvN
+				+ ", emailRecvY=" + emailRecvY + ", emailRecvN=" + emailRecvN + ", tmOfferY=" + tmOfferY + ", tmOfferN="
+				+ tmOfferN + ", dmOfferY=" + dmOfferY + ", dmOfferN=" + dmOfferN + ", emailOfferY=" + emailOfferY
+				+ ", emailOfferN=" + emailOfferN + ", smsOfferY=" + smsOfferY + ", smsOfferN=" + smsOfferN + ", idNo="
+				+ idNo + ", elementId=" + elementId + ", imgFileName=" + imgFileName + ", imgFormatType="
+				+ imgFormatType + ", maskPrgStsc=" + maskPrgStsc + ", userConfirm=" + userConfirm + ", userUpdateYn="
+				+ userUpdateYn + ", gridLabels=" + gridLabels + ", gridNames=" + gridNames + ", gridWidths="
+				+ gridWidths + ", gridAligns=" + gridAligns + ", excelDownYn=" + excelDownYn + ", ayn=" + ayn + ", byn="
+				+ byn + ", cyn=" + cyn + ", dyn=" + dyn + ", eyn=" + eyn + ", tmRecvYn=" + tmRecvYn + ", smsRecvYn="
+				+ smsRecvYn + ", dmRecvYn=" + dmRecvYn + ", emailRecvYn=" + emailRecvYn + ", tmOfferYn=" + tmOfferYn
+				+ ", dmOfferYn=" + dmOfferYn + ", emailOfferYn=" + emailOfferYn + ", smsOfferYn=" + smsOfferYn
+				+ ", intvisionImr=" + intvisionImr + ", cgnRzt=" + cgnRzt + ", pageNumber=" + pageNumber
+				+ ", totPageCnt=" + totPageCnt + ", totRowCnt=" + totRowCnt + ", pageSize=" + pageSize + ", fstImrPage="
+				+ fstImrPage + ", chgEno=" + chgEno + "]";
+	}
 	
 	
 	

@@ -1568,8 +1568,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		ELSE 0 END AS VERIFY_UPDATE_CN,			<!-- 수정건 -->
 		INTVISION_IMR 							<!-- json data -->
 	FROM TB_EM_IMR_MASK_OBJ 
-    <!-- WHERE PRC_DT = TO_CHAR(SYSDATE-1,'YYYYMMDD') -->
-    WHERE PRC_DT ='20221214'
+     WHERE PRC_DT = TO_CHAR(SYSDATE-1,'YYYYMMDD')
     </select>
     
     <insert id="insertDailyStatics"
@@ -1606,7 +1605,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 	 	'TOTAL', 
 	 	#{prcDtCnt}, 
 	 	#{prcCn}, 
-	 	#{prcDtCnt}-#{prcCn}, 
+	 	#{noCn}, 
 	 	#{errCn}, 
 	 	#{verifyCn}, 
 	 	#{verifyUpdateCn}, 
@@ -1615,10 +1614,10 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 	 	#{cy}, 
 	 	#{dy}, 
 	 	#{ey}, 
-	 	#{tmPecvY}, 
-	 	#{smsPecvY}, 
-	 	#{dmPecvY}, 
-	 	#{emailPecvY}, 
+	 	#{tmRecvY}, 
+	 	#{smsRecvY}, 
+	 	#{dmRecvY}, 
+	 	#{emailRecvY}, 
 	 	#{tmOfferY}, 
 	 	#{dmOfferY}, 
 	 	#{emailOfferY}, 

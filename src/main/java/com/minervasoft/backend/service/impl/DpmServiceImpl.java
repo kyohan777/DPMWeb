@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.minervasoft.backend.dao.DpmDAO;
@@ -37,6 +39,8 @@ public class DpmServiceImpl implements DpmService {
      *********************************************/	
     @Resource(name = "DpmDAO")
     private DpmDAO dpmDao;
+    
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public LoginChrrVO selOneLoginChrr(LoginChrrVO paramVO) throws Exception {
@@ -420,6 +424,7 @@ public class DpmServiceImpl implements DpmService {
 		StatisticsVO statisticInfo = new StatisticsVO(); 
 		for(StatisticsVO vo : list) {
             if(vo.getIntvisionImr() != null) {
+            	logger.debug("INTVISION_IMR : "+vo.getIntvisionImr());
             	//json string data 파싱하기
             	String json = vo.getIntvisionImr(); 
             	JSONParser parser = new JSONParser();
@@ -431,43 +436,43 @@ public class DpmServiceImpl implements DpmService {
             	statisticInfo.setErrCn(statisticInfo.getErrCn()+(Integer) vo.getErrCn());	//오류건수
             	statisticInfo.setVerifyCn(statisticInfo.getVerifyCn()+(Integer) vo.getVerifyCn());//검증건수
             	statisticInfo.setVerifyUpdateCn(statisticInfo.getVerifyUpdateCn()+(Integer) vo.getVerifyUpdateCn());//수정건수
-            	if((String)jsonObj.get("A")=="Y") {
+            	if(jsonObj.get("A").equals("Y")) {
             		statisticInfo.setAy(statisticInfo.getAy()+1);
             	}
-            	if((String)jsonObj.get("B")=="Y") {
+            	if(jsonObj.get("B").equals("Y")) {
             		statisticInfo.setBy(statisticInfo.getBy()+1);
             	}
-            	if((String)jsonObj.get("C")=="Y") {
+            	if(jsonObj.get("C").equals("Y")) {
             		statisticInfo.setCy(statisticInfo.getCy()+1);
             	}
-            	if((String)jsonObj.get("D")=="Y") {
+            	if(jsonObj.get("D").equals("Y")) {
             		statisticInfo.setDy(statisticInfo.getDy()+1);
             	}
-            	if((String)jsonObj.get("E")=="Y") {
+            	if(jsonObj.get("E").equals("Y")) {
             		statisticInfo.setEy(statisticInfo.getEy()+1);
             	}
-            	if((String)jsonObj.get("TM_RECV_YN")=="Y") {
+            	if(jsonObj.get("TM_RECV_YN").equals("Y")) {
             		statisticInfo.setTmRecvY(statisticInfo.getTmRecvY()+1);
             	}
-            	if((String)jsonObj.get("SMS_RECV_YN")=="Y") {
+            	if(jsonObj.get("SMS_RECV_YN").equals("Y")) {
             		statisticInfo.setSmsRecvY(statisticInfo.getSmsRecvY()+1);	
             	}
-            	if((String)jsonObj.get("DM_RECV_YN")=="Y") {
+            	if(jsonObj.get("DM_RECV_YN").equals("Y")) {
             		statisticInfo.setDmRecvY(statisticInfo.getDmRecvY()+1);	
             	}
-            	if((String)jsonObj.get("EMAIL_RECV_YN")=="Y") {
+            	if(jsonObj.get("EMAIL_RECV_YN").equals("Y")) {
             		statisticInfo.setEmailRecvY(statisticInfo.getEmailRecvY()+1);	
             	}
-            	if((String)jsonObj.get("TM_OFFER_YN")=="Y") {
+            	if(jsonObj.get("TM_OFFER_YN").equals("Y")) {
             		statisticInfo.setTmOfferY(statisticInfo.getTmOfferY()+1);
             	}
-            	if((String)jsonObj.get("DM_OFFER_YN")=="Y") {
+            	if(jsonObj.get("DM_OFFER_YN").equals("Y")) {
             		statisticInfo.setDmOfferY(statisticInfo.getDmOfferY()+1);	
             	}
-            	if((String)jsonObj.get("EMAIL_OFFER_YN")=="Y") {
+            	if(jsonObj.get("EMAIL_OFFER_YN").equals("Y")) {
             		statisticInfo.setEmailOfferY(statisticInfo.getEmailOfferY()+1);	
             	}
-            	if((String)jsonObj.get("SMS_OFFER_YN")=="Y") {
+            	if(jsonObj.get("SMS_OFFER_YN").equals("Y")) {
             		statisticInfo.setSmsOfferY(statisticInfo.getSmsOfferY()+1);	
             	}
             }
