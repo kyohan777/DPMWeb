@@ -27,6 +27,10 @@ function goPage(data){
 		case 'CalibVerfi':
 		frmHeader.action = "/dpm/dpmCalibVerifiInfo.do";
 		break;
+		
+		case 'ImrResult':
+		frmHeader.action = "/dpm/dpmImrResultInfo.do";
+		break;
 	}
 		
 		frmHeader.method = "post";

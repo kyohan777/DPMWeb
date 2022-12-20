@@ -1,6 +1,6 @@
 
 /**
-  * @File Name : dpmCalibVerifiInfo.js
+  * @File Name : modDpmImrResultInfo.js
   * @Description : 교정/검증 처리
   * @Modification Information
   * 
@@ -24,7 +24,7 @@ var selectByGrid;
 var onSelistfinger;
 var serverDate = modComm.getServerDate();
 
-var modDpmCalibVerifiInfo = (function(){    
+var modDpmImrResultInfo = (function(){    
     var totRowCnt = 0;
     var gridHeight = '100%';
 	/**
@@ -39,7 +39,7 @@ var modDpmCalibVerifiInfo = (function(){
 		
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언
-	        url: '/dpm/getDpmCalibVerifiInfo.do',
+	        url: '/dpm/getDpmImrResultInfo.do',
 	        mtype: "POST",
 	        datatype: "local",
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
@@ -126,7 +126,30 @@ var modDpmCalibVerifiInfo = (function(){
 	        },
 	      //Row클릭 이벤트
 	        onSelectRow: function(rowid) {
-				var selRowData = $("#jqGrid").getRowData(rowid);
+				newUser();
+				//imrRadioSet(rowid);
+				
+	        },
+	        //셀더블클릭 이벤트 - deprecated
+	        ondblClickRow: function(rowid, iRow, iCol) {
+	        },
+	        
+		});
+		//그리드 초기화 종료
+		//그리드 resize 
+		modComm.resizeJqGridWidth("jqGrid","gridContainer",$("#gridContainer").width(), true);
+		
+		//엑셀출력을 위한 컬럼정보 생성
+		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
+		
+		//열 숨기기
+		$("#jqGrid").jqGrid("hideCol","elementId");
+	};
+		
+	
+	function imrRadioSet(rowid) {
+		
+		var selRowData = $("#jqGrid").getRowData(rowid);
 				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
 				
 				$("#elementId").val(selRowData.elementId);
@@ -169,25 +192,7 @@ var modDpmCalibVerifiInfo = (function(){
 					$("input:radio[name='EMAIL_OFFER_YN']").prop('checked', false);
 					$("input:radio[name='DM_OFFER_YN']").prop('checked', false);
 				}
-				
-	        },
-	        //셀더블클릭 이벤트 - deprecated
-	        ondblClickRow: function(rowid, iRow, iCol) {
-	        },
-	        
-		});
-		//그리드 초기화 종료
-		//그리드 resize 
-		modComm.resizeJqGridWidth("jqGrid","gridContainer",$("#gridContainer").width(), true);
-		
-		//엑셀출력을 위한 컬럼정보 생성
-		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
-		
-		//열 숨기기
-		$("#jqGrid").jqGrid("hideCol","elementId");
-	};
-		
-
+	}
 
 
     
@@ -295,14 +300,14 @@ var modDpmCalibVerifiInfo = (function(){
  */
 $("#searchBtn").on("click", function() {
 	$("#prcDt").val();
-	modDpmCalibVerifiInfo.selList();
+	modDpmImrResultInfo.selList();
 });
 
 /**
  * 엑셀버튼 클릭
  */
 $("#btnExcel").on("click", function() {
-	modDpmCalibVerifiInfo.excelWrite();
+	modDpmImrResultInfo.excelWrite();
 });
 
 
@@ -353,7 +358,7 @@ $("#btnConfirm").on("click", function() {
 			if(jsonData.errMsg != "success") {
 				alert("오류:" + jsonData.errMsg);
 			}
-			modDpmCalibVerifiInfo.selList();
+			modDpmImrResultInfo.selList();
 			
 		},
 		error : function(data) {
@@ -365,7 +370,132 @@ $("#btnConfirm").on("click", function() {
 });
 
 
+//레이어팝업 오픈
+    function layer_popup(el){
 
+        var $el = $(el);    //레이어의 id를 $el 변수에 저장
+        var isDim = $el.prev().hasClass('dimBg'); //dimmed 레이어를 감지하기 위한 boolean 변수
+
+        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+            $elHeight = ~~($el.outerHeight()),
+            docWidth = $(document).width(),
+            docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('#close').click(function(){
+            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg').click(function(){
+            $('.dim-layer').fadeOut();
+            return false;
+        });
+
+    }
+    
+//신규 등록 레이어팝업 오픈
+	function newUser(){
+		dataReSet();
+		//$("#insert").show();
+		//$("#update").hide();
+		//$("#delete").hide();
+		//$(".join_form #newChrrId").prop('disabled',false)
+        layer_popup('#layer');
+	};
+	//레이어 폼 data 초기화
+	function dataReSet(){
+		/*
+		$(".join_form #newChrrId").val('');
+		$(".join_form #newCompanyId").val('');
+		$(".join_form #newChrrNm").val('');
+		$(".join_form #newChrrPwd").val('');
+		$(".join_form #newDeptnm").val('');
+		$(".join_form #idNo").val('');
+		$(".join_form #NewRgReason").val('');
+		*/
+	}
+	
+    //저장 버튼
+    $("#insert").on("click", function() {
+		var objChrr;
+		
+		if(modComm.isEmpty($(".join_form #NewRgReason").val())) {
+			alert("사유를 입력하십시오.");
+			$(".join_form #NewRgReason").focus();
+			return;
+		}else{
+			$(".join_form #NewRgReason").val().split("\n").join("\\n");
+		}
+		
+		var objParam = {};
+		var arrForm = $("#frmUserInfo").serializeArray();
+		//console.log(arrForm);
+		if(arrForm) {
+			arrForm.forEach(function(item) {
+				objParam[item.name] = item.value;
+			});
+		}
+		
+		modAjax.request("/dpm/insertUserInfo.do", objParam,  {
+		async: false,
+		success: function(data) {				
+			if(!modComm.isEmpty(data) && data.rsYn == "Y") {
+				alert("등록에 성공했습니다.");
+				dataReSet();// 등록 폼 리셋
+				closePopup('#layer');
+				modDpmUserManageInfo.selList(); //페이지 리로드
+			}							
+		},
+        error: function(response) {
+            console.log(response);
+        }
+		});
+	
+	});
+
+	
+	//등록 후 레이어 닫기
+	function closePopup(el){
+		var $el = $(el);   
+        var isDim = $el.prev().hasClass('dimBg'); 
+        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); 
+	}
+	
+	/**
+	 * 조회 사유 조회 
+	 */	
+	function viewReason(elementId) {
+		var objParam = {"elementId" : elementId};
+		var objResult;
+		
+		modAjax.request("/dpm/viewReason.do", objParam,  {
+			async: false,
+			success: function(data) {				
+				if(!modComm.isEmpty(data) && data.rsYn == "Y" && data.hasOwnProperty("selOne")) {
+					objResult = data.selOne;	
+				}							
+			},
+            error: function(response) {
+                console.log(response);
+            }
+    	});					
+		
+		return objResult;
+
+	};
     
     
 /**
@@ -373,8 +503,8 @@ $("#btnConfirm").on("click", function() {
  */
 $(document).ready(function() {
 		
-	modDpmCalibVerifiInfo.init();
-	modDpmCalibVerifiInfo.selList();
+	modDpmImrResultInfo.init();
+	modDpmImrResultInfo.selList();
 	
 	//viwerIframe.src = '/sfview/viewer.jsp';
 	
@@ -387,4 +517,4 @@ String.prototype.trim = function() {
 }
 
 
-//# sourceURL=dpmCalibVerifiInfo.js
+//# sourceURL=modDpmImrResultInfo.js

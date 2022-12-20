@@ -467,6 +467,26 @@ public class WebController {
         
         return "dpm/dpmCalibVerifiInfo";
     }
+    
+    
+    /**
+     * 검증 결과조회
+     * Kimsangmin
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/dpm/dpmImrResultInfo.do")
+    public String dpmImrResultInfo(CalibVerifiVo loginInfoVO,ModelMap modelMap,HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+        try {        
+        	modelMap.addAttribute("chrrId", loginVO.getChrrId());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "dpm/dpmImrResultInfo";
+    }
 
     
 }

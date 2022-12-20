@@ -69,6 +69,35 @@ public class DpmVrfController {
         return response;
     }
     
+    /**
+     *  [IMR] 교정/검증 화면
+     *  2022.12.15 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getDpmImrResultInfo.do")
+    @ResponseBody
+    public ResponseStatisticsVo getDpmImrResultInfo(StatisticsVO paramVO) {
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+        
+        try {
+            List<StatisticsVO> list = dpmService.getDpmDailyProInfo(paramVO);
+            response.setSelList(list);
+            response.setPageNumber(paramVO.getPageNumber());
+            response.setTotPageCnt(paramVO.getTotPageCnt());
+            response.setTotRowCnt(paramVO.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+            response.setSelList(new ArrayList<StatisticsVO>());
+        }
+        
+        return response;
+    }
+    
+    
+    
 
     
     /**
