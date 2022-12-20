@@ -296,5 +296,8 @@ public class DpmDAO extends AbstractDpmDAO {
         return (int) insert("insertDailyStatics",paramVO);
     }    
     
+    public int updImrConfirm(StatisticsVO paramVO) throws Exception {
+    	return (int) update("updImrConfirm",paramVO);
+    }
     
 }

@@ -480,5 +480,12 @@ public class DpmServiceImpl implements DpmService {
 		return dpmDao.insertDailyStatics(paramVO);
 	}
 	
+	
+	// 교정/검증 확정 처리
+	@Override
+    public int updImrConfirm(StatisticsVO paramVO) throws Exception {
+		return dpmDao.updImrConfirm(paramVO);
+    }
+	
 
 }

@@ -1,6 +1,7 @@
 package com.minervasoft.backend.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -71,34 +75,85 @@ public class DpmVrfController {
      *  [IMR] 교정/검증 확정 처리
      * @param paramVO
      * @return
+     * @throws ParseException 
      */
     @RequestMapping(value = "/dpm/imrConfirm.do")
     @ResponseBody
-    public int imrConfirm(StatisticsVO paramVO, HttpServletRequest request) {
+    public String imrConfirm(StatisticsVO paramVO, HttpServletRequest request) {
     	
-    	logger.info("asdfasdfasdfasd");
-    	
-        HttpSession session = request.getSession();
-        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
     	int updCnt = 0;
-    	
-    	logger.info("elementId ~~~:" + paramVO.getElementId());
-    	logger.info("getIntvisionImr ~~~:" + paramVO.getIntvisionImr());
-    	logger.info("ayn ~~~:" + paramVO.getAyn());
-    	    	       
-        
-        //if(StringUtils.isEmpty(paramVO.getChgEno())) paramVO.setChgEno(loginVO.getChrrId());
+    	JSONObject returnObj = new JSONObject();
+    	try {
+	        HttpSession session = request.getSession();
+	        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+	        paramVO.setChgEno(loginVO.getChrrId());
+	    	
+	    	logger.info("getIntvisionImr ~~~:" + paramVO.getIntvisionImr());
+	    	String strParam = paramVO.getIntvisionImr();
+	    	
+	    	JSONParser parser = new JSONParser();
+	    	Object obj = parser.parse(strParam);
+			
+	    	JSONObject jsonObjRoot = (JSONObject) obj;
+	    	String elementId  = (String)jsonObjRoot.get("elementId");
+	    	paramVO.setElementId(elementId);
+	    	
+	    	String intvisionImr  = (String)jsonObjRoot.get("intvisionImr");
+	    	jsonObjRoot.remove("elementId");
+	    	jsonObjRoot.remove("intvisionImr");
+	    	paramVO.setIntvisionImr(jsonObjRoot.toJSONString());
+	    	
+	    	obj = parser.parse(intvisionImr);
+	    	JSONObject jsonObj = (JSONObject) obj;
+	    	    	
+	    	// 데이터 비교
+	    	boolean eqYn = true;
+	    	Iterator<String> keys = jsonObjRoot.keySet().iterator();
+	    	Iterator<String> keysIv = jsonObj.keySet().iterator();
+	    	while(keys.hasNext()) {
+	    		if(eqYn == false) {
+	    			break;
+	    		}
+	    	    String key = keys.next();
+	    	    String val = (String)jsonObjRoot.get(key);
+	    	    while(keysIv.hasNext()) {
+	    	    	String key_sub = keysIv.next();
+	        	    String val_sub = (String)jsonObj.get(key_sub);
+	        	    if(key.equals(key_sub)) {
+	        	    	if(val.equals(val_sub)) {
+	        	    		eqYn = true;
+	        	    	} else {
+	        	    		eqYn = false;
+	        	    	}
+	        	    	break;
+	        	    }
+	    	    }
+	    	}
+	    	if(eqYn == true) {
+	    		paramVO.setUserUpdateYn("02"); //변경없음
+	    	} else {
+	    		paramVO.setUserUpdateYn("01"); //수정
+	    	}
+	    	paramVO.setUserConfirm("99");
+	    	
+	    	returnObj.put("errMsg", "success");
+    	} catch (Exception e) {
+			logger.error("", e);
+			returnObj.put("errMsg", e.getMessage());
+		}
         
     	try {
-    		//updCnt = dpmService.updFpMaskObj(paramVO);
+    		updCnt = dpmService.updImrConfirm(paramVO);
+    		returnObj.put("errMsg", "success");
 		} catch (Exception e) {
 			logger.error("", e);
+			returnObj.put("errMsg", e.getMessage());
 			updCnt = 0;
 		}
+    	returnObj.put("updCnt", updCnt);
     	
-    	return updCnt;
+    	return returnObj.toJSONString();
     }
-   
     
     
     

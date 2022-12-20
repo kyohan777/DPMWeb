@@ -62,16 +62,23 @@ public class StatisticsVO extends AbstractVO{
 	private String  dmOfferYn= "";
 	private String  emailOfferYn= "";
 	private String  smsOfferYn= "";
-	private String  intvisionImr;
+	private String  intvisionImr="";
 	private Integer cgnRzt = 0;
 	private Integer pageNumber = 0;
 	private Integer totPageCnt = 0;
 	private Integer totRowCnt  = 0;
 	private Integer pageSize   = 0;
 	private Integer fstImrPage  = 0;
+	private String  chgEno = "";
 	
 	
 	
+	public String getChgEno() {
+		return chgEno;
+	}
+	public void setChgEno(String chgEno) {
+		this.chgEno = chgEno;
+	}
 	public Integer getFstImrPage() {
 		return fstImrPage;
 	}

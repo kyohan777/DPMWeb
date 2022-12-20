@@ -313,7 +313,6 @@ $("#btnConfirm").on("click", function() {
 		return;
 	}
 	
-	
 	var imrObj = {};
 	
 	var arrForm = $("#frmImrInfo").serializeArray();
@@ -340,14 +339,19 @@ $("#btnConfirm").on("click", function() {
 	// 확정처리
 	modAjax.request("/dpm/imrConfirm.do", objParam, {
 		 async : false,
-		 success : function(cnt) {
-			//setTimeout(objCommUtil.LoadingBarClose, 1000);
-			console.log("success!!");			
+		 success : function(data) {
+			var jsonData = JSON.parse(data);
+			if(jsonData.updCnt == 1) {
+				alert("성공적으로 반영하였습니다.");
+			} 
+			if(jsonData.errMsg != "success") {
+				alert("오류:" + jsonData.errMsg);
+			}
+			modDpmCalibVerifiInfo.selList();
+			
 		},
-		error : function(cnt) {
-			console.log(cnt);
-			//setTimeout(objCommUtil.LoadingBarClose, 1000);
-
+		error : function(data) {
+			alert(data);
 		}
 	});
 	

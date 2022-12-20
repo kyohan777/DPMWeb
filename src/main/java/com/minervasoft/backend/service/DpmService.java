@@ -172,4 +172,7 @@ public interface DpmService {
     //일일 처리 통계 등록
     public int insertDailyStatics(StatisticsVO paramVO) throws Exception;
     
+    // 교정/검증 확정 처리
+    public int updImrConfirm(StatisticsVO paramVO) throws Exception;
+    
 }

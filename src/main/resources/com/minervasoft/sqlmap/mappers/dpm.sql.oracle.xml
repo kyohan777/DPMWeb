@@ -1571,6 +1571,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     <!-- WHERE PRC_DT = TO_CHAR(SYSDATE-1,'YYYYMMDD') -->
     WHERE PRC_DT ='20221214'
     </select>
+    
     <insert id="insertDailyStatics"
     parameterType="com.minervasoft.backend.vo.StatisticsVO">
     INSERT INTO TB_EM_IMR_DAILY_STATICS
@@ -1625,8 +1626,16 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 	 	SYSDATE, 
 	 	'system'
 	 )
-    
     </insert>
-
+    
+    <update id="updImrConfirm" parameterType="com.minervasoft.backend.vo.StatisticsVO">
+    	UPDATE TB_EM_IMR_MASK_OBJ
+    	SET INTVISION_IMR = #{intvisionImr}
+    	  , USER_CONFIRM  = #{userConfirm}
+		  ,	USER_UPDATE_YN = #{userUpdateYn}
+		  , CHG_DTM = SYSDATE
+		  , CHG_ENO = #{chgEno}
+    	WHERE ELEMENTID = #{elementId}
+    </update>
        
 </mapper>
