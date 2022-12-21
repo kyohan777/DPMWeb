@@ -66,6 +66,22 @@
 										</span>
                                     </div>
                                 </li>
+                                <li>
+                                    <label>고객번호</label>
+                                    <div class="datepicker-wrap">
+										<input id="custId" name="custId" type="text" class="form-control "
+									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
+										maxlength="20" autocomplete="off"> 
+                                    </div>
+                                </li>
+                                 <li>
+                                    <label>계약번호</label>
+                                    <div class="datepicker-wrap">
+										<input id="contractId" name="contractId" type="text" class="form-control "
+									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
+										maxlength="20" autocomplete="off"> 
+                                    </div>
+                                </li>
                             </ul>
                        <!-- 엑셀출력을 위한 컬럼정보 -->
 						<input id="gridLabelList" type="hidden" name="gridLabels"> 
@@ -96,18 +112,18 @@
                             	</div>
                             	
                             	<div id='box-center'>
-                            	<iframe src="/sfview/viewer.jsp" id="viwerIframe"
-                            			width="100%" 
-	  									height="100%" 
-							            frameborder="0" 
-							            allowfullscreen 
-							            >
-							    </iframe>
+	                            	<iframe src="/sfview/viewer.jsp" id="viwerIframe"
+	                            			width="100%" 
+		  									height="100%" 
+								            frameborder="0" 
+								            allowfullscreen 
+								            >
+								    </iframe>
                             	</div>
                             	
                             	<div id='box-right'>
-                            	 <div class="smbc-data-con-wrap">
-                                <div class="smbc-data-grid-wrap">
+                            	 <div id='box-right-1' class="smbc-data-con-wrap">
+                                <div id='box-right-2' class="smbc-data-grid-wrap">
                                 
                                 <form id="frmImrInfo" role="form"  method="post">
                                 	<input id="intvisionImr" name="intvisionImr" type="hidden">

@@ -453,6 +453,12 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		<if test='prcDt != null and prcDt !=""'>
 		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMMDD') = REPLACE(#{prcDt},'/','')
 		</if>
+		<if test='custId != null and custId !=""'>
+			AND CUST_ID = #{custId}
+		</if>
+		<if test='contractId != null and contractId !=""'>
+			AND CONTRACT_ID = #{contractId}
+		</if>
 	ORDER BY PRC_DT 
  	) TA             
     WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
@@ -474,6 +480,12 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		</if>
 		<if test='prcDt != null and prcDt !=""'>
 		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMMDD') = REPLACE(#{prcDt},'/','')
+		</if>
+		<if test='custId != null and custId !=""'>
+			AND CUST_ID = #{custId}
+		</if>
+		<if test='contractId != null and contractId !=""'>
+			AND CONTRACT_ID = #{contractId}
 		</if>
 		
     </select>

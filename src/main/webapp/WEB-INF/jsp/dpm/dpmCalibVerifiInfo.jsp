@@ -92,7 +92,6 @@
                             	</div>
                             	
                             	<div id='box-center'>
-                            		<!-- <div id="viewerContainer"> -->
 		                            	<iframe src="/sfview/viewer.jsp" id="viwerIframe"
 		                            			width="100%" 
 			  									height="100%" 
@@ -100,7 +99,6 @@
 									            allowfullscreen 
 									            >
 									    </iframe>
-							    	<!--  </div>  -->
                             	</div>
                             	
                             	<div id='box-right'>
