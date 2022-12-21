@@ -86,24 +86,27 @@
                             <div class="smbc-data-con-wrap" style="display: flex; height: calc(100%);">
                            		 <div id='box-left'>
                            			 <div id="gridContainer">
-									<table id="jqGrid"></table>
-									<div id="jqGridPager"></div>
+										<table id="jqGrid"></table>
+										<div id="jqGridPager"></div>
 									</div>
                             	</div>
                             	
                             	<div id='box-center'>
-                            	<iframe src="/sfview/viewer.jsp" id="viwerIframe"
-                            			width="100%" 
-	  									height="100%" 
-							            frameborder="0" 
-							            allowfullscreen 
-							            >
-							    </iframe>
+                            		<!-- <div id="viewerContainer"> -->
+		                            	<iframe src="/sfview/viewer.jsp" id="viwerIframe"
+		                            			width="100%" 
+			  									height="100%" 
+									            frameborder="0" 
+									            allowfullscreen 
+									            >
+									    </iframe>
+							    	<!--  </div>  -->
                             	</div>
                             	
                             	<div id='box-right'>
-                            	 <div class="smbc-data-con-wrap">
-                                <div class="smbc-data-grid-wrap">
+                            	
+                            	 <div id='box-right-1' class="smbc-data-con-wrap">
+                                	<div id='box-right-2' class="smbc-data-grid-wrap">
                                 
                                 <form id="frmImrInfo" role="form"  method="post">
                                 	<input id="elementId" name="elementId" type="hidden">

@@ -521,8 +521,18 @@ $(document).ready(function() {
 	modDpmImrResultInfo.init();
 	modDpmImrResultInfo.selList();
 	
-	//viwerIframe.src = '/sfview/viewer.jsp';
+	$("#box-center").height($("#gridContainer").height());
+	$("#box-right").height($("#gridContainer").height() - 10);
+	$("#box-right-1").height($("#gridContainer").height() - 10);
 	
+});
+
+
+$(window).on('resize', function(){
+	$("#box-center").height($("#gridContainer").height());
+	$("#box-right").height($("#gridContainer").height() - 10);
+	$("#box-right-1").height($("#gridContainer").height() - 10);
+    
 });
 
 
