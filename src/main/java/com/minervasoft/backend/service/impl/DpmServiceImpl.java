@@ -492,5 +492,10 @@ public class DpmServiceImpl implements DpmService {
 		return dpmDao.updImrConfirm(paramVO);
     }
 	
+	@Override
+	public int insertViewReason(CalibVerifiVo paramVO) throws Exception {
+		return dpmDao.insertViewReason(paramVO);
+	}
+	
 
 }

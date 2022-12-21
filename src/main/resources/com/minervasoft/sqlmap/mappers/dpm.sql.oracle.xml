@@ -1519,7 +1519,9 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			ELSE '확인전' 
 			END AS USER_UPDATE_YN,	
 			INTVISION_IMR,
-			FST_IMR_PAGE 
+			FST_IMR_PAGE, 
+			CUST_ID,
+			CONTRACT_ID 
 		FROM TB_EM_IMR_MASK_OBJ
 		WHERE 1=1
 		<if test='textPrcDt != null and textPrcDt !=""'>
@@ -1636,5 +1638,31 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		  , CHG_ENO = #{chgEno}
     	WHERE ELEMENTID = #{elementId}
     </update>
+    
+    <insert id="insertViewReason" parameterType="com.minervasoft.backend.vo.CalibVerifiVo">
+      	INSERT INTO TB_EM_IMR_QUERY_HISTORY 
+		(
+			ID_NO
+			, CHRR_ID
+			, PRC_DT
+			, ELEMENTID
+			, CUST_ID
+			, CONTRACT_ID
+			, QUERY_REASON
+			, IPDT_TIME
+		)
+		VALUES
+		(
+			TB_EM_IMR_QRY_HIST_SEQ.NEXTVAL,
+			#{chrrId}, 
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+			#{elementId},
+			#{custId}, 
+			#{contractId},
+			#{queryReason}, 
+			SYSTIMESTAMP 
+		)
+    </insert>
+    
        
 </mapper>

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.minervasoft.backend.service.DpmService;
+import com.minervasoft.backend.vo.CalibVerifiVo;
 import com.minervasoft.backend.vo.ImageVerifyVO;
 import com.minervasoft.backend.vo.LoginChrrVO;
 import com.minervasoft.backend.vo.ResponseStatisticsVo;
@@ -97,6 +98,34 @@ public class DpmVrfController {
     }
     
     
+    /**
+     *  [IMR] 결과 조회 사유 입력
+     * @param paramVO
+     * @return
+     * @throws ParseException 
+     */
+    @RequestMapping(value = "/dpm/insertViewReason.do")
+    @ResponseBody
+    public JSONObject insertViewReason(CalibVerifiVo paramVO, HttpServletRequest request) {
+    	
+    	int updCnt = 0;
+    	JSONObject returnObj = new JSONObject();
+    	
+    	HttpSession session = request.getSession();
+        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+        paramVO.setChrrId(loginVO.getChrrId());
+    	try {
+    		updCnt = dpmService.insertViewReason(paramVO);
+    		returnObj.put("errMsg", "success");
+		} catch (Exception e) {
+			logger.error("", e);
+			returnObj.put("errMsg", e.getMessage());
+			updCnt = 0;
+		}
+    	returnObj.put("updCnt", updCnt);
+    	
+    	return returnObj;
+    }
     
 
     

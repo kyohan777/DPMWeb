@@ -24,6 +24,8 @@ var selectByGrid;
 var onSelistfinger;
 var serverDate = modComm.getServerDate();
 
+var rowidSel; 
+
 var modDpmImrResultInfo = (function(){    
     var totRowCnt = 0;
     var gridHeight = '100%';
@@ -45,7 +47,9 @@ var modDpmImrResultInfo = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-				{ label: '엘리먼트ID',    name: 'elementId', 	   align: 'center', width:'0px'},
+				{ label: '엘리먼트ID',   name: 'elementId', 	   align: 'center', width:'0px'},
+				{ label: 'custId',    name: 'custId', 	   align: 'center', width:'0px'},
+				{ label: 'contractId', name: 'contractId', 	   align: 'center', width:'0px'},
 	            { label: '파일명',       name: 'imgFileName',	   align: 'center'},
 	            { label: '진행상태',     name: 'maskPrgStsc', 	   align: 'center', width: '80px'},
 	            { label: '최초탐지페이지', name: 'fstImrPage',    	   align: 'center', width: '60px'},
@@ -126,6 +130,17 @@ var modDpmImrResultInfo = (function(){
 	        },
 	      //Row클릭 이벤트
 	        onSelectRow: function(rowid) {
+				var selRowData = $("#jqGrid").getRowData(rowid);
+				
+				//$("#elementId").val(selRowData.elementId);
+				//$("#custId").val(selRowData.custId);
+				//$("#contractId").val(selRowData.contractId);
+				
+				$(".join_form #elementId").val(selRowData.elementId);
+				$(".join_form #contractId").val(selRowData.custId);
+				$(".join_form #custId").val(selRowData.contractId);
+				
+				rowidSel = rowid;
 				newUser();
 				//imrRadioSet(rowid);
 				
@@ -143,56 +158,11 @@ var modDpmImrResultInfo = (function(){
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
 		
 		//열 숨기기
-		$("#jqGrid").jqGrid("hideCol","elementId");
+		$("#jqGrid").jqGrid("hideCol",["elementId","custId","contractId"]);
 	};
 		
 	
-	function imrRadioSet(rowid) {
-		
-		var selRowData = $("#jqGrid").getRowData(rowid);
-				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
-				
-				$("#elementId").val(selRowData.elementId);
-				
-				var intvisionImr = selRowData.intvisionImr;
-				if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
-					var jsonImr = JSON.parse(intvisionImr);
-					
-					$("#intvisionImr").val(intvisionImr);
-					
-					$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
-					$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
-					$("input:radio[name='C']:radio[value='" + jsonImr.C + "']").prop('checked', true);
-					$("input:radio[name='D']:radio[value='" + jsonImr.D + "']").prop('checked', true);
-					$("input:radio[name='E']:radio[value='" + jsonImr.E + "']").prop('checked', true);
-					
-					$("input:radio[name='TM_RECV_YN']:radio[value='" + jsonImr.TM_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='SMS_RECV_YN']:radio[value='" + jsonImr.SMS_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='DM_RECV_YN']:radio[value='" + jsonImr.DM_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='EMAIL_RECV_YN']:radio[value='" + jsonImr.EMAIL_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
-					$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
-					$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
-					
-				} else {
-					
-					$("#intvisionImr").val("");
-									
-					$("input:radio[name='A']").prop('checked', false);
-					$("input:radio[name='B']").prop('checked', false);
-					$("input:radio[name='C']").prop('checked', false);
-					$("input:radio[name='D']").prop('checked', false);
-					$("input:radio[name='E']").prop('checked', false);
-					
-					$("input:radio[name='TM_RECV_YN']").prop('checked', false);
-					$("input:radio[name='SMS_RECV_YN']").prop('checked', false);
-					$("input:radio[name='DM_RECV_YN']").prop('checked', false);
-					$("input:radio[name='EMAIL_RECV_YN']").prop('checked', false);
-					$("input:radio[name='TM_OFFER_YN']").prop('checked', false);
-					$("input:radio[name='EMAIL_OFFER_YN']").prop('checked', false);
-					$("input:radio[name='DM_OFFER_YN']").prop('checked', false);
-				}
-	}
+	
 
 
     
@@ -200,6 +170,11 @@ var modDpmImrResultInfo = (function(){
 	 * 마스터 조회
 	 */  
 	function selList() {
+		
+		//imr 데이터 초기화
+		dataResetImr();
+		viwerIframe.src = '/sfview/viewer.jsp';
+		
 		$("#jqGrid").jqGrid('clearGridData');
 		
 		//전체건수 조회
@@ -311,6 +286,57 @@ $("#btnExcel").on("click", function() {
 });
 
 
+function imrRadioSet(rowid) {
+		
+		var selRowData = $("#jqGrid").getRowData(rowid);
+		$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
+					
+		
+		var intvisionImr = selRowData.intvisionImr;
+		if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
+			var jsonImr = JSON.parse(intvisionImr);
+			
+			$("#intvisionImr").val(intvisionImr);
+			
+			$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
+			$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
+			$("input:radio[name='C']:radio[value='" + jsonImr.C + "']").prop('checked', true);
+			$("input:radio[name='D']:radio[value='" + jsonImr.D + "']").prop('checked', true);
+			$("input:radio[name='E']:radio[value='" + jsonImr.E + "']").prop('checked', true);
+			
+			$("input:radio[name='TM_RECV_YN']:radio[value='" + jsonImr.TM_RECV_YN + "']").prop('checked', true);
+			$("input:radio[name='SMS_RECV_YN']:radio[value='" + jsonImr.SMS_RECV_YN + "']").prop('checked', true);
+			$("input:radio[name='DM_RECV_YN']:radio[value='" + jsonImr.DM_RECV_YN + "']").prop('checked', true);
+			$("input:radio[name='EMAIL_RECV_YN']:radio[value='" + jsonImr.EMAIL_RECV_YN + "']").prop('checked', true);
+			$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
+			$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
+			$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
+			
+		} else {
+			dataResetImr();
+		}
+}
+
+
+function dataResetImr() {
+	$("#intvisionImr").val("");
+							
+	$("input:radio[name='A']").prop('checked', false);
+	$("input:radio[name='B']").prop('checked', false);
+	$("input:radio[name='C']").prop('checked', false);
+	$("input:radio[name='D']").prop('checked', false);
+	$("input:radio[name='E']").prop('checked', false);
+	
+	$("input:radio[name='TM_RECV_YN']").prop('checked', false);
+	$("input:radio[name='SMS_RECV_YN']").prop('checked', false);
+	$("input:radio[name='DM_RECV_YN']").prop('checked', false);
+	$("input:radio[name='EMAIL_RECV_YN']").prop('checked', false);
+	$("input:radio[name='TM_OFFER_YN']").prop('checked', false);
+	$("input:radio[name='EMAIL_OFFER_YN']").prop('checked', false);
+	$("input:radio[name='DM_OFFER_YN']").prop('checked', false);
+		
+}
+
 /**
  * 확정버튼 클릭
  */
@@ -407,24 +433,16 @@ $("#btnConfirm").on("click", function() {
     
 //신규 등록 레이어팝업 오픈
 	function newUser(){
-		dataReSet();
-		//$("#insert").show();
-		//$("#update").hide();
-		//$("#delete").hide();
-		//$(".join_form #newChrrId").prop('disabled',false)
         layer_popup('#layer');
 	};
+	
 	//레이어 폼 data 초기화
 	function dataReSet(){
-		/*
-		$(".join_form #newChrrId").val('');
-		$(".join_form #newCompanyId").val('');
-		$(".join_form #newChrrNm").val('');
-		$(".join_form #newChrrPwd").val('');
-		$(".join_form #newDeptnm").val('');
-		$(".join_form #idNo").val('');
+		$(".join_form #elementId").val('');
+		$(".join_form #contractId").val('');
+		$(".join_form #custId").val('');
 		$(".join_form #NewRgReason").val('');
-		*/
+		rowidSel = null;
 	}
 	
     //저장 버튼
@@ -439,6 +457,20 @@ $("#btnConfirm").on("click", function() {
 			$(".join_form #NewRgReason").val().split("\n").join("\\n");
 		}
 		
+		if(modComm.isEmpty($(".join_form #elementId").val())) {
+			alert("해당 건의 elementId 가 없습니다.");
+			return;
+		}
+		if(modComm.isEmpty($(".join_form #contractId").val())) {
+			alert("해당 건의 계약번호가 없습니다.");
+			return;
+		}
+		if(modComm.isEmpty($(".join_form #custId").val())) {
+			alert("해당 건의 고객번호가 없습니다.");
+			return;
+		}
+		
+		
 		var objParam = {};
 		var arrForm = $("#frmUserInfo").serializeArray();
 		//console.log(arrForm);
@@ -447,19 +479,24 @@ $("#btnConfirm").on("click", function() {
 				objParam[item.name] = item.value;
 			});
 		}
+		objParam["queryReason"] = $(".join_form #NewRgReason").val(); 
+		console.log(objParam);
 		
-		modAjax.request("/dpm/insertUserInfo.do", objParam,  {
+		modAjax.request("/dpm/insertViewReason.do", objParam,  {
 		async: false,
 		success: function(data) {				
-			if(!modComm.isEmpty(data) && data.rsYn == "Y") {
+			if(!modComm.isEmpty(data) && data.errMsg == "success") {
 				alert("등록에 성공했습니다.");
-				dataReSet();// 등록 폼 리셋
 				closePopup('#layer');
-				modDpmUserManageInfo.selList(); //페이지 리로드
-			}							
+				imrRadioSet(rowidSel);
+				dataReSet();// 등록 폼 리셋
+			}
+			if(!modComm.isEmpty(data) && data.errMsg != "success") {
+				alert(data.errMsg);
+			}
 		},
         error: function(response) {
-            console.log(response);
+			alert(response);
         }
 		});
 	
@@ -474,28 +511,6 @@ $("#btnConfirm").on("click", function() {
         isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); 
 	}
 	
-	/**
-	 * 조회 사유 조회 
-	 */	
-	function viewReason(elementId) {
-		var objParam = {"elementId" : elementId};
-		var objResult;
-		
-		modAjax.request("/dpm/viewReason.do", objParam,  {
-			async: false,
-			success: function(data) {				
-				if(!modComm.isEmpty(data) && data.rsYn == "Y" && data.hasOwnProperty("selOne")) {
-					objResult = data.selOne;	
-				}							
-			},
-            error: function(response) {
-                console.log(response);
-            }
-    	});					
-		
-		return objResult;
-
-	};
     
     
 /**

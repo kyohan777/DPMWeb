@@ -296,8 +296,16 @@ public class DpmDAO extends AbstractDpmDAO {
         return (int) insert("insertDailyStatics",paramVO);
     }    
     
+    // 검증 확정
     public int updImrConfirm(StatisticsVO paramVO) throws Exception {
     	return (int) update("updImrConfirm",paramVO);
     }
+    // 결과 조회 사유 입력
+    public int insertViewReason(CalibVerifiVo paramVO) throws Exception {
+        return (int) insert("insertViewReason",paramVO);
+    }
+    
+    
+    
     
 }

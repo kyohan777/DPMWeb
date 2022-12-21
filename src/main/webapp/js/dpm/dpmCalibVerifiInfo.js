@@ -152,22 +152,7 @@ var modDpmCalibVerifiInfo = (function(){
 					$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
 					
 				} else {
-					
-					$("#intvisionImr").val("");
-									
-					$("input:radio[name='A']").prop('checked', false);
-					$("input:radio[name='B']").prop('checked', false);
-					$("input:radio[name='C']").prop('checked', false);
-					$("input:radio[name='D']").prop('checked', false);
-					$("input:radio[name='E']").prop('checked', false);
-					
-					$("input:radio[name='TM_RECV_YN']").prop('checked', false);
-					$("input:radio[name='SMS_RECV_YN']").prop('checked', false);
-					$("input:radio[name='DM_RECV_YN']").prop('checked', false);
-					$("input:radio[name='EMAIL_RECV_YN']").prop('checked', false);
-					$("input:radio[name='TM_OFFER_YN']").prop('checked', false);
-					$("input:radio[name='EMAIL_OFFER_YN']").prop('checked', false);
-					$("input:radio[name='DM_OFFER_YN']").prop('checked', false);
+					dataResetImr();
 				}
 				
 	        },
@@ -188,13 +173,14 @@ var modDpmCalibVerifiInfo = (function(){
 	};
 		
 
-
-
     
     /**
 	 * 마스터 조회
 	 */  
 	function selList() {
+		dataResetImr();
+		viwerIframe.src = '/sfview/viewer.jsp';
+		
 		$("#jqGrid").jqGrid('clearGridData');
 		
 		//전체건수 조회
@@ -304,6 +290,26 @@ $("#searchBtn").on("click", function() {
 $("#btnExcel").on("click", function() {
 	modDpmCalibVerifiInfo.excelWrite();
 });
+
+
+function dataResetImr() {
+	$("#intvisionImr").val("");
+							
+	$("input:radio[name='A']").prop('checked', false);
+	$("input:radio[name='B']").prop('checked', false);
+	$("input:radio[name='C']").prop('checked', false);
+	$("input:radio[name='D']").prop('checked', false);
+	$("input:radio[name='E']").prop('checked', false);
+	
+	$("input:radio[name='TM_RECV_YN']").prop('checked', false);
+	$("input:radio[name='SMS_RECV_YN']").prop('checked', false);
+	$("input:radio[name='DM_RECV_YN']").prop('checked', false);
+	$("input:radio[name='EMAIL_RECV_YN']").prop('checked', false);
+	$("input:radio[name='TM_OFFER_YN']").prop('checked', false);
+	$("input:radio[name='EMAIL_OFFER_YN']").prop('checked', false);
+	$("input:radio[name='DM_OFFER_YN']").prop('checked', false);
+		
+}
 
 
 /**

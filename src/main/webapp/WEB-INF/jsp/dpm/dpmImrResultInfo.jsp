@@ -110,8 +110,13 @@
                                 <div class="smbc-data-grid-wrap">
                                 
                                 <form id="frmImrInfo" role="form"  method="post">
-                                	<input id="elementId" name="elementId" type="hidden">
                                 	<input id="intvisionImr" name="intvisionImr" type="hidden">
+                                	<!-- 
+                                	<input id="elementId" name="elementId" type="hidden">
+                                	<input id="contractId" name="contractId" type="hidden">
+                                	<input id="custId" name="custId" type="hidden">
+                                	 -->
+                                	 
                                     <table>
                                         <colgroup>
                                             <col/>
@@ -221,11 +226,12 @@
             <div class="pop-conts">
                 <!--content //-->
                 <form id="frmUserInfo" role="form"  method="post">
-                
-                  <input type="hidden" id="newChrrNm" name="chrrNm">
-                  <input type = "hidden" id ="idNo" name="idNo">
-                  	
+                          
               	<div class="join_form">
+              		<input id="elementId" name="elementId" type="hidden">
+                    <input id="contractId" name="contractId" type="hidden">
+                    <input id="custId" name="custId" type="hidden">
+                  
             		<table>
               			<colgroup>
                 			<col width="30%"/>

@@ -8,6 +8,7 @@ public class CalibVerifiVo extends AbstractVO{
 	private String elementId;		
 	private String queryReason;		//조회사유
 	private String custId;			//고객 번호
+	private String contractId;      //계약번호
 	private String startPrcDt;		//조회조건 > 시작
 	private String endPrcDt;		//조회조건 > 종료
 	private String prcTm;			//조회 시간
@@ -17,6 +18,13 @@ public class CalibVerifiVo extends AbstractVO{
 	private Integer totRowCnt  = 0;
 	private Integer pageSize   = 0;
 	
+		
+	public String getContractId() {
+		return contractId;
+	}
+	public void setContractId(String contractId) {
+		this.contractId = contractId;
+	}
 	public String getChrrId() {
 		return chrrId;
 	}

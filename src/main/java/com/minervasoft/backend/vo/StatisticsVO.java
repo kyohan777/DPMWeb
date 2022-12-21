@@ -71,9 +71,21 @@ public class StatisticsVO extends AbstractVO{
 	private Integer pageSize   = 0;
 	private Integer fstImrPage  = 0;
 	private String  chgEno = "";
+	private String  custId = "";
+	private String  contractId = "";
 	
-	
-	
+	public String getCustId() {
+		return custId;
+	}
+	public void setCustId(String custId) {
+		this.custId = custId;
+	}
+	public String getContractId() {
+		return contractId;
+	}
+	public void setContractId(String contractId) {
+		this.contractId = contractId;
+	}
 	public String getChgEno() {
 		return chgEno;
 	}

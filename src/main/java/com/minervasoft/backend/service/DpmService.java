@@ -174,5 +174,6 @@ public interface DpmService {
     
     // 교정/검증 확정 처리
     public int updImrConfirm(StatisticsVO paramVO) throws Exception;
-    
+    // 결과 조회 사유 입력
+    public int insertViewReason(CalibVerifiVo paramVO) throws Exception;
 }
