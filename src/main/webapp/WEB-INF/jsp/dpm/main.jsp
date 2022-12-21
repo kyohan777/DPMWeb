@@ -62,7 +62,9 @@
                     </ul>
                 </div>
             </div>
-            <!-- <div class="subtitle-container clearfix">
+            
+            
+            <div class="subtitle-container clearfix">
                 <div class="sub-header float-left">
                     <img src="/images/icon-subtitle-search.png" alt="" ><span id="spnSubtitle" class="subtitle"></span>
                 </div>

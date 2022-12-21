@@ -35,6 +35,7 @@ public class DpmDAO extends AbstractDpmDAO {
         return (LoginChrrVO) selectOne("selOneLoginChrr", paramVO);
     }
     
+    /*
     public List<MenuAuthVO> selListMenuAuth(MenuAuthVO paramVO) throws Exception {
         return (List<MenuAuthVO>) selectList("selListMenuAuth", paramVO);
     }
@@ -42,11 +43,12 @@ public class DpmDAO extends AbstractDpmDAO {
     public List<CodeVO> selListCode(CodeVO paramVO) throws Exception {
         return (List<CodeVO>) selectList("selListCode", paramVO);
     }
-    
+    */
     
     /********************************************* 
      * 마스킹검증 
      *********************************************/
+    /*
     public ImageVerifyVO selOneImageVerifyTotRowCnt(ImageVerifyVO paramVO) throws Exception {
         return (ImageVerifyVO) selectOne("selOneImageVerifyTotRowCnt", paramVO);
     }    
@@ -79,10 +81,12 @@ public class DpmDAO extends AbstractDpmDAO {
 		// TODO Auto-generated method stub
 		return (int) delete("deleteAgent", paramVO);
 	}
+    */
     
     /********************************************* 
      * 통계  
      *********************************************/
+    /*
     public List<BizStatsVO> selListBizStats() throws Exception {
         return (List<BizStatsVO>) selectList("selListBizStats");
     }
@@ -110,11 +114,12 @@ public class DpmDAO extends AbstractDpmDAO {
     public List<MaskingHistoryVO> selListMaskingHistoryDetail(MaskingHistoryVO paramVO) throws Exception {
         return (List<MaskingHistoryVO>) selectList("selListMaskingHistoryDetail", paramVO);
     }
-    
+    */
     
     /********************************************* 
      * 관리
      *********************************************/
+    /*
     public List<CodeVO> selListCodeForManagement(CodeVO paramVO) throws Exception {
         return (List<CodeVO>) selectList("selListCodeForManagement", paramVO);
     }
@@ -203,12 +208,11 @@ public class DpmDAO extends AbstractDpmDAO {
     public int deleteChrrGroupAuth(ChrrGroupAuthVO paramVO) throws Exception {
     	return (int) delete("deleteChrrGroupAuth", paramVO);
     }    
-    
+    */
     /********************************************* 
      * 기타
      *********************************************/    
-	    
-
+    /*
     public ChrrVO selOneChrr(ChrrVO paramVO) throws Exception {
         return (ChrrVO) selectOne("selOneChrr", paramVO);
     }
@@ -224,7 +228,7 @@ public class DpmDAO extends AbstractDpmDAO {
     public List<XtromDailyStatsVO> selListXtormDailyStats(XtromDailyStatsVO paramVO) throws Exception {
         return (List<XtromDailyStatsVO>) selectList("selListXtormDailyStats", paramVO);
     }
-    
+    */
     
     /********************************************* 
      * 분리보관

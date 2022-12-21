@@ -28,14 +28,15 @@ public interface DpmService {
      *********************************************/	
     public LoginChrrVO selOneLoginChrr(LoginChrrVO paramVO) throws Exception;
     
-    public List<MenuAuthVO> selListMenuAuth(MenuAuthVO paramVO) throws Exception;
+    //public List<MenuAuthVO> selListMenuAuth(MenuAuthVO paramVO) throws Exception;
     
-    public List<CodeVO> selListCode(CodeVO paramVO) throws Exception;    
+    //public List<CodeVO> selListCode(CodeVO paramVO) throws Exception;    
     
     
     /********************************************* 
      * 마스킹검증 
      *********************************************/
+    /*
     public ImageVerifyVO selOneImageVerifyTotRowCnt(ImageVerifyVO paramVO) throws Exception;
     
     public List<ImageVerifyVO> selListImageVerify(ImageVerifyVO paramVO) throws Exception;
@@ -51,10 +52,11 @@ public interface DpmService {
     public int saveChrrForAgent(AgentAssignVO paramVO) throws Exception;
     
 	public int deleteAgent(AgentAssignVO paramVO) throws Exception;
-    
+    */
     /********************************************* 
      * 통계  
      *********************************************/
+    /*
     public List<BizStatsVO> selListBizStats() throws Exception;
     
     public List<BizStatsTodayVO> selListBizStatsToday() throws Exception;
@@ -68,11 +70,12 @@ public interface DpmService {
     public List<MaskingHistoryVO> selListMaskingHistory(MaskingHistoryVO paramVO) throws Exception;
     
     public List<MaskingHistoryVO> selListMaskingHistoryDetail(MaskingHistoryVO paramVO) throws Exception;    
-    
+    */
     
     /********************************************* 
      * 관리
      *********************************************/
+    /*
     public List<CodeVO> selListCodeForManagement(CodeVO paramVO) throws Exception;
     
     public List<CodeVO> selListCodeDetailForManagement(CodeVO paramVO) throws Exception;
@@ -116,11 +119,11 @@ public interface DpmService {
     public int deleteChrrForMng(ChrrVO paramVO) throws Exception;
     
     public int deleteChrrGroupAuth(ChrrGroupAuthVO paramVO) throws Exception;
-
+	*/
     /********************************************* 
      * 기타
      *********************************************/    	
-    
+    /*
     public ChrrVO selOneChrr(ChrrVO paramVO) throws Exception;
 
     public List<MenuVO> selListChrrMenu(ChrrVO paramVO) throws Exception;    
@@ -129,7 +132,7 @@ public interface DpmService {
     
     public List<XtromDailyStatsVO> selListXtormDailyStats(XtromDailyStatsVO paramVO) throws Exception;
 
-    
+    */
     /********************************************* 
      * 분리보관
      *********************************************/

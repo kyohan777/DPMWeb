@@ -48,6 +48,7 @@ public class DpmServiceImpl implements DpmService {
         return dpmDao.selOneLoginChrr(paramVO);
     }    
     
+    /*
     @Override
     public List<MenuAuthVO> selListMenuAuth(MenuAuthVO paramVO) throws Exception {
         // TODO Auto-generated method stub
@@ -59,11 +60,12 @@ public class DpmServiceImpl implements DpmService {
         // TODO Auto-generated method stub
         return dpmDao.selListCode(paramVO);
     }    
-    
+    */
     
     /********************************************* 
      * 마스킹검증 
      *********************************************/
+    /*
     @Override
     public ImageVerifyVO selOneImageVerifyTotRowCnt(ImageVerifyVO paramVO) throws Exception {
         // TODO Auto-generated method stub
@@ -111,10 +113,11 @@ public class DpmServiceImpl implements DpmService {
 		// TODO Auto-generated method stub
 		return dpmDao.deleteAgent(paramVO);
 	}
-    
+    */
     /********************************************* 
      * 통계  
      *********************************************/
+    /*
     @Override
     public List<BizStatsVO> selListBizStats() throws Exception {
         // TODO Auto-generated method stub
@@ -156,11 +159,12 @@ public class DpmServiceImpl implements DpmService {
         // TODO Auto-generated method stub
         return dpmDao.selListMaskingHistoryDetail(paramVO);
     }    
-    
+    */
     
     /********************************************* 
      * 관리
      *********************************************/
+    /*
     @Override
     public List<CodeVO> selListCodeForManagement(CodeVO paramVO) throws Exception {
         // TODO Auto-generated method stub
@@ -293,11 +297,11 @@ public class DpmServiceImpl implements DpmService {
     	// TODO Auto-generated method stub
         return dpmDao.deleteChrrGroupAuth(paramVO);
     } 
-    
+    */
     /********************************************* 
      * 기타
      *********************************************/         
-
+    /*
     @Override
     public ChrrVO selOneChrr(ChrrVO paramVO) throws Exception {
         // TODO Auto-generated method stub
@@ -321,7 +325,7 @@ public class DpmServiceImpl implements DpmService {
         // TODO Auto-generated method stub
         return dpmDao.selListXtormDailyStats(paramVO);
     }
-
+	*/
 
     /********************************************* 
      * 분리보관
