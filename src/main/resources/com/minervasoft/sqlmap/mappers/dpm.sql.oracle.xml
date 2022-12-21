@@ -42,14 +42,17 @@
   		FROM
   	(   
       SELECT 
-		TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY/MM/DD') AS PRC_DT, --기준일자(처리일자)
-		PRC_DT_CNT,							 						--대상건수
-		PRC_CN-ERR_CN AS PRC_CN,									--처리현황 > 정상
-		ERR_CN,														--처리현황 > 오류
-		CONCAT((ERR_CN/PRC_CN)*100,'%')		AS  ERR_RAT,			--오류율
-		CONCAT((PRC_CN/PRC_DT_CNT)*100,'%') AS  PRC_RAT,    		--처리율
-		VERIFY_UPDATE_CN, 											--검증건수 > 수정
-		VERIFY_CN -VERIFY_UPDATE_CN AS MAINTAIN_CN, 				--검증건수 > 유지
+		TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY/MM/DD') AS PRC_DT,    --기준일자(처리일자)
+		PRC_DT_CNT,							 						   --대상건수
+		CASE WHEN PRC_CN > 0 THEN PRC_CN-ERR_CN ELSE 0 END AS PRC_CN,  --처리현황 > 정상
+		ERR_CN,														   --처리현황 > 오류
+		CASE WHEN ERR_CN = 0 THEN '0%'
+			 WHEN PRC_CN = 0 THEN '0%'
+			 ELSE CONCAT((ERR_CN/PRC_CN)*100,'%') END      AS  ERR_RAT,--오류율
+		CASE WHEN PRC_CN = 0 THEN '0%'
+			 ELSE CONCAT((PRC_CN/PRC_DT_CNT)*100,'%') END  AS  PRC_RAT,--처리율
+		VERIFY_UPDATE_CN, 											   --검증건수 > 수정
+		VERIFY_CN -VERIFY_UPDATE_CN AS MAINTAIN_CN, 				   --검증건수 > 유지
 		A 			 				  AS AY,
 		PRC_DT_CNT-A 				  AS AN,
 		B 			 				  AS "BY",
@@ -145,8 +148,11 @@ FROM
 			SUM(T.PRC_DT_CNT) 						 				    AS PRC_DT_CNT,
 			SUM(T.PRC_CN) 							 				    AS PRC_CN,
 			SUM(T.ERR_CN) 							 				    AS ERR_CN,
-			CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_CN))*100,1),'%')      AS ERR_RAT,						
-			CONCAT(ROUND((SUM(T.PRC_CN)/SUM(T.PRC_DT_CNT))*100,1),'%')  AS PRC_RAT,    					
+			CASE WHEN SUM(T.ERR_CN) = 0 THEN '0%'
+			     WHEN SUM(T.PRC_CN) = 0 THEN '0%'
+			ELSE CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_CN))*100,1),'%') END AS ERR_RAT,
+			CASE WHEN SUM(T.PRC_CN) = 0 THEN '%'
+			ELSE CONCAT(ROUND((SUM(T.PRC_CN)/SUM(T.PRC_DT_CNT))*100,1),'%') END AS PRC_RAT,    					
 			SUM(T.VERIFY_UPDATE_CN) 				 				    AS VERIFY_UPDATE_CN,
 			SUM(T. MAINTAIN_CN) 					 				    AS MAINTAIN_CN,
 			SUM(T.AY) 							 				   	    AS AY,
