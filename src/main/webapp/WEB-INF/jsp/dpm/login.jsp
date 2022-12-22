@@ -19,7 +19,7 @@
                         <li>
                             <div>
                                 <span class="id-icon">아이디</span>
-                                <input type="text" name="chrrId" id="txtUserId" placeholder="사번"/>
+                                <input type="text" name="chrrId" id="txtUserId" placeholder="아이디"/>
                             </div>
                         </li>
                         <li>
