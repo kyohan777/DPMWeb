@@ -73,18 +73,19 @@ var modLogin = (function(){
 				alert("비밀번호가 일치하지 않습니다.");
 				$("#txtPassword").focus();
 				return;			
-			}
+			}else{
 				//로그인			
-			if($("#ckbLastLogin").is(":checked")) {
-				setCookie("lastLoginId", $("#txtUserId").val(), 7);	//7일 동안 쿠키 보관
-			} else {
-				deleteCookie("lastLoginId");
-			}
+				if($("#ckbLastLogin").is(":checked")) {
+					setCookie("lastLoginId", $("#txtUserId").val(), 7);	//7일 동안 쿠키 보관
+				} else {
+					deleteCookie("lastLoginId");
+				}
 
-			var frmLogin = $("#frmLogin")[0];
-			frmLogin.action = "/login/login.do";
-			frmLogin.method = "post";
-			frmLogin.submit();
+				var frmLogin = $("#frmLogin")[0];
+				frmLogin.action = "/login/login.do";
+				frmLogin.method = "post";
+				frmLogin.submit();
+			}
 		} else {
 			alert("담당자 ID가 존재하지 않습니다.");
 			$("#txtUserId").focus();
@@ -118,7 +119,7 @@ var modLogin = (function(){
 			async: false,
 			success: function(data) {				
 				if(!modComm.isEmpty(data) && data.rsYn == "Y" && data.hasOwnProperty("selOne")) {
-					objResult = data.selOne;	
+					objResult = data.selOne;
 				}							
 			},
             error: function(response) {
@@ -129,7 +130,6 @@ var modLogin = (function(){
 		return objResult;
 
 	};	
-	
 	
 	return {
 		getCookie : getCookie,

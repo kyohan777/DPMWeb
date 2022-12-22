@@ -75,7 +75,7 @@ public class DpmController {
         		response.setSelOne(one);
         		if("admin".equals(paramVO.getChrrId())) {//관리자 계정은 암호화 페스
         			if(!"admin".equals(paramVO.getChrrPwd())) {
-        				response.setPwdYn("N");
+        				one.setPwdYn("N");
         			}
         		}else {//password 일치 여부 확인
         			String password = paramVO.getChrrPwd();
@@ -85,7 +85,7 @@ public class DpmController {
             		md.update(password.getBytes());
             		hex = String.format("%064x", new BigInteger(1, md.digest()));
             		if(!hex.equals(one.getChrrPwd())) {
-            			response.setPwdYn("N");
+            			one.setPwdYn("N");
             		}
         		}
         	}else {

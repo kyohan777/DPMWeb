@@ -36,7 +36,7 @@
                         </label>
                     </span>
                     
-                    <button class="login-btn" id="btnLogin">LOGIN</button>
+                    <button type ="button"class="login-btn" id="btnLogin">LOGIN</button>
                     <p class="pw-info">처음 로그인 하시는 분은 <a href="#">'초기비밀번호 설정'</a> 클릭 후
                         비밀번호를 변경하시기 바랍니다.</p>
                     <div>

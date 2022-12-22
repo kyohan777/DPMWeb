@@ -13,6 +13,8 @@ public class LoginChrrVO extends AbstractVO {
     private String uyn = "";    
     
     private String chrrPwd = "";
+    
+    private String pwdYn="Y";
 
     public String getChrrPwd() {
 		return chrrPwd;
@@ -60,6 +62,13 @@ public class LoginChrrVO extends AbstractVO {
 
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
+	}
+	public String getPwdYn() {
+		return pwdYn;
+	}
+
+	public void setPwdYn(String pwdYn) {
+		this.pwdYn = pwdYn;
 	}
 
 
