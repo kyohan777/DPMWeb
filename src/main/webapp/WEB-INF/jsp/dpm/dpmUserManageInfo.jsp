@@ -32,6 +32,18 @@
                                 <li>
                                     <input type="text" id="deptnm" name="deptnm" class="input-st01" style ="background: #E3FFF0 ; color : black" placeholder="부서명">
                                 </li>
+                                 <li>
+                                    <label>사용여부</label>
+                                    <div class="datepicker-wrap">
+										<select id="useYn" name="useYn"class="form-control"
+									     style="width: 130px; background: #E3FFF0;margin-right: 0px; padding-right: 30px;">
+									     	<option value="Y">Y</option>
+									     	<option value="N">N</option>
+									     	<option value="">전체</option>
+									     	
+									     </select> 
+                                    </div>
+                                </li>
                                 <li>
                         			<label>접속자 정보</label>
                         			<input type="text" value="사번 : ${companyId}" disabled style ="color:white">
@@ -94,9 +106,9 @@
                   			<th><span>(회사)사번</span></th>
                   			<td><input type="text" id="newCompanyId" name="companyId" maxlength='20' autocomplete="off" placeholder="회사번호를 입력하세요."></td>
                 		</tr>
-                		<tr>
+                		<tr id="pwdTr">
                   			<th><span>비밀번호</span></th>
-                  			<td><input type="password" id="newChrrPwd" name="chrrPwd" maxlength='9' autocomplete="off" placeholder="비밀번호를 입력해주세요."></td>
+                  			<td><input type="password" id="newChrrPwd" name="chrrPwd" autocomplete="off" placeholder="비밀번호를 입력해주세요."></td>
                 		</tr>
                 		<tr>
                   			<th><span>담당자명</span></th>
@@ -122,6 +134,7 @@
          	 </div><!-- join_form E  -->
          	 </form>
                 <div class="btn-r">
+                	<a href="#" class="btn-layerClose" id="chgPwd">비밀번호 변경</a>
                  	<a href="#" class="btn-layerClose" id="update">변경</a>
                  	<a href="#" class="btn-layerClose" id="insert">등록</a>
                     <a href="#" class="btn-layerClose" id="delete">삭제</a>

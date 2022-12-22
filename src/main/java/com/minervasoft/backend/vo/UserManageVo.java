@@ -24,6 +24,7 @@ public class UserManageVo  extends AbstractVO{
 	private Integer totPageCnt = 0;
 	private Integer totRowCnt  = 0;
 	private Integer pageSize   = 0;
+	private String useYn="";
 	public String getChrrId() {
 		return chrrId;
 	}
@@ -162,5 +163,12 @@ public class UserManageVo  extends AbstractVO{
 	public void setRgReason(String rgReason) {
 		this.rgReason = rgReason;
 	}
+	public String getUseYn() {
+		return useYn;
+	}
+	public void setUseYn(String useYn) {
+		this.useYn = useYn;
+	}
+	
 
 }

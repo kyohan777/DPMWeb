@@ -1,8 +1,10 @@
 package com.minervasoft.backend.controller;
 
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +71,26 @@ public class DpmController {
         
         try {
         	LoginChrrVO one = dpmService.selOneLoginChrr(paramVO);
-            response.setSelOne(one);
+        	if(one != null) {//아이디 존재여부 확인
+        		response.setSelOne(one);
+        		if("admin".equals(paramVO.getChrrId())) {//관리자 계정은 암호화 페스
+        			if(!"admin".equals(paramVO.getChrrPwd())) {
+        				response.setPwdYn("N");
+        			}
+        		}else {//password 일치 여부 확인
+        			String password = paramVO.getChrrPwd();
+        			String hex = "";
+        			MessageDigest md = MessageDigest.getInstance("SHA-256");
+            		// 평문 암호화
+            		md.update(password.getBytes());
+            		hex = String.format("%064x", new BigInteger(1, md.digest()));
+            		if(!hex.equals(one.getChrrPwd())) {
+            			response.setPwdYn("N");
+            		}
+        		}
+        	}else {
+        		response.setSelOne(one);
+        	}
         } catch(Exception e) {
             e.printStackTrace();
             response.setRsYn("N");
@@ -647,6 +668,32 @@ public class DpmController {
         LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
         paramVO.setRgId(loginVO.getChrrId());
         try {
+        	// 비밀번호 평문
+        	String password = paramVO.getChrrPwd();
+    		String hex = "";
+    		
+//    		// "SHA1PRNG"은 알고리즘 이름
+//    		SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+//    		byte[] bytes = new byte[16];
+//    		random.nextBytes(bytes);
+//    		// SALT 생성
+//    		String salt = new String(Base64.getEncoder().encode(bytes));
+//    		String rawAndSalt = password+salt;
+//    		
+//    		System.out.println("raw : "+password);
+//    		System.out.println("salt : "+salt);
+    		
+    		MessageDigest md = MessageDigest.getInstance("SHA-256");
+    		// 평문 암호화
+    		md.update(password.getBytes());
+    		hex = String.format("%064x", new BigInteger(1, md.digest()));
+    		
+//    		// 평문+salt 암호화
+//    		md.update(rawAndSalt.getBytes());
+//    		hex = String.format("%064x", new BigInteger(1, md.digest()));
+//    		System.out.println("raw+salt의 해시값 : "+hex);
+            
+            paramVO.setChrrPwd(hex);
         	dpmService.insertUserInfo(paramVO);
         } catch(Exception e) {
             e.printStackTrace();
@@ -669,6 +716,16 @@ public class DpmController {
         LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
         paramVO.setRgId(loginVO.getChrrId());
         try {
+        	if(paramVO.getChrrPwd() != null && paramVO.getChrrPwd() !="") {
+        		// 비밀번호 평문
+            	String password = paramVO.getChrrPwd();
+        		String hex = "";
+        		MessageDigest md = MessageDigest.getInstance("SHA-256");
+        		// 평문 암호화
+        		md.update(password.getBytes());
+        		hex = String.format("%064x", new BigInteger(1, md.digest()));
+        		 paramVO.setChrrPwd(hex);
+        	}
         	dpmService.updateUserInfo(paramVO);
         } catch(Exception e) {
             e.printStackTrace();

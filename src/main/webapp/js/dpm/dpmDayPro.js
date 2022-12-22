@@ -69,6 +69,8 @@ var modDpmDayPro = (function(){
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
+	        sortable : true,
+			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        rownumbers: true,
 	        viewrecords: true,
 	        frozen : true,

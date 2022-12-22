@@ -12,6 +12,7 @@ var currntPageIndex;
 var gridEventFlag;
 var selectByGrid;
 var onSelistfinger;
+var chgPwdYn='N';
 var modDpmUserManageInfo = (function(){    
     var totRowCnt = 0;
     var gridHeight = '100%';
@@ -28,22 +29,24 @@ var modDpmUserManageInfo = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '담당자 ID',    name: 'chrrId',    align: 'center'},
-	            { label: '담당자명', 	   name: 'chrrNm',    align: 'center'},
-	            { label: '부서명', 	   name: 'deptnm',    align: 'center'},
-	            { label: '사용여부', 	   name: 'uyn',       align: 'center'},
-	            { label: '등록 일자', 	   name: 'rgDt',      align: 'center'},
-	            { label: '등록자 ID',    name: 'rgId',      align: 'center'},	  
-	            { label: '등록자명', 	   name: 'rgNm',      align: 'center'},
-	            { label: '등록 시간', 	   name: 'rgTm',      align: 'center'},
+	            { label: '담당자 ID',    name: 'chrrId',    align: 'center',width:'100'},
+	            { label: '담당자명', 	   name: 'chrrNm',    align: 'center',width:'100'},
+	            { label: '부서명', 	   name: 'deptnm',    align: 'center',width:'100'},
+	            { label: '사용여부', 	   name: 'uyn',       align: 'center',width:'70'},
+	            { label: '등록 일자', 	   name: 'rgDt',      align: 'center',width:'100'},
+	            { label: '등록자 ID',    name: 'rgId',      align: 'center',width:'100'},	  
+	            { label: '등록자명', 	   name: 'rgNm',      align: 'center',width:'100'},
+	            { label: '등록 시간', 	   name: 'rgTm',      align: 'center',width:'70'},
 	            { label: '사유', 	       name: 'rgReason',  align: 'center'},
 	            { label: '회사 번호', 	   name: 'companyId', align: 'center', hidden:true },
-	            { label: '비밀번호', 	   name: 'chrrPwd',   align: 'center', hidden:true }
+	            { label: '연번', 	   	   name: 'idNo', 	  align: 'center', hidden:true }
 	        ],
 	       
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
+	        sortable : true,
+			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        rownumbers: true,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
@@ -118,12 +121,12 @@ var modDpmUserManageInfo = (function(){
 				$(".join_form #newChrrId").prop('disabled',true)
 				$(".join_form #newCompanyId").val(rowdata.companyId);
 				$(".join_form #newChrrNm").val(rowdata.chrrNm);
-				$(".join_form #newChrrPwd").val(rowdata.chrrPwd);
 				$(".join_form #newDeptnm").val(rowdata.deptnm);
 				$(".join_form #NewRgReason").val(rowdata.rgReason);
 				$(".join_form #idNo").val(rowdata.idNo);
 				
 				$("#insert").hide();
+				$("#pwdTr").hide();
 				$("#update").show();
 				$("#delete").show();
         		layer_popup('#layer');
@@ -298,6 +301,7 @@ $("#btnExcel").on("click", function() {
 	function newUser(){
 		dataReSet();
 		$("#insert").show();
+		$("#pwdTr").show();
 		$("#update").hide();
 		$("#delete").hide();
 		$(".join_form #newChrrId").prop('disabled',false)
@@ -305,6 +309,7 @@ $("#btnExcel").on("click", function() {
 	};
 	//레이어 폼 data 초기화
 	function dataReSet(){
+		chgPwdYn="N";
 		$(".join_form #newChrrId").val('');
 		$(".join_form #newCompanyId").val('');
 		$(".join_form #newChrrNm").val('');
@@ -397,11 +402,12 @@ $("#btnExcel").on("click", function() {
 			$(".join_form #newCompanyId").focus();
 			return;
 		}
-		
-		if(modComm.isEmpty($(".join_form #newChrrPwd").val())) {
+		if(chgPwdYn =="Y"){
+			if(modComm.isEmpty($(".join_form #newChrrPwd").val())) {
 			alert("비밀번호를 입력하십시오.");
 			$(".join_form #newChrrPwd").focus();
 			return;
+			}
 		}
 		
 		if(modComm.isEmpty($(".join_form #newChrrNm").val())) {
@@ -477,6 +483,12 @@ $("#btnExcel").on("click", function() {
 			
 		}
 	
+	});
+	//비밀번호 변경 클릭 이벤트
+	 $("#chgPwd").on("click", function() {
+		chgPwdYn = "Y";
+		$("#pwdTr").show();
+		$("#newChrrPwd").focus();
 	});
 	
 	//등록 후 레이어 닫기

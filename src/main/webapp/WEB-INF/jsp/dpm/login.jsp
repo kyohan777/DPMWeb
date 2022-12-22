@@ -25,7 +25,7 @@
                         <li>
                             <div>
                                 <span class="pw-icon">비밀번호</span>
-                                <input type="text" name="chrrPwd" id="txtPassword" placeholder="비밀번호"/>
+                                <input type="password" name="chrrPwd" id="txtPassword" placeholder="비밀번호"/>
                             </div>
                         </li>
                     </ul>

@@ -9,15 +9,13 @@
         >
         SELECT 
                CHRR_ID
+             , CHRR_PWD 
              , CHRR_NM
              , COMPANY_ID
              , UYN
              , DEPTNM
           FROM TB_EM_PC_CHRR
          WHERE CHRR_ID = #{chrrId}
-         <if test='chrrPwd != "" and chrrPwd != null'>
-         AND   CHRR_PWD = #{chrrPwd}
-         </if>
            AND UYN = 'Y' 
     </select>
     
@@ -288,7 +286,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
         SELECT 
     		COUNT(*) TOT_ROW_CNT
     	FROM TB_EM_PC_CHRR
-    	WHERE UYN ='Y'
+    	WHERE 1=1
     	<if test='chrrId != null and chrrId !=""'>
     	AND CHRR_ID = #{chrrId}
     	</if>
@@ -297,6 +295,9 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     	</if>
     	<if test='deptnm != null and deptnm !=""'>
     	AND DEPTNM = #{deptnm}
+    	</if>
+    	<if test='useYn != null and useYn !=""'>
+    	AND UYN = #{useYn}
     	</if>
     </select>
     
@@ -326,7 +327,7 @@ FROM
     		(SELECT CHRR_NM FROM TB_EM_PC_CHRR WHERE UYN='Y' AND CHRR_ID= A.RG_ENO)   AS RG_NM,
     		TO_CHAR(RG_DTM,'HH24:MI')  AS RG_TM
     	FROM TB_EM_PC_CHRR A
-    	WHERE UYN ='Y'
+    	WHERE 1=1
     	<if test='chrrId != null and chrrId !=""'>
     	AND A.CHRR_ID = #{chrrId}
     	</if>
@@ -335,6 +336,9 @@ FROM
     	</if>
     	<if test='deptnm != null and deptnm !=""'>
     	AND A.DEPTNM = #{deptnm}
+    	</if>
+    	<if test='useYn != null and useYn !=""'>
+    	AND UYN = #{useYn}
     	</if>
     	ORDER BY RG_DTM
  ) TA             
@@ -347,6 +351,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     <insert id="insertUserInfo"
         parameterType="com.minervasoft.backend.vo.UserManageVo"
         >
+        <![CDATA[
       	INSERT INTO TB_EM_PC_CHRR
 		(
 			ID_NO,
@@ -375,6 +380,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			SYSDATE,
 			#{rgReason}
 		)
+		]]>
     </insert>
     
     <update  id="updateUserInfo"
@@ -385,7 +391,9 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			COMPANY_ID = #{companyId}, 
 			CHRR_NM	   = #{chrrNm}, 
 			DEPTNM     = #{deptnm},
-			CHRR_PWD   = #{chrrPwd},
+			<if test='chrrPwd != null and chrrPwd !=""'>
+			CHRR_PWD   = #{chrrPwd,jdbcType=VARCHAR},
+			</if>
 			RG_REASON  = #{rgReason},
 			CHG_DTM    = SYSDATE	
 		WHERE ID_NO = #{idNo}

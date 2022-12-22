@@ -69,25 +69,24 @@ var modLogin = (function(){
 		
 		objChrr = userLoginCheck($("#txtUserId").val(),$("#txtPassword").val());
 		if(!modComm.isEmpty(objChrr) && objChrr.hasOwnProperty("chrrId") && !modComm.isEmpty(objChrr.chrrId)) {
-			if($("#txtUserId").val() == objChrr.chrrId) {
-				//로그인			
-				if($("#ckbLastLogin").is(":checked")) {
-					setCookie("lastLoginId", $("#txtUserId").val(), 7);	//7일 동안 쿠키 보관
-				} else {
-					deleteCookie("lastLoginId");
-				}
-
-				var frmLogin = $("#frmLogin")[0];
-				frmLogin.action = "/login/login.do";
-				frmLogin.method = "post";
-				frmLogin.submit();
-				
-			} else {
-				alert("담당자ID가 변경되었습니다. 다시 입력하시기 바랍니다.");
-				$("#txtUserId").focus();				
+			if(objChrr.pwdYn =="N"){
+				alert("비밀번호가 일치하지 않습니다.");
+				$("#txtPassword").focus();
+				return;			
 			}
+				//로그인			
+			if($("#ckbLastLogin").is(":checked")) {
+				setCookie("lastLoginId", $("#txtUserId").val(), 7);	//7일 동안 쿠키 보관
+			} else {
+				deleteCookie("lastLoginId");
+			}
+
+			var frmLogin = $("#frmLogin")[0];
+			frmLogin.action = "/login/login.do";
+			frmLogin.method = "post";
+			frmLogin.submit();
 		} else {
-			alert("담당자 ID 또는 패스워드가 틀립니다.");
+			alert("담당자 ID가 존재하지 않습니다.");
 			$("#txtUserId").focus();
 			return;			
 		}

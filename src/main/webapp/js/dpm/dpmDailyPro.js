@@ -56,6 +56,8 @@ var modDpmDailyPro = (function(){
 	        autowidth:true,
 	        rowNum: 100,
 	        rownumbers: true,
+	        sortable : true,
+			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,

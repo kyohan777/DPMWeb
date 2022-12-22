@@ -42,17 +42,19 @@ var modDpmImrResViewerInfo = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '열람자 ID',    name: 'chrrId',    	align: 'center'},
-	            { label: '성명', 	       name: 'chrrNm', 	    align: 'center'},
-	            { label: '소속', 		   name: 'deptnm',    	align: 'center'},
-	            { label: '고유 ID', 	   name: 'elementId',   align: 'center', width :400},
-	            { label: '조회 일자', 	   name: 'prcDt',   	align: 'center'},
-	            { label: '고객번호', 	   name: 'custId',      align: 'center'},	  
-	            { label: '조회 사유', 	   name: 'queryReason', align: 'center', width :400},
-	            { label: '조회시간', 	   name: 'prcTm',       align: 'center'}
+	            { label: '열람자 ID',    name: 'chrrId',    	align: 'center', width :80},
+	            { label: '성명', 	       name: 'chrrNm', 	    align: 'center', width :80},
+	            { label: '소속', 		   name: 'deptnm',    	align: 'center', width :80},
+	            { label: '고유 ID', 	   name: 'elementId',   align: 'center', width :80},
+	            { label: '조회 일자', 	   name: 'prcDt',   	align: 'center', width :80},
+	            { label: '고객번호', 	   name: 'custId',      align: 'center', width :80},	  
+	            { label: '조회 사유', 	   name: 'queryReason', align: 'center'},
+	            { label: '조회시간', 	   name: 'prcTm',       align: 'center', width :80}
 	        ],
 	       
 	        height: gridHeight,
+	        sortable : true,
+			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        autowidth:true,
 	        rowNum: 100,
 	        rownumbers: true,
