@@ -42,7 +42,6 @@ var modDpmImrResViewerInfo = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '연번',    	   name: 'idNo',    	align: 'center'},
 	            { label: '열람자 ID',    name: 'chrrId',    	align: 'center'},
 	            { label: '성명', 	       name: 'chrrNm', 	    align: 'center'},
 	            { label: '소속', 		   name: 'deptnm',    	align: 'center'},
@@ -56,7 +55,7 @@ var modDpmImrResViewerInfo = (function(){
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
-	        rownumbers: false,
+	        rownumbers: true,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,

@@ -33,29 +33,29 @@ var modDpmDailyPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '엘리먼트 ID', 	 name: 'elementId',  	  align: 'center'},
-	            { label: '파일명',         name: 'imgFileName',     align: 'center'},
-	            { label: '포맷',          name: 'imgFormatType',   align: 'center'},
-	            { label: '상태코드', 		 name: 'maskPrgStsc',     align: 'center'},
-	            { label: '사용자 확인',     name: 'userConfirm',     align: 'center'},	  
-	            { label: '금융안내', 	  	 name: 'ayn', 		   	  align: 'center'},
-	            { label: '금융이외', 		 name: 'byn', 		   	  align: 'center'},
-	            { label: '보험제공', 	  	 name: 'cyn', 		   	  align: 'center'},
-	            { label: '딜러제공', 		 name: 'dyn', 		      align: 'center'},
-	            { label: 'KB제공', 		 name: 'eyn', 		      align: 'center'},
-	            { label: '수집-전화', 		 name: 'tmRecvYn', 	      align: 'center'},
-	            { label: '수집-문자', 		 name: 'smsRecvYn',       align: 'center'},
-	            { label: '수집-DM', 		 name: 'dmRecvYn', 	      align: 'center'},
-	            { label: '수집-메일', 		 name: 'emailRecvYn',     align: 'center'},
-	            { label: '제공-전화', 		 name: 'tmOfferYn',       align: 'center'},
-	            { label: '제공-DM', 		 name: 'dmOfferYn',       align: 'center'},
-	            { label: '제공-메일', 		 name: 'emailOfferYn',    align: 'center'}
+	            { label: '엘리먼트 ID', 	 name: 'elementId',   width:'80',	 align: 'center'},
+	            { label: '파일명',         name: 'imgFileName', width:'80',    align: 'center'},
+	            { label: '포맷',          name: 'imgFormatType',width:'65',   align: 'center'},
+	            { label: '상태코드', 		 name: 'maskPrgStsc',  width:'65',   align: 'center'},
+	            { label: '사용자 확인',     name: 'userConfirm',  width:'80',   align: 'center'},	  
+	            { label: '금융안내', 	  	 name: 'ayn', 		   width:'80',	 align: 'center'},
+	            { label: '금융이외', 		 name: 'byn', 		   width:'80',	 align: 'center'},
+	            { label: '보험제공', 	  	 name: 'cyn', 		   width:'80',	 align: 'center'},
+	            { label: '딜러제공', 		 name: 'dyn', 		   width:'80',   align: 'center'},
+	            { label: 'KB제공', 		 name: 'eyn', 		   width:'80',   align: 'center'},
+	            { label: '수집-전화', 		 name: 'tmRecvYn', 	   width:'80',   align: 'center'},
+	            { label: '수집-문자', 		 name: 'smsRecvYn',    width:'80',   align: 'center'},
+	            { label: '수집-DM', 		 name: 'dmRecvYn', 	   width:'80',   align: 'center'},
+	            { label: '수집-메일', 		 name: 'emailRecvYn',  width:'80',   align: 'center'},
+	            { label: '제공-전화', 		 name: 'tmOfferYn',    width:'80',   align: 'center'},
+	            { label: '제공-DM', 		 name: 'dmOfferYn',    width:'80',   align: 'center'},
+	            { label: '제공-메일', 		 name: 'emailOfferYn', width:'80',   align: 'center'}
 	        ],
 	       
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
-	        rownumbers: false,
+	        rownumbers: true,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
@@ -141,7 +141,7 @@ var modDpmDailyPro = (function(){
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
 	};
 		
-
+	
 
 
     
@@ -260,6 +260,7 @@ $("#searchBtn").on("click", function() {
 	$("#prcDt").val();
 	modDpmDailyPro.selList();
 });
+
 
 /**
  * DOM  load 완료 시 실행

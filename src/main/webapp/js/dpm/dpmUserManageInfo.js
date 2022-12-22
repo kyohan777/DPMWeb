@@ -28,7 +28,6 @@ var modDpmUserManageInfo = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '연번',    	   name: 'idNo',      align: 'center'},
 	            { label: '담당자 ID',    name: 'chrrId',    align: 'center'},
 	            { label: '담당자명', 	   name: 'chrrNm',    align: 'center'},
 	            { label: '부서명', 	   name: 'deptnm',    align: 'center'},
@@ -45,7 +44,7 @@ var modDpmUserManageInfo = (function(){
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
-	        rownumbers: false,
+	        rownumbers: true,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,

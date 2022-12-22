@@ -44,13 +44,13 @@
       SELECT 
 		TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY/MM/DD') AS PRC_DT,    --기준일자(처리일자)
 		PRC_DT_CNT,							 						   --대상건수
-		CASE WHEN PRC_CN > 0 THEN PRC_CN-ERR_CN ELSE 0 END AS PRC_CN,  --처리현황 > 정상
+		PRC_CN,  --처리현황 > 정상
 		ERR_CN,														   --처리현황 > 오류
 		CASE WHEN ERR_CN = 0 THEN '0%'
 			 WHEN PRC_CN = 0 THEN '0%'
-			 ELSE CONCAT((ERR_CN/PRC_CN)*100,'%') END      AS  ERR_RAT,--오류율
+			 ELSE CONCAT(ROUND((ERR_CN/PRC_CN)*100,2),'%') END      AS  ERR_RAT,--오류율
 		CASE WHEN PRC_CN = 0 THEN '0%'
-			 ELSE CONCAT((PRC_CN/PRC_DT_CNT)*100,'%') END  AS  PRC_RAT,--처리율
+			 ELSE CONCAT(ROUND((PRC_CN/PRC_DT_CNT)*100,2),'%') END  AS  PRC_RAT,--처리율
 		VERIFY_UPDATE_CN, 											   --검증건수 > 수정
 		VERIFY_CN -VERIFY_UPDATE_CN AS MAINTAIN_CN, 				   --검증건수 > 유지
 		A 			 				  AS AY,
@@ -150,9 +150,9 @@ FROM
 			SUM(T.ERR_CN) 							 				    AS ERR_CN,
 			CASE WHEN SUM(T.ERR_CN) = 0 THEN '0%'
 			     WHEN SUM(T.PRC_CN) = 0 THEN '0%'
-			ELSE CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_CN))*100,1),'%') END AS ERR_RAT,
+			ELSE CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_CN))*100,2),'%') END AS ERR_RAT,
 			CASE WHEN SUM(T.PRC_CN) = 0 THEN '%'
-			ELSE CONCAT(ROUND((SUM(T.PRC_CN)/SUM(T.PRC_DT_CNT))*100,1),'%') END AS PRC_RAT,    					
+			ELSE CONCAT(ROUND((SUM(T.PRC_CN)/SUM(T.PRC_DT_CNT))*100,2),'%') END AS PRC_RAT,    					
 			SUM(T.VERIFY_UPDATE_CN) 				 				    AS VERIFY_UPDATE_CN,
 			SUM(T. MAINTAIN_CN) 					 				    AS MAINTAIN_CN,
 			SUM(T.AY) 							 				   	    AS AY,
@@ -184,7 +184,7 @@ FROM
  	from(SELECT 
 			TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT, 
 			PRC_DT_CNT,							 						
-			PRC_CN-ERR_CN AS PRC_CN,									
+			PRC_CN,									
 			ERR_CN,														
 			VERIFY_UPDATE_CN, 											
 			PRC_CN-VERIFY_UPDATE_CN       AS MAINTAIN_CN, 					
@@ -479,7 +479,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     resultType="com.minervasoft.backend.vo.StatisticsVO">
     SELECT 
 		PRC_DT,									<!-- 대상건 -->
-		CASE WHEN MASK_PRG_STSC >= '20' THEN 1  
+		CASE WHEN MASK_PRG_STSC > '20' AND MASK_PRG_STSC <![CDATA[<]]> '100' THEN 1  
 		ELSE 0 END AS PRC_CN,					<!-- 처리건 -->
 		CASE WHEN MASK_PRG_STSC > '100' THEN 1
 		ELSE 0 END AS ERR_CN,					<!-- 오류건 -->
@@ -490,6 +490,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		INTVISION_IMR 							<!-- json data -->
 	FROM TB_EM_IMR_MASK_OBJ 
      WHERE PRC_DT = TO_CHAR(SYSDATE-1,'YYYYMMDD')
+     AND MASK_PRG_STSC > '20'
     </select>
     
     <insert id="insertDailyStatics"

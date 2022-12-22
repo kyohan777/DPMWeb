@@ -45,8 +45,8 @@ var modDpmMonthPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: 'YYYY/MM',    name: 'prcDt',    	   width: 200,align: 'center'},
-	            { label: '대상', 	       name: 'prcDtCnt', 	   width: 100,align: 'center'},
+	            { label: 'YYYY/MM',    name: 'prcDt',    	   width: 100,align: 'center'},
+	            { label: '대상', 	       name: 'prcDtCnt', 	   width: 80, align: 'center'},
 	            { label: '정상', 		   name: 'prcCn',    	   width: 80, align: 'center'},
 	            { label: '오류', 		   name: 'errCn',    	   width: 80, align: 'center'},
 	            { label: '오류율', 	   name: 'errRat',   	   width: 80, align: 'center'},
@@ -84,7 +84,7 @@ var modDpmMonthPro = (function(){
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
-	        rownumbers: false,
+	        rownumbers: true,
 	        rownumWidth : 40,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",

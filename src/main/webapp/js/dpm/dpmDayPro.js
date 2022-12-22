@@ -29,7 +29,7 @@ var modDpmDayPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: 'YYYY/MM/DD', name: 'prcDt',    	   width: 200,align: 'center'},
+	            { label: 'YYYY/MM/DD', name: 'prcDt',    	   width: 120,align: 'center'},
 	            { label: '대상', 	       name: 'prcDtCnt', 	   width: 100,align: 'center'},
 	            { label: '정상', 		   name: 'prcCn',    	   width: 80, align: 'center'},
 	            { label: '오류', 		   name: 'errCn',    	   width: 80, align: 'center'},
@@ -69,8 +69,9 @@ var modDpmDayPro = (function(){
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
-	        rownumbers: false,
+	        rownumbers: true,
 	        viewrecords: true,
+	        frozen : true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
 	        shrinkToFit:false,
@@ -91,8 +92,7 @@ var modDpmDayPro = (function(){
 	        	records: function(data) {return data.totRowCnt}	//전체 데이터 수
 	        },
 	        //로드완료 시 (조회 시 reloadGrid 후에도 호출)  
-	        loadComplete: function() {
-	        	
+	        loadComplete: function(data) {
 	        },
 	        
 	        //페이지 이벤트
@@ -150,7 +150,7 @@ var modDpmDayPro = (function(){
 	        },
 	        
 		});
-		
+		//jQuery("#jqGrid").jqGrid('setFrozenColumns');
 		jQuery("#jqGrid").jqGrid('setGroupHeaders', {
   			useColSpanStyle: true, 
   			groupHeaders:[
@@ -179,7 +179,10 @@ var modDpmDayPro = (function(){
 		
 		//엑셀출력을 위한 컬럼정보 생성
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
+		
 	};
+	
+
 		
 
 
@@ -298,6 +301,7 @@ $("#searchBtn").on("click", function() {
 $("#btnExcel").on("click", function() {
 	modDpmDayPro.excelWrite();
 });
+
 
 /**
  * DOM  load 완료 시 실행
