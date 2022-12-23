@@ -133,7 +133,7 @@ var modDpmCalibVerifiInfo = (function(){
 				}
 				$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
 				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
-				//setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 5000);
+				setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 5000);
 				
 				$("#elementId").val(selRowData.elementId);
 				
@@ -156,6 +156,7 @@ var modDpmCalibVerifiInfo = (function(){
 					$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
 					$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
 					$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
+					$("input:radio[name='SMS_OFFER_YN']:radio[value='" + jsonImr.SMS_OFFER_YN + "']").prop('checked', true);
 					
 				} else {
 					dataResetImr();
