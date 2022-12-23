@@ -392,7 +392,9 @@ public class DpmController {
         
         try {
         	StatisticsVO one = dpmService.getDpmDailyProInfoTotRowCnt(paramVO);
-            response.setTotRowCnt(one.getTotRowCnt());
+        	if(one != null) {
+        		response.setTotRowCnt(one.getTotRowCnt());
+        	}
             
         } catch(Exception e) {
             e.printStackTrace();
@@ -465,7 +467,9 @@ public class DpmController {
         
         try {
         	StatisticsVO one = dpmService.getDpmDayProInfoTotRowCnt(paramVO);
-            response.setTotRowCnt(one.getTotRowCnt());
+        	if(one != null) {
+        		response.setTotRowCnt(one.getTotRowCnt());
+        	}
             
         } catch(Exception e) {
             e.printStackTrace();
@@ -515,7 +519,10 @@ public class DpmController {
         
         try {
         	StatisticsVO one = dpmService.getDpmMonthProInfoTotRowCnt(paramVO);
-            response.setTotRowCnt(one.getTotRowCnt());
+        	if(one != null) {
+        		response.setTotRowCnt(one.getTotRowCnt());
+        	}
+        	
             
         } catch(Exception e) {
             e.printStackTrace();
@@ -567,7 +574,9 @@ public class DpmController {
         
         try {
         	CalibVerifiVo one = dpmService.getdpmImrResViewerInfoTotRowCnt(paramVO);
-            response.setTotRowCnt(one.getTotRowCnt());
+        	if(one != null) {
+        		response.setTotRowCnt(one.getTotRowCnt());
+        	}
             
         } catch(Exception e) {
             e.printStackTrace();
@@ -618,7 +627,9 @@ public class DpmController {
         
         try {
         	UserManageVo one = dpmService.getdpmUserManageInfoTotRowCnt(paramVO);
-            response.setTotRowCnt(one.getTotRowCnt());
+        	if(one != null) {
+        		response.setTotRowCnt(one.getTotRowCnt());
+        	}
             
         } catch(Exception e) {
             e.printStackTrace();

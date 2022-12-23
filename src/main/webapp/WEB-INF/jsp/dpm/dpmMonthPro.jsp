@@ -39,7 +39,7 @@
 						<input id="prcDt" type="hidden" name="prcDt">
    					</form>
                             <ul class="smbc-top-btn-wrap">
-                                <li class="search-btn"><button onclick="modDpmMonthPro.selList();">조회</button></li>
+                                <li class="search-btn"><button id="searchBtn">조회</button></li>
                             </ul>
                         </div>
                         <div class="smbc-data-wrap">

@@ -167,7 +167,7 @@ var modDpmDailyPro = (function(){
 		
     	//전체건수가 있으면 목록조회
 		if(totRowCnt < 1) {
-			alert("조회된 데이터가 없습니다.");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='17' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
         	objParam.totRowCnt	= totRowCnt;
@@ -230,7 +230,7 @@ var modDpmDailyPro = (function(){
 		
     	//전체건수가 있으면 엑셀출력
 		if(totRowCnt < 1) {
-			alert("엑셀출력할 데이터가 없습니다.");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='17' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {			
 			var frmLogin = $("#frmDailyPro")[0];
