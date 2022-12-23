@@ -263,6 +263,20 @@ $("#searchBtn").on("click", function() {
 	modDpmDailyPro.selList();
 });
 
+$("#btnBatch").on("click", function() {
+	if(confirm("배치를 돌리시겠습니까?")){
+		modAjax.request("/dpm/dpmBatchStart.do",  {
+			async: false,
+			success: function(data) {				
+				
+			},
+            error: function(response) {
+                console.log(response);
+            }
+    	});
+    }		
+});
+
 
 /**
  * DOM  load 완료 시 실행

@@ -426,61 +426,65 @@ public class DpmServiceImpl implements DpmService {
 	public StatisticsVO getDpmBatchInfo() throws Exception {
 		List<StatisticsVO> list = dpmDao.getDpmBatchInfo();
 		StatisticsVO statisticInfo = new StatisticsVO(); 
-		for(StatisticsVO vo : list) {
-            if(vo.getIntvisionImr() != null) {
-            	logger.debug("INTVISION_IMR : "+vo.getIntvisionImr());
-            	//json string data 파싱하기
-            	String json = vo.getIntvisionImr(); 
-            	JSONParser parser = new JSONParser();
-            	Object obj = parser.parse(json);
-            	JSONObject jsonObj = (JSONObject) obj;
-            	statisticInfo.setPrcDt(vo.getPrcDt());
-            	statisticInfo.setPrcDtCnt(statisticInfo.getPrcDtCnt()+1);  					//대상건수
-            	statisticInfo.setPrcCn(statisticInfo.getPrcCn()+(Integer) vo.getPrcCn());	//처리건수
-            	statisticInfo.setErrCn(statisticInfo.getErrCn()+(Integer) vo.getErrCn());	//오류건수
-            	statisticInfo.setVerifyCn(statisticInfo.getVerifyCn()+(Integer) vo.getVerifyCn());//검증건수
-            	statisticInfo.setVerifyUpdateCn(statisticInfo.getVerifyUpdateCn()+(Integer) vo.getVerifyUpdateCn());//수정건수
-            	if(jsonObj.get("A").equals("Y")) {
-            		statisticInfo.setAy(statisticInfo.getAy()+1);
-            	}
-            	if(jsonObj.get("B").equals("Y")) {
-            		statisticInfo.setBy(statisticInfo.getBy()+1);
-            	}
-            	if(jsonObj.get("C").equals("Y")) {
-            		statisticInfo.setCy(statisticInfo.getCy()+1);
-            	}
-            	if(jsonObj.get("D").equals("Y")) {
-            		statisticInfo.setDy(statisticInfo.getDy()+1);
-            	}
-            	if(jsonObj.get("E").equals("Y")) {
-            		statisticInfo.setEy(statisticInfo.getEy()+1);
-            	}
-            	if(jsonObj.get("TM_RECV_YN").equals("Y")) {
-            		statisticInfo.setTmRecvY(statisticInfo.getTmRecvY()+1);
-            	}
-            	if(jsonObj.get("SMS_RECV_YN").equals("Y")) {
-            		statisticInfo.setSmsRecvY(statisticInfo.getSmsRecvY()+1);	
-            	}
-            	if(jsonObj.get("DM_RECV_YN").equals("Y")) {
-            		statisticInfo.setDmRecvY(statisticInfo.getDmRecvY()+1);	
-            	}
-            	if(jsonObj.get("EMAIL_RECV_YN").equals("Y")) {
-            		statisticInfo.setEmailRecvY(statisticInfo.getEmailRecvY()+1);	
-            	}
-            	if(jsonObj.get("TM_OFFER_YN").equals("Y")) {
-            		statisticInfo.setTmOfferY(statisticInfo.getTmOfferY()+1);
-            	}
-            	if(jsonObj.get("DM_OFFER_YN").equals("Y")) {
-            		statisticInfo.setDmOfferY(statisticInfo.getDmOfferY()+1);	
-            	}
-            	if(jsonObj.get("EMAIL_OFFER_YN").equals("Y")) {
-            		statisticInfo.setEmailOfferY(statisticInfo.getEmailOfferY()+1);	
-            	}
-            	if(jsonObj.get("SMS_OFFER_YN").equals("Y")) {
-            		statisticInfo.setSmsOfferY(statisticInfo.getSmsOfferY()+1);	
-            	}
-            }
-        }
+		if(list.size()>0) {
+			for(StatisticsVO vo : list) {
+	            if(vo.getIntvisionImr() != null) {
+	            	logger.debug("INTVISION_IMR : "+vo.getIntvisionImr());
+	            	//json string data 파싱하기
+	            	String json = vo.getIntvisionImr(); 
+	            	JSONParser parser = new JSONParser();
+	            	Object obj = parser.parse(json);
+	            	JSONObject jsonObj = (JSONObject) obj;
+	            	statisticInfo.setPrcDt(vo.getPrcDt());
+	            	statisticInfo.setPrcDtCnt(statisticInfo.getPrcDtCnt()+1);  					//대상건수
+	            	statisticInfo.setPrcCn(statisticInfo.getPrcCn()+(Integer) vo.getPrcCn());	//처리건수
+	            	statisticInfo.setErrCn(statisticInfo.getErrCn()+(Integer) vo.getErrCn());	//오류건수
+	            	statisticInfo.setVerifyCn(statisticInfo.getVerifyCn()+(Integer) vo.getVerifyCn());//검증건수
+	            	statisticInfo.setVerifyUpdateCn(statisticInfo.getVerifyUpdateCn()+(Integer) vo.getVerifyUpdateCn());//수정건수
+	            	if(jsonObj.get("A").equals("Y")) {
+	            		statisticInfo.setAy(statisticInfo.getAy()+1);
+	            	}
+	            	if(jsonObj.get("B").equals("Y")) {
+	            		statisticInfo.setBy(statisticInfo.getBy()+1);
+	            	}
+	            	if(jsonObj.get("C").equals("Y")) {
+	            		statisticInfo.setCy(statisticInfo.getCy()+1);
+	            	}
+	            	if(jsonObj.get("D").equals("Y")) {
+	            		statisticInfo.setDy(statisticInfo.getDy()+1);
+	            	}
+	            	if(jsonObj.get("E").equals("Y")) {
+	            		statisticInfo.setEy(statisticInfo.getEy()+1);
+	            	}
+	            	if(jsonObj.get("TM_RECV_YN").equals("Y")) {
+	            		statisticInfo.setTmRecvY(statisticInfo.getTmRecvY()+1);
+	            	}
+	            	if(jsonObj.get("SMS_RECV_YN").equals("Y")) {
+	            		statisticInfo.setSmsRecvY(statisticInfo.getSmsRecvY()+1);	
+	            	}
+	            	if(jsonObj.get("DM_RECV_YN").equals("Y")) {
+	            		statisticInfo.setDmRecvY(statisticInfo.getDmRecvY()+1);	
+	            	}
+	            	if(jsonObj.get("EMAIL_RECV_YN").equals("Y")) {
+	            		statisticInfo.setEmailRecvY(statisticInfo.getEmailRecvY()+1);	
+	            	}
+	            	if(jsonObj.get("TM_OFFER_YN").equals("Y")) {
+	            		statisticInfo.setTmOfferY(statisticInfo.getTmOfferY()+1);
+	            	}
+	            	if(jsonObj.get("DM_OFFER_YN").equals("Y")) {
+	            		statisticInfo.setDmOfferY(statisticInfo.getDmOfferY()+1);	
+	            	}
+	            	if(jsonObj.get("EMAIL_OFFER_YN").equals("Y")) {
+	            		statisticInfo.setEmailOfferY(statisticInfo.getEmailOfferY()+1);	
+	            	}
+	            	if(jsonObj.get("SMS_OFFER_YN").equals("Y")) {
+	            		statisticInfo.setSmsOfferY(statisticInfo.getSmsOfferY()+1);	
+	            	}
+	            }
+	        }
+		}else {
+			statisticInfo = null;
+		}
 		return statisticInfo;
 	}
 

@@ -771,7 +771,7 @@ public class DpmController {
     	CommonVO commonVO 		 = getServerDateTime();
     	String filename 		 = commonVO.getServerTime().concat("_일별 통계.xlsx");    	
     	setExcelDownloadHeader(request, response, filename);
-    	 String title = "YYYY/MM/DD,대상,처리현황,'','',처리율,검증건수,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
+    	 String title = "YYYY/MM/DD,대상,처리현황,'','',처리율,검증현황,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
     	StatisticsVO one = dpmService.getDpmDayProInfoTotRowCnt(paramVO);
     	
     	int pageSize   = 10000;
@@ -789,6 +789,7 @@ public class DpmController {
     	modelMap.put("gridNames",  paramVO.getGridNames());
     	modelMap.put("gridWidths", paramVO.getGridWidths());
     	modelMap.put("headerMergeYn","Y");
+    	modelMap.put("intYn","Y");
     	modelMap.put("mergeTitle", title);
     	modelMap.put("VO", "StatisticsVO");
     	modelMap.put("excelList", list);
@@ -831,6 +832,7 @@ public class DpmController {
     	modelMap.put("gridNames", paramVO.getGridNames());
     	modelMap.put("gridWidths", paramVO.getGridWidths());
     	modelMap.put("headerMergeYn","N");
+    	modelMap.put("intYn","N");
     	modelMap.put("VO", "UserManageVo");
     	modelMap.put("excelList", list);
     	
@@ -856,7 +858,7 @@ public class DpmController {
     	String filename 		 = commonVO.getServerTime().concat("_월별 통계.xlsx");    	
     	setExcelDownloadHeader(request, response, filename);
     	StatisticsVO one = dpmService.getDpmMonthProInfoTotRowCnt(paramVO);
-    	String title = "YYYY/MM,대상,처리현황,'','',처리율,검증건수,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
+    	String title = "YYYY/MM,대상,처리현황,'','',처리율,검증현황,'',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
     	int pageSize   = 10000;
     	int totRowCnt  = one.getTotRowCnt() ;
     	int totPageCnt = (int) Math.floor(totRowCnt/pageSize)+1;
@@ -872,6 +874,7 @@ public class DpmController {
     	modelMap.put("gridNames",  paramVO.getGridNames());
     	modelMap.put("gridWidths", paramVO.getGridWidths());
     	modelMap.put("headerMergeYn","Y");
+    	modelMap.put("intYn","Y");
     	modelMap.put("mergeTitle", title);
     	modelMap.put("VO", "StatisticsVO");
     	modelMap.put("excelList", list);
@@ -938,6 +941,7 @@ public class DpmController {
     	modelMap.put("gridNames",  paramVO.getGridNames());
     	modelMap.put("gridWidths", paramVO.getGridWidths());
     	modelMap.put("headerMergeYn","N");
+    	modelMap.put("intYn","N");
     	modelMap.put("VO", "StatisticsVO");
     	modelMap.put("excelList", list);
     	
@@ -955,6 +959,7 @@ public class DpmController {
         String gridNames     = (String) model.get("gridNames");
         String gridWidths    = (String) model.get("gridWidths");
         String headerMergeYn = (String) model.get("headerMergeYn");
+        String intYn         = (String) model.get("intYn");
         rowList = (ArrayList<Object>) model.get("excelList");
         String vo =  (String) model.get("VO");
         Class<?> voClass = Class.forName("com.minervasoft.backend.vo." + vo);                        
@@ -1023,7 +1028,7 @@ public class DpmController {
 	    	if(rowList != null) {
             	for(int i = 0; i < rowList.size(); i++) {
             		Row aRow = (Row) sheet.createRow(rowNo++);
-            		setEachRow(aRow, rowList.get(i), methodList);
+            		setEachRow(aRow, rowList.get(i), methodList,intYn);
             	}
             		
             }
@@ -1045,16 +1050,52 @@ public class DpmController {
      * @param methodList
      * @throws Exception
      */
-    private void setEachRow(Row aRow, Object vo, List<Method> methodList) throws Exception {
+    private void setEachRow(Row aRow, Object vo, List<Method> methodList,String intYn) throws Exception {
     	for(int i=0; i<methodList.size(); i++) {
     		Cell cell = aRow.createCell(i);
     		if(!methodList.get(i).invoke(vo).equals(null)) {
-    			String val = methodList.get(i).invoke(vo).toString();
-    			cell.setCellValue(val);
+    			if(intYn.equals("Y")) {//숫자 형식으로 변경 필요한 경우
+    				//처리일자 + 처리율 + 오류울은 문자열 처리
+        			if( !"getPrcDt".equals(methodList.get(i).getName()) &&!"getErrRat".equals(methodList.get(i).getName()) && !"getPrcRat".equals(methodList.get(i).getName())) {
+        				Integer val = Integer.parseInt(methodList.get(i).invoke(vo).toString());
+        				cell.setCellValue(val);
+        			}else {
+            			String val = methodList.get(i).invoke(vo).toString();
+            			cell.setCellValue(val);
+            		}
+    			}else {
+    				String val = methodList.get(i).invoke(vo).toString();
+        			cell.setCellValue(val);
+    			}
     		}
-        		
     	}
     }	
+    
+    
+    
+    /**
+     * 일일 처리 통계 배치
+     * @param paramVO
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/dpm/dpmBatchStart.do")
+    public void dpmBatchStart(StatisticsVO paramVO, ModelMap modelMap) throws Exception {    	
+    	logger.debug("일일 처리 통계 배치 시작");
+    	try {
+			StatisticsVO info = dpmService.getDpmBatchInfo();
+			if(info != null) {
+				logger.debug("통계 처리 DATA StatisticsVO : " + info.toString());
+				info.setNoCn(info.getPrcDtCnt()-info.getPrcCn());//미처리 건수(대상건수 - 처리건수)
+				dpmService.insertDailyStatics(info);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     
     
      

@@ -70,6 +70,7 @@
                                 <h3>일일 처리 현황</h3>
                                  <ul class="smbc-data-top-menu">
                                     <li><button id="btnExcel">엑셀다운로드</button></li>
+                                    <c:if test="${chrrId == 'admin'}"> <li><button id="btnBatch">일일 배치</button></li></c:if>
                                 </ul>
                             </div>
                             <div class="smbc-data-con-wrap">
