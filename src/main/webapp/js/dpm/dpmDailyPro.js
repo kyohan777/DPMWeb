@@ -83,7 +83,6 @@ var modDpmDailyPro = (function(){
 	        loadComplete: function() {
 	        	
 	        },
-	        
 	        //페이지 이벤트
 	        onPaging: function(action) {
 	        	var curPage  = $("#jqGrid").getGridParam("page");

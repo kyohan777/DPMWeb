@@ -73,7 +73,6 @@ var modDpmDayPro = (function(){
 			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        rownumbers: true,
 	        viewrecords: true,
-	        frozen : true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
 	        shrinkToFit:false,

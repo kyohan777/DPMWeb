@@ -20,7 +20,7 @@
 		                http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 
-	<bean id="statisticTask" class="com.minervasoft.backend.common.SchedulerUtil" />
+<!-- 	<bean id="statisticTask" class="com.minervasoft.backend.common.SchedulerUtil" />
 
 	<bean name="statisticJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 		<property name="jobClass" value="com.minervasoft.backend.common.QuartzJob" />
@@ -37,6 +37,6 @@
 				<ref bean="statisticTrigger" />
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 
 </beans>

@@ -62,7 +62,7 @@ var modLogin = (function(){
 			return;
 		}
 		if(modComm.isEmpty($("#txtPassword").val())) {
-			alert("패스워드를 입력하십시오.");
+			alert("비밀번호를 입력하십시오.");
 			$("#txtPassword").focus();
 			return;
 		}
@@ -149,6 +149,11 @@ $("#btnLogin").on("click",function(){
 
 
 $("#txtUserId").keydown(function(key){
+	if(key.keyCode == 13) {
+		modLogin.login();
+	}
+});
+$("#txtPassword").keydown(function(key){
 	if(key.keyCode == 13) {
 		modLogin.login();
 	}

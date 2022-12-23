@@ -32,7 +32,7 @@
                     <span class="info">
                        <input id="ckbLastLogin" type="checkbox"/>
                         <label for="ckbLastLogin">
-                            <span>사번 저장</span>
+                            <span style="padding-left: 15px;">아이디 저장</span>
                         </label>
                     </span>
                     

@@ -3,10 +3,9 @@
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMBC 전자문서 관리시스템</title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=10"> 
+    <title>지문정보 마스킹처리 공정관리 시스템</title>
 </head>
 <body>
      <div class="smbc-wrap">
