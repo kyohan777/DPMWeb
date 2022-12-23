@@ -76,6 +76,9 @@ function setPageControl($thumbnails) {
 	});
 }
 
+
+var imrFirstPage = 1;
+
 function initViewer(completed, initFit = 'fit_hori', setNextPrevKey = true) {
 	$('div.view-box').load('/sfview/theme/view.html', function(){
 		const $view = $('#sfwork').sfview();
@@ -94,7 +97,9 @@ function initViewer(completed, initFit = 'fit_hori', setNextPrevKey = true) {
 					$view.loadEmbedded(null);
 					alert('없는 자료 입니다');				
 				} else {
+					console.log("loadEmbedded src:" + src + '#page=' + imrFirstPage);
 					$view.loadEmbedded(src);
+					//$view.loadEmbedded(src + '#page=' + imrFirstPage);
 				}
 			}
 	

@@ -183,8 +183,11 @@
                                                 <td><input type ="radio" name="DM_OFFER_YN" value="N"></td>
                                                 <td><input type ="radio" name="DM_OFFER_YN" value="Y"></td>
                                             </tr>
-
-                                            
+                                            <tr>
+                                                <td style="text-align: left">[제공 마케팅] 문자(SMS) 제공 동의</td>
+                                                <td><input type ="radio" name="SMS_OFFER_YN" value="N"></td>
+                                                <td><input type ="radio" name="SMS_OFFER_YN" value="Y"></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                     

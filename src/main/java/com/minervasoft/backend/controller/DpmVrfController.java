@@ -1,6 +1,8 @@
 package com.minervasoft.backend.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -22,6 +25,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.minervasoft.backend.service.DpmService;
 import com.minervasoft.backend.vo.CalibVerifiVo;
 import com.minervasoft.backend.vo.ImageVerifyVO;
@@ -159,12 +164,18 @@ public class DpmVrfController {
 	    	String intvisionImr  = (String)jsonObjRoot.get("intvisionImr");
 	    	jsonObjRoot.remove("elementId");
 	    	jsonObjRoot.remove("intvisionImr");
-	    	paramVO.setIntvisionImr(jsonObjRoot.toJSONString());
-	    	
+	    	    	
 	    	obj = parser.parse(intvisionImr);
 	    	JSONObject jsonObj = (JSONObject) obj;
-	    	    	
-	    	// 데이터 비교
+			
+			Map<String, Object> map = jsonToMap(jsonObjRoot);
+	        ObjectMapper om = new ObjectMapper();
+	        om.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true); //key로 정렬 설정
+	        String jsonStr = om.writeValueAsString(map); 
+	        logger.info(jsonStr);
+	        paramVO.setIntvisionImr(jsonStr);
+ 	
+	        // 데이터 비교
 	    	boolean eqYn = true;
 	    	Iterator<String> keys = jsonObjRoot.keySet().iterator();
 	    	Iterator<String> keysIv = jsonObj.keySet().iterator();
@@ -231,8 +242,72 @@ public class DpmVrfController {
     	
     	String baseFolder  = "D:/project_minerva/git/DPMWeb/src/main/webapp/WEB-INF/temp/";
     	
-    	Converter.getImage(baseFolder + filename, response);
+    	try {
+    		Converter.getImage(baseFolder + filename, response);
+    	} catch (Exception e) {
+    		logger.error("Converter.getImage error!!:", e);
+    		try {
+    			response.getWriter().write("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=");
+    		} catch (Exception e1) {
+    			logger.error("response.getWriter().write error!!:", e1);
+    		}
+    	}
     }
+    
+    
+    
+    
+  //json을 받아 hashmap으로 변환하는 메소드
+    public static Map<String, Object> jsonToMap(JSONObject json) throws Exception {
+		Map<String, Object> retMap = new HashMap<String, Object>();
+	    
+	    if(json != null) {
+	        retMap = toMap(json);
+	    }
+	    return retMap;
+	}
+
+	//json객체 안에 또다른 json 객체가 있을 경우
+	public static Map<String, Object> toMap(JSONObject object) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+	    @SuppressWarnings("rawtypes")
+		Set keys = object.keySet();
+	    @SuppressWarnings("unchecked")
+		Iterator<String> keysItr = keys.iterator();
+	    while(keysItr.hasNext()) {
+	        String key = keysItr.next();
+	        Object value = object.get(key);
+	        
+	        if(value instanceof JSONArray) {
+	            value = toList((JSONArray) value);
+	        }
+	        
+	        else if(value instanceof JSONObject) {
+	            value = toMap((JSONObject) value);
+	        }
+	        map.put(key, value);
+	    }
+	    return map;
+	}
+	
+    //json객체 안에 json 배열이 있을경우
+	public static List<Object> toList(JSONArray array) throws Exception {
+	    List<Object> list = new ArrayList<Object>();
+	    for(int i = 0; i < array.size(); i++) {
+	        Object value = array.get(i);
+	        if(value instanceof JSONArray) {
+	            value = toList((JSONArray) value);
+	        }
+
+	        else if(value instanceof JSONObject) {
+	            value = toMap((JSONObject) value);
+	        }
+	        list.add(value);
+	    }
+	    return list;
+	}
+ 
 
     
      

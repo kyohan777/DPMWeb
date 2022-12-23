@@ -46,18 +46,18 @@ var modDpmCalibVerifiInfo = (function(){
 	        //jqGrid 양식선언부        
 	        colModel: [
 				{ label: '엘리먼트ID',    name: 'elementId', 	   align: 'center', width:'0px'},
-	            { label: '파일명',       name: 'imgFileName',	   align: 'center'},
-	            { label: '진행상태',     name: 'maskPrgStsc', 	   align: 'center', width: '80px'},
-	            { label: '최초탐지페이지', name: 'fstImrPage',    	   align: 'center', width: '60px'},
-	            { label: '검증여부', 	   name: 'userConfirm',    	   align: 'center', width: '90px'},
-	            { label: '수정/유지', 	   name: 'userUpdateYn',   	   align: 'center', width: '90px'},
-	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'center'}
+	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
+	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
+	            { label: '탐지',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
+	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px'},
+	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'},
+	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1300px'}
 	        ],
 	       
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
-	        rownumbers: false,
+	        rownumbers: true,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
@@ -127,7 +127,13 @@ var modDpmCalibVerifiInfo = (function(){
 	      //Row클릭 이벤트
 	        onSelectRow: function(rowid) {
 				var selRowData = $("#jqGrid").getRowData(rowid);
+				var imrFPage = selRowData.fstImrPage;
+				if(imrFPage == null || imrFPage == "undefined" || imrFPage == "") {
+					imrFPage = 1;
+				}
+				$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
 				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
+				//setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 5000);
 				
 				$("#elementId").val(selRowData.elementId);
 				
@@ -386,6 +392,13 @@ $(document).ready(function() {
 	$("#box-right").height($("#gridContainer").height() - 10);
 	$("#box-right-1").height($("#gridContainer").height() - 10);
 	
+	//$("#jqGrid").jqGrid('setFrozenColumns');
+	
+	//$("#viwerIframe").get(0).contentWindow.viewerSetHeight($("#gridContainer").height());
+	
+	$('iframe#embedded.embedded').height($("#gridContainer").height());
+	
+	
 });
 
 $(window).on('resize', function(){
@@ -393,6 +406,10 @@ $(window).on('resize', function(){
 	$("#box-center").height($("#gridContainer").height());
 	$("#box-right").height($("#gridContainer").height() - 10);
 	$("#box-right-1").height($("#gridContainer").height() - 10);
+	
+	//$("#viwerIframe").get(0).contentWindow.viewerSetHeight($("#gridContainer").height());
+	
+	$('iframe#embedded.embedded').height($("#gridContainer").height());
     
 });
 

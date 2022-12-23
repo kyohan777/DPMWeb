@@ -47,21 +47,21 @@ var modDpmImrResultInfo = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-				{ label: '엘리먼트ID',   name: 'elementId', 	   align: 'center', width:'0px'},
-				{ label: 'custId',    name: 'custId', 	   align: 'center', width:'0px'},
+	            { label: '엘리먼트ID',    name: 'elementId', 	   align: 'center', width:'0px'},
+	            { label: 'custId',    name: 'custId', 	   align: 'center', width:'0px'},
 				{ label: 'contractId', name: 'contractId', 	   align: 'center', width:'0px'},
-	            { label: '파일명',       name: 'imgFileName',	   align: 'center'},
-	            { label: '진행상태',     name: 'maskPrgStsc', 	   align: 'center', width: '80px'},
-	            { label: '최초탐지페이지', name: 'fstImrPage',    	   align: 'center', width: '60px'},
-	            { label: '검증여부', 	   name: 'userConfirm',    	   align: 'center', width: '90px'},
-	            { label: '수정/유지', 	   name: 'userUpdateYn',   	   align: 'center', width: '90px'},
-	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'center'}
+	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
+	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
+	            { label: '탐지',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
+	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px'},
+	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'},
+	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1150px'}
 	        ],
 	       
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
-	        rownumbers: false,
+	        rownumbers: true,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
@@ -524,6 +524,12 @@ $(document).ready(function() {
 	$("#box-center").height($("#gridContainer").height());
 	$("#box-right").height($("#gridContainer").height() - 10);
 	$("#box-right-1").height($("#gridContainer").height() - 10);
+	
+	
+	$('input[type=radio]').click(function (event){
+       event.preventDefault();
+       event.stopPropagation();
+	});
 	
 });
 

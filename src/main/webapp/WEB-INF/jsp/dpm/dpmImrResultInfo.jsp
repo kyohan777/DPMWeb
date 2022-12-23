@@ -149,8 +149,8 @@
                                         <tbody id="mkTable">
                                             <tr>
                                                 <td style="text-align: left">금융상품안내 및 이용권유를 위한 수집, 이용</td>
-                                                <td><input type ="radio" name="A" value="N"></td>
-                                                <td><input type ="radio" name="A" value="Y"></td>
+                                                <td><input type ="radio" name="A" value="N" readonly></td>
+                                                <td><input type ="radio" name="A" value="Y" readonly></td>
                                             </tr>
                                              <tr>
                                                 <td style="text-align: left">금융상품 이외의 서비스 안내 및 이용권유를 위한 수집,이용</td>
@@ -207,8 +207,11 @@
                                                 <td><input type ="radio" name="DM_OFFER_YN" value="N"></td>
                                                 <td><input type ="radio" name="DM_OFFER_YN" value="Y"></td>
                                             </tr>
-
-                                            
+											<tr>
+                                                <td style="text-align: left">[제공 마케팅] 문자(SMS) 제공 동의</td>
+                                                <td><input type ="radio" name="SMS_OFFER_YN" value="N"></td>
+                                                <td><input type ="radio" name="SMS_OFFER_YN" value="Y"></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                     

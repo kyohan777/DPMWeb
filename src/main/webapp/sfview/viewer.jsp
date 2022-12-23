@@ -69,7 +69,7 @@
 		<div class="biz-box no-print">
 		</div>
 		 -->
-		<div class="view-box"></div>
+		<div id="id_view-box" class="view-box"></div>
 	</div>
 </body>
 <script>
@@ -210,8 +210,20 @@
     
     function viewerSetImg(filename) {
     	console.log("filename:" + filename);
+    	$thumbnails.empty();
+    	$view.clear(); 
+    	
     	//$thumbnails.setImg("/sfview/show_file.jsp?filename=" + filename);
     	$thumbnails.setImg("/showFile.do?filename=" + filename);
     }
+    
+    function viewerSetHeight(height) {
+    	
+    }
+    
+	function scrollToSeq(pageno) {
+		$thumbnails.scrollToSeq(pageno);
+    }
+    
 </script>   
 </html>

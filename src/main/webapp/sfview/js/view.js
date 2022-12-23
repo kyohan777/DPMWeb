@@ -204,12 +204,19 @@
 		Module.loadEmbedded = function (url) {
 			const $body = $("iframe#embedded").contents().find("body");
 			const bg = $('iframe.embedded').css('background');
-			const height = $('iframe.embedded').css('height');
+			//const height = $('iframe.embedded').css('height');
+			const height = $("#gridContainer", parent.document).height();
+			
+			console.log("body:" + $body + " bg:" + bg + " height:" + height);
+			console.log("url:" + url);
+			
 			$body.empty();
 			$body.css({'background':bg, 'height':height});
+					
 			$('iframe#embedded').show();
 			if (url != null) {
 				$('iframe#embedded').attr('src', url);
+				$('iframe#embedded').height(height);
 			}
 		}
 		
