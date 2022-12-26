@@ -26,7 +26,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=10">
-    <title>이미지조회</title>
+    <title>전자문서관리 시스템</title>
     
 </head>
 <body>

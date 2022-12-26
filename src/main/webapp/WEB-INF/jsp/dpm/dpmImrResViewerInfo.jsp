@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMBC 전자문서 관리시스템</title>
+    <title>전자문서관리 시스템</title>
 </head>
 <body>
      <div class="smbc-wrap">
