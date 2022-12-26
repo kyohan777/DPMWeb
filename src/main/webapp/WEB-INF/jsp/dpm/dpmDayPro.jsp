@@ -26,7 +26,7 @@
                                     <div class="datepicker-wrap">
 										<input id="textPrcDt" name="textPrcDt" type="text" class="form-control "
 									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
-										maxlength="10" autocomplete="off"> 
+										maxlength="10" autocomplete="off"onchange="modDpmDayPro.selList();"> 
 										<span class="icon-calendar">
 										<img id="imgStartDt" img src="../images/icon-calendar.png" alt="달력">
 										</span>
@@ -40,9 +40,9 @@
 						<input id="gridWidthList" type="hidden" name="gridWidths"> 
 						<input id="gridAlignList" type="hidden" name="gridAligns">
    					</form>
-                            <ul class="smbc-top-btn-wrap">
+                           <!--  <ul class="smbc-top-btn-wrap">
                                 <li class="search-btn"><button id="searchBtn">조회</button></li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="smbc-data-wrap">
                             <div class="smbc-data-title">

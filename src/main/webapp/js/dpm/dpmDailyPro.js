@@ -289,6 +289,11 @@ $("#btnBatch").on("click", function() {
     	});
     }		
 });
+$("#textPrcDt").keydown(function(key){
+	if(key.keyCode == 13) {
+		modDpmDailyPro.selList();
+	}
+});
 
 
 /**

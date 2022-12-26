@@ -312,4 +312,10 @@ $(document).ready(function() {
 	modDpmDayPro.selList();
 });
 
+$("#textPrcDt").keydown(function(key){
+	if(key.keyCode == 13) {
+		modDpmDailyPro.selList();
+	}
+});
+
 //# sourceURL=dpm1010.js

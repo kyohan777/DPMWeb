@@ -26,7 +26,8 @@
                                     <label>(처리)년</label>
                                     <div class="datepicker-wrap">
 										<select id="textPrcDt" name="textPrcDt"class="form-control "
-									     style="width: 130px; margin-right: 0px; padding-right: 30px;">
+									     style="width: 130px; margin-right: 0px; padding-right: 30px;"
+									     onchange="modDpmMonthPro.selList();">
 									     </select> 
                                     </div>
                                 </li>
@@ -38,9 +39,9 @@
 						<input id="gridAlignList" type="hidden" name="gridAligns">
 						<input id="prcDt" type="hidden" name="prcDt">
    					</form>
-                            <ul class="smbc-top-btn-wrap">
+                            <!-- <ul class="smbc-top-btn-wrap">
                                 <li class="search-btn"><button id="searchBtn">조회</button></li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="smbc-data-wrap">
                             <div class="smbc-data-title">

@@ -331,6 +331,13 @@ $("#searchBtn").on("click", function() {
 	modDpmMonthPro.selList();
 });
 
+$("#textPrcDt").keydown(function(key){
+	if(key.keyCode == 13) {
+		modDpmDailyPro.selList();
+	}
+});
+
+
 /**
  * DOM  load 완료 시 실행
  */
