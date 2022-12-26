@@ -45,11 +45,11 @@ var modDpmImrResViewerInfo = (function(){
 	            { label: '열람자 ID',    name: 'chrrId',    	align: 'center', width :80},
 	            { label: '성명', 	       name: 'chrrNm', 	    align: 'center', width :80},
 	            { label: '소속', 		   name: 'deptnm',    	align: 'center', width :80},
-	            { label: '고유 ID', 	   name: 'elementId',   align: 'center', width :80},
-	            { label: '조회 일자', 	   name: 'prcDt',   	align: 'center', width :80},
-	            { label: '고객번호', 	   name: 'custId',      align: 'center', width :80},	  
-	            { label: '조회 사유', 	   name: 'queryReason', align: 'center'},
-	            { label: '조회시간', 	   name: 'prcTm',       align: 'center', width :80}
+	            { label: '엘리먼트 ID',  name: 'elementId',   align: 'left',   width :80},
+	            { label: '고객번호', 	   name: 'custId',      align: 'center', width :100},
+	            { label: '조회 일자', 	   name: 'prcDt',   	align: 'center', width :80},	  
+	            { label: '조회시간', 	   name: 'prcTm',       align: 'center', width :80},
+	            { label: '조회 사유', 	   name: 'queryReason', align: 'left', width :200}
 	        ],
 	       
 	        height: gridHeight,
@@ -167,7 +167,7 @@ var modDpmImrResViewerInfo = (function(){
 		
     	//전체건수가 있으면 목록조회
 		if(totRowCnt < 1) {
-			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='8' class='text-center'>조회된 결과가 없습니다.</td></tr>");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='9' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
         	objParam.totRowCnt	= totRowCnt;
@@ -231,7 +231,7 @@ var modDpmImrResViewerInfo = (function(){
 		
     	//전체건수가 있으면 엑셀출력
 		if(totRowCnt < 1) {
-			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='8' class='text-center'>조회된 결과가 없습니다.</td></tr>");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='9' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {			
 			var frmLogin = $("#frmImrResViewerInfo")[0];

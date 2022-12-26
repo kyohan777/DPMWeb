@@ -33,11 +33,11 @@ var modDpmUserManageInfo = (function(){
 	            { label: '담당자명', 	   name: 'chrrNm',    align: 'center',width:'100'},
 	            { label: '부서명', 	   name: 'deptnm',    align: 'center',width:'100'},
 	            { label: '사용여부', 	   name: 'uyn',       align: 'center',width:'70'},
-	            { label: '등록 일자', 	   name: 'rgDt',      align: 'center',width:'100'},
 	            { label: '등록자 ID',    name: 'rgId',      align: 'center',width:'100'},	  
 	            { label: '등록자명', 	   name: 'rgNm',      align: 'center',width:'100'},
+	            { label: '등록 일자', 	   name: 'rgDt',      align: 'center',width:'100'},
 	            { label: '등록 시간', 	   name: 'rgTm',      align: 'center',width:'70'},
-	            { label: '사유', 	       name: 'rgReason',  align: 'center'},
+	            { label: '사유', 	       name: 'rgReason',  align: 'left'},
 	            { label: '회사 번호', 	   name: 'companyId', align: 'center', hidden:true },
 	            { label: '연번', 	   	   name: 'idNo', 	  align: 'center', hidden:true }
 	        ],
@@ -170,7 +170,7 @@ var modDpmUserManageInfo = (function(){
 		
     	//전체건수가 있으면 목록조회
 		if(totRowCnt < 1) {
-			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='11' class='text-center'>조회된 결과가 없습니다.</td></tr>");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='12' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
         	objParam.totRowCnt	= totRowCnt;
@@ -230,7 +230,7 @@ var modDpmUserManageInfo = (function(){
 		
     	//전체건수가 있으면 엑셀출력
 		if(totRowCnt < 1) {
-			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='11' class='text-center'>조회된 결과가 없습니다.</td></tr>");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='12' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {			
 			var frmLogin = $("#frmUserManageInfo")[0];

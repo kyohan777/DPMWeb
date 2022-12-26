@@ -46,9 +46,9 @@
 		ERR_CN,														   --처리현황 > 오류
 		CASE WHEN ERR_CN = 0 THEN '0%'
 			 WHEN PRC_CN = 0 THEN '0%'
-			 ELSE CONCAT(ROUND((ERR_CN/PRC_DT_CNT)*100,2),'%') END      AS  ERR_RAT,--오류율
+			 ELSE CONCAT(ROUND((ERR_CN/PRC_DT_CNT)*100,1),'%') END      AS  ERR_RAT,--오류율
 		CASE WHEN PRC_CN = 0 THEN '0%'
-			 ELSE CONCAT(ROUND(((PRC_CN+ERR_CN)/PRC_DT_CNT)*100,2),'%') END  AS  PRC_RAT,--처리율
+			 ELSE CONCAT(ROUND(((PRC_CN+ERR_CN)/PRC_DT_CNT)*100,1),'%') END  AS  PRC_RAT,--처리율
 		VERIFY_UPDATE_CN, 											   --검증현황 > 수정건수
 		VERIFY_CN, 				   									   --검증건수 > 금증건수
 		A 			 				  AS AY,
@@ -148,9 +148,9 @@ FROM
 			SUM(T.ERR_CN) 							 				    AS ERR_CN,
 			CASE WHEN SUM(T.ERR_CN) = 0 THEN '0%'
 			     WHEN SUM(T.PRC_CN) = 0 THEN '0%'
-			ELSE CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_DT_CNT))*100,2),'%') END AS ERR_RAT,
+			ELSE CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_DT_CNT))*100,1),'%') END AS ERR_RAT,
 			CASE WHEN SUM(T.PRC_CN) = 0 THEN '%'
-			ELSE CONCAT(ROUND(((SUM(T.PRC_CN)+SUM(T.ERR_CN))/SUM(T.PRC_DT_CNT))*100,2),'%') END AS PRC_RAT,    					
+			ELSE CONCAT(ROUND(((SUM(T.PRC_CN)+SUM(T.ERR_CN))/SUM(T.PRC_DT_CNT))*100,1),'%') END AS PRC_RAT,    					
 			SUM(T.VERIFY_UPDATE_CN) 				 				    AS VERIFY_UPDATE_CN,
 			SUM(T.VERIFY_CN) 					 				    	AS VERIFY_CN,
 			SUM(T.AY) 							 				   	    AS AY,

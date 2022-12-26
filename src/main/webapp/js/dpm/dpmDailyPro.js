@@ -33,8 +33,8 @@ var modDpmDailyPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '엘리먼트 ID', 	 name: 'elementId',   width:'80',	 align: 'center'},
-	            { label: '파일명',         name: 'imgFileName', width:'80',    align: 'center'},
+	            { label: '엘리먼트 ID', 	 name: 'elementId',    width:'80',	 align: 'left'},
+	            { label: '파일명',         name: 'imgFileName',  width:'160',  align: 'center'},
 	            { label: '포맷',          name: 'imgFormatType',width:'65',   align: 'center'},
 	            { label: '상태코드', 		 name: 'maskPrgStsc',  width:'65',   align: 'center'},
 	            { label: '사용자 확인',     name: 'userConfirm',  width:'80',   align: 'center'},	  
@@ -167,7 +167,7 @@ var modDpmDailyPro = (function(){
 		
     	//전체건수가 있으면 목록조회
 		if(totRowCnt < 1) {
-			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='17' class='text-center'>조회된 결과가 없습니다.</td></tr>");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='18' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
         	objParam.totRowCnt	= totRowCnt;
@@ -230,7 +230,7 @@ var modDpmDailyPro = (function(){
 		
     	//전체건수가 있으면 엑셀출력
 		if(totRowCnt < 1) {
-			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='17' class='text-center'>조회된 결과가 없습니다.</td></tr>");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='18' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {			
 			var frmLogin = $("#frmDailyPro")[0];
