@@ -73,7 +73,28 @@ public class StatisticsVO extends AbstractVO{
 	private String  chgEno = "";
 	private String  custId = "";
 	private String  contractId = "";
+	private String  maskPrgStscTxt="";
+	private String  userConfirmTxt="";
+	private String  userUpdateYnTxt="";
 	
+	public String getMaskPrgStscTxt() {
+		return maskPrgStscTxt;
+	}
+	public void setMaskPrgStscTxt(String maskPrgStscTxt) {
+		this.maskPrgStscTxt = maskPrgStscTxt;
+	}
+	public String getUserConfirmTxt() {
+		return userConfirmTxt;
+	}
+	public void setUserConfirmTxt(String userConfirmTxt) {
+		this.userConfirmTxt = userConfirmTxt;
+	}
+	public String getUserUpdateYnTxt() {
+		return userUpdateYnTxt;
+	}
+	public void setUserUpdateYnTxt(String userUpdateYnTxt) {
+		this.userUpdateYnTxt = userUpdateYnTxt;
+	}
 	public String getCustId() {
 		return custId;
 	}

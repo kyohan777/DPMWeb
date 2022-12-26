@@ -45,19 +45,24 @@ var modDpmCalibVerifiInfo = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-				{ label: '엘리먼트ID',    name: 'elementId', 	   align: 'center', width:'0px'},
+				{ label: '엘리ID',    name: 'elementId', 	   align: 'center', width:'0px'},
+				{ label: 'm',  name: 'maskPrgStscTxt', align: 'left', width: '0px'},
+	            { label: 'u',  name: 'userConfirmTxt', align: 'left', width: '0px'},
+	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px'},
 	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
 	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
 	            { label: '탐지',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
 	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px'},
 	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'},
-	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1300px'}
+	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1250px'}
 	        ],
 	       
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
 	        rownumbers: true,
+	        sortable : true,
+			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
@@ -167,6 +172,20 @@ var modDpmCalibVerifiInfo = (function(){
 	        ondblClickRow: function(rowid, iRow, iCol) {
 	        },
 	        
+	        loadComplete: function() {
+			    var ids = $("#jqGrid").jqGrid('getDataIDs');
+			    for (var i=0;i<ids.length;i++) {
+			        var id=ids[i];
+			        var rowData = $("#jqGrid").jqGrid('getRowData',id);
+		        	
+		        	//$("#testJqGrid").jqGrid('setCell', rowid, colname, nData, styleObj, cellAttirbuteObj, forceUpdate);
+				    $("#jqGrid").jqGrid('setCell', id, 'maskPrgStsc', "", "", {title: rowData.maskPrgStscTxt});
+				    $("#jqGrid").jqGrid('setCell', id, 'userConfirm', "", "", {title: rowData.userConfirmTxt});
+				    $("#jqGrid").jqGrid('setCell', id, 'userUpdateYn', "", "", {title: rowData.userUpdateYnTxt});
+				    
+			    }
+			}
+	        
 		});
 		//그리드 초기화 종료
 		//그리드 resize 
@@ -176,7 +195,7 @@ var modDpmCalibVerifiInfo = (function(){
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
 		
 		//열 숨기기
-		$("#jqGrid").jqGrid("hideCol","elementId");
+		$("#jqGrid").jqGrid("hideCol",["elementId", "userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt"]);
 	};
 		
 
@@ -204,7 +223,7 @@ var modDpmCalibVerifiInfo = (function(){
 		
     	//전체건수가 있으면 목록조회
 		if(totRowCnt < 1) {
-			alert("조회된 데이터가 없습니다.");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='7' class='text-left'>&nbsp; &nbsp; &nbsp;조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
         	objParam.totRowCnt	= totRowCnt;

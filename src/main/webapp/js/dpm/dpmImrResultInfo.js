@@ -31,6 +31,11 @@ var modDpmImrResultInfo = (function(){
     var gridHeight = '100%';
 	/**
 	 * 초기화
+	 
+	 { label: 'maskPrgStscTxt',  name: 'maskPrgStscTxt', align: 'left', width: '0px'},
+	            { label: 'userConfirmTxt',  name: 'userConfirmTxt', align: 'left', width: '0px'},
+	            { label: 'userUpdateYnTxt',  name: 'userUpdateYnTxt', align: 'left', width: '0px'}
+	            
 	 */	
 	function init() {
 		modComm.setDatepicker("textPrcDt","imgStartDt");
@@ -47,26 +52,31 @@ var modDpmImrResultInfo = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '엘리먼트ID',    name: 'elementId', 	   align: 'center', width:'0px'},
-	            { label: 'custId',    name: 'custId', 	   align: 'center', width:'0px'},
-				{ label: 'contractId', name: 'contractId', 	   align: 'center', width:'0px'},
+	            { label: '엘리ID',    name: 'elementId', 	   align: 'center', width:'0px'},
+	            { label: 'cust',    name: 'custId', 	   align: 'center', width:'0px'},
+				{ label: 'cont', name: 'contractId', 	   align: 'center', width:'0px'},
+				{ label: 'm',  name: 'maskPrgStscTxt', align: 'left', width: '0px'},
+	            { label: 'u',  name: 'userConfirmTxt', align: 'left', width: '0px'},
+	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px'},
 	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
+	            { label: '처리일자',     name: 'prcDt', 	   align: 'center', width: '70px'},
 	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
 	            { label: '탐지',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
 	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px'},
 	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'},
-	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1150px'}
+	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1250px'}
 	        ],
-	       
 	        height: gridHeight,
 	        autowidth:true,
 	        rowNum: 100,
 	        rownumbers: true,
+	        sortable : true,
+			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
 	        shrinkToFit:false,
-	        forceFit:true,
+	        forceFit:false,
 	        multiselect: false,
 	        //jqGrid 추가옵션영역
 	        pager: $("#jqGridPager"),
@@ -149,6 +159,21 @@ var modDpmImrResultInfo = (function(){
 	        ondblClickRow: function(rowid, iRow, iCol) {
 	        },
 	        
+	        
+	        loadComplete: function() {
+			    var ids = $("#jqGrid").jqGrid('getDataIDs');
+			    for (var i=0;i<ids.length;i++) {
+			        var id=ids[i];
+			        var rowData = $("#jqGrid").jqGrid('getRowData',id);
+		        	
+		        	//$("#testJqGrid").jqGrid('setCell', rowid, colname, nData, styleObj, cellAttirbuteObj, forceUpdate);
+				    $("#jqGrid").jqGrid('setCell', id, 'maskPrgStsc', "", "", {title: rowData.maskPrgStscTxt});
+				    $("#jqGrid").jqGrid('setCell', id, 'userConfirm', "", "", {title: rowData.userConfirmTxt});
+				    $("#jqGrid").jqGrid('setCell', id, 'userUpdateYn', "", "", {title: rowData.userUpdateYnTxt});
+				    
+			    }
+			}
+        
 		});
 		//그리드 초기화 종료
 		//그리드 resize 
@@ -158,13 +183,9 @@ var modDpmImrResultInfo = (function(){
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
 		
 		//열 숨기기
-		$("#jqGrid").jqGrid("hideCol",["elementId","custId","contractId"]);
+		$("#jqGrid").jqGrid("hideCol",["elementId","custId","contractId", "userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt"]);
 	};
 		
-	
-	
-
-
     
     /**
 	 * 마스터 조회
@@ -191,7 +212,7 @@ var modDpmImrResultInfo = (function(){
 		
     	//전체건수가 있으면 목록조회
 		if(totRowCnt < 1) {
-			alert("조회된 데이터가 없습니다.");
+			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='10' class='text-left'>&nbsp; &nbsp; &nbsp;조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
         	objParam.totRowCnt	= totRowCnt;
@@ -530,6 +551,8 @@ $(document).ready(function() {
        event.preventDefault();
        event.stopPropagation();
 	});
+	
+	  
 	
 });
 

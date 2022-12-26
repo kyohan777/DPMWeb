@@ -95,7 +95,7 @@
                         </div>
                         <div class="smbc-data-wrap">
                             <div class="smbc-data-title">
-                                <h3>결과 내용(조회)</h3>
+                                <h3>IMR 결과 조회</h3>
                                 <!-- 
                                 <ul class="smbc-data-top-menu">
                                     <li><button id="btnConfirm">확정</button></li>

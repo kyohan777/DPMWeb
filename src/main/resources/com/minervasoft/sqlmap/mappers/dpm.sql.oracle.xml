@@ -434,7 +434,31 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			INTVISION_IMR,
 			FST_IMR_PAGE, 
 			CUST_ID,
-			CONTRACT_ID 
+			CONTRACT_ID,
+			PRC_DT,
+			
+			CASE 
+				WHEN MASK_PRG_STSC ='10' THEN '요청'
+				WHEN MASK_PRG_STSC ='19' THEN '실패-파일없음'
+				WHEN MASK_PRG_STSC ='15' THEN '실패-복호화'
+				WHEN MASK_PRG_STSC ='55' THEN '재요청'
+				WHEN MASK_PRG_STSC ='20' THEN 'IMR 진행중'
+				WHEN MASK_PRG_STSC ='80' THEN 'IMR 없음'
+				WHEN MASK_PRG_STSC ='90' THEN 'IMR 반영완료'
+				ELSE '' 
+			END AS MASK_PRG_STSC_TXT,
+			CASE 
+				WHEN USER_CONFIRM  = '00' THEN '확인전'
+				WHEN USER_CONFIRM  = '99' THEN '확인완료'
+				ELSE '확인전' 
+			END AS USER_CONFIRM_TXT,
+			
+			CASE
+				WHEN USER_UPDATE_YN = '01' THEN '수정'
+				WHEN USER_UPDATE_YN = '02' THEN '유지'
+			ELSE '확인전' 
+			END AS USER_UPDATE_YN_TXT	
+			  
 		FROM TB_EM_IMR_MASK_OBJ
 		WHERE 1=1
 		AND MASK_PRG_STSC > 20
