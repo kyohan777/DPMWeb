@@ -78,13 +78,12 @@
 			</ul>
 		</li>
 		</c:if>
-		<!-- 
 		<li><a href="#">기타</a>
 			<ul>
-				<li><a href="#">일 배치(실행)</a></li>
+				<li><a href="#">일일배치</a></li>
 			</ul>
 		</li>
-		 -->
+		
 	</ul>
 </div>
     <ul class="smbc-nav-btn-wrap">
