@@ -33,23 +33,25 @@ var modDpmDailyPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '엘리먼트 ID', 	 name: 'elementId',    width:'80',	 align: 'left'},
-	            { label: '파일명',         name: 'imgFileName',  width:'160',  align: 'center'},
-	            { label: '포맷',          name: 'imgFormatType',width:'65',   align: 'center'},
-	            { label: '상태코드', 		 name: 'maskPrgStsc',  width:'65',   align: 'center'},
-	            { label: '사용자 확인',     name: 'userConfirm',  width:'80',   align: 'center'},	  
-	            { label: '금융안내', 	  	 name: 'ayn', 		   width:'80',	 align: 'center'},
-	            { label: '금융이외', 		 name: 'byn', 		   width:'80',	 align: 'center'},
-	            { label: '보험제공', 	  	 name: 'cyn', 		   width:'80',	 align: 'center'},
-	            { label: '딜러제공', 		 name: 'dyn', 		   width:'80',   align: 'center'},
-	            { label: 'KB제공', 		 name: 'eyn', 		   width:'80',   align: 'center'},
-	            { label: '수집-전화', 		 name: 'tmRecvYn', 	   width:'80',   align: 'center'},
-	            { label: '수집-문자', 		 name: 'smsRecvYn',    width:'80',   align: 'center'},
-	            { label: '수집-DM', 		 name: 'dmRecvYn', 	   width:'80',   align: 'center'},
-	            { label: '수집-메일', 		 name: 'emailRecvYn',  width:'80',   align: 'center'},
-	            { label: '제공-전화', 		 name: 'tmOfferYn',    width:'80',   align: 'center'},
-	            { label: '제공-DM', 		 name: 'dmOfferYn',    width:'80',   align: 'center'},
-	            { label: '제공-메일', 		 name: 'emailOfferYn', width:'80',   align: 'center'}
+	            { label: '엘리먼트 ID', 	 name: 'elementId',     width:'80',	  align: 'left'},
+	            { label: '파일명',         name: 'imgFileName',   width:'160',  align: 'center'},
+	            { label: '포맷',          name: 'imgFormatType', width:'65',   align: 'center'},
+	            { label: '상태코드', 		 name: 'maskPrgStsc',   width:'65',   align: 'center'},
+	            { label: '사용자 확인',     name: 'userConfirm',   width:'80',   align: 'center'},	  
+	            { label: '금융안내', 	  	 name: 'ayn', 		    width:'80',	  align: 'center'},
+	            { label: '금융이외', 		 name: 'byn', 		    width:'80',	  align: 'center'},
+	            { label: '보험제공', 	  	 name: 'cyn', 		    width:'80',	  align: 'center'},
+	            { label: '딜러제공', 		 name: 'dyn', 		    width:'80',   align: 'center'},
+	            { label: 'KB제공', 		 name: 'eyn', 		    width:'80',   align: 'center'},
+	            { label: '수집-전화', 		 name: 'tmRecvYn', 	    width:'80',   align: 'center'},
+	            { label: '수집-문자', 		 name: 'smsRecvYn',     width:'80',   align: 'center'},
+	            { label: '수집-DM', 		 name: 'dmRecvYn', 	    width:'80',   align: 'center'},
+	            { label: '수집-메일', 		 name: 'emailRecvYn',   width:'80',   align: 'center'},
+	            { label: '제공-전화', 		 name: 'tmOfferYn',     width:'80',   align: 'center'},
+	            { label: '제공-DM', 		 name: 'dmOfferYn',     width:'80',   align: 'center'},
+	            { label: '제공-메일', 		 name: 'emailOfferYn',  width:'80',   align: 'center'},
+	            { label: '',  			 name: 'maskPrgStscTxt',width:'0',    align: 'left', hidden:true},
+	            { label: '',  			 name: 'userConfirmTxt',width:'0',    align: 'left', hidden:true},
 	        ],
 	       
 	        height: gridHeight,
@@ -131,6 +133,18 @@ var modDpmDailyPro = (function(){
 	        //셀더블클릭 이벤트 - deprecated
 	        ondblClickRow: function(rowid, iRow, iCol) {
 	        },
+	        loadComplete: function() {
+			    var ids = $("#jqGrid").jqGrid('getDataIDs');
+			    for (var i=0;i<ids.length;i++) {
+			        var id=ids[i];
+			        var rowData = $("#jqGrid").jqGrid('getRowData',id);
+		        	
+		        	//$("#testJqGrid").jqGrid('setCell', rowid, colname, nData, styleObj, cellAttirbuteObj, forceUpdate);
+				    $("#jqGrid").jqGrid('setCell', id, 'maskPrgStsc', "", "", {title: rowData.maskPrgStscTxt});
+				    $("#jqGrid").jqGrid('setCell', id, 'userConfirm', "", "", {title: rowData.userConfirmTxt});
+				    
+			    }
+			}
 	        
 		});
 
