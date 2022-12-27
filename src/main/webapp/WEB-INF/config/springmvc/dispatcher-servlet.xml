@@ -30,6 +30,13 @@
         </property>
     </bean>
     
+    
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="/WEB-INF/config/config.properties"/>
+        <property name="fileEncoding" value="UTF-8" />
+    </bean>
+    
+    
     <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
         <constructor-arg index="0" name="defaultCharset" value="UTF-8"/>
         <property name="supportedMediaTypes">

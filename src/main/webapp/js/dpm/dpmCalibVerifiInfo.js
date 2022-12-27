@@ -397,7 +397,12 @@ $("#btnConfirm").on("click", function() {
 });
 
 
-
+$("#textPrcDt").on("propertychange change keyup paste input", function(){
+    var txt = $("#textPrcDt").val();
+    if(txt.length == 10) {
+		modDpmCalibVerifiInfo.selList();
+	}
+});
     
     
 /**

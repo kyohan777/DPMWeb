@@ -332,6 +332,7 @@ function imrRadioSet(rowid) {
 			$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
 			$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
 			$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
+			$("input:radio[name='SMS_OFFER_YN']:radio[value='" + jsonImr.SMS_OFFER_YN + "']").prop('checked', true);
 			
 		} else {
 			dataResetImr();
@@ -507,7 +508,7 @@ $("#btnConfirm").on("click", function() {
 		async: false,
 		success: function(data) {				
 			if(!modComm.isEmpty(data) && data.errMsg == "success") {
-				alert("등록에 성공했습니다.");
+				//alert("등록에 성공했습니다.");
 				closePopup('#layer');
 				imrRadioSet(rowidSel);
 				dataReSet();// 등록 폼 리셋
@@ -532,7 +533,13 @@ $("#btnConfirm").on("click", function() {
         isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); 
 	}
 	
-    
+
+$("#textPrcDt").on("propertychange change keyup paste input", function(){
+    var txt = $("#textPrcDt").val();
+    if(txt.length == 10) {
+		modDpmImrResultInfo.selList();
+	}
+});    
     
 /**
  * DOM  load 완료 시 실행

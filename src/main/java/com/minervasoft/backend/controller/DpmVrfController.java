@@ -1,6 +1,10 @@
 package com.minervasoft.backend.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +24,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +33,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.minervasoft.backend.service.CustomImage;
+import com.minervasoft.backend.service.CustomTextType;
 import com.minervasoft.backend.service.DpmService;
 import com.minervasoft.backend.vo.CalibVerifiVo;
 import com.minervasoft.backend.vo.ImageVerifyVO;
@@ -40,12 +48,21 @@ import kr.smartflow.viewer.Converter;
 //import SafeSignOn.SsoAuthInfo;
 
 @Controller
+@Configuration
 public class DpmVrfController {
     
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     
     @Resource(name = "DpmService")
     private DpmService dpmService; 
+    
+    
+    @Value("${minerva.baseFolder}")
+    private String baseFolder;
+    
+    @Value("${minerva.noFileImg}")
+    private String noFileImg;
+    
     
     
     /**
@@ -240,18 +257,36 @@ public class DpmVrfController {
     		return;
     	}
     	
-    	String baseFolder  = "D:/project_minerva/git/DPMWeb/src/main/webapp/WEB-INF/temp/";
+    	logger.info("baseFolder" + baseFolder);
+    	logger.info("noFileImg" + noFileImg);
     	
-    	try {
-    		Converter.getImage(baseFolder + filename, response);
-    	} catch (Exception e) {
-    		logger.error("Converter.getImage error!!:", e);
-    		try {
-    			response.getWriter().write("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=");
-    		} catch (Exception e1) {
-    			logger.error("response.getWriter().write error!!:", e1);
-    		}
-    	}
+    	Path srcPath = Paths.get(baseFolder + filename);
+		if(Files.notExists(srcPath, LinkOption.NOFOLLOW_LINKS)) {
+			 /*
+	    	 String userDir = System.getProperty("user.dir");
+	         String filePath = String.format("%s/test.png", userDir);
+	         System.out.println("생성될 파일 : " + filePath);
+	    	
+	    	 CustomImage image = CustomImage.builder()
+		                .imageWidth(600)
+		                .imageHeight(600)
+		                .imageColor("#5CDB95")
+		                .build();
+	        image.converting(
+	        			filePath,
+		                CustomTextType.title.getText("ERROR"),
+		                //CustomTextType.title.getText("IMAGE ++"),
+		                //CustomTextType.title.getText("CONVERTING"),
+		                //CustomTextType.subtitle.getText("created by jogeum"),
+		                CustomTextType.content.getText("파일이 경로에 없습니다.")
+		                //CustomTextType.comment.getText("java 11 / lombok / awt / 나눔고딕")
+		        );
+	        Converter.getImage(filePath, response);
+	        */
+	        Converter.getImage(noFileImg, response);
+		} else {
+			Converter.getImage(baseFolder + filename, response);
+		}
     }
     
     
