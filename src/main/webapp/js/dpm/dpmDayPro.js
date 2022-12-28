@@ -270,7 +270,8 @@ var modDpmDayPro = (function(){
 		
     	//전체건수가 있으면 엑셀출력
 		if(totRowCnt < 1) {
-			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='35' class='text-center'>조회된 결과가 없습니다.</td></tr>");
+			alert("조회된 결과가 없습니다.");
+			//$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='35' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {			
 			var frmDayPro = $("#frmDayPro")[0];

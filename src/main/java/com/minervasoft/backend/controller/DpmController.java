@@ -991,9 +991,10 @@ public class DpmController {
             }
             
             int rowNo = 0;
-            Row headerRow = sheet.createRow(rowNo++);
+            Row headerRow;
             
             if(headerMergeYn =="Y") {
+            	 headerRow= sheet.createRow(rowNo++);
             	 String title = (String) model.get("mergeTitle");
             	 String[] titleList = title.split(",");
             	 //셀 병합
