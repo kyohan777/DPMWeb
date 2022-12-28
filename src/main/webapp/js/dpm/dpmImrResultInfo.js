@@ -356,8 +356,10 @@ function dataResetImr() {
 	$("input:radio[name='TM_OFFER_YN']").prop('checked', false);
 	$("input:radio[name='EMAIL_OFFER_YN']").prop('checked', false);
 	$("input:radio[name='DM_OFFER_YN']").prop('checked', false);
+	$("input:radio[name='SMS_OFFER_YN']").prop('checked', false);
 		
 }
+	
 
 /**
  * 확정버튼 클릭

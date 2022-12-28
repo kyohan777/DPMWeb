@@ -66,8 +66,9 @@
 		</li>
 		<li><a href="#">교정/검증</a>
 			<ul>
-				<li><a href="#" onclick="goPage('CalibVerfi');">교정/검증 처리</a></li>
+				<li><a href="#" onclick="goPage('CalibVerfi');">IMR 교정/검증</a></li>
 				<li><a href="#" onclick="goPage('ImrResult');">IMR 결과 조회</a></li>
+				<li><a href="#" onclick="goPage('MaskResult');">마스킹 교정/검증</a></li>
 				<li><a href="#" onclick="goPage('IMRReader');">열람자 이력 조회</a></li>
 			</ul>
 		</li>

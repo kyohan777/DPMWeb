@@ -24,7 +24,7 @@ var selectByGrid;
 var onSelistfinger;
 var serverDate = modComm.getServerDate();
 
-var modDpmCalibVerifiInfo = (function(){    
+var modDpmMaskVerifiInfo = (function(){    
     var totRowCnt = 0;
     var gridHeight = '100%';
 	/**
@@ -39,7 +39,7 @@ var modDpmCalibVerifiInfo = (function(){
 		
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언
-	        url: '/dpm/getDpmCalibVerifiInfo.do',
+	        url: '/dpm/getDpmMaskVerifiInfo.do',
 	        mtype: "POST",
 	        datatype: "local",
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
@@ -53,8 +53,7 @@ var modDpmCalibVerifiInfo = (function(){
 	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
 	            { label: '탐지',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
 	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px'},
-	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'},
-	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1250px'}
+	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'}
 	        ],
 	       
 	        height: gridHeight,
@@ -142,6 +141,7 @@ var modDpmCalibVerifiInfo = (function(){
 				
 				$("#elementId").val(selRowData.elementId);
 				
+				/*
 				var intvisionImr = selRowData.intvisionImr;
 				if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
 					var jsonImr = JSON.parse(intvisionImr);
@@ -166,6 +166,7 @@ var modDpmCalibVerifiInfo = (function(){
 				} else {
 					dataResetImr();
 				}
+				*/
 				
 	        },
 	        //셀더블클릭 이벤트 - deprecated
@@ -307,14 +308,14 @@ var modDpmCalibVerifiInfo = (function(){
  */
 $("#searchBtn").on("click", function() {
 	$("#prcDt").val();
-	modDpmCalibVerifiInfo.selList();
+	modDpmMaskVerifiInfo.selList();
 });
 
 /**
  * 엑셀버튼 클릭
  */
 $("#btnExcel").on("click", function() {
-	modDpmCalibVerifiInfo.excelWrite();
+	modDpmMaskVerifiInfo.excelWrite();
 });
 
 
@@ -376,7 +377,7 @@ $("#btnConfirm").on("click", function() {
  	};
 	
 	// 확정처리
-	modAjax.request("/dpm/imrConfirm.do", objParam, {
+	modAjax.request("/dpm/maskConfirm.do", objParam, {
 		 async : false,
 		 success : function(data) {
 			var jsonData = JSON.parse(data);
@@ -386,7 +387,7 @@ $("#btnConfirm").on("click", function() {
 			if(jsonData.errMsg != "success") {
 				alert("오류:" + jsonData.errMsg);
 			}
-			modDpmCalibVerifiInfo.selList();
+			modDpmMaskVerifiInfo.selList();
 			
 		},
 		error : function(data) {
@@ -401,7 +402,7 @@ $("#btnConfirm").on("click", function() {
 $("#textPrcDt").on("propertychange change keyup paste input", function(){
     var txt = $("#textPrcDt").val();
     if(txt.length == 10) {
-		modDpmCalibVerifiInfo.selList();
+		modDpmMaskVerifiInfo.selList();
 	}
 });
     
@@ -411,8 +412,8 @@ $("#textPrcDt").on("propertychange change keyup paste input", function(){
  */
 $(document).ready(function() {
 		
-	modDpmCalibVerifiInfo.init();
-	modDpmCalibVerifiInfo.selList();
+	modDpmMaskVerifiInfo.init();
+	modDpmMaskVerifiInfo.selList();
 	
 	$("#box-center").height($("#gridContainer").height());
 	$("#box-right").height($("#gridContainer").height() - 10);

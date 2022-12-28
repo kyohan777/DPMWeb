@@ -93,7 +93,7 @@ public class DpmVrfController {
     }
     
     /**
-     *  [IMR] 교정/검증 화면
+     *  [IMR] 교정/검증 결과 화면
      *  2022.12.15 신규 개발 
      * @param paramVO
      * @return
@@ -101,6 +101,34 @@ public class DpmVrfController {
     @RequestMapping(value = "/dpm/getDpmImrResultInfo.do")
     @ResponseBody
     public ResponseStatisticsVo getDpmImrResultInfo(StatisticsVO paramVO) {
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+        
+        try {
+            List<StatisticsVO> list = dpmService.getDpmDailyProInfo(paramVO);
+            response.setSelList(list);
+            response.setPageNumber(paramVO.getPageNumber());
+            response.setTotPageCnt(paramVO.getTotPageCnt());
+            response.setTotRowCnt(paramVO.getTotRowCnt());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+            response.setSelList(new ArrayList<StatisticsVO>());
+        }
+        
+        return response;
+    }
+    
+    
+    /**
+     *  [MASK] 교정/검증 화면
+     *  2022.12.15 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getDpmMaskVerifiInfo.do")
+    @ResponseBody
+    public ResponseStatisticsVo getDpmMaskVerifiInfo(StatisticsVO paramVO) {
     	ResponseStatisticsVo response = new ResponseStatisticsVo();
         
         try {
@@ -242,6 +270,63 @@ public class DpmVrfController {
     }
     
     
+    
+    /**
+     *  [MASK] 교정/검증 확정 처리
+     * @param paramVO
+     * @return
+     * @throws ParseException 
+     */
+    @RequestMapping(value = "/dpm/maskConfirm.do")
+    @ResponseBody
+    public String maskConfirm(StatisticsVO paramVO, HttpServletRequest request) {
+    	
+    	int updCnt = 0;
+    	JSONObject returnObj = new JSONObject();
+    	try {
+	        HttpSession session = request.getSession();
+	        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+	        paramVO.setChgEno(loginVO.getChrrId());
+	    	
+	    	logger.info("getIntvisionImr ~~~:" + paramVO.getIntvisionImr());
+	    	String strParam = paramVO.getIntvisionImr();
+	    	
+	    	JSONParser parser = new JSONParser();
+	    	Object obj = parser.parse(strParam);
+			
+	    	JSONObject jsonObjRoot = (JSONObject) obj;
+	    	String elementId  = (String)jsonObjRoot.get("elementId");
+	    	paramVO.setElementId(elementId);
+	    	
+	    	//String intvisionImr  = (String)jsonObjRoot.get("intvisionImr");
+	    	jsonObjRoot.remove("elementId");
+	    	jsonObjRoot.remove("intvisionImr");
+	    	
+	    	//TO DO
+	    	// MASK 미완료 건 처리 어떻게 할지....
+	    	//paramVO.setUserUpdateYn("02"); //변경없음
+	    	paramVO.setUserUpdateYn("01"); //수정
+	    	
+	    	paramVO.setUserConfirm("99");
+	    	
+	    	returnObj.put("errMsg", "success");
+    	} catch (Exception e) {
+			logger.error("", e);
+			returnObj.put("errMsg", e.getMessage());
+		}
+        
+    	try {
+    		updCnt = dpmService.updImrConfirm(paramVO);
+    		returnObj.put("errMsg", "success");
+		} catch (Exception e) {
+			logger.error("", e);
+			returnObj.put("errMsg", e.getMessage());
+			updCnt = 0;
+		}
+    	returnObj.put("updCnt", updCnt);
+    	
+    	return returnObj.toJSONString();
+    }
     
     
     @RequestMapping(value = "/showFile.do")

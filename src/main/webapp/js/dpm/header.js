@@ -31,6 +31,12 @@ function goPage(data){
 		case 'ImrResult':
 		frmHeader.action = "/dpm/dpmImrResultInfo.do";
 		break;
+		
+		case 'MaskResult':
+		frmHeader.action = "/dpm/dpmMaskVerifiInfo.do";
+		break;
+		
+		
 	}
 		
 		frmHeader.method = "post";
