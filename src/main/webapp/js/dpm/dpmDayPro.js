@@ -20,7 +20,13 @@ var modDpmDayPro = (function(){
 	function init() {
 		modComm.setMonthpicker("textPrcDt","imgStartDt");
 		//마스터 그리드 초기화 시작
-		$("#textPrcDt").val(modComm.getGridDateFormat(serverDate,'month'));
+		console.log($("#prcDt").val());
+		if($("#prcDt").val() != ''){
+			$("#textPrcDt").val($("#prcDt").val().replaceAll('/','-'));
+		}else{
+			$("#textPrcDt").val(modComm.getGridDateFormat(serverDate,'month'));	
+		}
+		
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언
 	        url: '/dpm/getDpmDayProInfo.do',
@@ -33,8 +39,8 @@ var modDpmDayPro = (function(){
 	            { label: '대상(A)', 	   name: 'prcDtCnt', 	  sorttype:'int', width: 80,align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '정상(B)', 	   name: 'prcCn',    	  sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '오류(C)', 	   name: 'errCn',    	  sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '오류율', 	   name: 'errRat',   	  sorttype:'text',width: 55, align: 'right'},
-	            { label: '처리율', 	   name: 'prcRat',        sorttype:'text',width: 55, align: 'right'},	  
+	            { label: '오류율', 	   name: 'errRat',   	  sorttype:'int', width: 55, align: 'right'},
+	            { label: '처리율', 	   name: 'prcRat',        sorttype:'int', width: 55, align: 'right'},	  
 	            { label: '검증건수', 	   name: 'verifyCn',      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},	  
 	            { label: '수정건수', 	   name: 'verifyUpdateCn',sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '동의', 	  	   name: 'ay', 		   	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},

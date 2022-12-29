@@ -16,14 +16,18 @@ var onSelistfinger;
 var serverDate = modComm.getServerDate();
 var modDpmDailyPro = (function(){    
     var totRowCnt  = 0;
-    var batchYn = "N";
     var gridHeight = '100%';
 	/**
 	 * 초기화
 	 */	
 	function init() {
 		modComm.setDatepicker("textPrcDt","imgStartDt");
-		$("#textPrcDt").val(modComm.getGridDateFormat(serverDate));
+		console.log($("#prcDt").val());
+		if($("#prcDt").val() != ''){
+			$("#textPrcDt").val($("#prcDt").val().replaceAll('/','-'));
+		}else{
+			$("#textPrcDt").val(modComm.getGridDateFormat(serverDate));	
+		}
 		//마스터 그리드 초기화 시작
 		$("#jqGrid").jqGrid({
 	    	//jqGrid url 전송선언

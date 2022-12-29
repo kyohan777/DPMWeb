@@ -49,8 +49,8 @@ var modDpmMonthPro = (function(){
 	            { label: '대상(A)', 	   name: 'prcDtCnt', 	   sorttype:'int' ,width: 80,align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '정상(B)', 	   name: 'prcCn',    	   sorttype:'int' ,width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '오류(C)', 	   name: 'errCn',    	   sorttype:'int' ,width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '오류율', 	   name: 'errRat',   	   sorttype:'text',width: 55, align: 'right'},
-	            { label: '처리율', 	   name: 'prcRat',         sorttype:'text',width: 55, align: 'right'},	  
+	            { label: '오류율', 	   name: 'errRat',   	   sorttype:'int', width: 55, align: 'right'},
+	            { label: '처리율', 	   name: 'prcRat',         sorttype:'int', width: 55, align: 'right'},	  
 	            { label: '검증건수', 	   name: 'verifyCn',       sorttype:'int' ,width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},	  
 	            { label: '수정건수', 	   name: 'verifyUpdateCn', sorttype:'int' ,width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '동의', 	  	   name: 'ay', 		   	   sorttype:'int' ,width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
@@ -158,6 +158,9 @@ var modDpmMonthPro = (function(){
 	        },
 	        //Row클릭 이벤트 일별 통계 화면으로 이동 
 	        onSelectRow: function(rowid) {
+	        },
+	        //셀더블클릭 이벤트 - deprecated
+	        ondblClickRow: function(rowid, iRow, iCol) {
 				var rowdata = 	$("#jqGrid").getRowData(rowid);
 				$("#prcDt").val(rowdata.prcDt);
 				var frmMonthPro = $("#frmMonthPro")[0];
@@ -165,9 +168,6 @@ var modDpmMonthPro = (function(){
 				frmMonthPro.method = "post";
 				frmMonthPro.submit();			
 
-	        },
-	        //셀더블클릭 이벤트 - deprecated
-	        ondblClickRow: function(rowid, iRow, iCol) {
 	        },
 	        
 		});
