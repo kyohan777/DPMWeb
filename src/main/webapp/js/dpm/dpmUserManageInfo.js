@@ -523,6 +523,13 @@ $("#btnExcel").on("click", function() {
 
 	};	
 	
+	//검색조건 초기화
+	 $("#resetBtn").on("click", function() {
+		$("#chrrId").val('');
+		$("#chrrNm").val('');
+		$("#deptnm").val('');
+	});
+	
 
 /**
  * DOM  load 완료 시 실행

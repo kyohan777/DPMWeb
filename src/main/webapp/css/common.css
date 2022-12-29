@@ -966,3 +966,13 @@
 .smbc-popup-wrap .smbc-pop-btn-wrap button.pop-btn-close:hover {
   background: #839d17;
 }
+.reset{
+	min-height: 28px;
+    padding: 0 10px;
+    background: #A8C91E;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 14px;
+    border: 0;
+    cursor: pointer;
+}

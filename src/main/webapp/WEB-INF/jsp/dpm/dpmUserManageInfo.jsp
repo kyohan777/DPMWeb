@@ -49,6 +49,9 @@
                         			<input type="text" value="사번 : ${companyId}" disabled style ="color:white">
                         			<input type="text" value="성명 : ${chrrNm}" disabled style ="color:white"> 
                     			</li>
+                    			<li>
+                    				<button id="resetBtn" type="button" class="reset">초기화</button>
+                    			</li>
                             </ul>
                             <!-- 엑셀출력을 위한 컬럼정보 -->
 							<input id="gridLabelList" type="hidden" name="gridLabels"> 

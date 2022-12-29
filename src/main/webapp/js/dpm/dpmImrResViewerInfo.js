@@ -42,14 +42,15 @@ var modDpmImrResViewerInfo = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '열람자 ID',    name: 'chrrId',    	align: 'center', width :80},
-	            { label: '성명', 	       name: 'chrrNm', 	    align: 'center', width :80},
-	            { label: '소속', 		   name: 'deptnm',    	align: 'center', width :80},
-	            { label: '엘리먼트 ID',  name: 'elementId',    align: 'left',   width :100},
-	            { label: '고객번호', 	   name: 'custId',      align: 'center', width :100},
-	            { label: '조회 일자', 	   name: 'prcDt',   	align: 'center', width :80},	  
+	            { label: '열람자 ID',    name: 'chrrId',    	align: 'center', width :100},
+	            { label: '성명', 	       name: 'chrrNm', 	    align: 'center', width :100},
+	            { label: '소속', 		   name: 'deptnm',    	align: 'center', width :100},
+	            { label: '엘리먼트 ID',  name: 'elementId',    align: 'left',   width :110},
+	            { label: '고객번호', 	   name: 'custId',      align: 'center', width :110},
+	            { label: '계약번호', 	   name: 'contractId',  align: 'center', width :110},
+	            { label: '조회 일자', 	   name: 'prcDt',   	align: 'center', width :100},	  
 	            { label: '조회시간', 	   name: 'prcTm',       align: 'center', width :80},
-	            { label: '조회 사유', 	   name: 'queryReason', align: 'left', width :400}
+	            { label: '조회 사유', 	   name: 'queryReason', align: 'left', width :600}
 	        ],
 	       
 	        height: gridHeight,
@@ -261,6 +262,13 @@ $("#searchBtn").on("click", function() {
  */
 $("#btnExcel").on("click", function() {
 	modDpmImrResViewerInfo.excelWrite();
+});
+
+//검색조건 초기화
+$("#resetBtn").on("click", function() {
+	$("#custId").val('');
+	$("#startPrcDt").val('');
+	$("#endPrcDt").val('');
 });
 
 /**
