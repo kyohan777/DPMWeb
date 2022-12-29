@@ -1099,11 +1099,7 @@ public class DpmController {
     	ResponseStatisticsVo response = new ResponseStatisticsVo();
     	try {
 			StatisticsVO info = dpmService.getDpmBatchInfo();
-			if(info != null) {
-				logger.debug("통계 처리 DATA StatisticsVO : " + info.toString());
-				info.setNoCn(info.getPrcDtCnt()-info.getPrcCn());//미처리 건수(대상건수 - 처리건수)
-				dpmService.insertDailyStatics(info);
-			}else {
+			if(info == null) {
 				response.setRsYn("N");
 			}
 		} catch (Exception e) {

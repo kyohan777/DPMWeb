@@ -55,32 +55,32 @@
 			 END  					 AS  PRC_RAT,--처리율
 		VERIFY_UPDATE_CN, 											   --검증현황 > 수정건수
 		VERIFY_CN, 				   									   --검증건수 > 금증건수
-		A 			 				  AS AY,
-		PRC_DT_CNT-A 				  AS AN,
-		B 			 				  AS "BY",
-		PRC_DT_CNT-B 				  AS BN,
-		C 			 				  AS CY,
-		PRC_DT_CNT-C 				  AS CN,
-		D 			 				  AS DY,
-		PRC_DT_CNT-D 				  AS DN,
-		E 			 				  AS EY,
-		PRC_DT_CNT-E 				  AS EN,
-		TM_RECV_YN 			      AS TM_RECV_Y,
-		PRC_DT_CNT-TM_RECV_YN     AS TM_RECV_N,
-		SMS_RECV_YN 		      AS SMS_RECV_Y,
-		PRC_DT_CNT-SMS_RECV_YN    AS SMS_RECV_N,
-		DM_RECV_YN 			  	  AS DM_RECV_Y,
-		PRC_DT_CNT-DM_RECV_YN 	  AS DM_RECV_N,
-		EMAIL_RECV_YN 			  AS EMAIL_RECV_Y,
-		PRC_DT_CNT-EMAIL_RECV_YN  AS EMAIL_RECV_N,
-		TM_OFFER_YN 			  AS TM_OFFER_Y,
-		PRC_DT_CNT-TM_OFFER_YN    AS TM_OFFER_N,
-		DM_OFFER_YN 			  AS DM_OFFER_Y,
-		PRC_DT_CNT-DM_OFFER_YN 	  AS DM_OFFER_N,
-		EMAIL_OFFER_YN 			  AS EMAIL_OFFER_Y,
-		PRC_DT_CNT-EMAIL_OFFER_YN AS EMAIL_OFFER_N,
-		SMS_OFFER_YN 			  AS SMS_OFFER_Y,
-		PRC_DT_CNT-SMS_OFFER_YN   AS SMS_OFFER_N
+		A_Y 			      AS AY,
+		A_N 				  AS AN,
+		B_Y 			 	  AS "BY",
+		B_N 				  AS BN,
+		C_Y 			 	  AS CY,
+		C_N 				  AS CN,
+		D_Y 			 	  AS DY,
+		D_N 				  AS DN,
+		E_Y 			 	  AS EY,
+		E_N 				  AS EN,
+		TM_RECV_Y, 			      
+		TM_RECV_N,     
+		SMS_RECV_Y, 		      
+		SMS_RECV_N,
+		DM_RECV_Y,
+		DM_RECV_N, 			  
+		EMAIL_RECV_Y,
+		EMAIL_RECV_N,
+		TM_OFFER_Y,
+		TM_OFFER_N,
+		DM_OFFER_Y,
+		DM_OFFER_N,
+		EMAIL_OFFER_Y,
+		EMAIL_OFFER_N,
+		SMS_OFFER_Y,
+		SMS_OFFER_N 
 	FROM TB_EM_IMR_DAILY_STATICS
 	WHERE MAJOR_CLASS ='TOTAL'
 	<if test='textPrcDt != null and textPrcDt !=""'>
@@ -154,16 +154,16 @@ FROM
 			END AS PRC_RAT,    					
 			SUM(T.VERIFY_UPDATE_CN) 				 				    AS VERIFY_UPDATE_CN,
 			SUM(T.VERIFY_CN) 					 				    	AS VERIFY_CN,
-			SUM(T.AY) 							 				   	    AS AY,
-			SUM(T.AN) 							 				   	    AS AN,
+			SUM(T.A_Y) 							 				   	    AS AY,
+			SUM(T.A_N) 							 				   	    AS AN,
 			SUM(T.B_Y) 							 				        AS "BY",
-			SUM(T.BN) 							 				        AS BN,
-			SUM(T.CY) 							 				        AS CY,
-			SUM(T.CN) 							 				   		AS CN,
-			SUM(T.DY) 							 				   		AS DY,
-			SUM(T.DN) 							 				   		AS DN,
-			SUM(T.EY) 							 				   		AS EY,
-			SUM(T.EN) 							 				   		AS EN,
+			SUM(T.B_N) 							 				        AS BN,
+			SUM(T.C_Y) 							 				        AS CY,
+			SUM(T.C_N) 							 				   		AS CN,
+			SUM(T.D_Y) 							 				   		AS DY,
+			SUM(T.D_N) 							 				   		AS DN,
+			SUM(T.E_Y) 							 				   		AS EY,
+			SUM(T.E_N) 							 				   		AS EN,
 			SUM(T.TM_RECV_Y) 							 		   		AS TM_RECV_Y,
 			SUM(T.TM_RECV_N) 							 		   		AS TM_RECV_N,
 			SUM(T.SMS_RECV_Y) 							 		   		AS SMS_RECV_Y,
@@ -187,32 +187,32 @@ FROM
 			ERR_CN,														
 			VERIFY_UPDATE_CN, 											
 			VERIFY_CN, 					
-			A 			 				  AS AY,
-			PRC_DT_CNT-A 				  AS AN,
-			B 			 				  AS B_Y,
-			PRC_DT_CNT-B 				  AS BN,
-			C 			 				  AS CY,
-			PRC_DT_CNT-C 				  AS CN,
-			D 			 				  AS DY,
-			PRC_DT_CNT-D 				  AS DN,
-			E 			 				  AS EY,
-			PRC_DT_CNT-E 				  AS EN,
-			TM_RECV_YN 			      	  AS TM_RECV_Y,
-			PRC_DT_CNT-TM_RECV_YN     	  AS TM_RECV_N,
-			SMS_RECV_YN 		      	  AS SMS_RECV_Y,
-			PRC_DT_CNT-SMS_RECV_YN    	  AS SMS_RECV_N,
-			DM_RECV_YN 			  	  	  AS DM_RECV_Y,
-			PRC_DT_CNT-DM_RECV_YN 	      AS DM_RECV_N,
-			EMAIL_RECV_YN 			      AS EMAIL_RECV_Y,
-			PRC_DT_CNT-EMAIL_RECV_YN      AS EMAIL_RECV_N,
-			TM_OFFER_YN 			      AS TM_OFFER_Y,
-			PRC_DT_CNT-TM_OFFER_YN        AS TM_OFFER_N,
-			DM_OFFER_YN 			      AS DM_OFFER_Y,
-			PRC_DT_CNT-DM_OFFER_YN 	      AS DM_OFFER_N,
-			EMAIL_OFFER_YN 			      AS EMAIL_OFFER_Y,
-			PRC_DT_CNT-EMAIL_OFFER_YN     AS EMAIL_OFFER_N,
-			SMS_OFFER_YN 			      AS SMS_OFFER_Y,
-			PRC_DT_CNT-SMS_OFFER_YN       AS SMS_OFFER_N											
+			A_Y, 			      
+			A_N, 				  
+			B_Y, 			 	 
+			B_N,				 
+			C_Y, 			 	
+			C_N, 				 
+			D_Y, 			 	  
+			D_N, 				  
+			E_Y, 			 	  
+			E_N,				  
+			TM_RECV_Y, 			      
+			TM_RECV_N,     
+			SMS_RECV_Y, 		      
+			SMS_RECV_N,
+			DM_RECV_Y,
+			DM_RECV_N, 			  
+			EMAIL_RECV_Y,
+			EMAIL_RECV_N,
+			TM_OFFER_Y,
+			TM_OFFER_N,
+			DM_OFFER_Y,
+			DM_OFFER_N,
+			EMAIL_OFFER_Y,
+			EMAIL_OFFER_N,
+			SMS_OFFER_Y,
+			SMS_OFFER_N 									
 			FROM TB_EM_IMR_DAILY_STATICS
 		WHERE MAJOR_CLASS ='TOTAL'
 		<if test='textPrcDt != null and textPrcDt !=""'>
@@ -517,8 +517,15 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		INTVISION_IMR 							<!-- json data -->
 	FROM TB_EM_IMR_MASK_OBJ 
       WHERE PRC_DT <![CDATA[<]]> TO_CHAR(SYSDATE,'YYYYMMDD')
-     AND   PRC_DT > (SELECT MAX(PRC_DT) FROM TB_EM_IMR_DAILY_STATICS)
+     AND   PRC_DT > 
+     (
+		CASE 
+			WHEN (SELECT COUNT(*) FROM TB_EM_IMR_DAILY_STATICS) > 0 THEN
+     	     (SELECT MAX(PRC_DT) FROM TB_EM_IMR_DAILY_STATICS)
+     	ELSE '0000000'END 
+	 )
      AND   MASK_PRG_STSC > 20
+     ORDER BY PRC_DT
     </select>
     
     <insert id="insertDailyStatics"
@@ -533,19 +540,32 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		ERR_CN, 
 		VERIFY_CN, 
 		VERIFY_UPDATE_CN, 
-		A, 
-		B,
-		C, 
-		D, 
-		E, 
-		TM_RECV_YN, 
-		SMS_RECV_YN, 
-		DM_RECV_YN, 
-		EMAIL_RECV_YN, 
-		TM_OFFER_YN, 
-		EMAIL_OFFER_YN, 
-		DM_OFFER_YN,
-		SMS_OFFER_YN, 
+		A_Y,
+		A_N, 
+		B_Y,
+		B_N,
+		C_Y,
+		C_N, 
+		D_Y,
+		D_N, 
+		E_Y,
+		E_N, 
+		TM_RECV_Y,
+		TM_RECV_N, 
+		SMS_RECV_Y,
+		SMS_RECV_N, 
+		DM_RECV_Y,
+		DM_RECV_N, 
+		EMAIL_RECV_Y,
+		EMAIL_RECV_N, 
+		TM_OFFER_Y,
+		TM_OFFER_N, 
+		EMAIL_OFFER_Y,
+		EMAIL_OFFER_N, 
+		DM_OFFER_Y,
+		DM_OFFER_N,
+		SMS_OFFER_Y,
+		SMS_OFFER_N, 
 		RG_DTM, 
 		RG_ENO 
 	)
@@ -555,23 +575,36 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 	 	'TOTAL', 
 	 	#{prcDtCnt}, 
 	 	#{prcCn}, 
-	 	#{noCn}, 
+	 	#{prcDtCnt}-#{prcCn}, 
 	 	#{errCn}, 
 	 	#{verifyCn}, 
 	 	#{verifyUpdateCn}, 
-	 	#{ay}, 
-	 	#{by}, 
-	 	#{cy}, 
-	 	#{dy}, 
-	 	#{ey}, 
-	 	#{tmRecvY}, 
-	 	#{smsRecvY}, 
-	 	#{dmRecvY}, 
-	 	#{emailRecvY}, 
-	 	#{tmOfferY}, 
-	 	#{dmOfferY}, 
-	 	#{emailOfferY}, 
-	 	#{smsOfferY}, 
+	 	#{ay},
+	 	#{an}, 
+	 	#{by},
+	 	#{bn}, 
+	 	#{cy},
+	 	#{cn}, 
+	 	#{dy},
+	 	#{dn}, 
+	 	#{ey},
+	 	#{en}, 
+	 	#{tmRecvY},
+	 	#{tmRecvN}, 
+	 	#{smsRecvY},
+	 	#{smsRecvN}, 
+	 	#{dmRecvY},
+	 	#{dmRecvN}, 
+	 	#{emailRecvY},
+	 	#{emailRecvN}, 
+	 	#{tmOfferY},
+	 	#{tmOfferN}, 
+	 	#{dmOfferY},
+	 	#{dmOfferN}, 
+	 	#{emailOfferY},
+	 	#{emailOfferN}, 
+	 	#{smsOfferY},
+	 	#{smsOfferN}, 
 	 	SYSDATE, 
 	 	'system'
 	 )
@@ -611,6 +644,25 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			SYSTIMESTAMP 
 		)
     </insert>
+    
+    <select id="getPrcDtGroupList"
+    	resultType="com.minervasoft.backend.vo.StatisticsVO">
+    	 SELECT 
+			PRC_DT									<!-- 대상건 -->
+		 FROM TB_EM_IMR_MASK_OBJ 
+      	 WHERE PRC_DT <![CDATA[<]]> TO_CHAR(SYSDATE,'YYYYMMDD')
+     	 AND   PRC_DT > 
+     	(
+			CASE 
+				WHEN (SELECT COUNT(*) FROM TB_EM_IMR_DAILY_STATICS) > 0 THEN
+     	     	(SELECT MAX(PRC_DT) FROM TB_EM_IMR_DAILY_STATICS)
+     		ELSE '0000000'END 
+	 	)
+     	AND   MASK_PRG_STSC > 20
+    	GROUP BY PRC_DT
+        ORDER BY PRC_DT 
+    </select>
+   
     
        
 </mapper>

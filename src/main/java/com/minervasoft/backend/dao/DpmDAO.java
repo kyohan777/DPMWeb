@@ -308,6 +308,10 @@ public class DpmDAO extends AbstractDpmDAO {
     public int insertViewReason(CalibVerifiVo paramVO) throws Exception {
         return (int) insert("insertViewReason",paramVO);
     }
+    //월별 통계 조회
+    public List<StatisticsVO> getPrcDtGroupList() throws Exception {
+        return (List<StatisticsVO>) selectList("getPrcDtGroupList");
+    }
     
     
     
