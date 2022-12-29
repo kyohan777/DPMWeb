@@ -36,8 +36,8 @@ var modDpmUserManageInfo = (function(){
 	            { label: '등록자 ID',    name: 'rgId',      align: 'center',width:'100'},	  
 	            { label: '등록자명', 	   name: 'rgNm',      align: 'center',width:'100'},
 	            { label: '등록 일자', 	   name: 'rgDt',      align: 'center',width:'100'},
-	            { label: '등록 시간', 	   name: 'rgTm',      align: 'center',width:'70'},
-	            { label: '사유', 	       name: 'rgReason',  align: 'left'},
+	            { label: '등록 시간', 	   name: 'rgTm',      align: 'center',width:'80'},
+	            { label: '사유', 	       name: 'rgReason',  align: 'left',width:'400'},
 	            { label: '회사 번호', 	   name: 'companyId', align: 'center', hidden:true },
 	            { label: '연번', 	   	   name: 'idNo', 	  align: 'center', hidden:true }
 	        ],
