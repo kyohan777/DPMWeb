@@ -47,8 +47,8 @@ var modDpmMonthPro = (function(){
 	        colModel: [
 	            { label: '년/월',    	   name: 'prcDt',    	   sorttype:'text',width: 80,align: 'center'},
 	            { label: '대상(A)', 	   name: 'prcDtCnt', 	   sorttype:'int' ,width: 80,align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '정상(B)', 	   name: 'prcCn',    	   sorttype:'int' ,width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '오류(C)', 	   name: 'errCn',    	   sorttype:'int' ,width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '정상(B)', 	   name: 'prcCn',    	   sorttype:'int' ,width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '오류(C)', 	   name: 'errCn',    	   sorttype:'int' ,width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '오류율', 	   name: 'errRat',   	   sorttype:'text',width: 55, align: 'right'},
 	            { label: '처리율', 	   name: 'prcRat',         sorttype:'text',width: 55, align: 'right'},	  
 	            { label: '검증건수', 	   name: 'verifyCn',       sorttype:'int' ,width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},	  

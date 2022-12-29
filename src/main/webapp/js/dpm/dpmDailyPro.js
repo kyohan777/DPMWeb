@@ -34,7 +34,7 @@ var modDpmDailyPro = (function(){
 	        //jqGrid 양식선언부        
 	        colModel: [
 	            { label: '엘리먼트 ID', 	 name: 'elementId',     width:'80',	  align: 'left',  sorttype:'text'},
-	            { label: '파일명',         name: 'imgFileName',   width:'160',  align: 'center',sorttype:'text'},
+	            { label: '파일명',         name: 'imgFileName',   width:'160',  align: 'left',  sorttype:'text'},
 	            { label: '포맷',          name: 'imgFormatType', width:'65',   align: 'center',sorttype:'text'},
 	            { label: '상태코드', 		 name: 'maskPrgStsc',   width:'65',   align: 'center',sorttype:'text'},
 	            { label: '사용자 확인',     name: 'userConfirm',   width:'80',   align: 'center',sorttype:'text'},	  
