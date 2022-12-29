@@ -44,11 +44,15 @@
 		PRC_DT_CNT,							 						   --대상건수
 		PRC_CN,  --처리현황 > 정상
 		ERR_CN,														   --처리현황 > 오류
-		CASE WHEN ERR_CN = 0 THEN '0%'
-			 WHEN PRC_CN = 0 THEN '0%'
-			 ELSE CONCAT(ROUND((ERR_CN/PRC_DT_CNT)*100,1),'%') END      AS  ERR_RAT,--오류율
-		CASE WHEN PRC_CN = 0 THEN '0%'
-			 ELSE CONCAT(ROUND(((PRC_CN+ERR_CN)/PRC_DT_CNT)*100,1),'%') END  AS  PRC_RAT,--처리율
+		CASE WHEN ERR_CN = 0 THEN '0.0%'
+			 WHEN PRC_CN = 0 THEN '0.0%'
+			 WHEN ROUND((ERR_CN/PRC_DT_CNT)*100,1) = 100 THEN '100%'
+			 ELSE CONCAT(TO_CHAR(ROUND((ERR_CN/PRC_DT_CNT)*100,1),'FM90.0'),'%') 
+			 END      				  AS  ERR_RAT,--오류율
+		CASE WHEN PRC_CN = 0 THEN '0.0%'
+			 WHEN ROUND(((PRC_CN+ERR_CN)/PRC_DT_CNT)*100,1) = 100 THEN '100%'
+			 ELSE CONCAT(TO_CHAR(ROUND(((PRC_CN+ERR_CN)/PRC_DT_CNT)*100,1),'FM90.0'),'%') 
+			 END  					 AS  PRC_RAT,--처리율
 		VERIFY_UPDATE_CN, 											   --검증현황 > 수정건수
 		VERIFY_CN, 				   									   --검증건수 > 금증건수
 		A 			 				  AS AY,
@@ -146,11 +150,15 @@ FROM
 			SUM(T.PRC_DT_CNT) 						 				    AS PRC_DT_CNT,
 			SUM(T.PRC_CN) 							 				    AS PRC_CN,
 			SUM(T.ERR_CN) 							 				    AS ERR_CN,
-			CASE WHEN SUM(T.ERR_CN) = 0 THEN '0%'
-			     WHEN SUM(T.PRC_CN) = 0 THEN '0%'
-			ELSE CONCAT(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_DT_CNT))*100,1),'%') END AS ERR_RAT,
-			CASE WHEN SUM(T.PRC_CN) = 0 THEN '%'
-			ELSE CONCAT(ROUND(((SUM(T.PRC_CN)+SUM(T.ERR_CN))/SUM(T.PRC_DT_CNT))*100,1),'%') END AS PRC_RAT,    					
+			CASE WHEN SUM(T.ERR_CN) = 0 THEN '0.0%'
+			     WHEN SUM(T.PRC_CN) = 0 THEN '0.0%'
+			     WHEN ROUND((SUM(T.ERR_CN)/SUM(T.PRC_DT_CNT))*100,1) = 100 THEN '100%'
+			ELSE CONCAT(TO_CHAR(ROUND((SUM(T.ERR_CN)/SUM(T.PRC_DT_CNT))*100,1),'FM90.0'),'%') 
+			END AS ERR_RAT,
+			CASE WHEN SUM(T.PRC_CN) = 0 THEN '0.0%'
+				 WHEN ROUND(((SUM(T.PRC_CN)+SUM(T.ERR_CN))/SUM(T.PRC_DT_CNT))*100,1) =100 THEN '100%'
+			ELSE CONCAT(TO_CHAR(ROUND(((SUM(T.PRC_CN)+SUM(T.ERR_CN))/SUM(T.PRC_DT_CNT))*100,1),'FM90.0'),'%') 
+			END AS PRC_RAT,    					
 			SUM(T.VERIFY_UPDATE_CN) 				 				    AS VERIFY_UPDATE_CN,
 			SUM(T.VERIFY_CN) 					 				    	AS VERIFY_CN,
 			SUM(T.AY) 							 				   	    AS AY,
@@ -259,7 +267,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			B.CHRR_NM,
 			B.DEPTNM,
 			A.ELEMENTID AS ELEMENT_ID ,
-			TO_CHAR(A.IPDT_TIME,'YYYYMMDD') AS PRC_DT,
+			TO_CHAR(A.IPDT_TIME,'YYYY/MM/DD') AS PRC_DT,
 			A.CUST_ID ,
 			A.QUERY_REASON ,
 			TO_CHAR(A.IPDT_TIME,'HH24:MI') AS PRC_TM  
@@ -322,7 +330,7 @@ FROM
     		DEPTNM,
     		RG_REASON,
     		UYN,
-    		TO_CHAR(RG_DTM,'YYYYMMDD') AS RG_DT,
+    		TO_CHAR(RG_DTM,'YYYY/MM/DD') AS RG_DT,
     		RG_ENO  AS RG_ID,
     		(SELECT CHRR_NM FROM TB_EM_PC_CHRR WHERE UYN='Y' AND CHRR_ID= A.RG_ENO)   AS RG_NM,
     		TO_CHAR(RG_DTM,'HH24:MI')  AS RG_TM
@@ -438,13 +446,13 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			PRC_DT,
 			
 			CASE 
-				WHEN MASK_PRG_STSC ='10' THEN '요청'
-				WHEN MASK_PRG_STSC ='19' THEN '실패-파일없음'
-				WHEN MASK_PRG_STSC ='15' THEN '실패-복호화'
-				WHEN MASK_PRG_STSC ='55' THEN '재요청'
-				WHEN MASK_PRG_STSC ='20' THEN 'IMR 진행중'
-				WHEN MASK_PRG_STSC ='80' THEN 'IMR 없음'
-				WHEN MASK_PRG_STSC ='90' THEN 'IMR 반영완료'
+				WHEN MASK_PRG_STSC ='10' THEN '미처리'
+				WHEN MASK_PRG_STSC ='20' THEN '처리중'
+				WHEN MASK_PRG_STSC ='80' THEN '처리(완료)'
+				WHEN MASK_PRG_STSC ='90' THEN '탐지(완료)'
+				WHEN MASK_PRG_STSC ='99' THEN '반영(완료)'
+				WHEN MASK_PRG_STSC ='98' THEN '반영(실패)'
+				WHEN MASK_PRG_STSC ='95' THEN '검증(완료)'
 				ELSE '' 
 			END AS MASK_PRG_STSC_TXT,
 			CASE 

@@ -1094,19 +1094,46 @@ public class DpmController {
      * @throws Exception
      */
     @RequestMapping(value = "/dpm/dpmBatchStart.do")
-    public void dpmBatchStart(StatisticsVO paramVO, ModelMap modelMap) throws Exception {    	
+    public ResponseStatisticsVo dpmBatchStart(StatisticsVO paramVO, ModelMap modelMap) throws Exception {    	
     	logger.debug("일일 처리 통계 배치 시작");
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
     	try {
 			StatisticsVO info = dpmService.getDpmBatchInfo();
 			if(info != null) {
 				logger.debug("통계 처리 DATA StatisticsVO : " + info.toString());
 				info.setNoCn(info.getPrcDtCnt()-info.getPrcCn());//미처리 건수(대상건수 - 처리건수)
 				dpmService.insertDailyStatics(info);
+			}else {
+				response.setRsYn("N");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	return response;
+    }
+    
+    /**
+     * 일일 처리 통계 배치 건수 조회
+     * @param paramVO
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/dpm/getBatchTotCnt.do")
+    public ResponseStatisticsVo getBatchTotCnt(StatisticsVO paramVO, ModelMap modelMap) throws Exception {    	
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+    	try {
+			StatisticsVO info = dpmService.getDpmBatchInfo();
+			if(info == null) {
+				response.setRsYn("N");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return response;
     }
     
     

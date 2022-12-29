@@ -45,11 +45,11 @@ var modDpmImrResViewerInfo = (function(){
 	            { label: '열람자 ID',    name: 'chrrId',    	align: 'center', width :80},
 	            { label: '성명', 	       name: 'chrrNm', 	    align: 'center', width :80},
 	            { label: '소속', 		   name: 'deptnm',    	align: 'center', width :80},
-	            { label: '엘리먼트 ID',  name: 'elementId',   align: 'left',   width :80},
+	            { label: '엘리먼트 ID',  name: 'elementId',    align: 'left',   width :100},
 	            { label: '고객번호', 	   name: 'custId',      align: 'center', width :100},
 	            { label: '조회 일자', 	   name: 'prcDt',   	align: 'center', width :80},	  
 	            { label: '조회시간', 	   name: 'prcTm',       align: 'center', width :80},
-	            { label: '조회 사유', 	   name: 'queryReason', align: 'left', width :200}
+	            { label: '조회 사유', 	   name: 'queryReason', align: 'left', width :400}
 	        ],
 	       
 	        height: gridHeight,

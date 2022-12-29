@@ -14,9 +14,9 @@ var gridEventFlag;
 var selectByGrid;
 var onSelistfinger;
 var serverDate = modComm.getServerDate();
-
 var modDpmDailyPro = (function(){    
     var totRowCnt  = 0;
+    var batchYn = "N";
     var gridHeight = '100%';
 	/**
 	 * 초기화
@@ -33,23 +33,23 @@ var modDpmDailyPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '엘리먼트 ID', 	 name: 'elementId',     width:'80',	  align: 'left'},
-	            { label: '파일명',         name: 'imgFileName',   width:'160',  align: 'center'},
-	            { label: '포맷',          name: 'imgFormatType', width:'65',   align: 'center'},
-	            { label: '상태코드', 		 name: 'maskPrgStsc',   width:'65',   align: 'center'},
-	            { label: '사용자 확인',     name: 'userConfirm',   width:'80',   align: 'center'},	  
-	            { label: '금융안내', 	  	 name: 'ayn', 		    width:'80',	  align: 'center'},
-	            { label: '금융이외', 		 name: 'byn', 		    width:'80',	  align: 'center'},
-	            { label: '보험제공', 	  	 name: 'cyn', 		    width:'80',	  align: 'center'},
-	            { label: '딜러제공', 		 name: 'dyn', 		    width:'80',   align: 'center'},
-	            { label: 'KB제공', 		 name: 'eyn', 		    width:'80',   align: 'center'},
-	            { label: '수집-전화', 		 name: 'tmRecvYn', 	    width:'80',   align: 'center'},
-	            { label: '수집-문자', 		 name: 'smsRecvYn',     width:'80',   align: 'center'},
-	            { label: '수집-DM', 		 name: 'dmRecvYn', 	    width:'80',   align: 'center'},
-	            { label: '수집-메일', 		 name: 'emailRecvYn',   width:'80',   align: 'center'},
-	            { label: '제공-전화', 		 name: 'tmOfferYn',     width:'80',   align: 'center'},
-	            { label: '제공-DM', 		 name: 'dmOfferYn',     width:'80',   align: 'center'},
-	            { label: '제공-메일', 		 name: 'emailOfferYn',  width:'80',   align: 'center'},
+	            { label: '엘리먼트 ID', 	 name: 'elementId',     width:'80',	  align: 'left',  sorttype:'text'},
+	            { label: '파일명',         name: 'imgFileName',   width:'160',  align: 'center',sorttype:'text'},
+	            { label: '포맷',          name: 'imgFormatType', width:'65',   align: 'center',sorttype:'text'},
+	            { label: '상태코드', 		 name: 'maskPrgStsc',   width:'65',   align: 'center',sorttype:'text'},
+	            { label: '사용자 확인',     name: 'userConfirm',   width:'80',   align: 'center',sorttype:'text'},	  
+	            { label: '금융안내', 	  	 name: 'ayn', 		    width:'80',	  align: 'center',sorttype:'text'},
+	            { label: '금융이외', 		 name: 'byn', 		    width:'80',	  align: 'center',sorttype:'text'},
+	            { label: '보험제공', 	  	 name: 'cyn', 		    width:'80',	  align: 'center',sorttype:'text'},
+	            { label: '딜러제공', 		 name: 'dyn', 		    width:'80',   align: 'center',sorttype:'text'},
+	            { label: 'KB제공', 		 name: 'eyn', 		    width:'80',   align: 'center',sorttype:'text'},
+	            { label: '수집-전화', 		 name: 'tmRecvYn', 	    width:'80',   align: 'center',sorttype:'text'},
+	            { label: '수집-문자', 		 name: 'smsRecvYn',     width:'80',   align: 'center',sorttype:'text'},
+	            { label: '수집-DM', 		 name: 'dmRecvYn', 	    width:'80',   align: 'center',sorttype:'text'},
+	            { label: '수집-메일', 		 name: 'emailRecvYn',   width:'80',   align: 'center',sorttype:'text'},
+	            { label: '제공-전화', 		 name: 'tmOfferYn',     width:'80',   align: 'center',sorttype:'text'},
+	            { label: '제공-DM', 		 name: 'dmOfferYn',     width:'80',   align: 'center',sorttype:'text'},
+	            { label: '제공-메일', 		 name: 'emailOfferYn',  width:'80',   align: 'center',sorttype:'text'},
 	            { label: '',  			 name: 'maskPrgStscTxt',width:'0',    align: 'left', hidden:true},
 	            { label: '',  			 name: 'userConfirmTxt',width:'0',    align: 'left', hidden:true},
 	        ],
@@ -254,12 +254,49 @@ var modDpmDailyPro = (function(){
 			frmLogin.submit();			
 		}		
 	};
+	 /**
+	 * 배치 건수 조회
+	 */  
+	function batchTotCheck(){
+		if(confirm("배치를 돌리시겠습니까?")){
+			modAjax.request("/dpm/getBatchTotCnt.do","",{
+			async: false,
+			success: function(data) {
+				if(data.responseStatisticsVo.rsYn == "Y") {
+					batchStart();
+				}else{
+					alert("처리 할 데이터가 없습니다.");
+					return;
+				}
+			},
+            error: function(response) {
+                console.log(response);
+            }
+    		});		
+			
+    	}		
+	};
+	
+	  /**
+	 * 배치 시작
+	 */  	
+	function batchStart() {
+		modAjax.request("/dpm/dpmBatchStart.do","",{
+			async: false,
+			success: function(data) {
+			},
+            error: function(response) {
+            console.log(response);
+            }
+    	});
+	};
 	
 	return {
 		init: init,
 		selList: selList,
 		selListPage: selListPage,
-		excelWrite: excelWrite		
+		excelWrite: excelWrite,
+		batchTotCheck: batchTotCheck		
 	};
 
 })();
@@ -277,19 +314,6 @@ $("#searchBtn").on("click", function() {
 	modDpmDailyPro.selList();
 });
 
-$("#btnBatch").on("click", function() {
-	if(confirm("배치를 돌리시겠습니까?")){
-		modAjax.request("/dpm/dpmBatchStart.do",  {
-			async: false,
-			success: function(data) {				
-				
-			},
-            error: function(response) {
-                console.log(response);
-            }
-    	});
-    }		
-});
 $("#textPrcDt").keydown(function(key){
 	if(key.keyCode == 13) {
 		modDpmDailyPro.selList();
