@@ -206,6 +206,15 @@
             Toolbar.showToolbar(false);
             Toolbar.showThumbnails(false);
         });
+    	
+    	/*
+    	var rowid = parent.$("#jqGrid").jqGrid("getGridParam","selrow");
+    	console.log("rowid:" + rowid);
+    	if(rowid != null && rowid != undefined) {
+    		parent.dataSelect(rowid);
+    	}
+    	*/
+    	
     });
     
     function viewerSetImg(filename) {
@@ -219,6 +228,15 @@
     
     function viewerSetHeight(height) {
     	
+    	$('#id_view-box').height(height);
+    	
+    	$('#embedded').height(height);
+    	
+    	const $view = $('#sfwork').sfview();
+		$('#sfwork').css({'height': height});
+		
+    	
+    	console.log("window size ~~~~");
     }
     
 	function scrollToSeq(pageno) {

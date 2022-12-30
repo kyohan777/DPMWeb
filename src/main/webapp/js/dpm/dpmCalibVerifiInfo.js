@@ -51,7 +51,7 @@ var modDpmCalibVerifiInfo = (function(){
 	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px'},
 	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
 	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
-	            { label: '탐지',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
+	            { label: '최.탐',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
 	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px'},
 	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'},
 	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1250px'}
@@ -131,43 +131,8 @@ var modDpmCalibVerifiInfo = (function(){
 	        },
 	      //Row클릭 이벤트
 	        onSelectRow: function(rowid) {
-				var selRowData = $("#jqGrid").getRowData(rowid);
-				var imrFPage = selRowData.fstImrPage;
-				if(imrFPage == null || imrFPage == "undefined" || imrFPage == "") {
-					imrFPage = 1;
-				}
-				$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
-				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
-				setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 5000);
-				
-				$("#elementId").val(selRowData.elementId);
-				
-				var intvisionImr = selRowData.intvisionImr;
-				if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
-					var jsonImr = JSON.parse(intvisionImr);
-					
-					$("#intvisionImr").val(intvisionImr);
-					
-					$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
-					$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
-					$("input:radio[name='C']:radio[value='" + jsonImr.C + "']").prop('checked', true);
-					$("input:radio[name='D']:radio[value='" + jsonImr.D + "']").prop('checked', true);
-					$("input:radio[name='E']:radio[value='" + jsonImr.E + "']").prop('checked', true);
-					
-					$("input:radio[name='TM_RECV_YN']:radio[value='" + jsonImr.TM_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='SMS_RECV_YN']:radio[value='" + jsonImr.SMS_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='DM_RECV_YN']:radio[value='" + jsonImr.DM_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='EMAIL_RECV_YN']:radio[value='" + jsonImr.EMAIL_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
-					$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
-					$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
-					$("input:radio[name='SMS_OFFER_YN']:radio[value='" + jsonImr.SMS_OFFER_YN + "']").prop('checked', true);
-					
-				} else {
-					dataResetImr();
-				}
-				
-	        },
+					dataSelect(rowid);
+			},        
 	        //셀더블클릭 이벤트 - deprecated
 	        ondblClickRow: function(rowid, iRow, iCol) {
 	        },
@@ -318,6 +283,44 @@ $("#btnExcel").on("click", function() {
 });
 
 
+function dataSelect(rowid) {
+	var selRowData = $("#jqGrid").getRowData(rowid);
+	var imrFPage = selRowData.fstImrPage;
+	if(imrFPage == null || imrFPage == "undefined" || imrFPage == "") {
+		imrFPage = 1;
+	}
+	$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
+	$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
+	setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 500);
+	
+	$("#elementId").val(selRowData.elementId);
+	
+	var intvisionImr = selRowData.intvisionImr;
+	if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
+		var jsonImr = JSON.parse(intvisionImr);
+		
+		$("#intvisionImr").val(intvisionImr);
+		
+		$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
+		$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
+		$("input:radio[name='C']:radio[value='" + jsonImr.C + "']").prop('checked', true);
+		$("input:radio[name='D']:radio[value='" + jsonImr.D + "']").prop('checked', true);
+		$("input:radio[name='E']:radio[value='" + jsonImr.E + "']").prop('checked', true);
+		
+		$("input:radio[name='TM_RECV_YN']:radio[value='" + jsonImr.TM_RECV_YN + "']").prop('checked', true);
+		$("input:radio[name='SMS_RECV_YN']:radio[value='" + jsonImr.SMS_RECV_YN + "']").prop('checked', true);
+		$("input:radio[name='DM_RECV_YN']:radio[value='" + jsonImr.DM_RECV_YN + "']").prop('checked', true);
+		$("input:radio[name='EMAIL_RECV_YN']:radio[value='" + jsonImr.EMAIL_RECV_YN + "']").prop('checked', true);
+		$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
+		$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
+		$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
+		$("input:radio[name='SMS_OFFER_YN']:radio[value='" + jsonImr.SMS_OFFER_YN + "']").prop('checked', true);
+		
+	} else {
+		dataResetImr();
+	}
+}				
+
 function dataResetImr() {
 	$("#intvisionImr").val("");
 							
@@ -422,7 +425,7 @@ $(document).ready(function() {
 	
 	//$("#viwerIframe").get(0).contentWindow.viewerSetHeight($("#gridContainer").height());
 	
-	$('iframe#embedded.embedded').height($("#gridContainer").height());
+	//$('iframe#embedded.embedded').height($("#gridContainer").height());
 	
 	
 });
@@ -433,10 +436,15 @@ $(window).on('resize', function(){
 	$("#box-right").height($("#gridContainer").height() - 10);
 	$("#box-right-1").height($("#gridContainer").height() - 10);
 	
+	
 	//$("#viwerIframe").get(0).contentWindow.viewerSetHeight($("#gridContainer").height());
 	
-	$('iframe#embedded.embedded').height($("#gridContainer").height());
-    
+	//$('iframe#embedded.embedded').height($("#gridContainer").height());
+	
+	//$('#viwerIframe').contents().find('iframe#embedded').height($("#gridContainer").height());
+	
+	//$("#viwerIframe").attr('src', '/sfview/viewer.jsp');
+	    
 });
 
 

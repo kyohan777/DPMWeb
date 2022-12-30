@@ -645,7 +645,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		(
 			TB_EM_IMR_QRY_HIST_SEQ.NEXTVAL,
 			#{chrrId}, 
-			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+			TO_CHAR(SYSDATE, 'YYYYMMDD'),
 			#{elementId},
 			#{custId}, 
 			#{contractId},

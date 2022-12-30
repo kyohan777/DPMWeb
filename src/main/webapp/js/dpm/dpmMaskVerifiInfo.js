@@ -137,36 +137,17 @@ var modDpmMaskVerifiInfo = (function(){
 				}
 				$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
 				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
-				setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 5000);
+				setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 500);
+				
+				
+				$("#viwerIframe2").get(0).contentWindow.imrFirstPage = imrFPage;
+				$("#viwerIframe2").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
+				setTimeout(() => $("#viwerIframe2").get(0).contentWindow.scrollToSeq(imrFPage), 500);
+				
 				
 				$("#elementId").val(selRowData.elementId);
 				
-				/*
-				var intvisionImr = selRowData.intvisionImr;
-				if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
-					var jsonImr = JSON.parse(intvisionImr);
-					
-					$("#intvisionImr").val(intvisionImr);
-					
-					$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
-					$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
-					$("input:radio[name='C']:radio[value='" + jsonImr.C + "']").prop('checked', true);
-					$("input:radio[name='D']:radio[value='" + jsonImr.D + "']").prop('checked', true);
-					$("input:radio[name='E']:radio[value='" + jsonImr.E + "']").prop('checked', true);
-					
-					$("input:radio[name='TM_RECV_YN']:radio[value='" + jsonImr.TM_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='SMS_RECV_YN']:radio[value='" + jsonImr.SMS_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='DM_RECV_YN']:radio[value='" + jsonImr.DM_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='EMAIL_RECV_YN']:radio[value='" + jsonImr.EMAIL_RECV_YN + "']").prop('checked', true);
-					$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
-					$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
-					$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
-					$("input:radio[name='SMS_OFFER_YN']:radio[value='" + jsonImr.SMS_OFFER_YN + "']").prop('checked', true);
-					
-				} else {
-					dataResetImr();
-				}
-				*/
+				
 				
 	        },
 	        //셀더블클릭 이벤트 - deprecated
@@ -416,8 +397,8 @@ $(document).ready(function() {
 	modDpmMaskVerifiInfo.selList();
 	
 	$("#box-center").height($("#gridContainer").height());
-	$("#box-right").height($("#gridContainer").height() - 10);
-	$("#box-right-1").height($("#gridContainer").height() - 10);
+	$("#box-right").height($("#gridContainer").height());
+	
 	
 	//$("#jqGrid").jqGrid('setFrozenColumns');
 	
@@ -431,8 +412,7 @@ $(document).ready(function() {
 $(window).on('resize', function(){
 	
 	$("#box-center").height($("#gridContainer").height());
-	$("#box-right").height($("#gridContainer").height() - 10);
-	$("#box-right-1").height($("#gridContainer").height() - 10);
+	$("#box-right").height($("#gridContainer").height());
 	
 	//$("#viwerIframe").get(0).contentWindow.viewerSetHeight($("#gridContainer").height());
 	

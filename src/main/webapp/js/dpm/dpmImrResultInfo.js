@@ -61,7 +61,7 @@ var modDpmImrResultInfo = (function(){
 	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
 	            { label: '처리일자',     name: 'prcDt', 	   align: 'center', width: '70px'},
 	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
-	            { label: '탐지',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
+	            { label: '최.탐',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
 	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px'},
 	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'},
 	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1250px'}

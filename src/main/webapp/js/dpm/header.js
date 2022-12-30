@@ -32,9 +32,14 @@ function goPage(data){
 		frmHeader.action = "/dpm/dpmImrResultInfo.do";
 		break;
 		
-		case 'MaskResult':
+		case 'MaskVerfi':
 		frmHeader.action = "/dpm/dpmMaskVerifiInfo.do";
 		break;
+		
+		case 'MaskResult':
+		frmHeader.action = "/dpm/dpmMasResultInfo.do";
+		break;
+		
 		
 		
 	}

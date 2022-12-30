@@ -84,7 +84,7 @@ $.fn.extend({
 						eventMap.run('select', 'add', $img);
 				 		$activeImg = $img;
 				 		const isImgFile = isImg($img);
-				 		const src = ($img.attr('seperatedThumbnail') || !isImgFile) ? $img.attr("data-src") : ($img.attr("src") ?? $img.attr("data-src"));
+				 		const src = isImgFile ? ($img.attr("src") ?? $img.attr("data-src")):  $img.attr("data-src");
 				 		
 				    	clickImageCallback(src, $img.attr("title"), $img, isImgFile);
 						eventMap.run('click', src, $img, isImgFile);
@@ -173,10 +173,9 @@ $.fn.extend({
 										$wrap = $element;
 									}
 									i++;
-								});
-																		
-								resetSeq();
+								});										
 							});
+							resetSeq();
 							
 						}, function (e) {
 							console.log('zip error', e);
@@ -254,7 +253,7 @@ $.fn.extend({
 		}
 
 
-		function makeImg(src, title, tag, thumbnail) {
+		function makeImg(src, title, tag) {
 			const $img = $('<img>');
 			$img.attr('data-src', src);
 			$img.attr('title', title);
@@ -262,31 +261,12 @@ $.fn.extend({
 			if (tag) {
 				$img.attr('tag', tag);
 			}
-			if (thumbnail) {
-				$img.attr('src', thumbnail);
-				$img.attr('isimg', true);
-				$img.attr('seperatedThumbnail', true);
-			}
 
 			return $(imgWrap.replace('$img', $img[0].outerHTML).replace('$title', title));
 		}
 		
-		function add(src, title, tag, thumbnail) {
-			$(root).append(makeImg(src, title, tag, thumbnail));
-		}
-		
-		function remove(src) {
-			const $img = findThumbnail('[data-src="' + src +  '"]');
-			if ($img.length > 0) {
-				const $wrap = $img.parents(wrapTag);
-				if ($wrap.length > 0) {
-					$wrap.remove();
-					
-					return 1;
-				}
-			}
-			
-			return 0;
+		function add(src, title, tag) {
+			$(root).append(makeImg(src, title, tag));
 		}
 		
 		function debug(...msgs) {
@@ -529,7 +509,7 @@ $.fn.extend({
 			} else if (Array.isArray(src) && src.length > 0) {
 				if (Array.isArray(src[0])) {   // [['/aa/a.jpg', 'a.jpg'], ['/bb/b.pdf', 'b.pdf']]
 					src.forEach(x => {
-						add(x[0], x[1], x.length > 2 ? x[2] : null, x.length > 3 ? x[3] : null);
+						add(x[0], x[1], x.length > 2 ? x[2] : null);
 					});			 					
 				} else { // ['/aa/a.jpg', '/bb/b.jpg']
 					src.forEach(x => {
@@ -539,22 +519,6 @@ $.fn.extend({
 			} else {
 				debug('img is empty or invalid type', src);
 			}
-		}
-		
-		Module.removeImg = (src) => {
-			debug('removeImg', src, typeof src);
-			let count = 0;
-			if ((typeof src) == 'string') { // 'aa/a.jpg'
-				count = remove(src);
-			} else if (Array.isArray(src)) {
-				src.forEach(x => {
-					count += remove(x);
-				});			 															
-			} else {
-				debug('img is empty or invalid type', src);
-			}
-			
-			return count;
 		}
 		
 		Module.setImg = function(src) {
@@ -639,8 +603,6 @@ $.fn.extend({
 				$container.scroll();
 			}
 		}
-		
-		Module.getWrap = $img => $img.parents(wrapTag);
 		
 		return Module;
 	}

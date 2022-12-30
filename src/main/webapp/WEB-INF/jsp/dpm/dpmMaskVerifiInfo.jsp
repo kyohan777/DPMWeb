@@ -26,11 +26,11 @@
  		 flex: 2;
 	}
 	#box-center {
-  		flex: 5;
+  		flex: 3;
   		
 	}
 	#box-right {
-		flex: 0;
+		flex: 3;
 	}
 	#mkTable > tr{
 	height : 40px
@@ -79,7 +79,10 @@
                             <div class="smbc-data-title">
                                 <h3>교정/검증 처리</h3>
                                 <ul class="smbc-data-top-menu">
-                                    <li><button id="btnConfirm">확정</button></li>
+                                    <li><button id="btnConfirm">확인</button></li>
+                                </ul>
+                                <ul class="smbc-data-top-menu">
+                                    <li><button id="btnSetOrigin">원복</button></li>
                                 </ul>
                             </div>
                             <div class="smbc-data-wrap">
@@ -101,104 +104,24 @@
 									    </iframe>
                             	</div>
                             	
-                            	<div id='box-right'>
+	                            	<div id='box-right'>
+	                            		<iframe src="/sfview/viewer.jsp" id="viwerIframe2"
+			                            			width="100%" 
+				  									height="100%" 
+										            frameborder="0" 
+										            allowfullscreen 
+										            >
+										</iframe>
+									</div>	    
                             	
-                            	 <div id='box-right-1' class="smbc-data-con-wrap">
-                                	<div id='box-right-2' class="smbc-data-grid-wrap">
-                                
-                                <form id="frmImrInfo" role="form"  method="post">
+                            	
+                            	<form id="frmImrInfo" role="form"  method="post">
                                 	<input id="elementId" name="elementId" type="hidden">
-                                	<input id="intvisionImr" name="intvisionImr" type="hidden">
-                                	
-                                	<!-- 
-                                    <table>
-                                        <colgroup>
-                                            <col/>
-                                            <col/>
-                                            <col/>
-                                        </colgroup>
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align: center">구분</th>
-                                                <th style="text-align: center">NO</th>
-                                                <th style="text-align: center">YES</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="mkTable">
-                                            <tr>
-                                                <td style="text-align: left">금융상품안내 및 이용권유를 위한 수집, 이용</td>
-                                                <td><input type ="radio" name="A" value="N"></td>
-                                                <td><input type ="radio" name="A" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">금융상품 이외의 서비스 안내 및 이용권유를 위한 수집,이용</td>
-                                                <td><input type ="radio" name="B" value="N"></td>
-                                                <td><input type ="radio" name="B" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">업무제휴계약을 체결한 제휴 보험사에 제공</td>
-                                                <td><input type ="radio" name="C" value="N"></td>
-                                                <td><input type ="radio" name="C" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">업무제휴계약을 체결한 제휴 딜러사에 제공</td>
-                                                <td><input type ="radio" name="D" value="N"></td>
-                                                <td><input type ="radio" name="D" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">KB국민은행 등 KB금융 그룹 내 자회사에 제공</td>
-                                                <td><input type ="radio" name="E" value="N"></td>
-                                                <td><input type ="radio" name="E" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">[수집 마케팅] 전화 수신 동의</td>
-                                                <td><input type ="radio" name="TM_RECV_YN" value="N"></td>
-                                                <td><input type ="radio" name="TM_RECV_YN" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">[수집 마케팅] 문자(SMS) 수신 동의</td>
-                                                <td><input type ="radio" name="SMS_RECV_YN" value="N"></td>
-                                                <td><input type ="radio" name="SMS_RECV_YN" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">[수집 마케팅] DM 수신 동의 (우편을 DM으로 인식)</td>
-                                                <td><input type ="radio" name="DM_RECV_YN" value="N"></td>
-                                                <td><input type ="radio" name="DM_RECV_YN" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">[수집 마케팅] 이메일 수신 동의</td>
-                                                <td><input type ="radio" name="EMAIL_RECV_YN" value="N"></td>
-                                                <td><input type ="radio" name="EMAIL_RECV_YN" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">[제공 마케팅] 전화 제공 동의</td>
-                                                <td><input type ="radio" name="TM_OFFER_YN" value="N"></td>
-                                                <td><input type ="radio" name="TM_OFFER_YN" value="Y"></td>
-                                            </tr>
-                                             <tr>
-                                                <td style="text-align: left">[제공 마케팅] 이메일 제공 동의</td>
-                                                <td><input type ="radio" name="EMAIL_OFFER_YN" value="N"></td>
-                                                <td><input type ="radio" name="EMAIL_OFFER_YN" value="Y"></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: left">[제공 마케팅] DM 제공 동의</td>
-                                                <td><input type ="radio" name="DM_OFFER_YN" value="N"></td>
-                                                <td><input type ="radio" name="DM_OFFER_YN" value="Y"></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: left">[제공 마케팅] 문자(SMS) 제공 동의</td>
-                                                <td><input type ="radio" name="SMS_OFFER_YN" value="N"></td>
-                                                <td><input type ="radio" name="SMS_OFFER_YN" value="Y"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                     -->
-                                    </form>
-	                                
-                                    
-                                </div>
+                                	<input id="contractId" name="contractId" type="hidden">
+                                	<input id="custId" name="custId" type="hidden">
+                                </form>	 
+                            	
                             </div>
-                            	</div>
                              
                             </div>
                         </div>
