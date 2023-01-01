@@ -226,18 +226,6 @@
     	$thumbnails.setImg("/showFile.do?filename=" + filename);
     }
     
-    function viewerSetHeight(height) {
-    	
-    	$('#id_view-box').height(height);
-    	
-    	$('#embedded').height(height);
-    	
-    	const $view = $('#sfwork').sfview();
-		$('#sfwork').css({'height': height});
-		
-    	
-    	console.log("window size ~~~~");
-    }
     
 	function scrollToSeq(pageno) {
 		$thumbnails.scrollToSeq(pageno);
