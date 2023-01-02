@@ -80,7 +80,14 @@ public class StatisticsVO extends AbstractVO{
 	private String  resultImgPath="";
 	private String  stPrcDt="";
 	private String  edPrcDt="";
+	private String  imgPathOrg="";
 	
+	public String getImgPathOrg() {
+		return imgPathOrg;
+	}
+	public void setImgPathOrg(String imgPathOrg) {
+		this.imgPathOrg = imgPathOrg;
+	}
 	public String getResultImgPath() {
 		return resultImgPath;
 	}

@@ -447,7 +447,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			CONTRACT_ID,
 			PRC_DT,
 			RESULT_IMG_PATH,
-			
+			IMG_PATH_ORG,
 			CASE 
 				WHEN MASK_PRG_STSC ='10' THEN '미처리'
 				WHEN MASK_PRG_STSC ='20' THEN '처리중'
@@ -677,7 +677,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
    
     <update id="updMaskRecover" parameterType="java.util.Map">
     	UPDATE TB_EM_IMR_MASK_OBJ
-    	SET MASK_PRG_STSC = '80'
+    	SET MASK_PRG_STSC = '85'
             , RESULT_IMG_PATH = NULL
 	  		, CHG_DTM = SYSDATE
 	  		, CHG_ENO = #{chgEno}
