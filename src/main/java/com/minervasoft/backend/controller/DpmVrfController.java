@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -323,6 +324,40 @@ public class DpmVrfController {
 			returnObj.put("errMsg", e.getMessage());
 			updCnt = 0;
 		}
+    	returnObj.put("updCnt", updCnt);
+    	
+    	return returnObj.toJSONString();
+    }
+    
+    
+    /**
+     *  [MASK] 교정/검증 원복 처리
+     * @param paramVO
+     * @return
+     * @throws ParseException 
+     */
+    @RequestMapping(value = "/dpm/maskRecover.do")
+    @ResponseBody
+    public String maskRecover(@RequestParam Map<String, String> param, HttpServletRequest request) {
+    	
+    	logger.debug("paramVO.toString() ~~~:" + param.toString());
+    	
+    	int updCnt = 0;
+    	JSONObject returnObj = new JSONObject();
+    	try {
+	        HttpSession session = request.getSession();
+	        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+	        param.put("chgEno", loginVO.getChrrId());
+	        
+	        updCnt = dpmService.updMaskRecover(param);
+	    	
+	    	returnObj.put("errMsg", "success");
+    	} catch (Exception e) {
+			logger.error("", e);
+			returnObj.put("errMsg", e.getMessage());
+			updCnt = 0;
+		}
+    	
     	returnObj.put("updCnt", updCnt);
     	
     	return returnObj.toJSONString();

@@ -1,6 +1,7 @@
 package com.minervasoft.backend.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -539,5 +540,10 @@ public class DpmServiceImpl implements DpmService {
 		return dpmDao.insertViewReason(paramVO);
 	}
 	
+	// MASK 원복
+	@Override
+    public int updMaskRecover(Map<String, String> param) throws Exception {
+		return dpmDao.updMaskRecover(param);
+    }
 
 }

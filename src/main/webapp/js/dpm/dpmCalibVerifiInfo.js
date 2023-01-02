@@ -436,13 +436,13 @@ $(window).on('resize', function(){
 	$("#box-right").height($("#gridContainer").height() - 10);
 	$("#box-right-1").height($("#gridContainer").height() - 10);
 	
-	$('#viwerIframe').contents().find('iframe#embedded').height($("#gridContainer").height());
-	$('#viwerIframe').contents().find('#id_view-box').height($("#gridContainer").height());
 	
-	$('#viwerIframe').contents().find('div.v-board').height($("#gridContainer").height());
+	//$('#viwerIframe').contents().find('#id_view-box').height($("#gridContainer").height());
+	//$('#viwerIframe').contents().find('div.v-board').height($("#gridContainer").height());
 	$('#viwerIframe').contents().find('div.v-content').height($("#gridContainer").height());
+	$('#viwerIframe').contents().find('iframe#embedded').height($("#gridContainer").height());
 	
-	console.log("#id_view-box height:" + $('#viwerIframe').contents().find('#id_view-box').height());
+	//console.log("#id_view-box height:" + $('#viwerIframe').contents().find('#id_view-box').height());
 	
 	/*	
 	var rowid = $("#jqGrid").jqGrid("getGridParam","selrow");
@@ -453,11 +453,8 @@ $(window).on('resize', function(){
 		console.log("rowid:" + rowid);
 	}
 	*/
-
-	//console.log("$('#viwerIframe').contents().find('iframe#embedded').height():" + $('#viwerIframe').contents().find('iframe#embedded').height());
 	
 	//const height = $("#gridContainer", parent.document).height();
-	
 	//$("#viwerIframe").attr('src', '/sfview/viewer.jsp');
 	    
 });

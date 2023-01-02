@@ -1,6 +1,7 @@
 package com.minervasoft.backend.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.minervasoft.backend.vo.AgentAssignVO;
 import com.minervasoft.backend.vo.BizStatsTodayVO;
@@ -179,4 +180,6 @@ public interface DpmService {
     public int updImrConfirm(StatisticsVO paramVO) throws Exception;
     // 결과 조회 사유 입력
     public int insertViewReason(CalibVerifiVo paramVO) throws Exception;
+    // MASK 원복
+    public int updMaskRecover(Map<String, String> param) throws Exception;
 }

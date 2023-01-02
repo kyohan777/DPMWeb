@@ -571,6 +571,8 @@ $(window).on('resize', function(){
 	$("#box-right").height($("#gridContainer").height() - 10);
 	$("#box-right-1").height($("#gridContainer").height() - 10);
     
+    $('#viwerIframe').contents().find('div.v-content').height($("#gridContainer").height());
+	$('#viwerIframe').contents().find('iframe#embedded').height($("#gridContainer").height());
 });
 
 

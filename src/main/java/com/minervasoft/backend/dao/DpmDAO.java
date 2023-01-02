@@ -1,6 +1,7 @@
 package com.minervasoft.backend.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -313,7 +314,10 @@ public class DpmDAO extends AbstractDpmDAO {
         return (List<StatisticsVO>) selectList("getPrcDtGroupList");
     }
     
-    
+    // mask 원복
+    public int updMaskRecover(Map<String, String> param) throws Exception {
+    	return (int) update("updMaskRecover", param);
+    }
     
     
 }

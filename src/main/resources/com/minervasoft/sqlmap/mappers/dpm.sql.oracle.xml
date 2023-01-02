@@ -674,6 +674,13 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
         ORDER BY PRC_DT 
     </select>
    
-    
+    <update id="updMaskRecover" parameterType="java.util.Map">
+    	UPDATE TB_EM_IMR_MASK_OBJ
+    	SET MASK_PRG_STSC = '80'
+            , RESULT_IMG_PATH = NULL
+	  		, CHG_DTM = SYSDATE
+	  		, CHG_ENO = #{chgEno}
+    	WHERE ELEMENTID = #{elementId}
+    </update>
        
 </mapper>

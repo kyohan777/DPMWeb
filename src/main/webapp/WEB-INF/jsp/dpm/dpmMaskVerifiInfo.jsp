@@ -82,7 +82,7 @@
                                     <li><button id="btnConfirm">확인</button></li>
                                 </ul>
                                 <ul class="smbc-data-top-menu">
-                                    <li><button id="btnSetOrigin">원복</button></li>
+                                    <li><button id="btnRecover">원복</button></li>
                                 </ul>
                             </div>
                             <div class="smbc-data-wrap">
