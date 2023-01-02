@@ -417,9 +417,9 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     	UPDATE TB_EM_PC_CHRR
 		SET 
 			UYN       = 'N',
-			IPDT_TIME = SYSDATE
+			RG_REASON = CONCAT(RG_REASON,TO_CHAR(RG_DTM,'YYYY/MM/DD HH24:MI:SS')),
+			RG_DTM    = SYSDATE
 		WHERE ID_NO = #{idNo}
-    
     </update>
     
     
@@ -682,5 +682,20 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 	  		, CHG_ENO = #{chgEno}
     	WHERE ELEMENTID = #{elementId}
     </update>
+    <select id="getBatchTotCnt" resultType="com.minervasoft.backend.vo.StatisticsVO">
+     SELECT 
+		COUNT(PRC_DT) TOT_ROW_CNT 	
+	FROM TB_EM_IMR_MASK_OBJ 
+      WHERE PRC_DT <![CDATA[<]]> TO_CHAR(SYSDATE,'YYYYMMDD')
+     AND   PRC_DT > 
+     (
+		CASE 
+			WHEN (SELECT COUNT(*) FROM TB_EM_IMR_DAILY_STATICS) > 0 THEN
+     	     (SELECT MAX(PRC_DT) FROM TB_EM_IMR_DAILY_STATICS)
+     	ELSE '0000000'END 
+	 )
+     AND   MASK_PRG_STSC > 20
+     ORDER BY PRC_DT
+    </select>
        
 </mapper>

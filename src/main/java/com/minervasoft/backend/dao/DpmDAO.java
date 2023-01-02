@@ -319,5 +319,10 @@ public class DpmDAO extends AbstractDpmDAO {
     	return (int) update("updMaskRecover", param);
     }
     
+    // mask 원복
+    public StatisticsVO getBatchTotCnt() throws Exception {
+    	return (StatisticsVO) selectOne("getBatchTotCnt");
+    }
+    
     
 }

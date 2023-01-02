@@ -182,4 +182,6 @@ public interface DpmService {
     public int insertViewReason(CalibVerifiVo paramVO) throws Exception;
     // MASK 원복
     public int updMaskRecover(Map<String, String> param) throws Exception;
+    
+    public StatisticsVO getBatchTotCnt() throws Exception;
 }

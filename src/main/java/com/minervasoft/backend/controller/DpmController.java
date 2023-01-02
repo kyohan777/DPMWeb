@@ -5,8 +5,11 @@ import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -1110,8 +1113,8 @@ public class DpmController {
     public ResponseStatisticsVo getBatchTotCnt(StatisticsVO paramVO, ModelMap modelMap) throws Exception {    	
     	ResponseStatisticsVo response = new ResponseStatisticsVo();
     	try {
-			StatisticsVO info = dpmService.getDpmBatchInfo();
-			if(info == null) {
+    		StatisticsVO one = dpmService.getBatchTotCnt();
+			if(one.getTotRowCnt() <= 0) {
 				response.setRsYn("N");
 			}
 		} catch (Exception e) {
