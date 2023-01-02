@@ -51,7 +51,7 @@
                                 </ul>
                             </div>
                             <div class="smbc-data-con-wrap">
-                             <div id="gridContainer">
+                             <div id="gridContainer"style="height:95%">
 								<table id="jqGrid"></table>
 								<div id="jqGridPager"></div>
 							</div>

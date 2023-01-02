@@ -472,6 +472,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		FROM TB_EM_IMR_MASK_OBJ
 		WHERE 1=1
 		AND MASK_PRG_STSC > 20
+		AND INTVISION_IMR IS NOT NULL
 		<if test='textPrcDt != null and textPrcDt !=""'>
 		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
 		</if>
@@ -498,6 +499,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		FROM TB_EM_IMR_MASK_OBJ
 		WHERE 1=1
 		AND MASK_PRG_STSC > 20
+		AND INTVISION_IMR IS NOT NULL
 		<if test='textPrcDt != null and textPrcDt !=""'>
 		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
 		</if>
