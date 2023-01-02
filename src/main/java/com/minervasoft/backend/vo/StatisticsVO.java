@@ -77,7 +77,14 @@ public class StatisticsVO extends AbstractVO{
 	private String  maskPrgStscTxt="";
 	private String  userConfirmTxt="";
 	private String  userUpdateYnTxt="";
+	private String  resultImgPath="";
 	
+	public String getResultImgPath() {
+		return resultImgPath;
+	}
+	public void setResultImgPath(String resultImgPath) {
+		this.resultImgPath = resultImgPath;
+	}
 	public String getMaskPrgStscTxt() {
 		return maskPrgStscTxt;
 	}

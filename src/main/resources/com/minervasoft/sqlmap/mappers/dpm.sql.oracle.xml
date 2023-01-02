@@ -446,6 +446,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			CUST_ID,
 			CONTRACT_ID,
 			PRC_DT,
+			RESULT_IMG_PATH,
 			
 			CASE 
 				WHEN MASK_PRG_STSC ='10' THEN '미처리'
