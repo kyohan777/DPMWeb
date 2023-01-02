@@ -1,8 +1,8 @@
 package com.minervasoft.backend.service.impl;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,25 +18,10 @@ import org.springframework.stereotype.Service;
 
 import com.minervasoft.backend.dao.DpmDAO;
 import com.minervasoft.backend.service.DpmService;
-import com.minervasoft.backend.vo.AgentAssignVO;
-import com.minervasoft.backend.vo.BizStatsTodayVO;
-import com.minervasoft.backend.vo.BizStatsVO;
 import com.minervasoft.backend.vo.CalibVerifiVo;
-import com.minervasoft.backend.vo.ChrrGroupAuthVO;
-import com.minervasoft.backend.vo.ChrrVO;
-import com.minervasoft.backend.vo.CodeVO;
-import com.minervasoft.backend.vo.DailyStatsVO;
-import com.minervasoft.backend.vo.GroupAuthVO;
-import com.minervasoft.backend.vo.ImageVerifyVO;
 import com.minervasoft.backend.vo.LoginChrrVO;
-import com.minervasoft.backend.vo.MaskingHistoryVO;
-import com.minervasoft.backend.vo.MenuAuthVO;
-import com.minervasoft.backend.vo.MenuVO;
-import com.minervasoft.backend.vo.MonthlyStatsVO;
 import com.minervasoft.backend.vo.StatisticsVO;
-import com.minervasoft.backend.vo.StepStatsVO;
 import com.minervasoft.backend.vo.UserManageVo;
-import com.minervasoft.backend.vo.XtromDailyStatsVO;
 
 @Service("DpmService")
 public class DpmServiceImpl implements DpmService {
@@ -434,6 +419,8 @@ public class DpmServiceImpl implements DpmService {
 		List<StatisticsVO> prcDtList = dpmDao.getPrcDtGroupList();
 		StatisticsVO statisticInfo = new StatisticsVO(); 
 		if(list.size()>0) {
+			//daily table max 날짜 ~ 배치 시작일 하루전 날짜 사이 없는 날짜 0값으로 등록 처리
+			insertPrcDtNullToZeroData(prcDtList);
 			for(StatisticsVO prcDt : prcDtList) {
 				statisticInfo = new StatisticsVO();
 				statisticInfo.setPrcDt(prcDt.getPrcDt());
@@ -556,12 +543,18 @@ public class DpmServiceImpl implements DpmService {
 		return dpmDao.getBatchTotCnt();
 	}
 	
-	public void insertPrcDtNull() throws ParseException {
-		String s1="20080110";
-		String s2="20080211";
+	public void insertPrcDtNullToZeroData(List<StatisticsVO> paramList) throws Exception {
+		StatisticsVO info = dpmDao.getStarDateEndDate();
+		List<String> prcDtList = new ArrayList<String>();
+		for(StatisticsVO vo : paramList) {
+			prcDtList.add(vo.getPrcDt());
+		}
+		String stDate=info.getStPrcDt();//시작일
+		String edDate=info.getEdPrcDt();//종료일
 		DateFormat df = new SimpleDateFormat("yyyyMMdd");
-		Date d1 = df.parse( s1 );
-		Date d2 = df.parse( s2 );
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		Date d1 = df.parse( stDate );
+		Date d2 = df.parse( edDate);
 		Calendar c1 = Calendar.getInstance();
 		Calendar c2 = Calendar.getInstance();
 		//Calendar 타입으로 변경 add()메소드로 1일씩 추가해 주기위해 변경
@@ -569,13 +562,13 @@ public class DpmServiceImpl implements DpmService {
 		c2.setTime( d2 );
 
 		//시작날짜와 끝 날짜를 비교해, 시작날짜가 작거나 같은 경우 출력
-
 		while( c1.compareTo( c2 ) !=1 ){
-
-		//출력
-		System.out.printf("%tF\n",c1.getTime());
-
-		//시작날짜 + 1 일
+			//시작일과 종료일 날짜 중 MASK_OBJ 테이블에 존재하지 않는 날짜는 '0' 값 으로 해당 날짜 등록 
+			if(!prcDtList.contains(dateFormat.format(c1.getTime()))) {
+				StatisticsVO statisticInfo = new StatisticsVO();
+				statisticInfo.setPrcDt(dateFormat.format(c1.getTime()));
+				dpmDao.insertDailyStatics(statisticInfo);
+			}
 		c1.add(Calendar.DATE, 1);
 		}
 	}

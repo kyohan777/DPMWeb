@@ -319,9 +319,14 @@ public class DpmDAO extends AbstractDpmDAO {
     	return (int) update("updMaskRecover", param);
     }
     
-    // mask 원복
+    // 배치 정보 조회
     public StatisticsVO getBatchTotCnt() throws Exception {
     	return (StatisticsVO) selectOne("getBatchTotCnt");
+    }
+    
+    // mask 원복
+    public StatisticsVO getStarDateEndDate() throws Exception {
+    	return (StatisticsVO) selectOne("getStarDateEndDate");
     }
     
     

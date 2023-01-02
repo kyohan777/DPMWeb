@@ -78,6 +78,8 @@ public class StatisticsVO extends AbstractVO{
 	private String  userConfirmTxt="";
 	private String  userUpdateYnTxt="";
 	private String  resultImgPath="";
+	private String  stPrcDt="";
+	private String  edPrcDt="";
 	
 	public String getResultImgPath() {
 		return resultImgPath;
@@ -542,6 +544,18 @@ public class StatisticsVO extends AbstractVO{
 	public void setVerifyUpdateRat(String verifyUpdateRat) {
 		this.verifyUpdateRat = verifyUpdateRat;
 	}
+	public String getStPrcDt() {
+		return stPrcDt;
+	}
+	public void setStPrcDt(String stPrcDt) {
+		this.stPrcDt = stPrcDt;
+	}
+	public String getEdPrcDt() {
+		return edPrcDt;
+	}
+	public void setEdPrcDt(String edPrcDt) {
+		this.edPrcDt = edPrcDt;
+	}
 	@Override
 	public String toString() {
 		return "StatisticsVO [prcDt=" + prcDt + ", textPrcDt=" + textPrcDt + ", prcDtCnt=" + prcDtCnt + ", prcCn="
@@ -564,10 +578,9 @@ public class StatisticsVO extends AbstractVO{
 				+ ", cgnRzt=" + cgnRzt + ", pageNumber=" + pageNumber + ", totPageCnt=" + totPageCnt + ", totRowCnt="
 				+ totRowCnt + ", pageSize=" + pageSize + ", fstImrPage=" + fstImrPage + ", chgEno=" + chgEno
 				+ ", custId=" + custId + ", contractId=" + contractId + ", maskPrgStscTxt=" + maskPrgStscTxt
-				+ ", userConfirmTxt=" + userConfirmTxt + ", userUpdateYnTxt=" + userUpdateYnTxt + "]";
+				+ ", userConfirmTxt=" + userConfirmTxt + ", userUpdateYnTxt=" + userUpdateYnTxt + ", resultImgPath="
+				+ resultImgPath + ", stPrcDt=" + stPrcDt + ", edPrcDt=" + edPrcDt + "]";
 	}
-
-	
 	
 	
 	
