@@ -703,7 +703,7 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     
      <select id="getStarDateEndDate" resultType="com.minervasoft.backend.vo.StatisticsVO">
      SELECT 
-		MAX(PRC_DT) ST_PRC_DT,
+		MIN(PRC_DT) ST_PRC_DT,
 		TO_CHAR(SYSDATE-1,'YYYYMMDD') ED_PRC_DT
 	FROM TB_EM_IMR_MASK_OBJ 
       WHERE PRC_DT <![CDATA[<]]> TO_CHAR(SYSDATE,'YYYYMMDD')
