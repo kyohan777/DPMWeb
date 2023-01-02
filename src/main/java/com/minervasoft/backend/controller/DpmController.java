@@ -800,7 +800,6 @@ public class DpmController {
     	modelMap.put("gridNames",  paramVO.getGridNames());
     	modelMap.put("gridWidths", paramVO.getGridWidths());
     	modelMap.put("headerMergeYn","Y");
-    	modelMap.put("intYn","Y");
     	modelMap.put("mergeTitle", title);
     	modelMap.put("VO", "StatisticsVO");
     	modelMap.put("excelList", list);
@@ -843,7 +842,6 @@ public class DpmController {
     	modelMap.put("gridNames", paramVO.getGridNames());
     	modelMap.put("gridWidths", paramVO.getGridWidths());
     	modelMap.put("headerMergeYn","N");
-    	modelMap.put("intYn","N");
     	modelMap.put("VO", "UserManageVo");
     	modelMap.put("excelList", list);
     	
@@ -885,7 +883,6 @@ public class DpmController {
     	modelMap.put("gridNames",  paramVO.getGridNames());
     	modelMap.put("gridWidths", paramVO.getGridWidths());
     	modelMap.put("headerMergeYn","Y");
-    	modelMap.put("intYn","Y");
     	modelMap.put("mergeTitle", title);
     	modelMap.put("VO", "StatisticsVO");
     	modelMap.put("excelList", list);
@@ -952,7 +949,6 @@ public class DpmController {
     	modelMap.put("gridNames",  paramVO.getGridNames());
     	modelMap.put("gridWidths", paramVO.getGridWidths());
     	modelMap.put("headerMergeYn","N");
-    	modelMap.put("intYn","N");
     	modelMap.put("VO", "StatisticsVO");
     	modelMap.put("excelList", list);
     	
@@ -970,7 +966,6 @@ public class DpmController {
         String gridNames     = (String) model.get("gridNames");
         String gridWidths    = (String) model.get("gridWidths");
         String headerMergeYn = (String) model.get("headerMergeYn");
-        String intYn         = (String) model.get("intYn");
         rowList = (ArrayList<Object>) model.get("excelList");
         String vo =  (String) model.get("VO");
         Class<?> voClass = Class.forName("com.minervasoft.backend.vo." + vo);                        
@@ -1040,7 +1035,7 @@ public class DpmController {
 	    	if(rowList != null) {
             	for(int i = 0; i < rowList.size(); i++) {
             		Row aRow = (Row) sheet.createRow(rowNo++);
-            		setEachRow(aRow, rowList.get(i), methodList,intYn);
+            		setEachRow(aRow, rowList.get(i), methodList);
             	}
             		
             }
@@ -1062,22 +1057,16 @@ public class DpmController {
      * @param methodList
      * @throws Exception
      */
-    private void setEachRow(Row aRow, Object vo, List<Method> methodList,String intYn) throws Exception {
+    private void setEachRow(Row aRow, Object vo, List<Method> methodList) throws Exception {
     	for(int i=0; i<methodList.size(); i++) {
     		Cell cell = aRow.createCell(i);
     		if(!methodList.get(i).invoke(vo).equals(null)) {
-    			if(intYn.equals("Y")) {//숫자 형식으로 변경 필요한 경우
-    				//처리일자 + 처리율 + 오류울은 문자열 처리
-        			if( !"getPrcDt".equals(methodList.get(i).getName()) &&!"getErrRat".equals(methodList.get(i).getName()) && !"getPrcRat".equals(methodList.get(i).getName())&& !"getVerifyUpdateRat".equals(methodList.get(i).getName())) {
-        				Integer val = Integer.parseInt(methodList.get(i).invoke(vo).toString());
-        				cell.setCellValue(val);
-        			}else {
-            			String val = methodList.get(i).invoke(vo).toString();
-            			cell.setCellValue(val);
-            		}
-    			}else {
+    			if(methodList.get(i).getGenericReturnType().getTypeName().contains("String")) {
     				String val = methodList.get(i).invoke(vo).toString();
         			cell.setCellValue(val);
+    			}else {
+    				Integer val = Integer.parseInt(methodList.get(i).invoke(vo).toString());
+    				cell.setCellValue(val);
     			}
     		}
     	}
