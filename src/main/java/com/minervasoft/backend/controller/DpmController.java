@@ -785,7 +785,7 @@ public class DpmController {
     	CommonVO commonVO 		 = getServerDateTime();
     	String filename 		 = commonVO.getServerTime().concat("_일별 통계.xlsx");    	
     	setExcelDownloadHeader(request, response, filename);
-    	 String title = "YYYY/MM/DD,대상,처리현황,'','',처리율,검증현황,'','',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
+    	 String title = "년/월/일,대상,처리현황,'','',처리율,검증현황,'','',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
     	StatisticsVO one = dpmService.getDpmDayProInfoTotRowCnt(paramVO);
     	
     	int pageSize   = 10000;
@@ -870,7 +870,7 @@ public class DpmController {
     	String filename 		 = commonVO.getServerTime().concat("_월별 통계.xlsx");    	
     	setExcelDownloadHeader(request, response, filename);
     	StatisticsVO one = dpmService.getDpmMonthProInfoTotRowCnt(paramVO);
-    	String title = "YYYY/MM,대상,처리현황,'','',처리율,검증현황,'','',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
+    	String title = "년/월,대상,처리현황,'','',처리율,검증현황,'','',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
     	int pageSize   = 10000;
     	int totRowCnt  = one.getTotRowCnt() ;
     	int totPageCnt = (int) Math.floor(totRowCnt/pageSize)+1;
