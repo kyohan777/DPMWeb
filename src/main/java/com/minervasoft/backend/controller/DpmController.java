@@ -76,11 +76,6 @@ public class DpmController {
         	LoginChrrVO one = dpmService.selOneLoginChrr(paramVO);
         	if(one != null) {//아이디 존재여부 확인
         		response.setSelOne(one);
-        		if("admin".equals(paramVO.getChrrId())) {//관리자 계정은 암호화 페스
-        			if(!"admin".equals(paramVO.getChrrPwd())) {
-        				one.setPwdYn("N");
-        			}
-        		}else {//password 일치 여부 확인
         			String password = paramVO.getChrrPwd();
         			String hex = "";
         			MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -90,7 +85,6 @@ public class DpmController {
             		if(!hex.equals(one.getChrrPwd())) {
             			one.setPwdYn("N");
             		}
-        		}
         	}else {
         		response.setSelOne(one);
         	}
