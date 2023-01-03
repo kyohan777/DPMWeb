@@ -382,6 +382,7 @@ public class DpmVrfController {
         String filename = request.getParameter("filename");
         logger.info("filename:" + filename);
     	
+        /*
     	if (filename == null) {
     		System.err.println("usage example: /show_file.jsp?filename=/tif/jpeg/1.tif");
     		return;
@@ -389,6 +390,7 @@ public class DpmVrfController {
     		System.err.println("filename not allowed contains ..");
     		return;
     	}
+    	*/
     	
     	logger.info("baseFolder" + baseFolder);
     	logger.info("noFileImg" + noFileImg);
@@ -429,6 +431,7 @@ public class DpmVrfController {
         String filename = request.getParameter("filename");
         logger.info("file path:" + filename);
     	
+        /*
     	if (filename == null) {
     		System.err.println("usage example: /show_file.jsp?filename=/tif/jpeg/1.tif");
     		return;
@@ -436,7 +439,9 @@ public class DpmVrfController {
     		System.err.println("filename not allowed contains ..");
     		return;
     	}
-    	
+    	*/
+    	       
+        
     	Path srcPath = Paths.get(filename);
 		if(Files.notExists(srcPath, LinkOption.NOFOLLOW_LINKS)) {
 			 /*

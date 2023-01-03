@@ -310,39 +310,44 @@ $("#btnExcel").on("click", function() {
 
 
 function imrRadioSet(rowid) {
+	var selRowData = $("#jqGrid").getRowData(rowid);
+	var imrFPage = selRowData.fstImrPage;
+	if(imrFPage == null || imrFPage == "undefined" || imrFPage == "") {
+		imrFPage = 1;
+	}
 		
-		var selRowData = $("#jqGrid").getRowData(rowid);
-		if(selRowData.imgPathOrg != null && selRowData.imgPathOrg != "" && selRowData.imgPathOrg != undefined) {
-			$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
-			//$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
-			$("#viwerIframe").get(0).contentWindow.viewerSetImg(encodeURI(selRowData.imgPathOrg));
-			setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 500);
-		}
 		
-		var intvisionImr = selRowData.intvisionImr;
-		if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
-			var jsonImr = JSON.parse(intvisionImr);
-			
-			$("#intvisionImr").val(intvisionImr);
-			
-			$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
-			$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
-			$("input:radio[name='C']:radio[value='" + jsonImr.C + "']").prop('checked', true);
-			$("input:radio[name='D']:radio[value='" + jsonImr.D + "']").prop('checked', true);
-			$("input:radio[name='E']:radio[value='" + jsonImr.E + "']").prop('checked', true);
-			
-			$("input:radio[name='TM_RECV_YN']:radio[value='" + jsonImr.TM_RECV_YN + "']").prop('checked', true);
-			$("input:radio[name='SMS_RECV_YN']:radio[value='" + jsonImr.SMS_RECV_YN + "']").prop('checked', true);
-			$("input:radio[name='DM_RECV_YN']:radio[value='" + jsonImr.DM_RECV_YN + "']").prop('checked', true);
-			$("input:radio[name='EMAIL_RECV_YN']:radio[value='" + jsonImr.EMAIL_RECV_YN + "']").prop('checked', true);
-			$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
-			$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
-			$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
-			$("input:radio[name='SMS_OFFER_YN']:radio[value='" + jsonImr.SMS_OFFER_YN + "']").prop('checked', true);
-			
-		} else {
-			dataResetImr();
-		}
+	if(selRowData.imgPathOrg != null && selRowData.imgPathOrg != "" && selRowData.imgPathOrg != undefined) {
+		$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
+		//$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
+		$("#viwerIframe").get(0).contentWindow.viewerSetImg(encodeURI(selRowData.imgPathOrg));
+		setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 500);
+	}
+	
+	var intvisionImr = selRowData.intvisionImr;
+	if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
+		var jsonImr = JSON.parse(intvisionImr);
+		
+		$("#intvisionImr").val(intvisionImr);
+		
+		$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
+		$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
+		$("input:radio[name='C']:radio[value='" + jsonImr.C + "']").prop('checked', true);
+		$("input:radio[name='D']:radio[value='" + jsonImr.D + "']").prop('checked', true);
+		$("input:radio[name='E']:radio[value='" + jsonImr.E + "']").prop('checked', true);
+		
+		$("input:radio[name='TM_RECV_YN']:radio[value='" + jsonImr.TM_RECV_YN + "']").prop('checked', true);
+		$("input:radio[name='SMS_RECV_YN']:radio[value='" + jsonImr.SMS_RECV_YN + "']").prop('checked', true);
+		$("input:radio[name='DM_RECV_YN']:radio[value='" + jsonImr.DM_RECV_YN + "']").prop('checked', true);
+		$("input:radio[name='EMAIL_RECV_YN']:radio[value='" + jsonImr.EMAIL_RECV_YN + "']").prop('checked', true);
+		$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
+		$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
+		$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
+		$("input:radio[name='SMS_OFFER_YN']:radio[value='" + jsonImr.SMS_OFFER_YN + "']").prop('checked', true);
+		
+	} else {
+		dataResetImr();
+	}
 }
 
 
