@@ -223,7 +223,7 @@
     	$view.clear(); 
     	
     	//$thumbnails.setImg("/sfview/show_file.jsp?filename=" + filename);
-    	$thumbnails.setImg("/showFile.do?filename=" + filename);
+    	$thumbnails.setImg("/showPathFile.do?filename=" + filename);
     }
     
     

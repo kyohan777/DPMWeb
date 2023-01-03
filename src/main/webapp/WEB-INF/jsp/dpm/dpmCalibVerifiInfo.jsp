@@ -79,7 +79,10 @@
                             <div class="smbc-data-title">
                                 <h3>교정/검증 처리</h3>
                                 <ul class="smbc-data-top-menu">
-                                    <li><button id="btnConfirm">확정</button></li>
+                                    <li><button id="btnModify">수정</button></li>
+                                </ul>
+                                <ul class="smbc-data-top-menu">
+                                    <li><button id="btnConfirm">확인</button></li>
                                 </ul>
                             </div>
                             <div class="smbc-data-wrap">

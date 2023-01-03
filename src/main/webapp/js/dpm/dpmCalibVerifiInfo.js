@@ -49,6 +49,8 @@ var modDpmCalibVerifiInfo = (function(){
 				{ label: 'm',  name: 'maskPrgStscTxt', align: 'left', width: '0px'},
 	            { label: 'u',  name: 'userConfirmTxt', align: 'left', width: '0px'},
 	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px'},
+	            { label: 'u3',  name: 'resultImgPath', align: 'left', width: '0px'},
+	            { label: 'u4',  name: 'imgPathOrg', align: 'left', width: '0px'},
 	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
 	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
 	            { label: '최.탐',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
@@ -160,7 +162,7 @@ var modDpmCalibVerifiInfo = (function(){
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
 		
 		//열 숨기기
-		$("#jqGrid").jqGrid("hideCol",["elementId", "userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt"]);
+		$("#jqGrid").jqGrid("hideCol",["elementId", "userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt", "resultImgPath", "imgPathOrg"]);
 	};
 		
 
@@ -289,9 +291,14 @@ function dataSelect(rowid) {
 	if(imrFPage == null || imrFPage == "undefined" || imrFPage == "") {
 		imrFPage = 1;
 	}
-	$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
-	$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
-	setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 500);
+	
+	if(selRowData.imgPathOrg != null && selRowData.imgPathOrg != "" && selRowData.imgPathOrg != undefined) {
+		$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
+		//$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
+		$("#viwerIframe").get(0).contentWindow.viewerSetImg(encodeURI(selRowData.imgPathOrg));
+		setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 500);
+	}
+	
 	
 	$("#elementId").val(selRowData.elementId);
 	
@@ -364,22 +371,10 @@ $("#btnConfirm").on("click", function() {
 			console.log("name:" + item.name + ", value" + item.value);
 		});
 	}
-	
-	var strImr = JSON.stringify(imrObj);
-	console.log("strImr: ~~~" + strImr);				
-	/*
-	var objParam = {
-		"elementId" : $("#elementId").val(),
-		"intvisionImr" : $("#intvisionImr").val(),
-		"ayn" : strImr
-	};
-	*/
-	var objParam = {
-		"intvisionImr" : strImr,
- 	};
+	imrObj['flag'] = "con";
 	
 	// 확정처리
-	modAjax.request("/dpm/imrConfirm.do", objParam, {
+	modAjax.request("/dpm/imrConfirm.do", imrObj, {
 		 async : false,
 		 success : function(data) {
 			var jsonData = JSON.parse(data);
@@ -396,9 +391,54 @@ $("#btnConfirm").on("click", function() {
 			alert(data);
 		}
 	});
-	
-	
 });
+
+/**
+ * 수정버튼 클릭
+ */
+$("#btnModify").on("click", function() {
+		
+	if($("#elementId").val() == '') {
+		alert("수정할 대상이 없습니다.");
+		return;
+	}
+	if(!confirm("수정하시겠습니까?")) {
+		return;
+	}
+	
+	var imrObj = {};
+	
+	var arrForm = $("#frmImrInfo").serializeArray();
+	if(arrForm) {
+		arrForm.forEach(function(item) {
+			imrObj[item.name] = item.value;
+			console.log("name:" + item.name + ", value" + item.value);
+		});
+	}
+	
+	imrObj['flag'] = "upd";
+	
+	// 수정처리
+	modAjax.request("/dpm/imrConfirm.do", imrObj, {
+		 async : false,
+		 success : function(data) {
+			var jsonData = JSON.parse(data);
+			if(jsonData.updCnt == 1) {
+				alert("성공적으로 반영하였습니다.");
+			} 
+			if(jsonData.errMsg != "success") {
+				alert("오류:" + jsonData.errMsg);
+			}
+			modDpmCalibVerifiInfo.selList();
+			
+		},
+		error : function(data) {
+			alert(data);
+		}
+	});
+});
+
+
 
 
 $("#textPrcDt").on("propertychange change keyup paste input", function(){

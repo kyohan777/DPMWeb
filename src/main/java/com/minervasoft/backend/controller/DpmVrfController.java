@@ -188,7 +188,11 @@ public class DpmVrfController {
      */
     @RequestMapping(value = "/dpm/imrConfirm.do")
     @ResponseBody
-    public String imrConfirm(StatisticsVO paramVO, HttpServletRequest request) {
+    public String imrConfirm(@RequestParam Map<String, String> param, HttpServletRequest request) {
+    	
+    	logger.debug("param:" + param.toString());
+    	//param:{elementId=adsdf_2.jpg, intvisionImr={"A":"Y","B":"Y","C":"Y","D":"Y","E":"Y","TM_RECV_YN":"Y","SMS_RECV_YN":"Y","DM_RECV_YN":"Y","EMAIL_RECV_YN":"Y","TM_OFFER_YN":"Y","SMS_OFFER_YN":"Y","DM_OFFER_YN":"Y","EMAIL_OFFER_YN":"Y"}, A=Y, B=Y, C=Y, D=Y, E=Y, TM_RECV_YN=N, SMS_RECV_YN=N, DM_RECV_YN=Y, EMAIL_RECV_YN=Y, TM_OFFER_YN=Y, EMAIL_OFFER_YN=Y, DM_OFFER_YN=Y, SMS_OFFER_YN=Y}
+    	StatisticsVO paramVO = new StatisticsVO(); 
     	
     	int updCnt = 0;
     	JSONObject returnObj = new JSONObject();
@@ -197,21 +201,25 @@ public class DpmVrfController {
 	        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
 	        paramVO.setChgEno(loginVO.getChrrId());
 	    	
-	    	logger.info("getIntvisionImr ~~~:" + paramVO.getIntvisionImr());
-	    	String strParam = paramVO.getIntvisionImr();
-	    	
-	    	JSONParser parser = new JSONParser();
-	    	Object obj = parser.parse(strParam);
-			
-	    	JSONObject jsonObjRoot = (JSONObject) obj;
-	    	String elementId  = (String)jsonObjRoot.get("elementId");
+	    	logger.info("getIntvisionImr ~~~:" + param.get("intvisionImr"));
+	    	String intvisionImr = param.get("intvisionImr");
+	    	String elementId  = param.get("elementId");
 	    	paramVO.setElementId(elementId);
 	    	
-	    	String intvisionImr  = (String)jsonObjRoot.get("intvisionImr");
+	    	String flag = param.get("flag");
+	        if("upd".equals(flag)) {
+	        	paramVO.setUserUpdateYn("01"); //수정
+	    	} else {
+	    		paramVO.setUserUpdateYn("02"); //변경없음
+	    	}
+	    	
+	    	JSONObject jsonObjRoot = new JSONObject(param);
 	    	jsonObjRoot.remove("elementId");
 	    	jsonObjRoot.remove("intvisionImr");
-	    	    	
-	    	obj = parser.parse(intvisionImr);
+	    	jsonObjRoot.remove("flag");
+	    	
+	    	JSONParser parser = new JSONParser();
+	    	Object obj = parser.parse(intvisionImr);
 	    	JSONObject jsonObj = (JSONObject) obj;
 			
 			Map<String, Object> map = jsonToMap(jsonObjRoot);
@@ -222,6 +230,7 @@ public class DpmVrfController {
 	        paramVO.setIntvisionImr(jsonStr);
  	
 	        // 데이터 비교
+	        /*
 	    	boolean eqYn = true;
 	    	Iterator<String> keys = jsonObjRoot.keySet().iterator();
 	    	Iterator<String> keysIv = jsonObj.keySet().iterator();
@@ -249,6 +258,9 @@ public class DpmVrfController {
 	    	} else {
 	    		paramVO.setUserUpdateYn("01"); //수정
 	    	}
+	    	*/
+	        
+	        
 	    	paramVO.setUserConfirm("99");
 	    	
 	    	returnObj.put("errMsg", "success");
@@ -368,6 +380,7 @@ public class DpmVrfController {
     public void showFile(HttpServletRequest request, HttpServletResponse response) {
         
         String filename = request.getParameter("filename");
+        logger.info("filename:" + filename);
     	
     	if (filename == null) {
     		System.err.println("usage example: /show_file.jsp?filename=/tif/jpeg/1.tif");
@@ -410,7 +423,49 @@ public class DpmVrfController {
     }
     
     
-    
+    @RequestMapping(value = "/showPathFile.do")
+    public void showPathFile(HttpServletRequest request, HttpServletResponse response) {
+        
+        String filename = request.getParameter("filename");
+        logger.info("file path:" + filename);
+    	
+    	if (filename == null) {
+    		System.err.println("usage example: /show_file.jsp?filename=/tif/jpeg/1.tif");
+    		return;
+    	} else if (filename.indexOf("..") >= 0) {
+    		System.err.println("filename not allowed contains ..");
+    		return;
+    	}
+    	
+    	Path srcPath = Paths.get(filename);
+		if(Files.notExists(srcPath, LinkOption.NOFOLLOW_LINKS)) {
+			 /*
+	    	 String userDir = System.getProperty("user.dir");
+	         String filePath = String.format("%s/test.png", userDir);
+	         System.out.println("생성될 파일 : " + filePath);
+	    	
+	    	 CustomImage image = CustomImage.builder()
+		                .imageWidth(600)
+		                .imageHeight(600)
+		                .imageColor("#5CDB95")
+		                .build();
+	        image.converting(
+	        			filePath,
+		                CustomTextType.title.getText("ERROR"),
+		                //CustomTextType.title.getText("IMAGE ++"),
+		                //CustomTextType.title.getText("CONVERTING"),
+		                //CustomTextType.subtitle.getText("created by jogeum"),
+		                CustomTextType.content.getText("파일이 경로에 없습니다.")
+		                //CustomTextType.comment.getText("java 11 / lombok / awt / 나눔고딕")
+		        );
+	        Converter.getImage(filePath, response);
+	        */
+	        Converter.getImage(noFileImg, response);
+		} else {
+			//Converter.getImage(baseFolder + filename, response);
+			Converter.getImage(filename, response);
+		}
+    }
     
   //json을 받아 hashmap으로 변환하는 메소드
     public static Map<String, Object> jsonToMap(JSONObject json) throws Exception {

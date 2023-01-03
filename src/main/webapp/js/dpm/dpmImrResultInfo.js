@@ -58,6 +58,8 @@ var modDpmImrResultInfo = (function(){
 				{ label: 'm',  name: 'maskPrgStscTxt', align: 'left', width: '0px'},
 	            { label: 'u',  name: 'userConfirmTxt', align: 'left', width: '0px'},
 	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px'},
+	            { label: 'u3',  name: 'resultImgPath', align: 'left', width: '0px'},
+	            { label: 'u4',  name: 'imgPathOrg', align: 'left', width: '0px'},
 	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
 	            { label: '처리일자',     name: 'prcDt', 	   align: 'center', width: '70px'},
 	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
@@ -183,7 +185,7 @@ var modDpmImrResultInfo = (function(){
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
 		
 		//열 숨기기
-		$("#jqGrid").jqGrid("hideCol",["elementId","custId","contractId", "userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt"]);
+		$("#jqGrid").jqGrid("hideCol",["elementId","custId","contractId", "userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt", "resultImgPath", "imgPathOrg"]);
 	};
 		
     
@@ -310,8 +312,12 @@ $("#btnExcel").on("click", function() {
 function imrRadioSet(rowid) {
 		
 		var selRowData = $("#jqGrid").getRowData(rowid);
-		$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
-					
+		if(selRowData.imgPathOrg != null && selRowData.imgPathOrg != "" && selRowData.imgPathOrg != undefined) {
+			$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
+			//$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
+			$("#viwerIframe").get(0).contentWindow.viewerSetImg(encodeURI(selRowData.imgPathOrg));
+			setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 500);
+		}
 		
 		var intvisionImr = selRowData.intvisionImr;
 		if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {

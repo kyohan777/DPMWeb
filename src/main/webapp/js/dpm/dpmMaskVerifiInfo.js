@@ -49,6 +49,8 @@ var modDpmMaskVerifiInfo = (function(){
 				{ label: 'm',  name: 'maskPrgStscTxt', align: 'left', width: '0px'},
 	            { label: 'u',  name: 'userConfirmTxt', align: 'left', width: '0px'},
 	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px'},
+	            { label: 'u3',  name: 'resultImgPath', align: 'left', width: '0px'},
+	            { label: 'u4',  name: 'imgPathOrg', align: 'left', width: '0px'},
 	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
 	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
 	            { label: '탐지',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
@@ -135,19 +137,20 @@ var modDpmMaskVerifiInfo = (function(){
 				if(imrFPage == null || imrFPage == "undefined" || imrFPage == "") {
 					imrFPage = 1;
 				}
-				$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
-				$("#viwerIframe").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
-				setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 500);
 				
+				if(selRowData.imgPathOrg != null && selRowData.imgPathOrg != "" && selRowData.imgPathOrg != undefined) {
+					$("#viwerIframe").get(0).contentWindow.imrFirstPage = imrFPage;
+					$("#viwerIframe").get(0).contentWindow.viewerSetImg(encodeURI(selRowData.imgPathOrg));
+					setTimeout(() => $("#viwerIframe").get(0).contentWindow.scrollToSeq(imrFPage), 500);
+				}
 				
-				$("#viwerIframe2").get(0).contentWindow.imrFirstPage = imrFPage;
-				$("#viwerIframe2").get(0).contentWindow.viewerSetImg(selRowData.imgFileName);
-				setTimeout(() => $("#viwerIframe2").get(0).contentWindow.scrollToSeq(imrFPage), 500);
-				
+				if(selRowData.resultImgPath != null && selRowData.resultImgPath != "" && selRowData.resultImgPath != undefined) { 
+					$("#viwerIframe2").get(0).contentWindow.imrFirstPage = imrFPage;
+					$("#viwerIframe2").get(0).contentWindow.viewerSetImg(encodeURI(selRowData.resultImgPath));
+					setTimeout(() => $("#viwerIframe2").get(0).contentWindow.scrollToSeq(imrFPage), 500);
+				}
 				
 				$("#elementId").val(selRowData.elementId);
-				
-				
 				
 	        },
 	        //셀더블클릭 이벤트 - deprecated
@@ -177,7 +180,7 @@ var modDpmMaskVerifiInfo = (function(){
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
 		
 		//열 숨기기
-		$("#jqGrid").jqGrid("hideCol",["elementId", "userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt"]);
+		$("#jqGrid").jqGrid("hideCol",["elementId", "userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt", "resultImgPath", "imgPathOrg"]);
 	};
 		
 
@@ -188,6 +191,7 @@ var modDpmMaskVerifiInfo = (function(){
 	function selList() {
 		dataResetImr();
 		viwerIframe.src = '/sfview/viewer.jsp';
+		viwerIframe2.src = '/sfview/viewer.jsp';
 		
 		$("#jqGrid").jqGrid('clearGridData');
 		
@@ -302,22 +306,6 @@ $("#btnExcel").on("click", function() {
 
 function dataResetImr() {
 	$("#intvisionImr").val("");
-							
-	$("input:radio[name='A']").prop('checked', false);
-	$("input:radio[name='B']").prop('checked', false);
-	$("input:radio[name='C']").prop('checked', false);
-	$("input:radio[name='D']").prop('checked', false);
-	$("input:radio[name='E']").prop('checked', false);
-	
-	$("input:radio[name='TM_RECV_YN']").prop('checked', false);
-	$("input:radio[name='SMS_RECV_YN']").prop('checked', false);
-	$("input:radio[name='DM_RECV_YN']").prop('checked', false);
-	$("input:radio[name='EMAIL_RECV_YN']").prop('checked', false);
-	$("input:radio[name='TM_OFFER_YN']").prop('checked', false);
-	$("input:radio[name='EMAIL_OFFER_YN']").prop('checked', false);
-	$("input:radio[name='DM_OFFER_YN']").prop('checked', false);
-	$("input:radio[name='SMS_OFFER_YN']").prop('checked', false);
-		
 }
 
 
@@ -402,19 +390,6 @@ $("#btnRecover").on("click", function() {
 			console.log("name:" + item.name + ", value" + item.value);
 		});
 	}
-	
-	//var strImr = JSON.stringify(imrObj);
-	//console.log("strImr: ~~~" + strImr);				
-	/*
-	var objParam = {
-		"elementId" : $("#elementId").val(),
-		"intvisionImr" : $("#intvisionImr").val(),
-		"ayn" : strImr
-	};
-	*/
-	//var objParam = {
-	//	"intvisionImr" : strImr,
- 	//};
 	
 	// 확정처리
 	modAjax.request("/dpm/maskRecover.do", imrObj, {
