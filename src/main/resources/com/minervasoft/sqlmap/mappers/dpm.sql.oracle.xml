@@ -262,6 +262,13 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
      parameterType="com.minervasoft.backend.vo.CalibVerifiVo"
         resultType="com.minervasoft.backend.vo.CalibVerifiVo"
         >
+   	SELECT *
+	FROM
+	(
+  		SELECT TA.*
+     		,ROWNUM RNUM
+  		FROM
+  	( 
 		SELECT 
 			A.ID_NO,
 			A.CHRR_ID,
@@ -286,6 +293,10 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     	<if test='endPrcDt != null and endPrcDt !=""'>
     	AND TO_CHAR(A.IPDT_TIME,'YYYYMMDD') <![CDATA[<=]]> REPLACE(#{endPrcDt},'-','')
     	</if> 
+   ) TA             
+    WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+   )
+   WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1) 	
     </select>
     
      
