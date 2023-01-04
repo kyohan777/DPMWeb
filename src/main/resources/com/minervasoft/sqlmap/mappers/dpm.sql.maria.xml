@@ -32,15 +32,8 @@
         parameterType="com.minervasoft.backend.vo.StatisticsVO"
         resultType="com.minervasoft.backend.vo.StatisticsVO"
         >
-	SELECT *
-	FROM
-	(
-  		SELECT TA.*
-     		,ROWNUM RNUM
-  		FROM
-  	(   
       SELECT 
-		TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY/MM/DD') AS PRC_DT,    --기준일자(처리일자)
+		TO_CHAR(DATE_FORMAT(PRC_DT,'YYYYMMDD'),'YYYY/MM/DD') AS PRC_DT,    --기준일자(처리일자)
 		PRC_DT_CNT,							 						   --대상건수
 		PRC_CN,  --처리현황 > 정상
 		ERR_CN,														   --처리현황 > 오류
@@ -88,13 +81,11 @@
 	FROM TB_EM_IMR_DAILY_STATICS
 	WHERE MAJOR_CLASS ='TOTAL'
 	<if test='textPrcDt != null and textPrcDt !=""'>
-	AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
+	AND TO_CHAR(DATE_FORMAT(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
 	</if>
 	ORDER BY PRC_DT 
- 	) TA             
-    WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
- 	)
-	WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+ 	LIMIT  #{pageSize}
+	OFFSET #{startPageNumber}
     </select> 
     
     <!-- 일별 전체 cnt 값  -->
@@ -107,7 +98,7 @@
 		FROM TB_EM_IMR_DAILY_STATICS
 		WHERE MAJOR_CLASS ='TOTAL'
 		<if test='textPrcDt != null and textPrcDt !=""'>
-		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
+		AND TO_CHAR(DATE_FORMAT(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
 		</if>
     </select>
     
@@ -119,11 +110,11 @@
         SELECT 
 			COUNT(*) TOT_ROW_CNT
  		from(SELECT 
-				TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT
+				TO_CHAR(DATE_FORMAT(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT
 			FROM TB_EM_IMR_DAILY_STATICS
 			WHERE MAJOR_CLASS ='TOTAL'
 			<if test='textPrcDt != null and textPrcDt !=""'>
-			AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY') = REPLACE(#{textPrcDt},'-','')
+			AND TO_CHAR(DATE_FORMAT(PRC_DT,'YYYYMMDD'),'YYYY') = REPLACE(#{textPrcDt},'-','')
 			</if>
 		) T GROUP BY T.PRC_DT
     </select>
@@ -135,15 +126,8 @@
      parameterType="com.minervasoft.backend.vo.StatisticsVO"
         resultType="com.minervasoft.backend.vo.StatisticsVO"
         >
-SELECT *
-FROM
-	(
-  		SELECT TA.*
-     		,ROWNUM RNUM
-  		FROM
-  	(   
       SELECT 
-			TO_CHAR(TO_DATE(T.PRC_DT,'YYYYMM'),'YYYY/MM') 			    AS PRC_DT, 
+			TO_CHAR(DATE_FORMAT(T.PRC_DT,'YYYYMM'),'YYYY/MM') 			    AS PRC_DT, 
 			SUM(T.PRC_DT_CNT) 						 				    AS PRC_DT_CNT,
 			SUM(T.PRC_CN) 							 				    AS PRC_CN,
 			SUM(T.ERR_CN) 							 				    AS ERR_CN,
@@ -189,7 +173,7 @@ FROM
 			SUM(T.SMS_OFFER_Y) 							 	   			AS SMS_OFFER_Y,
 			SUM(T.SMS_OFFER_N) 							 	   			AS SMS_OFFER_N
  	from(SELECT 
-			TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT, 
+			TO_CHAR(DATE_FORMAT(PRC_DT,'YYYYMMDD'),'YYYYMM') AS PRC_DT, 
 			PRC_DT_CNT,							 						
 			PRC_CN,									
 			ERR_CN,														
@@ -224,14 +208,13 @@ FROM
 			FROM TB_EM_IMR_DAILY_STATICS
 		WHERE MAJOR_CLASS ='TOTAL'
 		<if test='textPrcDt != null and textPrcDt !=""'>
-		AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYY') = REPLACE(#{textPrcDt},'-','')
+		AND TO_CHAR(DATE_FORMAT(PRC_DT,'YYYYMMDD'),'YYYY') = REPLACE(#{textPrcDt},'-','')
 		</if>
 		ORDER BY PRC_DT  
 	) T GROUP BY T.PRC_DT
- ) TA             
- WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
- )
-WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+	LIMIT  #{pageSize}
+	OFFSET #{startPageNumber}
+ 
     </select> 
     
     
@@ -262,13 +245,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
      parameterType="com.minervasoft.backend.vo.CalibVerifiVo"
         resultType="com.minervasoft.backend.vo.CalibVerifiVo"
         >
-   	SELECT *
-	FROM
-	(
-  		SELECT TA.*
-     		,ROWNUM RNUM
-  		FROM
-  	( 
 		SELECT 
 			A.ID_NO,
 			A.CHRR_ID,
@@ -293,10 +269,8 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     	<if test='endPrcDt != null and endPrcDt !=""'>
     	AND TO_CHAR(A.IPDT_TIME,'YYYYMMDD') <![CDATA[<=]]> REPLACE(#{endPrcDt},'-','')
     	</if> 
-   ) TA             
-    WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
-   )
-   WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1) 	
+  		LIMIT  #{pageSize}
+		OFFSET #{startPageNumber}
     </select>
     
      
@@ -327,13 +301,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
      parameterType="com.minervasoft.backend.vo.UserManageVo"
         resultType="com.minervasoft.backend.vo.UserManageVo"
         >
-SELECT *
-FROM
-	(
-  		SELECT TA.*
-     		,ROWNUM RNUM
-  		FROM
-  	(   
      	SELECT 
     		ID_NO,
     		CHRR_ID,
@@ -362,10 +329,8 @@ FROM
     	AND UYN = #{useYn}
     	</if>
     	ORDER BY RG_DTM
- ) TA             
- WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
- )
-WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+ 		LIMIT  #{pageSize}
+		OFFSET #{startPageNumber}
     </select>
     
     <!-- 사용자 등록 -->
@@ -375,7 +340,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
         <![CDATA[
       	INSERT INTO TB_EM_PC_CHRR
 		(
-			ID_NO,
 			CHRR_ID, 
 			COMPANY_ID, 
 			CHRR_NM, 
@@ -389,7 +353,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		)
 		VALUES
 		(
-			TB_EM_PC_CHRR_SEQ.NEXTVAL,
 			#{chrrId}, 
 			#{companyId},
 			#{chrrNm},
@@ -438,13 +401,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
         parameterType="com.minervasoft.backend.vo.StatisticsVO"
         resultType="com.minervasoft.backend.vo.StatisticsVO"
         >
-	SELECT *
-	FROM
-	(
-  		SELECT TA.*
-     		,ROWNUM RNUM
-  		FROM
-  	(   
      	SELECT 
 			ELEMENTID AS ELEMENT_ID,
 			IMG_FILE_NAME ,
@@ -480,7 +436,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 				WHEN USER_UPDATE_YN = '02' THEN '유지'
 			ELSE '확인전' 
 			END AS USER_UPDATE_YN_TXT	
-			  
 		FROM TB_EM_IMR_MASK_OBJ
 		WHERE 1=1
 		AND MASK_PRG_STSC > 20
@@ -494,11 +449,9 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		<if test='contractId != null and contractId !=""'>
 			AND CONTRACT_ID = #{contractId}
 		</if>
-	ORDER BY PRC_DT 
- 	) TA             
-    WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
- 	)
-	WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+		ORDER BY PRC_DT 
+		LIMIT  #{pageSize}
+		OFFSET #{startPageNumber}
     </select> 
     
     <!-- 일일 처리 현황 전체 cnt 값  -->
@@ -646,7 +599,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     <insert id="insertViewReason" parameterType="com.minervasoft.backend.vo.CalibVerifiVo">
       	INSERT INTO TB_EM_IMR_QUERY_HISTORY 
 		(
-			ID_NO
 			, CHRR_ID
 			, PRC_DT
 			, ELEMENTID
@@ -657,7 +609,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		)
 		VALUES
 		(
-			TB_EM_IMR_QRY_HIST_SEQ.NEXTVAL,
 			#{chrrId}, 
 			TO_CHAR(SYSDATE, 'YYYYMMDD'),
 			#{elementId},

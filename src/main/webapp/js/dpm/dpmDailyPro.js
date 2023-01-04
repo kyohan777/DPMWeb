@@ -221,7 +221,8 @@ var modDpmDailyPro = (function(){
     	objParam.pageNumber = pageNumber;
     	objParam.pageSize	= pageSize;
     	objParam.totPageCnt	= Math.ceil(objParam.totRowCnt/pageSize);
-    	
+    	objParam.startPageNumber = (((pageNumber - 1) * pageSize) + 1);
+    	console.log("startPageNumber"+(((pageNumber - 1) * pageSize) + 1))
     	$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
     	$("#jqGrid").trigger('reloadGrid');    	
 		$("#spnTotCnt").text(totRowCnt);

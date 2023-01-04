@@ -17,6 +17,7 @@ public class CalibVerifiVo extends AbstractVO{
 	private Integer totPageCnt = 0;
 	private Integer totRowCnt  = 0;
 	private Integer pageSize   = 0;
+	private Integer startPageNumber = 0;
 	
 		
 	public String getContractId() {
@@ -115,6 +116,12 @@ public class CalibVerifiVo extends AbstractVO{
 	}
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
+	}
+	public Integer getStartPageNumber() {
+		return startPageNumber;
+	}
+	public void setStartPageNumber(Integer startPageNumber) {
+		this.startPageNumber = startPageNumber;
 	}
 	
 	

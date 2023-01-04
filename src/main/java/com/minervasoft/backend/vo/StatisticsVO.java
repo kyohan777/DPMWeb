@@ -70,6 +70,7 @@ public class StatisticsVO extends AbstractVO{
 	private Integer totPageCnt = 0;
 	private Integer totRowCnt  = 0;
 	private Integer pageSize   = 0;
+	private Integer startPageNumber = 0;
 	private Integer fstImrPage  = 0;
 	private String  chgEno = "";
 	private String  custId = "";
@@ -563,6 +564,12 @@ public class StatisticsVO extends AbstractVO{
 	public void setEdPrcDt(String edPrcDt) {
 		this.edPrcDt = edPrcDt;
 	}
+	public Integer getStartPageNumber() {
+		return startPageNumber;
+	}
+	public void setStartPageNumber(Integer startPageNumber) {
+		this.startPageNumber = startPageNumber;
+	}
 	@Override
 	public String toString() {
 		return "StatisticsVO [prcDt=" + prcDt + ", textPrcDt=" + textPrcDt + ", prcDtCnt=" + prcDtCnt + ", prcCn="
@@ -583,12 +590,12 @@ public class StatisticsVO extends AbstractVO{
 				+ ", emailRecvYn=" + emailRecvYn + ", tmOfferYn=" + tmOfferYn + ", dmOfferYn=" + dmOfferYn
 				+ ", emailOfferYn=" + emailOfferYn + ", smsOfferYn=" + smsOfferYn + ", intvisionImr=" + intvisionImr
 				+ ", cgnRzt=" + cgnRzt + ", pageNumber=" + pageNumber + ", totPageCnt=" + totPageCnt + ", totRowCnt="
-				+ totRowCnt + ", pageSize=" + pageSize + ", fstImrPage=" + fstImrPage + ", chgEno=" + chgEno
-				+ ", custId=" + custId + ", contractId=" + contractId + ", maskPrgStscTxt=" + maskPrgStscTxt
-				+ ", userConfirmTxt=" + userConfirmTxt + ", userUpdateYnTxt=" + userUpdateYnTxt + ", resultImgPath="
-				+ resultImgPath + ", stPrcDt=" + stPrcDt + ", edPrcDt=" + edPrcDt + "]";
+				+ totRowCnt + ", pageSize=" + pageSize + ", startPageNumber=" + startPageNumber + ", fstImrPage="
+				+ fstImrPage + ", chgEno=" + chgEno + ", custId=" + custId + ", contractId=" + contractId
+				+ ", maskPrgStscTxt=" + maskPrgStscTxt + ", userConfirmTxt=" + userConfirmTxt + ", userUpdateYnTxt="
+				+ userUpdateYnTxt + ", resultImgPath=" + resultImgPath + ", stPrcDt=" + stPrcDt + ", edPrcDt=" + edPrcDt
+				+ ", imgPathOrg=" + imgPathOrg + "]";
 	}
-	
 	
 	
 }

@@ -24,6 +24,7 @@ public class UserManageVo  extends AbstractVO{
 	private Integer totPageCnt = 0;
 	private Integer totRowCnt  = 0;
 	private Integer pageSize   = 0;
+	private Integer startPageNumber = 0;
 	private String useYn="";
 	public String getChrrId() {
 		return chrrId;
@@ -168,6 +169,12 @@ public class UserManageVo  extends AbstractVO{
 	}
 	public void setUseYn(String useYn) {
 		this.useYn = useYn;
+	}
+	public Integer getStartPageNumber() {
+		return startPageNumber;
+	}
+	public void setStartPageNumber(Integer startPageNumber) {
+		this.startPageNumber = startPageNumber;
 	}
 	
 
