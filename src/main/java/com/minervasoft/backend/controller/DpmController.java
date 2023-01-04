@@ -96,6 +96,7 @@ public class DpmController {
         return response;
     }    
     
+    //초기 비번 : admin - 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
     
 //    @RequestMapping(value = "/login/getUserInfoSSO.do")
 //    public String getUserInfoSSO(ChrrVO paramVO, HttpServletRequest request, ModelMap modelMap) {
