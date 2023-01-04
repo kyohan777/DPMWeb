@@ -35,7 +35,7 @@
       SELECT 
 		TO_CHAR(PRC_DT,'YYYY/MM/DD') AS PRC_DT,   
 		PRC_DT_CNT,							 						   
-		PRC_CN,  --처리현황 > 정상
+		PRC_CN,  
 		ERR_CN,														   
 		CASE WHEN ERR_CN = 0 THEN '0.0%'
 			 WHEN PRC_CN = 0 THEN '0.0%'
@@ -127,7 +127,7 @@
         resultType="com.minervasoft.backend.vo.StatisticsVO"
         >
       SELECT 
-			TO_CHAR(DATE_FORMAT(T.PRC_DT,'YYYYMM'),'YYYY/MM') 			    AS PRC_DT, 
+			T.PRC_DT												    AS PRC_DT, 
 			SUM(T.PRC_DT_CNT) 						 				    AS PRC_DT_CNT,
 			SUM(T.PRC_CN) 							 				    AS PRC_CN,
 			SUM(T.ERR_CN) 							 				    AS ERR_CN,
@@ -173,7 +173,7 @@
 			SUM(T.SMS_OFFER_Y) 							 	   			AS SMS_OFFER_Y,
 			SUM(T.SMS_OFFER_N) 							 	   			AS SMS_OFFER_N
  	from(SELECT 
-			TO_CHAR(PRC_DT'YYYYMM') AS PRC_DT, 
+			TO_CHAR(PRC_DT,'YYYY/MM') AS PRC_DT, 
 			PRC_DT_CNT,							 						
 			PRC_CN,									
 			ERR_CN,														

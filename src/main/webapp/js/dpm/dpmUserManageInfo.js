@@ -129,6 +129,7 @@ var modDpmUserManageInfo = (function(){
 				$("#pwdTr").hide();
 				$("#update").show();
 				$("#delete").show();
+				$("#chgPwd").show();
         		layer_popup('#layer');
 	        },
 	        //셀더블클릭 이벤트 - deprecated
@@ -206,7 +207,7 @@ var modDpmUserManageInfo = (function(){
     	objParam.pageNumber = pageNumber;
     	objParam.pageSize	= pageSize;
     	objParam.totPageCnt	= Math.ceil(objParam.totRowCnt/pageSize);
-    	objParam.startPageNumber = (((pageNumber - 1) * pageSize) + 1);
+    	objParam.startPageNumber = (((pageNumber - 1) * pageSize));
     	$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
     	$("#jqGrid").trigger('reloadGrid');    	
 		$("#spnTotCnt").text(totRowCnt);
@@ -304,6 +305,7 @@ $("#btnExcel").on("click", function() {
 		dataReSet();
 		$("#insert").show();
 		$("#pwdTr").show();
+		$("#chgPwd").hide();
 		$("#update").hide();
 		$("#delete").hide();
 		$(".join_form #newChrrId").prop('disabled',false)
