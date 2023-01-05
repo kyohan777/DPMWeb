@@ -53,7 +53,7 @@ var modDpmDailyPro = (function(){
 	            { label: '수집-메일', 		 name: 'emailRecvYn',   width:'80',   align: 'center',sortable: false },
 	            { label: '제공-전화', 		 name: 'tmOfferYn',     width:'80',   align: 'center',sortable: false },
 	            { label: '제공-DM', 		 name: 'dmOfferYn',     width:'80',   align: 'center',sortable: false },
-	            { label: '제공-메일', 		 name: 'emailOfferYn',  width:'80',   align: 'center'},
+	            { label: '제공-메일', 		 name: 'emailOfferYn',  width:'80',   align: 'center',sortable: false },
 	            { label: '',  			 name: 'maskPrgStscTxt',width:'0',    align: 'left', hidden:true},
 	            { label: '',  			 name: 'userConfirmTxt',width:'0',    align: 'left', hidden:true},
 	        ],
