@@ -45,26 +45,27 @@ var modDpmCalibVerifiInfo = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-				{ label: '엘리ID',    name: 'elementId', 	   align: 'center', width:'0px'},
-				{ label: 'm',  name: 'maskPrgStscTxt', align: 'left', width: '0px'},
-	            { label: 'u',  name: 'userConfirmTxt', align: 'left', width: '0px'},
-	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px'},
-	            { label: 'u3',  name: 'resultImgPath', align: 'left', width: '0px'},
-	            { label: 'u4',  name: 'imgPathOrg', align: 'left', width: '0px'},
-	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px'},
+				{ label: '엘리먼트ID',    name: 'elementId', 	   align: 'center', width:'150px'},
+				{ label: 'm',  name: 'maskPrgStscTxt', align: 'left', width: '0px', hidden: true},
+	            { label: 'u',  name: 'userConfirmTxt', align: 'left', width: '0px', hidden: true},
+	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px', hidden: true},
+	            { label: 'u3',  name: 'resultImgPath', align: 'left', width: '0px', hidden: true},
+	            { label: 'u4',  name: 'imgPathOrg', align: 'left', width: '0px', hidden: true},
+	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px', hidden: true},
 	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
 	            { label: '최.탐',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
 	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px'},
 	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'},
+	            { label: 'bprImr',  name: 'bprImr',    align: 'left', width: '200px'},
 	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1250px'}
 	        ],
 	       
 	        height: gridHeight,
 	        autowidth:true,
-	        rowNum: 100,
+	        rowNum: 50,
 	        rownumbers: true,
 	        sortable : true,
-			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
+			//loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
@@ -85,10 +86,8 @@ var modDpmCalibVerifiInfo = (function(){
 	        	total: function(data) {return data.totPageCnt},	//전체 페이지 수
 	        	records: function(data) {return data.totRowCnt}	//전체 데이터 수
 	        },
-	        //로드완료 시 (조회 시 reloadGrid 후에도 호출)  
-	        loadComplete: function() {
-	        	
-	        },
+	        
+	        //
 	        
 	        //페이지 이벤트
 	        onPaging: function(action) {
@@ -96,6 +95,8 @@ var modDpmCalibVerifiInfo = (function(){
 	        	var lastPage = $("#jqGrid").getGridParam("lastpage");
 	        	var userPage = $("#jqGridPager").find("input.ui-pg-input").val();
 	        	var pageSize = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
+	        	
+	        	console.log("pageSize:" + pageSize + ", curPage:" + curPage + ", lastPage:" + lastPage);
 
 	        	switch(action.split("_")[0]) {
 	        		case "next" :	//다음페이지
@@ -162,7 +163,7 @@ var modDpmCalibVerifiInfo = (function(){
 		modComm.addGridColEl("jqGrid", "gridLabelList", "gridNameList", "gridWidthList", "gridAlignList");
 		
 		//열 숨기기
-		$("#jqGrid").jqGrid("hideCol",["elementId", "userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt", "resultImgPath", "imgPathOrg"]);
+		//$("#jqGrid").jqGrid("hideCol",["userUpdateYnTxt", "maskPrgStscTxt", "userConfirmTxt", "resultImgPath", "imgPathOrg"]);
 	};
 		
 
@@ -210,6 +211,7 @@ var modDpmCalibVerifiInfo = (function(){
 			success: function(data) {				
 				if(!modComm.isEmpty(data) && data.rsYn == "Y" && data.hasOwnProperty("totRowCnt")) {
 					totRowCnt = data.totRowCnt;	
+					console.log("totRowCnt:" + totRowCnt);
 				}
 			},
             error: function(response) {
@@ -226,6 +228,7 @@ var modDpmCalibVerifiInfo = (function(){
     	objParam.pageNumber = pageNumber;
     	objParam.pageSize	= pageSize;
     	objParam.totPageCnt	= Math.ceil(objParam.totRowCnt/pageSize);
+    	//objParam.startPageNumber = (((pageNumber - 1) * pageSize) + 1);
     	objParam.startPageNumber = (((pageNumber - 1) * pageSize));
     	
     	console.log("objParam.pageNumber:" + objParam.pageNumber + ", objParam.pageSize:" + objParam.pageSize + ", objParam.totPageCnt:" + objParam.totPageCnt + ", objParam.startPageNumber:" + objParam.startPageNumber);
@@ -465,12 +468,9 @@ $(document).ready(function() {
 	$("#box-right").height($("#gridContainer").height() - 10);
 	$("#box-right-1").height($("#gridContainer").height() - 10);
 	
-	//$("#jqGrid").jqGrid('setFrozenColumns');
 	
-	//$("#viwerIframe").get(0).contentWindow.viewerSetHeight($("#gridContainer").height());
-	
-	//$('iframe#embedded.embedded').height($("#gridContainer").height());
-	
+	$("#BPR_B").text("Y");
+	$("#IMR_B").text("N");
 	
 });
 
@@ -510,4 +510,4 @@ String.prototype.trim = function() {
 }
 
 
-//# sourceURL=dpmCalibVerifiInfo.js
+//# sourceURL=dpmCalibVerifiInfoKBC.js

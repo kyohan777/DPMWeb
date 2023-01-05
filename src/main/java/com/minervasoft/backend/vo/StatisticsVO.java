@@ -82,7 +82,14 @@ public class StatisticsVO extends AbstractVO{
 	private String  stPrcDt="";
 	private String  edPrcDt="";
 	private String  imgPathOrg="";
+	private String  bprImr="";
 	
+	public String getBprImr() {
+		return bprImr;
+	}
+	public void setBprImr(String bprImr) {
+		this.bprImr = bprImr;
+	}
 	public String getImgPathOrg() {
 		return imgPathOrg;
 	}

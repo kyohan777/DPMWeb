@@ -218,7 +218,9 @@ public class WebController {
             e.printStackTrace();
         }
         
-        return "dpm/dpmCalibVerifiInfo";
+        //return "dpm/dpmCalibVerifiInfo";
+        //KB 캐피탈 전용
+        return "dpm/dpmCalibVerifiInfoKBC"; 
     }
     
     

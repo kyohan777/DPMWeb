@@ -82,6 +82,7 @@ public class DpmVrfController {
             response.setSelList(list);
             response.setPageNumber(paramVO.getPageNumber());
             response.setTotPageCnt(paramVO.getTotPageCnt());
+            //response.setTotPageCnt(2);
             response.setTotRowCnt(paramVO.getTotRowCnt());
             
         } catch(Exception e) {
