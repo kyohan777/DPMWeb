@@ -83,6 +83,8 @@ public class StatisticsVO extends AbstractVO{
 	private String  edPrcDt="";
 	private String  imgPathOrg="";
 	private String  bprImr="";
+	private String  columnName="";
+	private String  sortOrder="";
 	
 	public String getBprImr() {
 		return bprImr;
@@ -577,6 +579,18 @@ public class StatisticsVO extends AbstractVO{
 	public void setStartPageNumber(Integer startPageNumber) {
 		this.startPageNumber = startPageNumber;
 	}
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public String getSortOrder() {
+		return sortOrder;
+	}
+	public void setSortOrder(String sortOrder) {
+		this.sortOrder = sortOrder;
+	}
 	@Override
 	public String toString() {
 		return "StatisticsVO [prcDt=" + prcDt + ", textPrcDt=" + textPrcDt + ", prcDtCnt=" + prcDtCnt + ", prcCn="
@@ -601,7 +615,8 @@ public class StatisticsVO extends AbstractVO{
 				+ fstImrPage + ", chgEno=" + chgEno + ", custId=" + custId + ", contractId=" + contractId
 				+ ", maskPrgStscTxt=" + maskPrgStscTxt + ", userConfirmTxt=" + userConfirmTxt + ", userUpdateYnTxt="
 				+ userUpdateYnTxt + ", resultImgPath=" + resultImgPath + ", stPrcDt=" + stPrcDt + ", edPrcDt=" + edPrcDt
-				+ ", imgPathOrg=" + imgPathOrg + "]";
+				+ ", imgPathOrg=" + imgPathOrg + ", bprImr=" + bprImr + ", columnName=" + columnName + ", sortOrder="
+				+ sortOrder + "]";
 	}
 	
 }
