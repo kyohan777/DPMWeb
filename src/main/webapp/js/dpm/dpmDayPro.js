@@ -75,7 +75,7 @@ var modDpmDayPro = (function(){
 	       
 	        height: gridHeight,
 	        autowidth:true,
-	        rowNum: 10,
+	        rowNum: 100,
 	        sortable : true,
 			loadonce : false, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        rownumbers: true,
@@ -87,7 +87,7 @@ var modDpmDayPro = (function(){
 	        multiselect: false,
 	        //jqGrid 추가옵션영역
 	        pager: $("#jqGridPager"),
-	        rowList: [10,50,100,200,300,500,1000],
+	        rowList: [50,100,200,300,500,1000],
 	        //jsonReader 영역
 	        jsonReader : {
 	        	repeatitems: false,

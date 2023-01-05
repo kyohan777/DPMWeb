@@ -91,8 +91,14 @@
 	AND TO_CHAR(TO_DATE(PRC_DT,'YYYYMMDD'),'YYYYMM') = REPLACE(#{textPrcDt},'-','')
 	</if>
 	ORDER BY PRC_DT 
- 	) TA             
+ 	) TA
     WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+    <if test='columnName !="" and sortOrder !=""'>
+	ORDER BY TA.${columnName} ${sortOrder} 
+	</if>
+	<if test='columnName =="" and sortOrder ==""'>
+	ORDER BY TA.PRC_DT 
+	</if>      
  	)
 	WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     </select> 
@@ -230,6 +236,12 @@ FROM
 	) T GROUP BY T.PRC_DT
  ) TA             
  WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+ <if test='columnName !="" and sortOrder !=""'>
+ ORDER BY TA.${columnName} ${sortOrder} 
+</if>
+<if test='columnName =="" and sortOrder ==""'>
+	ORDER BY TA.PRC_DT  
+</if>
  )
 WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     </select> 
@@ -295,6 +307,9 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     	</if> 
    ) TA             
     WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+    <if test='columnName !="" and sortOrder !=""'>
+	ORDER BY TA.${columnName} ${sortOrder} 
+	</if> 
    )
    WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1) 	
     </select>
@@ -364,6 +379,12 @@ FROM
     	ORDER BY RG_DTM
  ) TA             
  WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+ <if test='columnName !="" and sortOrder !=""'>
+ ORDER BY TA.${columnName} ${sortOrder} 
+ </if>
+ <if test='columnName =="" and sortOrder ==""'>
+ ORDER BY TA.RG_DT 
+ </if>
  )
 WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
     </select>
@@ -494,7 +515,9 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		<if test='contractId != null and contractId !=""'>
 			AND CONTRACT_ID = #{contractId}
 		</if>
-	ORDER BY PRC_DT 
+	<if test='columnName !="" and sortOrder !=""'>
+	ORDER BY ${columnName} ${sortOrder} 
+	</if>
  	) TA             
     WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
  	)
