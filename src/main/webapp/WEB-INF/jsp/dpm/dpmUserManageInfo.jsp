@@ -22,6 +22,8 @@
                    <div class="smbc-main-content-wrap" id= "contentPage">
                         <div class="smbc-top-search-wrap">
                         <form id="frmUserManageInfo" role="form"  method="post"> 
+                        	<input id="columnName" type="hidden" name="columnName">
+							<input id="sortOrder" type="hidden" name="sortOrder">
                             <ul class="smbc-top-search">
                              	<li>
                                     <input type="text" id="chrrId" name="chrrId" class="input-st01" style ="background: #E3FFF0; color : black" placeholder="담당자 ID">

@@ -34,26 +34,26 @@ var modDpmDailyPro = (function(){
 	        url: '/dpm/getDpmDailyProInfo.do',
 	        mtype: "POST",
 	        datatype: "local",
-	        postData: {"textPrcDt" : $("#textPrcDt").val()},
+	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '엘리먼트 ID', 	 name: 'elementId',     width:'80',	  align: 'left',  sorttype:'text'},
-	            { label: '파일명',         name: 'imgFileName',   width:'160',  align: 'left',  sorttype:'text'},
-	            { label: '포맷',          name: 'imgFormatType', width:'65',   align: 'center',sorttype:'text'},
-	            { label: '상태코드', 		 name: 'maskPrgStsc',   width:'65',   align: 'center',sorttype:'text'},
-	            { label: '사용자 확인',     name: 'userConfirm',   width:'80',   align: 'center',sorttype:'text'},	  
-	            { label: '금융안내', 	  	 name: 'ayn', 		    width:'80',	  align: 'center',sorttype:'text'},
-	            { label: '금융이외', 		 name: 'byn', 		    width:'80',	  align: 'center',sorttype:'text'},
-	            { label: '보험제공', 	  	 name: 'cyn', 		    width:'80',	  align: 'center',sorttype:'text'},
-	            { label: '딜러제공', 		 name: 'dyn', 		    width:'80',   align: 'center',sorttype:'text'},
-	            { label: 'KB제공', 		 name: 'eyn', 		    width:'80',   align: 'center',sorttype:'text'},
-	            { label: '수집-전화', 		 name: 'tmRecvYn', 	    width:'80',   align: 'center',sorttype:'text'},
-	            { label: '수집-문자', 		 name: 'smsRecvYn',     width:'80',   align: 'center',sorttype:'text'},
-	            { label: '수집-DM', 		 name: 'dmRecvYn', 	    width:'80',   align: 'center',sorttype:'text'},
-	            { label: '수집-메일', 		 name: 'emailRecvYn',   width:'80',   align: 'center',sorttype:'text'},
-	            { label: '제공-전화', 		 name: 'tmOfferYn',     width:'80',   align: 'center',sorttype:'text'},
-	            { label: '제공-DM', 		 name: 'dmOfferYn',     width:'80',   align: 'center',sorttype:'text'},
-	            { label: '제공-메일', 		 name: 'emailOfferYn',  width:'80',   align: 'center',sorttype:'text'},
+	            { label: '엘리먼트 ID', 	 name: 'elementId',    index:'ELEMENTID'      , width:'80',	 align: 'left'},
+	            { label: '파일명',         name: 'imgFileName',  index:'IMG_FILE_NAME'  , width:'160', align: 'left'},
+	            { label: '포맷',          name: 'imgFormatType',index:'IMG_FORMAT_TYPE',width:'65',   align: 'center'},
+	            { label: '상태코드', 		 name: 'maskPrgStsc',  index:'MASK_PRG_STSC'  , width:'65',  align: 'center'},
+	            { label: '사용자 확인',     name: 'userConfirm',  index:'USER_CONFIRM'   , width:'80',  align: 'center'},	  
+	            { label: '금융안내', 	  	 name: 'ayn', 		    width:'80',	  align: 'center',sortable: false },
+	            { label: '금융이외', 		 name: 'byn', 		    width:'80',	  align: 'center',sortable: false },
+	            { label: '보험제공', 	  	 name: 'cyn', 		    width:'80',	  align: 'center',sortable: false },
+	            { label: '딜러제공', 		 name: 'dyn', 		    width:'80',   align: 'center',sortable: false },
+	            { label: 'KB제공', 		 name: 'eyn', 		    width:'80',   align: 'center',sortable: false },
+	            { label: '수집-전화', 		 name: 'tmRecvYn', 	    width:'80',   align: 'center',sortable: false },
+	            { label: '수집-문자', 		 name: 'smsRecvYn',     width:'80',   align: 'center',sortable: false },
+	            { label: '수집-DM', 		 name: 'dmRecvYn', 	    width:'80',   align: 'center',sortable: false },
+	            { label: '수집-메일', 		 name: 'emailRecvYn',   width:'80',   align: 'center',sortable: false },
+	            { label: '제공-전화', 		 name: 'tmOfferYn',     width:'80',   align: 'center',sortable: false },
+	            { label: '제공-DM', 		 name: 'dmOfferYn',     width:'80',   align: 'center',sortable: false },
+	            { label: '제공-메일', 		 name: 'emailOfferYn',  width:'80',   align: 'center'},
 	            { label: '',  			 name: 'maskPrgStscTxt',width:'0',    align: 'left', hidden:true},
 	            { label: '',  			 name: 'userConfirmTxt',width:'0',    align: 'left', hidden:true},
 	        ],
@@ -63,14 +63,13 @@ var modDpmDailyPro = (function(){
 	        rowNum: 100,
 	        rownumbers: true,
 	        sortable : true,
-			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
+			loadonce : false, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
 	        shrinkToFit:false,
 	        forceFit:true,
 	        multiselect: false,
-	        
 	        //jqGrid 추가옵션영역
 	        pager: $("#jqGridPager"),
 	        rowList: [50,100,200,300,500,1000],
@@ -78,7 +77,7 @@ var modDpmDailyPro = (function(){
 	        jsonReader : {
 	        	repeatitems: false,
 	        	root: function(data) {
-	        		if(data.rsYn == "N" && !modComm.isEmpty(data.rsMsg)) alert(data.rsMsg);
+					if(data.rsYn == "N" && !modComm.isEmpty(data.rsMsg)) alert(data.rsMsg);
 	        		return data.selList;
 	        	},
 	        	page: function(data) {return data.pageNumber},	//현재 페이지 번호
@@ -89,6 +88,13 @@ var modDpmDailyPro = (function(){
 	        loadComplete: function() {
 	        	
 	        },
+	        onSortCol: function(columnName, columnIndex, sortOrder) {
+    			var pageNumber = $(".ui-pg-input").val();
+				var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
+    			$('#columnName').val(columnName);
+    			$('#sortOrder').val(sortOrder);
+    			selListPage(pageNumber,pageSize);
+			},
 	        //페이지 이벤트
 	        onPaging: function(action) {
 	        	var curPage  = $("#jqGrid").getGridParam("page");
@@ -138,16 +144,6 @@ var modDpmDailyPro = (function(){
 	        ondblClickRow: function(rowid, iRow, iCol) {
 	        },
 	        loadComplete: function() {
-			    var ids = $("#jqGrid").jqGrid('getDataIDs');
-			    for (var i=0;i<ids.length;i++) {
-			        var id=ids[i];
-			        var rowData = $("#jqGrid").jqGrid('getRowData',id);
-		        	
-		        	//$("#testJqGrid").jqGrid('setCell', rowid, colname, nData, styleObj, cellAttirbuteObj, forceUpdate);
-				    $("#jqGrid").jqGrid('setCell', id, 'maskPrgStsc', "", "", {title: rowData.maskPrgStscTxt});
-				    $("#jqGrid").jqGrid('setCell', id, 'userConfirm', "", "", {title: rowData.userConfirmTxt});
-				    
-			    }
 			}
 	        
 		});
@@ -188,9 +184,18 @@ var modDpmDailyPro = (function(){
 			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='18' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
+			$("#columnName").val("");
+			$("#sortOrder").val("");
+			var pageNumber = 1;
+			var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
         	objParam.totRowCnt	= totRowCnt;
-			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});			
-			selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
+    		objParam.pageNumber = pageNumber;
+    		objParam.pageSize	= pageSize;
+    		objParam.totPageCnt	= Math.ceil(totRowCnt/pageSize);
+    		objParam.startPageNumber = (((pageNumber - 1) * pageSize));
+			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
+			$("#jqGrid").trigger('reloadGrid');    				
+			//selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
 		}
 	
 	};
@@ -216,16 +221,17 @@ var modDpmDailyPro = (function(){
     /**
 	 * 마스터 페이징조회
 	 */ 	
-	function selListPage(pageNumber, pageSize, selIdx) {		
+	function selListPage(pageNumber, pageSize) {
 		var objParam = $("#jqGrid").getGridParam("postData");    	
     	objParam.pageNumber = pageNumber;
     	objParam.pageSize	= pageSize;
     	objParam.totPageCnt	= Math.ceil(objParam.totRowCnt/pageSize);
     	objParam.startPageNumber = (((pageNumber - 1) * pageSize));
-    	console.log("startPageNumber"+(((pageNumber - 1) * pageSize) + 1))
+    	objParam.columnName = $("#columnName").val();
+    	objParam.sortOrder = $("#sortOrder").val();
     	$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
     	$("#jqGrid").trigger('reloadGrid');    	
-		$("#spnTotCnt").text(totRowCnt);
+		//$("#spnTotCnt").text(totRowCnt);
 
     			
 	};	

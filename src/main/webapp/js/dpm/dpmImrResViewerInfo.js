@@ -42,20 +42,20 @@ var modDpmImrResViewerInfo = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '열람자 ID',    name: 'chrrId',    	align: 'center', width :100},
-	            { label: '성명', 	       name: 'chrrNm', 	    align: 'center', width :100},
-	            { label: '소속', 		   name: 'deptnm',    	align: 'center', width :100},
-	            { label: '엘리먼트 ID',  name: 'elementId',    align: 'left',   width :110},
-	            { label: '고객번호', 	   name: 'custId',      align: 'center', width :110},
-	            { label: '계약번호', 	   name: 'contractId',  align: 'center', width :110},
-	            { label: '조회 일자', 	   name: 'prcDt',   	align: 'center', width :100},	  
-	            { label: '조회시간', 	   name: 'prcTm',       align: 'center', width :80},
-	            { label: '조회 사유', 	   name: 'queryReason', align: 'left', width :600}
+	            { label: '열람자 ID',    name: 'chrrId',    	index:'CHRR_ID',	 align: 'center', width :100},
+	            { label: '성명', 	       name: 'chrrNm', 	    index:'CHRR_NM',	 align: 'center', width :100},
+	            { label: '소속', 		   name: 'deptnm',    	index:'DEPTNM',		 align: 'center', width :100},
+	            { label: '엘리먼트 ID',  name: 'elementId',   index:'ELEMENT_ID',    align: 'left',   width :110},
+	            { label: '고객번호', 	   name: 'custId',      index:'CUST_ID', 	 align: 'center', width :110},
+	            { label: '계약번호', 	   name: 'contractId',  index:'CONTRACT_ID', align: 'center', width :110},
+	            { label: '조회 일자', 	   name: 'prcDt',   	index:'PRC_DT',		 align: 'center', width :100},	  
+	            { label: '조회시간', 	   name: 'prcTm',       index:'PRC_TM',		 align: 'center', width :80},
+	            { label: '조회 사유', 	   name: 'queryReason', index:'QUERT_REASON',align: 'left', width :600}
 	        ],
 	       
 	        height: gridHeight,
 	        sortable : true,
-			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
+			loadonce : false, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        autowidth:true,
 	        rowNum: 100,
 	        rownumbers: true,
@@ -83,6 +83,13 @@ var modDpmImrResViewerInfo = (function(){
 	        loadComplete: function() {
 	        	
 	        },
+	        onSortCol: function(columnName, columnIndex, sortOrder) {
+    			var pageNumber = $(".ui-pg-input").val();
+				var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
+    			$('#columnName').val(columnName);
+    			$('#sortOrder').val(sortOrder);
+    			selListPage(pageNumber,pageSize);
+			},
 	        
 	        //페이지 이벤트
 	        onPaging: function(action) {
@@ -171,9 +178,18 @@ var modDpmImrResViewerInfo = (function(){
 			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='9' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
+			$("#columnName").val("");
+			$("#sortOrder").val("");
+        	var pageNumber = 1;
+			var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
         	objParam.totRowCnt	= totRowCnt;
-			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});			
-			selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
+    		objParam.pageNumber = pageNumber;
+    		objParam.pageSize	= pageSize;
+    		objParam.totPageCnt	= Math.ceil(totRowCnt/pageSize);
+    		objParam.startPageNumber = (((pageNumber - 1) * pageSize));
+			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
+			$("#jqGrid").trigger('reloadGrid');    					
+			//selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
 		}
 	
 	};
@@ -205,9 +221,11 @@ var modDpmImrResViewerInfo = (function(){
     	objParam.pageSize	= pageSize;
     	objParam.totPageCnt	= Math.ceil(objParam.totRowCnt/pageSize);
     	objParam.startPageNumber = (((pageNumber - 1) * pageSize) + 1);
+    	objParam.columnName = $("#columnName").val();
+    	objParam.sortOrder  = $("#sortOrder").val();
     	$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
     	$("#jqGrid").trigger('reloadGrid');    	
-		$("#spnTotCnt").text(totRowCnt);
+		//$("#spnTotCnt").text(totRowCnt);
 	};	
 	
 	

@@ -35,49 +35,49 @@ var modDpmDayPro = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '년/월/일',     name: 'prcDt',    	  sorttype:'text',width: 80,align: 'center'},
-	            { label: '대상(A)', 	   name: 'prcDtCnt', 	  sorttype:'int', width: 80,align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '정상(B)', 	   name: 'prcCn',    	  sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '오류(C)', 	   name: 'errCn',    	  sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '오류율', 	   name: 'errRat',   	  sorttype:'int', width: 55, align: 'right'},
-	            { label: '처리율', 	   name: 'prcRat',        sorttype:'int', width: 55, align: 'right'},	  
-	            { label: '검증', 	   	   name: 'verifyCn',      sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},	  
-	            { label: '수정', 	       name: 'verifyUpdateCn',sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '수정율', 	   name: 'verifyUpdateRat',sorttype:'int', width: 55, align: 'right'},
-	            { label: '동의', 	  	   name: 'ay', 		   	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'an', 		  	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'by', 		   	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'bn',         	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 	  	   name: 'cy', 		   	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'cn', 		   	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'dy', 		      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'dn', 		      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'ey', 		      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'en', 		      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'tmRecvY', 	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'tmRecvN', 	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'smsRecvY',      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'smsRecvN',      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'dmRecvY', 	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'dmRecvN', 	  sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'emailRecvY',    sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'emailRecvN',    sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'tmOfferY',      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'tmOfferN',      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'dmOfferY',      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'dmOfferN',      sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'emailOfferY',   sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'emailOfferN',   sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '동의', 		   name: 'smsOfferY',     sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '미동의', 	   name: 'smsOfferN',     sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }}
+	            { label: '년/월/일',     name: 'prcDt',    	  index:'PRC_DT',		sorttype:'text',width: 80,align: 'center'},
+	            { label: '대상(A)', 	   name: 'prcDtCnt', 	  index:'PRC_DT_CNT',	sorttype:'int', width: 80,align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '정상(B)', 	   name: 'prcCn',    	  index:'PRC_CN',		sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '오류(C)', 	   name: 'errCn',    	  index:'ERR_CN',		sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '오류율', 	   name: 'errRat',   	  index:'ERR_RAT',		sorttype:'int', width: 55, align: 'right'},
+	            { label: '처리율', 	   name: 'prcRat',        index:'PRC_RAT',		sorttype:'int', width: 55, align: 'right'},	  
+	            { label: '검증', 	   	   name: 'verifyCn',      index:'VERIFY_CN', 	sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},	  
+	            { label: '수정', 	       name: 'verifyUpdateCn',index:'VERIFY_UPDATE_CN',sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '수정율', 	   name: 'verifyUpdateRat',index:'VERIFY_UPDATE_RAT',sorttype:'int', width: 55, align: 'right'},
+	            { label: '동의', 	  	   name: 'ay', 		   	  index:'A_Y',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'an', 		  	  index:'A_N',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'by', 		   	  index:'B_Y',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'bn',         	  index:'B_N',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 	  	   name: 'cy', 		   	  index:'C_Y',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'cn', 		   	  index:'C_N',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'dy', 		      index:'D_Y',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'dn', 		      index:'D_N',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'ey', 		      index:'E_Y',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'en', 		      index:'E_N',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'tmRecvY', 	  index:'TM_RECV_Y',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'tmRecvN', 	  index:'TM_RECV_N',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'smsRecvY',      index:'SMS_RECV_Y',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'smsRecvN',      index:'SMS_RECV_N',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'dmRecvY', 	  index:'DM_RECV_Y',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'dmRecvN', 	  index:'DM_RECV_N',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'emailRecvY',    index:'EMAIL_RECV_Y', sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'emailRecvN',    index:'EMAIL_RECV_N', sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'tmOfferY',      index:'TM_OFFER_Y',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'tmOfferN',      index:'TM_OFFER_N',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'dmOfferY',      index:'SMS_OFFER_Y',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'dmOfferN',      index:'SMS_OFFER_N',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'emailOfferY',   index:'DM_OFFER_Y',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'emailOfferN',   index:'DM_OFFER_N',	sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '동의', 		   name: 'smsOfferY',     index:'EMAIL_OFFER_Y',sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '미동의', 	   name: 'smsOfferN',     index:'EMAIL_OFFER_N',sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }}
 	            
 	        ],
 	       
 	        height: gridHeight,
 	        autowidth:true,
-	        rowNum: 100,
+	        rowNum: 10,
 	        sortable : true,
-			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
+			loadonce : false, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        rownumbers: true,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
@@ -87,7 +87,7 @@ var modDpmDayPro = (function(){
 	        multiselect: false,
 	        //jqGrid 추가옵션영역
 	        pager: $("#jqGridPager"),
-	        rowList: [50,100,200,300,500,1000],
+	        rowList: [10,50,100,200,300,500,1000],
 	        //jsonReader 영역
 	        jsonReader : {
 	        	repeatitems: false,
@@ -102,6 +102,14 @@ var modDpmDayPro = (function(){
 	        //로드완료 시 (조회 시 reloadGrid 후에도 호출)  
 	        loadComplete: function(data) {
 	        },
+	        onSortCol: function(columnName, columnIndex, sortOrder) {
+    			var pageNumber = $(".ui-pg-input").val();
+				var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
+    			$('#columnName').val(columnName);
+    			$('#sortOrder').val(sortOrder);
+    			console.log("sortOrder="+sortOrder);
+    			selListPage(pageNumber,pageSize);
+			},
 	        
 	        //페이지 이벤트
 	        onPaging: function(action) {
@@ -219,9 +227,18 @@ var modDpmDayPro = (function(){
 			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='35' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
+			$("#columnName").val("");
+			$("#sortOrder").val("");
+        	var pageNumber = 1;
+			var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
         	objParam.totRowCnt	= totRowCnt;
-			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});			
-			selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
+    		objParam.pageNumber = pageNumber;
+    		objParam.pageSize	= pageSize;
+    		objParam.totPageCnt	= Math.ceil(totRowCnt/pageSize);
+    		objParam.startPageNumber = (((pageNumber - 1) * pageSize));
+			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});	
+			$("#jqGrid").trigger('reloadGrid');		
+			//selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
 		}
 	
 	};
@@ -253,9 +270,11 @@ var modDpmDayPro = (function(){
     	objParam.pageSize	= pageSize;
     	objParam.totPageCnt	= Math.ceil(objParam.totRowCnt/pageSize);
     	objParam.startPageNumber = (((pageNumber - 1) * pageSize));
+    	objParam.columnName = $("#columnName").val();
+    	objParam.sortOrder = $("#sortOrder").val();
     	$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
     	$("#jqGrid").trigger('reloadGrid');    	
-		$("#spnTotCnt").text(totRowCnt);
+		//$("#spnTotCnt").text(totRowCnt);
 	};	
 	
 

@@ -33,6 +33,8 @@
                                 </li>
                             </ul>
                        <!-- 엑셀출력을 위한 컬럼정보 -->
+                        <input id="columnName"    type="hidden" name="columnName">
+						<input id="sortOrder"     type="hidden" name="sortOrder">
 						<input id="gridLabelList" type="hidden" name="gridLabels"> 
 						<input id="gridNameList"  type="hidden" name="gridNames"> 
 						<input id="gridWidthList" type="hidden" name="gridWidths"> 

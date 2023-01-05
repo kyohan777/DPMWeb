@@ -21,6 +21,8 @@
                    <div class="smbc-main-content-wrap" id= "contentPage">
                         <div class="smbc-top-search-wrap">
                         <form id="frmImrResViewerInfo" role="form"  method="post"> 
+                        	<input id="columnName" type="hidden" name="columnName">
+							<input id="sortOrder" type="hidden" name="sortOrder">
                             <ul class="smbc-top-search">
                              	<li>
                                     <input type="text" class="input-st01" id="custId" name="custId" style ="background: #E3FFF0; color:black" placeholder="고객번호">

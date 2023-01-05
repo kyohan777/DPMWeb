@@ -604,5 +604,4 @@ public class StatisticsVO extends AbstractVO{
 				+ ", imgPathOrg=" + imgPathOrg + "]";
 	}
 	
-	
 }

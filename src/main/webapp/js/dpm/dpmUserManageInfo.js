@@ -29,15 +29,15 @@ var modDpmUserManageInfo = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	            { label: '담당자 ID',    name: 'chrrId',    align: 'center',width:'100'},
-	            { label: '담당자명', 	   name: 'chrrNm',    align: 'center',width:'100'},
-	            { label: '부서명', 	   name: 'deptnm',    align: 'center',width:'100'},
-	            { label: '사용여부', 	   name: 'uyn',       align: 'center',width:'70'},
-	            { label: '등록자 ID',    name: 'rgId',      align: 'center',width:'100'},	  
-	            { label: '등록자명', 	   name: 'rgNm',      align: 'center',width:'100'},
-	            { label: '등록 일자', 	   name: 'rgDt',      align: 'center',width:'100'},
-	            { label: '등록 시간', 	   name: 'rgTm',      align: 'center',width:'80'},
-	            { label: '사유', 	       name: 'rgReason',  align: 'left',width:'400'},
+	            { label: '담당자 ID',    name: 'chrrId',    index:'CHRR_ID',align: 'center',width:'100'},
+	            { label: '담당자명', 	   name: 'chrrNm',    index:'CHRR_NM',align: 'center',width:'100'},
+	            { label: '부서명', 	   name: 'deptnm',    index:'DEPTNM' ,align: 'center',width:'100'},
+	            { label: '사용여부', 	   name: 'uyn',       index:'UYN' 	 ,align: 'center',width:'70'},
+	            { label: '등록자 ID',    name: 'rgId',      index:'RG_ID'  ,align: 'center',width:'100'},	  
+	            { label: '등록자명', 	   name: 'rgNm',      index:'RG_NM'  ,align: 'center',width:'100'},
+	            { label: '등록 일자', 	   name: 'rgDt',      index:'RG_DT'  ,align: 'center',width:'100'},
+	            { label: '등록 시간', 	   name: 'rgTm',      index:'RG_TM'  ,align: 'center',width:'80'},
+	            { label: '사유', 	       name: 'rgReason',  index:'RG_REASON',align: 'left',width:'400'},
 	            { label: '회사 번호', 	   name: 'companyId', align: 'center', hidden:true },
 	            { label: '연번', 	   	   name: 'idNo', 	  align: 'center', hidden:true }
 	        ],
@@ -46,7 +46,7 @@ var modDpmUserManageInfo = (function(){
 	        autowidth:true,
 	        rowNum: 100,
 	        sortable : true,
-			loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
+			loadonce : false, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        rownumbers: true,
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
@@ -72,7 +72,13 @@ var modDpmUserManageInfo = (function(){
 	        loadComplete: function() {
 	        	
 	        },
-	        
+	        onSortCol: function(columnName, columnIndex, sortOrder) {
+    			var pageNumber = $(".ui-pg-input").val();
+				var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
+    			$('#columnName').val(columnName);
+    			$('#sortOrder').val(sortOrder);
+    			selListPage(pageNumber,pageSize);
+			},
 	        //페이지 이벤트
 	        onPaging: function(action) {
 	        	var curPage  = $("#jqGrid").getGridParam("page");
@@ -174,9 +180,18 @@ var modDpmUserManageInfo = (function(){
 			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='12' class='text-center'>조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
+			$("#columnName").val("");
+			$("#sortOrder").val("");
+        	var pageNumber = 1;
+			var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
         	objParam.totRowCnt	= totRowCnt;
-			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});			
-			selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
+    		objParam.pageNumber = pageNumber;
+    		objParam.pageSize	= pageSize;
+    		objParam.totPageCnt	= Math.ceil(totRowCnt/pageSize);
+    		objParam.startPageNumber = (((pageNumber - 1) * pageSize));
+			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
+			$("#jqGrid").trigger('reloadGrid');    				
+			//selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
 		}
 	
 	};
@@ -208,6 +223,8 @@ var modDpmUserManageInfo = (function(){
     	objParam.pageSize	= pageSize;
     	objParam.totPageCnt	= Math.ceil(objParam.totRowCnt/pageSize);
     	objParam.startPageNumber = (((pageNumber - 1) * pageSize));
+    	objParam.columnName = $("#columnName").val();
+    	objParam.sortOrder = $("#sortOrder").val();
     	$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
     	$("#jqGrid").trigger('reloadGrid');    	
 		$("#spnTotCnt").text(totRowCnt);

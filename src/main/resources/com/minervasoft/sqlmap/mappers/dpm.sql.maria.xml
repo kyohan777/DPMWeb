@@ -32,7 +32,9 @@
         parameterType="com.minervasoft.backend.vo.StatisticsVO"
         resultType="com.minervasoft.backend.vo.StatisticsVO"
         >
-      SELECT 
+   SELECT
+   		T.*     
+   FROM(SELECT 
 		TO_CHAR(PRC_DT,'YYYY/MM/DD') AS PRC_DT,   
 		PRC_DT_CNT,							 						   
 		PRC_CN,  
@@ -83,7 +85,13 @@
 	<if test='textPrcDt != null and textPrcDt !=""'>
 	AND TO_CHAR(PRC_DT,'YYYYMM') = REPLACE(#{textPrcDt},'-','')
 	</if>
-	ORDER BY PRC_DT 
+	) T
+	<if test='columnName !="" and sortOrder !=""'>
+	ORDER BY T.${columnName} ${sortOrder} 
+	</if>
+	<if test='columnName =="" and sortOrder ==""'>
+	ORDER BY T.PRC_DT 
+	</if>
  	LIMIT  #{pageSize}
 	OFFSET #{startPageNumber}
     </select> 
@@ -126,7 +134,9 @@
      parameterType="com.minervasoft.backend.vo.StatisticsVO"
         resultType="com.minervasoft.backend.vo.StatisticsVO"
         >
-      SELECT 
+SELECT
+ 	TT.*
+FROM(SELECT 
 			T.PRC_DT												    AS PRC_DT, 
 			SUM(T.PRC_DT_CNT) 						 				    AS PRC_DT_CNT,
 			SUM(T.PRC_CN) 							 				    AS PRC_CN,
@@ -210,10 +220,16 @@
 		<if test='textPrcDt != null and textPrcDt !=""'>
 		AND TO_CHAR(PRC_DT,'YYYY') = REPLACE(#{textPrcDt},'-','')
 		</if>
-		ORDER BY PRC_DT  
 	) T GROUP BY T.PRC_DT
-	LIMIT  #{pageSize}
-	OFFSET #{startPageNumber}
+)TT	
+<if test='columnName !="" and sortOrder !=""'>
+	ORDER BY TT.${columnName} ${sortOrder} 
+</if>
+<if test='columnName =="" and sortOrder ==""'>
+	ORDER BY TT.PRC_DT  
+</if>
+LIMIT  #{pageSize}
+OFFSET #{startPageNumber}
  
     </select> 
     
@@ -245,7 +261,9 @@
      parameterType="com.minervasoft.backend.vo.CalibVerifiVo"
         resultType="com.minervasoft.backend.vo.CalibVerifiVo"
         >
-		SELECT 
+  	SELECT
+  		T.*
+  	FROM(SELECT 
 			A.ID_NO,
 			A.CHRR_ID,
 			B.CHRR_NM,
@@ -268,9 +286,13 @@
     	</if> 
     	<if test='endPrcDt != null and endPrcDt !=""'>
     	AND TO_CHAR(A.IPDT_TIME,'YYYYMMDD') <![CDATA[<=]]> REPLACE(#{endPrcDt},'-','')
-    	</if> 
-  		LIMIT  #{pageSize}
-		OFFSET #{startPageNumber}
+    	</if>
+    )T	
+    <if test='columnName !="" and sortOrder !=""'>
+	ORDER BY T.${columnName} ${sortOrder} 
+	</if> 
+  	LIMIT  #{pageSize}
+	OFFSET #{startPageNumber}
     </select>
     
      
@@ -301,7 +323,9 @@
      parameterType="com.minervasoft.backend.vo.UserManageVo"
         resultType="com.minervasoft.backend.vo.UserManageVo"
         >
-     	SELECT 
+   SELECT
+   	T.*
+   FROM(SELECT 
     		ID_NO,
     		CHRR_ID,
     		COMPANY_ID,
@@ -328,9 +352,15 @@
     	<if test='useYn != null and useYn !=""'>
     	AND UYN = #{useYn}
     	</if>
-    	ORDER BY RG_DTM
- 		LIMIT  #{pageSize}
-		OFFSET #{startPageNumber}
+    )T
+    <if test='columnName !="" and sortOrder !=""'>
+	ORDER BY T.${columnName} ${sortOrder} 
+	</if>
+	<if test='columnName =="" and sortOrder ==""'>
+	ORDER BY T.RG_DT 
+	</if>
+ 	LIMIT  #{pageSize}
+	OFFSET #{startPageNumber}
     </select>
     
     <!-- 사용자 등록 -->
@@ -450,7 +480,9 @@
 		<if test='contractId != null and contractId !=""'>
 			AND CONTRACT_ID = #{contractId}
 		</if>
-		ORDER BY PRC_DT 
+		<if test='columnName !="" and sortOrder !=""'>
+		ORDER BY ${columnName} ${sortOrder} 
+		</if>
 		LIMIT  #{pageSize}
 		OFFSET #{startPageNumber}
     </select> 

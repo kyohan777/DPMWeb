@@ -18,6 +18,8 @@ public class CalibVerifiVo extends AbstractVO{
 	private Integer totRowCnt  = 0;
 	private Integer pageSize   = 0;
 	private Integer startPageNumber = 0;
+	private String  columnName="";
+	private String  sortOrder="";
 	
 		
 	public String getContractId() {
@@ -122,6 +124,18 @@ public class CalibVerifiVo extends AbstractVO{
 	}
 	public void setStartPageNumber(Integer startPageNumber) {
 		this.startPageNumber = startPageNumber;
+	}
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public String getSortOrder() {
+		return sortOrder;
+	}
+	public void setSortOrder(String sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 	
 	
