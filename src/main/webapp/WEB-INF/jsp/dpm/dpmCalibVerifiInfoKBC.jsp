@@ -65,6 +65,9 @@
                                     </div>
                                 </li>
                             </ul>
+                            
+                        <input id="columnName" type="hidden" name="columnName">
+						<input id="sortOrder" type="hidden" name="sortOrder">    
                        <!-- 엑셀출력을 위한 컬럼정보 -->
 						<input id="gridLabelList" type="hidden" name="gridLabels"> 
 						<input id="gridNameList"  type="hidden" name="gridNames"> 
@@ -128,70 +131,70 @@
                                             </tr>
                                         </thead>
                                         <tbody id="mkTable">
-                                            <tr>
+                                            <tr id="TR_A">
                                                 <td style="text-align: left">금융상품안내 및 이용권유를 위한 수집, 이용</td>
                                                 <td id="BPR_A"></td>
                                                 <td id="IMR_A"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_B">
                                                 <td style="text-align: left">금융상품 이외의 서비스 안내 및 이용권유를 위한 수집,이용</td>
                                                 <td id="BPR_B"></td>
                                                 <td id="IMR_B"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_C">
                                                 <td style="text-align: left">업무제휴계약을 체결한 제휴 보험사에 제공</td>
                                                 <td id="BPR_C"></td>
                                                 <td id="IMR_C"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_D">
                                                 <td style="text-align: left">업무제휴계약을 체결한 제휴 딜러사에 제공</td>
                                                 <td id="BPR_D"></td>
                                                 <td id="IMR_D"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_E">
                                                 <td style="text-align: left">KB국민은행 등 KB금융 그룹 내 자회사에 제공</td>
                                                 <td id="BPR_E"></td>
                                                 <td id="IMR_E"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_TM_RECV_YN">
                                                 <td style="text-align: left">[수집 마케팅] 전화 수신 동의</td>
-                                                <td><input type ="radio" name="TM_RECV_YN" value="N"></td>
-                                                <td><input type ="radio" name="TM_RECV_YN" value="Y"></td>
+                                                <td id="BPR_TM_RECV_YN"></td>
+                                                <td id="IMR_TM_RECV_YN"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_SMS_RECV_YN">
                                                 <td style="text-align: left">[수집 마케팅] 문자(SMS) 수신 동의</td>
-                                                <td><input type ="radio" name="SMS_RECV_YN" value="N"></td>
-                                                <td><input type ="radio" name="SMS_RECV_YN" value="Y"></td>
+                                                <td id="BPR_SMS_RECV_YN"></td>
+                                                <td id="IMR_SMS_RECV_YN"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_DM_RECV_YN">
                                                 <td style="text-align: left">[수집 마케팅] DM 수신 동의 (우편을 DM으로 인식)</td>
-                                                <td><input type ="radio" name="DM_RECV_YN" value="N"></td>
-                                                <td><input type ="radio" name="DM_RECV_YN" value="Y"></td>
+                                                <td id="BPR_DM_RECV_YN"></td>
+                                                <td id="IMR_DM_RECV_YN"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_EMAIL_RECV_YN">
                                                 <td style="text-align: left">[수집 마케팅] 이메일 수신 동의</td>
-                                                <td><input type ="radio" name="EMAIL_RECV_YN" value="N"></td>
-                                                <td><input type ="radio" name="EMAIL_RECV_YN" value="Y"></td>
+                                                <td  id="BPR_EMAIL_RECV_YN"></td>
+                                                <td id="IMR_EMAIL_RECV_YN"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_TM_OFFER_YN">
                                                 <td style="text-align: left">[제공 마케팅] 전화 제공 동의</td>
-                                                <td><input type ="radio" name="TM_OFFER_YN" value="N"></td>
-                                                <td><input type ="radio" name="TM_OFFER_YN" value="Y"></td>
+                                                <td id="BPR_TM_OFFER_YN"></td>
+                                                <td id="IMR_TM_OFFER_YN"></td>
                                             </tr>
-                                             <tr>
+                                             <tr id="TR_EMAIL_OFFER_YN">
                                                 <td style="text-align: left">[제공 마케팅] 이메일 제공 동의</td>
-                                                <td><input type ="radio" name="EMAIL_OFFER_YN" value="N"></td>
-                                                <td><input type ="radio" name="EMAIL_OFFER_YN" value="Y"></td>
+                                                <td id="BPR_EMAIL_OFFER_YN"></td>
+                                                <td id="IMR_EMAIL_OFFER_YN"></td>
                                             </tr>
-                                            <tr>
+                                            <tr id="TR_DM_OFFER_YN">
                                                 <td style="text-align: left">[제공 마케팅] DM 제공 동의</td>
-                                                <td><input type ="radio" name="DM_OFFER_YN" value="N"></td>
-                                                <td><input type ="radio" name="DM_OFFER_YN" value="Y"></td>
+                                                <td id="BPR_DM_OFFER_YN"></td>
+                                                <td id="IMR_DM_OFFER_YN"></td>
                                             </tr>
-                                            <tr>
+                                            <tr id="TR_SMS_OFFER_YN">
                                                 <td style="text-align: left">[제공 마케팅] 문자(SMS) 제공 동의</td>
-                                                <td><input type ="radio" name="SMS_OFFER_YN" value="N"></td>
-                                                <td><input type ="radio" name="SMS_OFFER_YN" value="Y"></td>
+                                                <td id="BPR_SMS_OFFER_YN"></td>
+                                                <td id="IMR_SMS_OFFER_YN"></td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -45,19 +45,19 @@ var modDpmCalibVerifiInfo = (function(){
 	        postData: {"textPrcDt" : $("#textPrcDt").val()},
 	        //jqGrid 양식선언부        
 	        colModel: [
-				{ label: '엘리먼트ID',    name: 'elementId', 	   align: 'center', width:'150px'},
+				{ label: '엘리먼트ID',    name: 'elementId', index:'ELEMENTID',  align: 'left', width:'150px'},
 				{ label: 'm',  name: 'maskPrgStscTxt', align: 'left', width: '0px', hidden: true},
 	            { label: 'u',  name: 'userConfirmTxt', align: 'left', width: '0px', hidden: true},
 	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px', hidden: true},
 	            { label: 'u3',  name: 'resultImgPath', align: 'left', width: '0px', hidden: true},
 	            { label: 'u4',  name: 'imgPathOrg', align: 'left', width: '0px', hidden: true},
 	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px', hidden: true},
-	            { label: '진행',     name: 'maskPrgStsc', 	   align: 'center', width: '50px'},
-	            { label: '최.탐',        name: 'fstImrPage',    	   align: 'center', width: '50px'},
-	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px'},
-	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px'},
-	            { label: 'bprImr',  name: 'bprImr',    align: 'left', width: '200px'},
-	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1250px'}
+	            { label: '진행',     name: 'maskPrgStsc', index:'MASK_PRG_STSC',   align: 'center', width: '50px'},
+	            { label: '최.탐',        name: 'fstImrPage', index:'FST_IMR_PAGE',	   align: 'center', width: '50px'},
+	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px', hidden: true},
+	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px', hidden: true},
+	            { label: 'bprImr',  name: 'bprImr',    align: 'left', width: '140px', sortable: false},
+	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1250px', sortable: false}
 	        ],
 	       
 	        height: gridHeight,
@@ -65,7 +65,7 @@ var modDpmCalibVerifiInfo = (function(){
 	        rowNum: 50,
 	        rownumbers: true,
 	        sortable : true,
-			//loadonce : true, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
+			loadonce : false, //이옵션이 정렬시에 다시쿼리 안날리고 화면에서 하는거
 	        viewrecords: true,
 	        loadtext: "<img src='/images/loadinfo.net.gif' />",
 	        scrollrows: true,
@@ -86,8 +86,13 @@ var modDpmCalibVerifiInfo = (function(){
 	        	total: function(data) {return data.totPageCnt},	//전체 페이지 수
 	        	records: function(data) {return data.totRowCnt}	//전체 데이터 수
 	        },
-	        
-	        //
+	        onSortCol: function(columnName, columnIndex, sortOrder) {
+    			var pageNumber = $(".ui-pg-input").val();
+				var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
+    			$('#columnName').val(columnName);
+    			$('#sortOrder').val(sortOrder);
+    			selListPage(pageNumber,pageSize);
+			},
 	        
 	        //페이지 이벤트
 	        onPaging: function(action) {
@@ -148,8 +153,8 @@ var modDpmCalibVerifiInfo = (function(){
 		        	
 		        	//$("#testJqGrid").jqGrid('setCell', rowid, colname, nData, styleObj, cellAttirbuteObj, forceUpdate);
 				    $("#jqGrid").jqGrid('setCell', id, 'maskPrgStsc', "", "", {title: rowData.maskPrgStscTxt});
-				    $("#jqGrid").jqGrid('setCell', id, 'userConfirm', "", "", {title: rowData.userConfirmTxt});
-				    $("#jqGrid").jqGrid('setCell', id, 'userUpdateYn', "", "", {title: rowData.userUpdateYnTxt});
+				    //$("#jqGrid").jqGrid('setCell', id, 'userConfirm', "", "", {title: rowData.userConfirmTxt});
+				    //$("#jqGrid").jqGrid('setCell', id, 'userUpdateYn', "", "", {title: rowData.userUpdateYnTxt});
 				    
 			    }
 			}
@@ -194,9 +199,18 @@ var modDpmCalibVerifiInfo = (function(){
 			$("#jqGrid > tbody").append("<tr class='ui-widget-content jqgrow ui-ltr'><td colspan='7' class='text-left'>&nbsp; &nbsp; &nbsp;조회된 결과가 없습니다.</td></tr>");
 			return;
 		} else {
+        	$("#columnName").val("");
+			$("#sortOrder").val("");
+			var pageNumber = 1;
+			var pageSize   = $("#jqGridPager").find("select.ui-pg-selbox option:selected").val();
         	objParam.totRowCnt	= totRowCnt;
-			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});			
-			selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
+    		objParam.pageNumber = pageNumber;
+    		objParam.pageSize	= pageSize;
+    		objParam.totPageCnt	= Math.ceil(totRowCnt/pageSize);
+    		objParam.startPageNumber = (((pageNumber - 1) * pageSize));
+			$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
+			$("#jqGrid").trigger('reloadGrid');    				
+			//selListPage(1, $("#jqGridPager").find("select.ui-pg-selbox option:selected").val());
 		}
 	
 	};
@@ -228,14 +242,13 @@ var modDpmCalibVerifiInfo = (function(){
     	objParam.pageNumber = pageNumber;
     	objParam.pageSize	= pageSize;
     	objParam.totPageCnt	= Math.ceil(objParam.totRowCnt/pageSize);
-    	//objParam.startPageNumber = (((pageNumber - 1) * pageSize) + 1);
     	objParam.startPageNumber = (((pageNumber - 1) * pageSize));
-    	
+    	objParam.columnName = $("#columnName").val();
+    	objParam.sortOrder = $("#sortOrder").val();
     	console.log("objParam.pageNumber:" + objParam.pageNumber + ", objParam.pageSize:" + objParam.pageSize + ", objParam.totPageCnt:" + objParam.totPageCnt + ", objParam.startPageNumber:" + objParam.startPageNumber);
-    	
     	$("#jqGrid").setGridParam({datatype : 'json', postData : objParam});
     	$("#jqGrid").trigger('reloadGrid');    	
-		$("#spnTotCnt").text(totRowCnt);
+		//$("#spnTotCnt").text(totRowCnt);
 	};	
 	
 
@@ -293,6 +306,8 @@ $("#btnExcel").on("click", function() {
 
 
 function dataSelect(rowid) {
+	dataResetImr();
+	
 	var selRowData = $("#jqGrid").getRowData(rowid);
 	var imrFPage = selRowData.fstImrPage;
 	if(imrFPage == null || imrFPage == "undefined" || imrFPage == "") {
@@ -310,49 +325,154 @@ function dataSelect(rowid) {
 	$("#elementId").val(selRowData.elementId);
 	
 	var intvisionImr = selRowData.intvisionImr;
+	var bprImr = selRowData.bprImr;
+	var bprImrObj = {};
+	
+	if(bprImr != null && bprImr != undefined && $.trim(bprImr).length == 13) {
+		bprImrObj = bprParse(bprImr);
+		$("#BPR_A").text(bprImrObj.A);
+		$("#BPR_B").text(bprImrObj.B);
+		$("#BPR_C").text(bprImrObj.C);
+		$("#BPR_D").text(bprImrObj.D);
+		$("#BPR_E").text(bprImrObj.E);
+		$("#BPR_TM_RECV_YN").text(bprImrObj.TM_RECV_YN);
+		$("#BPR_SMS_RECV_YN").text(bprImrObj.SMS_RECV_YN);
+		$("#BPR_DM_RECV_YN").text(bprImrObj.DM_RECV_YN);
+		$("#BPR_EMAIL_RECV_YN").text(bprImrObj.EMAIL_RECV_YN);
+		$("#BPR_TM_OFFER_YN").text(bprImrObj.TM_OFFER_YN);
+		$("#BPR_EMAIL_OFFER_YN").text(bprImrObj.EMAIL_OFFER_YN);
+		$("#BPR_DM_OFFER_YN").text(bprImrObj.DM_OFFER_YN);
+		$("#BPR_SMS_OFFER_YN").text(bprImrObj.SMS_OFFER_YN);
+	}
+	
+	var jsonImr = {};
 	if(intvisionImr != null && intvisionImr != undefined && $.trim(intvisionImr) !='' ) {
-		var jsonImr = JSON.parse(intvisionImr);
+		
+		jsonImr = JSON.parse(intvisionImr);
 		
 		$("#intvisionImr").val(intvisionImr);
 		
-		$("input:radio[name='A']:radio[value='" + jsonImr.A + "']").prop('checked', true); 
-		$("input:radio[name='B']:radio[value='" + jsonImr.B + "']").prop('checked', true);
-		$("input:radio[name='C']:radio[value='" + jsonImr.C + "']").prop('checked', true);
-		$("input:radio[name='D']:radio[value='" + jsonImr.D + "']").prop('checked', true);
-		$("input:radio[name='E']:radio[value='" + jsonImr.E + "']").prop('checked', true);
-		
-		$("input:radio[name='TM_RECV_YN']:radio[value='" + jsonImr.TM_RECV_YN + "']").prop('checked', true);
-		$("input:radio[name='SMS_RECV_YN']:radio[value='" + jsonImr.SMS_RECV_YN + "']").prop('checked', true);
-		$("input:radio[name='DM_RECV_YN']:radio[value='" + jsonImr.DM_RECV_YN + "']").prop('checked', true);
-		$("input:radio[name='EMAIL_RECV_YN']:radio[value='" + jsonImr.EMAIL_RECV_YN + "']").prop('checked', true);
-		$("input:radio[name='TM_OFFER_YN']:radio[value='" + jsonImr.TM_OFFER_YN + "']").prop('checked', true);
-		$("input:radio[name='EMAIL_OFFER_YN']:radio[value='" + jsonImr.EMAIL_OFFER_YN + "']").prop('checked', true);
-		$("input:radio[name='DM_OFFER_YN']:radio[value='" + jsonImr.DM_OFFER_YN + "']").prop('checked', true);
-		$("input:radio[name='SMS_OFFER_YN']:radio[value='" + jsonImr.SMS_OFFER_YN + "']").prop('checked', true);
-		
-	} else {
-		dataResetImr();
+		$("#IMR_A").text(jsonImr.A);
+		$("#IMR_B").text(jsonImr.B);
+		$("#IMR_C").text(jsonImr.C);
+		$("#IMR_D").text(jsonImr.D);
+		$("#IMR_E").text(jsonImr.E);
+		$("#IMR_TM_RECV_YN").text(jsonImr.TM_RECV_YN);
+		$("#IMR_SMS_RECV_YN").text(jsonImr.SMS_RECV_YN);
+		$("#IMR_DM_RECV_YN").text(jsonImr.DM_RECV_YN);
+		$("#IMR_EMAIL_RECV_YN").text(jsonImr.EMAIL_RECV_YN);
+		$("#IMR_TM_OFFER_YN").text(jsonImr.TM_OFFER_YN);
+		$("#IMR_EMAIL_OFFER_YN").text(jsonImr.EMAIL_OFFER_YN);
+		$("#IMR_DM_OFFER_YN").text(jsonImr.DM_OFFER_YN);
+		$("#IMR_SMS_OFFER_YN").text(jsonImr.SMS_OFFER_YN);
+	} 
+	
+	if(bprImrObj.A != jsonImr.A) {
+		$('#TR_A').css("backgroundColor","#FFFF00");	
 	}
-}				
+	if(bprImrObj.B != jsonImr.B) {
+		$('#TR_B').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.C != jsonImr.C) {
+		$('#TR_C').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.D != jsonImr.D) {
+		$('#TR_D').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.E != jsonImr.E) {
+		$('#TR_E').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.TM_RECV_YN != jsonImr.TM_RECV_YN) {
+		$('#TR_TM_RECV_YN').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.SMS_RECV_YN != jsonImr.SMS_RECV_YN) {
+		$('#TR_SMS_RECV_YN').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.DM_RECV_YN != jsonImr.DM_RECV_YN) {
+		$('#TR_DM_RECV_YN').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.EMAIL_RECV_YN != jsonImr.EMAIL_RECV_YN) {
+		$('#TR_EMAIL_RECV_YN').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.TM_OFFER_YN != jsonImr.TM_OFFER_YN) {
+		$('#TR_TM_OFFER_YN').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.EMAIL_OFFER_YN != jsonImr.EMAIL_OFFER_YN) {
+		$('#TR_EMAIL_OFFER_YN').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.DM_OFFER_YN != jsonImr.DM_OFFER_YN) {
+		$('#TR_DM_OFFER_YN').css("backgroundColor","#FFFF00");	
+	}
+	if(bprImrObj.SMS_OFFER_YN != jsonImr.SMS_OFFER_YN) {
+		$('#TR_SMS_OFFER_YN').css("backgroundColor","#FFFF00");	
+	}
+}
+
+function bprParse(bprImr) {
+	var bprImrObj = {};
+	bprImrObj.A = bprImr.substr(0,1);
+	bprImrObj.B = bprImr.substr(1,1);
+	bprImrObj.C = bprImr.substr(2,1);
+	bprImrObj.D = bprImr.substr(3,1);
+	bprImrObj.E = bprImr.substr(4,1);
+	bprImrObj.TM_RECV_YN = bprImr.substr(5,1);
+	bprImrObj.SMS_RECV_YN = bprImr.substr(6,1);
+	bprImrObj.DM_RECV_YN = bprImr.substr(7,1);
+	bprImrObj.EMAIL_RECV_YN = bprImr.substr(8,1);
+	bprImrObj.TM_OFFER_YN = bprImr.substr(9,1);
+	bprImrObj.EMAIL_OFFER_YN = bprImr.substr(10,1);
+	bprImrObj.DM_OFFER_YN = bprImr.substr(11,1);
+	bprImrObj.SMS_OFFER_YN = bprImr.substr(12,1);
+	
+	return bprImrObj;
+}
 
 function dataResetImr() {
 	$("#intvisionImr").val("");
-							
-	$("input:radio[name='A']").prop('checked', false);
-	$("input:radio[name='B']").prop('checked', false);
-	$("input:radio[name='C']").prop('checked', false);
-	$("input:radio[name='D']").prop('checked', false);
-	$("input:radio[name='E']").prop('checked', false);
 	
-	$("input:radio[name='TM_RECV_YN']").prop('checked', false);
-	$("input:radio[name='SMS_RECV_YN']").prop('checked', false);
-	$("input:radio[name='DM_RECV_YN']").prop('checked', false);
-	$("input:radio[name='EMAIL_RECV_YN']").prop('checked', false);
-	$("input:radio[name='TM_OFFER_YN']").prop('checked', false);
-	$("input:radio[name='EMAIL_OFFER_YN']").prop('checked', false);
-	$("input:radio[name='DM_OFFER_YN']").prop('checked', false);
-	$("input:radio[name='SMS_OFFER_YN']").prop('checked', false);
-		
+	$("#BPR_A").text("");
+	$("#IMR_A").text("");
+	$("#BPR_B").text("");
+	$("#IMR_B").text("");
+	$("#BPR_C").text("");
+	$("#IMR_C").text("");
+	$("#BPR_D").text("");
+	$("#IMR_D").text("");
+	$("#BPR_E").text("");
+	$("#IMR_E").text("");
+	
+	$("#BPR_TM_RECV_YN").text("");
+	$("#IMR_TM_RECV_YN").text("");
+	$("#BPR_SMS_RECV_YN").text("");
+	$("#IMR_SMS_RECV_YN").text("");
+	$("#BPR_DM_RECV_YN").text("");
+	$("#IMR_DM_RECV_YN").text("");
+	$("#BPR_EMAIL_RECV_YN").text("");
+	$("#IMR_EMAIL_RECV_YN").text("");
+	$("#BPR_TM_OFFER_YN").text("");
+	$("#IMR_TM_OFFER_YN").text("");
+	$("#BPR_EMAIL_OFFER_YN").text("");
+	$("#IMR_EMAIL_OFFER_YN").text("");
+	$("#BPR_DM_OFFER_YN").text("");
+	$("#IMR_DM_OFFER_YN").text("");
+	$("#BPR_SMS_OFFER_YN").text("");
+	$("#IMR_SMS_OFFER_YN").text("");
+	
+	
+	$('#TR_A').css("backgroundColor","#FFFFFF");	
+	$('#TR_B').css("backgroundColor","#FFFFFF");	
+	$('#TR_C').css("backgroundColor","#FFFFFF");	
+	$('#TR_D').css("backgroundColor","#FFFFFF");	
+	$('#TR_E').css("backgroundColor","#FFFFFF");	
+	$('#TR_TM_RECV_YN').css("backgroundColor","#FFFFFF");	
+	$('#TR_SMS_RECV_YN').css("backgroundColor","#FFFFFF");	
+	$('#TR_DM_RECV_YN').css("backgroundColor","#FFFFFF");	
+	$('#TR_EMAIL_RECV_YN').css("backgroundColor","#FFFFFF");	
+	$('#TR_TM_OFFER_YN').css("backgroundColor","#FFFFFF");	
+	$('#TR_EMAIL_OFFER_YN').css("backgroundColor","#FFFFFF");	
+	$('#TR_DM_OFFER_YN').css("backgroundColor","#FFFFFF");	
+	$('#TR_SMS_OFFER_YN').css("backgroundColor","#FFFFFF");	
+	
 }
 
 
@@ -468,9 +588,6 @@ $(document).ready(function() {
 	$("#box-right").height($("#gridContainer").height() - 10);
 	$("#box-right-1").height($("#gridContainer").height() - 10);
 	
-	
-	$("#BPR_B").text("Y");
-	$("#IMR_B").text("N");
 	
 });
 
