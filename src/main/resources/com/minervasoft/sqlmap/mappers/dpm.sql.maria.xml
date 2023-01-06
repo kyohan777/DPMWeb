@@ -632,7 +632,7 @@ OFFSET #{startPageNumber}
     <insert id="insertViewReason" parameterType="com.minervasoft.backend.vo.CalibVerifiVo">
       	INSERT INTO TB_EM_IMR_QUERY_HISTORY 
 		(
-			, CHRR_ID
+			CHRR_ID
 			, PRC_DT
 			, ELEMENTID
 			, CUST_ID
@@ -643,12 +643,12 @@ OFFSET #{startPageNumber}
 		VALUES
 		(
 			#{chrrId}, 
-			TO_CHAR(SYSDATE(), 'YYYYMMDD'),
+			DATE_FORMAT(SYSDATE(), '%Y%m%d'),
 			#{elementId},
 			#{custId}, 
 			#{contractId},
 			#{queryReason}, 
-			SYSTIMESTAMP 
+			CURRENT_TIMESTAMP 
 		)
     </insert>
     

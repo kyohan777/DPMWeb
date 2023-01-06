@@ -51,10 +51,10 @@ var modDpmCalibVerifiInfo = (function(){
 	            { label: 'u2',  name: 'userUpdateYnTxt', align: 'left', width: '0px', hidden: true},
 	            { label: 'u3',  name: 'resultImgPath', align: 'left', width: '0px', hidden: true},
 	            { label: 'u4',  name: 'imgPathOrg', align: 'left', width: '0px', hidden: true},
-	            { label: '파일명',       name: 'imgFileName',	   align: 'left', width: '150px', hidden: true},
+	            { label: '파일명',   name: 'imgFileName',	   align: 'left', width: '150px', hidden: true},
 	            { label: '진행',     name: 'maskPrgStsc', index:'MASK_PRG_STSC',   align: 'center', width: '50px'},
-	            { label: '최.탐',        name: 'fstImrPage', index:'FST_IMR_PAGE',	   align: 'center', width: '50px'},
-	            { label: '검증', 	       name: 'userConfirm',    	   align: 'center', width: '50px', hidden: true},
+	            { label: '최.탐',    name: 'fstImrPage', index:'FST_IMR_PAGE',	   align: 'center', width: '50px'},
+	            { label: '검증', 	    name: 'userConfirm',    	   align: 'center', width: '50px', hidden: true},
 	            { label: '수정', 	   name: 'userUpdateYn',   	   align: 'center', width: '50px', hidden: true},
 	            { label: 'bprImr',  name: 'bprImr',    align: 'left', width: '140px', sortable: false},
 	            { label: 'intvisionImr',  name: 'intvisionImr',    align: 'left', width: '1250px', sortable: false}
