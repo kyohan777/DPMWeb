@@ -780,7 +780,7 @@ public class DpmController {
     	CommonVO commonVO 		 = getServerDateTime();
     	String filename 		 = commonVO.getServerTime().concat("_일별 통계.xlsx");    	
     	setExcelDownloadHeader(request, response, filename);
-    	 String title = "년/월/일,대상,처리현황,'','',처리율,검증현황,'','',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
+    	 String title = "년/월/일,대상,처리현황,'','','',처리율,검증현황,'','',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
     	StatisticsVO one = dpmService.getDpmDayProInfoTotRowCnt(paramVO);
     	
     	int pageSize   = 10000;
@@ -865,7 +865,7 @@ public class DpmController {
     	String filename 		 = commonVO.getServerTime().concat("_월별 통계.xlsx");    	
     	setExcelDownloadHeader(request, response, filename);
     	StatisticsVO one = dpmService.getDpmMonthProInfoTotRowCnt(paramVO);
-    	String title = "년/월,대상,처리현황,'','',처리율,검증현황,'','',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
+    	String title = "년/월,대상,처리현황,'','','',처리율,검증현황,'','',금융안내,'',금융이외,'',보험제공,'',딜러제공,'',KB제공,'',수집-전화,'',수집-문자,'',수집-DM,'',수집-메일,'',제공-전화,'',제공-DM,'',제공-메일,'',제공-문자,''";
     	int pageSize   = 10000;
     	int totRowCnt  = one.getTotRowCnt() ;
     	int totPageCnt = (int) Math.floor(totRowCnt/pageSize)+1;
@@ -993,22 +993,22 @@ public class DpmController {
             	 //셀 병합
                 sheet.addMergedRegion(new CellRangeAddress(0,1,0,0));  //일자
                 sheet.addMergedRegion(new CellRangeAddress(0,1,1,1));  //대상
-                sheet.addMergedRegion(new CellRangeAddress(0,0,2,4));  //처리현황
-                sheet.addMergedRegion(new CellRangeAddress(0,1,5,5));  //처리율
-                sheet.addMergedRegion(new CellRangeAddress(0,0,6,8));  //검증건수
-                sheet.addMergedRegion(new CellRangeAddress(0,0,9,10));  //금융안내
-                sheet.addMergedRegion(new CellRangeAddress(0,0,11,12));//금융이외
-                sheet.addMergedRegion(new CellRangeAddress(0,0,13,14));//보험제공
-                sheet.addMergedRegion(new CellRangeAddress(0,0,15,16));//딜러제공
-                sheet.addMergedRegion(new CellRangeAddress(0,0,17,18));//KB제공
-                sheet.addMergedRegion(new CellRangeAddress(0,0,19,20));//수집-전화
-                sheet.addMergedRegion(new CellRangeAddress(0,0,21,22));//수집-문자
-                sheet.addMergedRegion(new CellRangeAddress(0,0,23,24));//수집-DM
-                sheet.addMergedRegion(new CellRangeAddress(0,0,25,26));//수집-메일
-                sheet.addMergedRegion(new CellRangeAddress(0,0,27,28));//제공-전화
-                sheet.addMergedRegion(new CellRangeAddress(0,0,29,30));//제공-DM
-                sheet.addMergedRegion(new CellRangeAddress(0,0,31,32));//제공-메일
-                sheet.addMergedRegion(new CellRangeAddress(0,0,33,34));//제공-문자
+                sheet.addMergedRegion(new CellRangeAddress(0,0,2,5));  //처리현황
+                sheet.addMergedRegion(new CellRangeAddress(0,1,6,6));  //처리율
+                sheet.addMergedRegion(new CellRangeAddress(0,0,7,9));  //검증현황
+                sheet.addMergedRegion(new CellRangeAddress(0,0,10,11));  //금융안내
+                sheet.addMergedRegion(new CellRangeAddress(0,0,12,13));//금융이외
+                sheet.addMergedRegion(new CellRangeAddress(0,0,14,15));//보험제공
+                sheet.addMergedRegion(new CellRangeAddress(0,0,16,17));//딜러제공
+                sheet.addMergedRegion(new CellRangeAddress(0,0,18,19));//KB제공
+                sheet.addMergedRegion(new CellRangeAddress(0,0,20,21));//수집-전화
+                sheet.addMergedRegion(new CellRangeAddress(0,0,22,23));//수집-문자
+                sheet.addMergedRegion(new CellRangeAddress(0,0,24,25));//수집-DM
+                sheet.addMergedRegion(new CellRangeAddress(0,0,26,27));//수집-메일
+                sheet.addMergedRegion(new CellRangeAddress(0,0,28,29));//제공-전화
+                sheet.addMergedRegion(new CellRangeAddress(0,0,30,31));//제공-DM
+                sheet.addMergedRegion(new CellRangeAddress(0,0,32,33));//제공-메일
+                sheet.addMergedRegion(new CellRangeAddress(0,0,34,35));//제공-문자
                 int headNo= 0;
                 //merge header 생성
                 for(String name : titleList) {

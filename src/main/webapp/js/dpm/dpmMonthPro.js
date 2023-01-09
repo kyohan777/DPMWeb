@@ -45,14 +45,15 @@ var modDpmMonthPro = (function(){
 	        postData: {},
 	        //jqGrid 양식선언부        
 	        colModel: [
-	             { label: '년/월',      name: 'prcDt',    	  index:'PRC_DT',		sorttype:'text',width: 80,align: 'center'},
-	            { label: '대상(A)', 	   name: 'prcDtCnt', 	  index:'PRC_DT_CNT',	sorttype:'int', width: 80,align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '정상(B)', 	   name: 'prcCn',    	  index:'PRC_CN',		sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
-	            { label: '오류(C)', 	   name: 'errCn',    	  index:'ERR_CN',		sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '년/월/일',     name: 'prcDt',    	  index:'PRC_DT',		sorttype:'text',width: 80,align: 'center'},
+	            { label: '대상건수(A)',  name: 'prcDtCnt', 	  index:'PRC_DT_CNT',	sorttype:'int', width: 90,align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '인식 O(B)',   name: 'prcCn',    	  index:'PRC_CN',		sorttype:'int', width: 90, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '인식 X(C)',   name: 'noCn',    	      index:'NO_CN',		sorttype:'int', width: 80, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '오류(D)', 	   name: 'errCn',    	  index:'ERR_CN',		sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '오류율', 	   name: 'errRat',   	  index:'ERR_RAT',		sorttype:'int', width: 55, align: 'right'},
-	            { label: '처리율', 	   name: 'prcRat',        index:'PRC_RAT',		sorttype:'int', width: 55, align: 'right'},	  
-	            { label: '검증', 	   	   name: 'verifyCn',      index:'VERIFY_CN', 	sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},	  
-	            { label: '수정', 	       name: 'verifyUpdateCn',index:'VERIFY_UPDATE_CN',sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
+	            { label: '처리율',       name: 'prcRat',        index:'PRC_RAT',		sorttype:'int', width: 55, align: 'right'},	  
+	            { label: '검증건수', 	   name: 'verifyCn',      index:'VERIFY_CN', 	sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},	  
+	            { label: '수정건수', 	   name: 'verifyUpdateCn',index:'VERIFY_UPDATE_CN',sorttype:'int', width: 60, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '수정율', 	   name: 'verifyUpdateRat',index:'VERIFY_UPDATE_RAT',sorttype:'int', width: 55, align: 'right'},
 	            { label: '동의', 	  	   name: 'ay', 		   	  index:'A_Y',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
 	            { label: '미동의', 	   name: 'an', 		  	  index:'A_N',			sorttype:'int', width: 50, align: 'center', formatter:'integer',formatoptions: { defaultValue: '', thousandsSeparator: ',' }},
@@ -181,8 +182,8 @@ var modDpmMonthPro = (function(){
 		jQuery("#jqGrid").jqGrid('setGroupHeaders', {
   			useColSpanStyle: false, 
   			groupHeaders:[
- 				{startColumnName: 'prcCn',  		numberOfColumns: 3, titleText: '처리 현황'},
- 				{startColumnName: 'verifyCn', 		numberOfColumns: 3, titleText: '검증 현황'},
+ 				{startColumnName: 'prcCn',		    numberOfColumns: 4, titleText: '처리현황'},
+ 				{startColumnName: 'verifyCn',		numberOfColumns: 3, titleText: '검증현황'},
  				{startColumnName: 'ay',		    	numberOfColumns: 2, titleText: '금융안내'},
  				{startColumnName: 'by',		    	numberOfColumns: 2, titleText: '금융이외'},
  				{startColumnName: 'cy',		    	numberOfColumns: 2, titleText: '보험제공'},
@@ -195,7 +196,7 @@ var modDpmMonthPro = (function(){
  				{startColumnName: 'tmOfferY',	    numberOfColumns: 2, titleText: '제공-전화'},
  				{startColumnName: 'dmOfferY',	    numberOfColumns: 2, titleText: '제공-DM'},
  				{startColumnName: 'emailOfferY',	numberOfColumns: 2, titleText: '제공-메일'},
- 				{startColumnName: 'smsOfferY',	    numberOfColumns: 2, titleText: '제공-문자'}
+ 				{startColumnName: 'smsOfferY',		numberOfColumns: 2, titleText: '제공-문자'}
   			] 
   			
 		});

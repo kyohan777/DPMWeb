@@ -433,11 +433,12 @@ public class DpmServiceImpl implements DpmService {
 			            	JSONParser parser = new JSONParser();
 			            	Object obj = parser.parse(json);
 			            	JSONObject jsonObj = (JSONObject) obj;
-			            	statisticInfo.setPrcDtCnt(statisticInfo.getPrcDtCnt()+1);  					//대상건수
-			            	statisticInfo.setPrcCn(statisticInfo.getPrcCn()+(Integer) vo.getPrcCn());	//처리건수
-			            	statisticInfo.setErrCn(statisticInfo.getErrCn()+(Integer) vo.getErrCn());	//오류건수
-			            	statisticInfo.setVerifyCn(statisticInfo.getVerifyCn()+(Integer) vo.getVerifyCn());//검증건수
-			            	statisticInfo.setVerifyUpdateCn(statisticInfo.getVerifyUpdateCn()+(Integer) vo.getVerifyUpdateCn());//수정건수
+			            	statisticInfo.setPrcDtCnt(statisticInfo.getPrcDtCnt()+1);//대상건수
+			            	statisticInfo.setPrcCn(statisticInfo.getPrcCn()+1);	//처리건수
+			            	statisticInfo.setNoCn(statisticInfo.getNoCn()+1);// 미인식건수
+			            	statisticInfo.setErrCn(statisticInfo.getErrCn()+1);	//오류건수
+			            	statisticInfo.setVerifyCn(statisticInfo.getVerifyCn()+1);//검증건수
+			            	statisticInfo.setVerifyUpdateCn(statisticInfo.getVerifyUpdateCn()+1);//수정건수
 			            	if(jsonObj.get("A").equals("Y")) {
 			            		statisticInfo.setAy(statisticInfo.getAy()+1);
 			            	}else {
