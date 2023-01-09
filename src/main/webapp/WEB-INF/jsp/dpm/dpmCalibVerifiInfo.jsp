@@ -64,6 +64,19 @@
 										</span>
                                     </div>
                                 </li>
+                                 <li>
+                                    <label>상태코드</label>
+                                    <div class="datepicker-wrap">
+										<select id="maskPrgStsc" name="maskPrgStsc"class="form-control"
+									     style="width: 130px; background: #E3FFF0;margin-right: 0px; padding-right: 30px;"
+									     onchange="modDpmCalibVerifiInfo.selList();">
+									     	<option value="">전체</option>
+									     	<option value="Y">인식됨</option>
+									     	<option value="N">인식안됨</option>
+									     	<option value="E">오류</option>
+									     </select> 
+                                    </div>
+                                </li>
                             </ul>
                         <input id="columnName" type="hidden" name="columnName">
 						<input id="sortOrder" type="hidden" name="sortOrder">      
