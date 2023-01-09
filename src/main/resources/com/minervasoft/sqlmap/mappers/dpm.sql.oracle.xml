@@ -504,7 +504,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			  
 		FROM TB_EM_IMR_MASK_OBJ
 		WHERE 1=1
-		AND MASK_PRG_STSC > 20
 		AND INTVISION_IMR IS NOT NULL
 		<if test='textPrcDt != null and textPrcDt !=""'>
 		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
@@ -515,6 +514,22 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		<if test='contractId != null and contractId !=""'>
 			AND CONTRACT_ID = #{contractId}
 		</if>
+		<choose>
+			<when test='maskPrgStsc != null and maskPrgStsc !=""'>
+				<if test='maskPrgStsc == "Y"'>
+				AND (90 <![CDATA[<=]]> MASK_PRG_STSC AND MASK_PRG_STSC <![CDATA[<=]]> 99)
+				</if>
+				<if test='maskPrgStsc == "N"'>
+				AND (80 <![CDATA[<=]]> MASK_PRG_STSC AND MASK_PRG_STSC <![CDATA[<]]> 90)
+				</if>
+				<if test='maskPrgStsc == "E"'>
+				AND MASK_PRG_STSC >= 100
+				</if>
+			</when>
+			<otherwise>
+			AND MASK_PRG_STSC >= 10
+			</otherwise>
+		</choose>
 	<if test='columnName !="" and sortOrder !=""'>
 	ORDER BY ${columnName} ${sortOrder} 
 	</if>
@@ -533,7 +548,6 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			COUNT(*) TOT_ROW_CNT
 		FROM TB_EM_IMR_MASK_OBJ
 		WHERE 1=1
-		AND MASK_PRG_STSC > 20
 		AND INTVISION_IMR IS NOT NULL
 		<if test='textPrcDt != null and textPrcDt !=""'>
 		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
@@ -544,7 +558,22 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 		<if test='contractId != null and contractId !=""'>
 			AND CONTRACT_ID = #{contractId}
 		</if>
-		
+		<choose>
+			<when test='maskPrgStsc != null and maskPrgStsc !=""'>
+				<if test='maskPrgStsc == "Y"'>
+				AND (90 <![CDATA[<=]]> MASK_PRG_STSC AND MASK_PRG_STSC <![CDATA[<=]]> 99)
+				</if>
+				<if test='maskPrgStsc == "N"'>
+				AND (80 <![CDATA[<=]]> MASK_PRG_STSC AND MASK_PRG_STSC <![CDATA[<]]> 90)
+				</if>
+				<if test='maskPrgStsc == "E"'>
+				AND MASK_PRG_STSC >= 100
+				</if>
+			</when>
+			<otherwise>
+			AND MASK_PRG_STSC >= 10
+			</otherwise>
+		</choose>
     </select>
     
     
