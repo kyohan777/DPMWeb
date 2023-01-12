@@ -22,7 +22,6 @@ var modDpmDailyPro = (function(){
 	 */	
 	function init() {
 		modComm.setDatepicker("textPrcDt","imgStartDt");
-		console.log($("#prcDt").val());
 		if($("#prcDt").val() != ''){
 			$("#textPrcDt").val($("#prcDt").val().replaceAll('/','-'));
 		}else{
