@@ -24,6 +24,33 @@
   			overflow: scroll;
  			height: 500px;
 		}
+		.sect01 {
+  			position: relative;
+  			width: 30px; /* X 사이즈 */
+  			height: 30px; /* X 세로 중앙 */
+  			margin: 0 auto; /* 가운데 정렬 */
+		}
+		.sect01 .line-box {
+  			position: absolute;
+  			top: 50%;
+  			left: 50%;
+  			transform: translate(1045%, -50%);
+  			width: 100%;
+  			height: 100%;
+		}
+		.sect01 .line-box > span {
+  			position: absolute;
+  			top: 50%;
+  			width: 100%;
+  			height: 2px;
+  			background-color: #000;
+		}
+		.sect01 .line-01 {
+  			transform: rotate(135deg) translateX(0%);
+		}
+		.sect01 .line-02 {
+  			transform: rotate(45deg) translateX(0%);
+		}
     </style>
 </head>
 <body>
@@ -103,15 +130,21 @@
 <div class="dim-layer">
     <div class="dimBg"></div>
     <div id="layer" class="pop-layer" style="width:700px">
-        <div class="pop-container">
+        <div class="">
             <div class="pop-conts">
+           		<div class="sect01">
+  					<div class="line-box" id="close">
+   						 <span class="line-01"></span>
+    					<span class="line-02"></span>
+  					</div>
+				</div>
                 <!--content //-->
                 <div>
                 <pre id="json-renderer"></pre>
                 </div>
-                <div class="btn-r">
+               <!--  <div class="btn-r">
                     <a href="#" class="btn-layerClose" id="close">닫기</a>
-                </div>
+                </div> -->
                 <!--// content-->
             </div>
         </div>
