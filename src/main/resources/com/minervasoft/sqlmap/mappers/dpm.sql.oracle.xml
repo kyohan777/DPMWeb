@@ -500,8 +500,8 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 				WHEN USER_UPDATE_YN = '01' THEN '수정'
 				WHEN USER_UPDATE_YN = '02' THEN '유지'
 			ELSE '확인전' 
-			END AS USER_UPDATE_YN_TXT	
-			  
+			END AS USER_UPDATE_YN_TXT,	
+			INTVISION_JSON  
 		FROM TB_EM_IMR_MASK_OBJ
 		WHERE 1=1
 		AND INTVISION_IMR IS NOT NULL

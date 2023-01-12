@@ -85,6 +85,7 @@ public class StatisticsVO extends AbstractVO{
 	private String  bprImr="";
 	private String  columnName="";
 	private String  sortOrder="";
+	private String intvisionJson="";
 	
 	public String getBprImr() {
 		return bprImr;
@@ -591,6 +592,12 @@ public class StatisticsVO extends AbstractVO{
 	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
+	public String getIntvisionJson() {
+		return intvisionJson;
+	}
+	public void setIntvisionJson(String intvisionJson) {
+		this.intvisionJson = intvisionJson;
+	}
 	@Override
 	public String toString() {
 		return "StatisticsVO [prcDt=" + prcDt + ", textPrcDt=" + textPrcDt + ", prcDtCnt=" + prcDtCnt + ", prcCn="
@@ -616,7 +623,8 @@ public class StatisticsVO extends AbstractVO{
 				+ ", maskPrgStscTxt=" + maskPrgStscTxt + ", userConfirmTxt=" + userConfirmTxt + ", userUpdateYnTxt="
 				+ userUpdateYnTxt + ", resultImgPath=" + resultImgPath + ", stPrcDt=" + stPrcDt + ", edPrcDt=" + edPrcDt
 				+ ", imgPathOrg=" + imgPathOrg + ", bprImr=" + bprImr + ", columnName=" + columnName + ", sortOrder="
-				+ sortOrder + "]";
+				+ sortOrder + ", intvisionJson=" + intvisionJson + "]";
 	}
+	
 	
 }

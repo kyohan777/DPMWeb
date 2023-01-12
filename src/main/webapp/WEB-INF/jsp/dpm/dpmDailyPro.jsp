@@ -6,6 +6,25 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=10"> 
     <title>전자문서관리 시스템</title>
+    <link href="/css/layerPop.css" rel="stylesheet">
+    <link href="/css/jquery.json-viewer.css" rel="stylesheet">
+    <style type="text/css">
+		p.options label {
+  			margin-right: 10px;
+		}
+		p.options input[type=checkbox] {
+  			vertical-align: middle;
+		}
+		textarea#json-input {
+  			width: 100%;
+  			height: 200px;
+		}
+		pre#json-renderer {
+  			border: 1px solid #aaa;
+  			overflow: scroll;
+ 			height: 500px;
+		}
+    </style>
 </head>
 <body>
     <div class="smbc-wrap">
@@ -48,6 +67,7 @@
                             </ul>
                             <!-- 엑셀출력을 위한 컬럼정보 -->
                             <input id="prcDt" type="hidden" name="prcDt" value="${prcDt}">
+                            <input id="chrrId" type="hidden" name="prcDt" value="${chrrId}">
 							<input id="columnName" type="hidden" name="columnName">
 							<input id="sortOrder" type="hidden" name="sortOrder">
 							<input id="gridLabelList" type="hidden" name="gridLabels"> 
@@ -79,9 +99,32 @@
             </div>
         </div>
     </div>
+    <!-------------------- layerPopup------------------>
+<div class="dim-layer">
+    <div class="dimBg"></div>
+    <div id="layer" class="pop-layer" style="width:700px">
+        <div class="pop-container">
+            <div class="pop-conts">
+                <!--content //-->
+                <div>
+                <pre id="json-renderer"></pre>
+                </div>
+                <div class="btn-r">
+                    <a href="#" class="btn-layerClose" id="close">닫기</a>
+                </div>
+                <!--// content-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--//----------------- layerPopup------------------>
+
+
     <script type="text/javascript" src="/js/libs/jquery.jqGrid.js"></script>
     <jsp:include page="/WEB-INF/jsp/include/script.jsp" />    
     <script type="text/javascript" src="/js/dpm/dpmDailyPro.js"></script>
+    <script type="text/javascript" src="/js/dpm/jquery.json-viewer.js"></script>
+    
    
 </body>
 </html>

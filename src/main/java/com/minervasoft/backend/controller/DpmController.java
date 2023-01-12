@@ -416,7 +416,7 @@ public class DpmController {
         try {
             List<StatisticsVO> list = dpmService.getDpmDailyProInfo(paramVO);
             for(StatisticsVO vo : list) {
-                if(vo.getIntvisionImr() != null) {
+                if(vo.getIntvisionImr() != null && !vo.getIntvisionImr().isEmpty()) {
                 	//json string data 파싱하기
                 	String json = vo.getIntvisionImr(); 
                 	JSONParser parser = new JSONParser();
@@ -917,7 +917,7 @@ public class DpmController {
     		paramVO.setPageNumber(pageNumber);
     		List<StatisticsVO> listPage = dpmService.getDpmDailyProInfo(paramVO);
     		 for(StatisticsVO vo : listPage) {
-                 if(vo.getIntvisionImr() != null) {
+                 if(vo.getIntvisionImr() != null && !vo.getIntvisionImr().isEmpty()) {
                  	//json string data 파싱하기
                  	String json = vo.getIntvisionImr(); 
                  	JSONParser parser = new JSONParser();
