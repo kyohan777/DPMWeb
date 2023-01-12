@@ -142,8 +142,8 @@ var modDpmDailyPro = (function(){
 	        },
 	        //셀더블클릭 이벤트 - deprecated
 	        ondblClickRow: function(rowid, iRow, iCol) {
-			if($("#chrrId").val() ==='minerva'){
-				var rowdata = 	$("#jqGrid").getRowData(rowid);
+			var rowdata = 	$("#jqGrid").getRowData(rowid);
+			if($("#chrrId").val() ==='minerva' && parseInt(rowdata.maskPrgStsc)>=100){
 				if(rowdata.intvisionJson !="" && rowdata.intvisionJson != null){
 					renderJson(rowdata.intvisionJson);
 					layer_popup('#layer');
