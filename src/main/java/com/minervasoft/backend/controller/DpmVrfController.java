@@ -24,6 +24,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.minervasoft.backend.service.CustomImage;
 import com.minervasoft.backend.service.CustomTextType;
 import com.minervasoft.backend.service.DpmService;
+import com.minervasoft.backend.service.impl.MagicCryptoService;
+import com.minervasoft.backend.service.impl.XvarmService;
 import com.minervasoft.backend.vo.CalibVerifiVo;
 import com.minervasoft.backend.vo.ImageVerifyVO;
 import com.minervasoft.backend.vo.LoginChrrVO;
@@ -57,9 +60,19 @@ public class DpmVrfController {
     @Resource(name = "DpmService")
     private DpmService dpmService; 
     
+	@Autowired
+	MagicCryptoService  magicCryptoService;
+	
+	@Autowired
+	XvarmService xvarmService;
+    
     
     @Value("${minerva.baseFolder}")
     private String baseFolder;
+    
+    @Value("${minerva.encDownFolder}")
+    private String encDownFolder;
+        
     
     @Value("${minerva.noFileImg}")
     private String noFileImg;
@@ -78,7 +91,7 @@ public class DpmVrfController {
     	ResponseStatisticsVo response = new ResponseStatisticsVo();
         
         try {
-            List<StatisticsVO> list = dpmService.getDpmDailyProInfo(paramVO);
+            List<StatisticsVO> list = dpmService.getDpmCalibVerifiInfo(paramVO);
             response.setSelList(list);
             response.setPageNumber(paramVO.getPageNumber());
             response.setTotPageCnt(paramVO.getTotPageCnt());
@@ -93,6 +106,34 @@ public class DpmVrfController {
         
         return response;
     }
+    
+    
+    /**
+     *  [IMR] 교정 검증 :: 전체 cnt 조회
+     *  2022.12.08 신규 개발 
+     * @param paramVO
+     * @return
+     */
+    @RequestMapping(value = "/dpm/getDpmCalibVerifiTotRowCnt.do")
+    @ResponseBody
+    public ResponseStatisticsVo getDpmCalibVerifiTotRowCnt(StatisticsVO paramVO) {
+    	ResponseStatisticsVo response = new ResponseStatisticsVo();
+        
+        try {
+        	StatisticsVO one = dpmService.getDpmCalibVerifiTotRowCnt(paramVO);
+        	if(one != null) {
+        		response.setTotRowCnt(one.getTotRowCnt());
+        	}
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            response.setRsYn("N");
+        }
+        
+        return response;
+    }    
+    
+    
     
     /**
      *  [IMR] 교정/검증 결과 화면
@@ -375,28 +416,81 @@ public class DpmVrfController {
     	
     	return returnObj.toJSONString();
     }
+ 
+    
+        
+    
+    /**
+     *  [MASK] 교정/검증 원복 처리
+     * @param paramVO
+     * @return
+     * @throws ParseException 
+     */
+    @RequestMapping(value = "/dpm/getDpmDailyProSummaryCnt.do")
+    @ResponseBody
+    public JSONObject getDpmDailyProSummaryCnt(StatisticsVO param, HttpServletRequest request) {
+    	
+    	logger.debug("paramVO.toString() ~~~:" + param.toString());
+    	
+    	JSONObject returnObj = new JSONObject();
+    	
+    	Map<String,Object> response = new HashMap<String,Object>();
+    	
+    	try {
+	        HttpSession session = request.getSession();
+	        LoginChrrVO loginVO = (LoginChrrVO) session.getAttribute("loginInfo");
+	        	        
+	        response = dpmService.getDpmDailyProSummaryCnt(param);
+	        if( String.valueOf(response.get("TOT_CNT")).equals("0")) {
+	        	response.put("NO_RECOG_CN", 0);
+	        	response.put("RECOG_CN", 0);
+	        	response.put("NOT_PRC_CN", 0);
+	        }
+	        
+	        returnObj = new JSONObject(response);
+	    		    	
+    	} catch (Exception e) {
+			logger.error("", e);
+			
+		}
+    	   	
+    	
+    	return returnObj;
+    }
+    
+
     
     
     @RequestMapping(value = "/showFile.do")
     public void showFile(HttpServletRequest request, HttpServletResponse response) {
-        
-        String filename = request.getParameter("filename");
+    	
+    	String filename = request.getParameter("filename");
+    	String elementid = request.getParameter("elementid");
         logger.info("filename:" + filename);
     	
-        /*
-    	if (filename == null) {
-    		System.err.println("usage example: /show_file.jsp?filename=/tif/jpeg/1.tif");
-    		return;
-    	} else if (filename.indexOf("..") >= 0) {
-    		System.err.println("filename not allowed contains ..");
-    		return;
-    	}
-    	*/
+    	String s = "XVARM_MAIN::2019102316515801::IMAGE";
     	
+    	String sDecFile = encDownFolder + filename;
+    	String sEncFile = encDownFolder + "enc_" + filename;
+    	
+    	Path srcPath = Paths.get(sDecFile);
+		if (Files.notExists(srcPath, LinkOption.NOFOLLOW_LINKS)) {
+			
+			try {
+	        	xvarmService.downloadFile(elementid, "enc_" + filename, encDownFolder);
+	        	magicCryptoService.DecryptFile(sEncFile, sDecFile);
+        	
+	        } catch (Exception e) {
+	        	logger.error("error!!", e);
+	        }
+		
+		}			
+  	
+            	
     	logger.info("baseFolder" + baseFolder);
     	logger.info("noFileImg" + noFileImg);
     	
-    	Path srcPath = Paths.get(baseFolder + filename);
+    	srcPath = Paths.get(sDecFile);
 		if(Files.notExists(srcPath, LinkOption.NOFOLLOW_LINKS)) {
 			 /*
 	    	 String userDir = System.getProperty("user.dir");

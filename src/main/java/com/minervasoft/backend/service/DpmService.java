@@ -146,6 +146,14 @@ public interface DpmService {
     public List<StatisticsVO> getDpmDailyProInfo(StatisticsVO paramVO) throws Exception;
     //일일 처리 현황 전체 cnt 조회
     public StatisticsVO getDpmDailyProInfoTotRowCnt(StatisticsVO paramVO) throws Exception;
+    
+   
+    // 교정 검증 전체 cnt 조회
+    public StatisticsVO getDpmCalibVerifiTotRowCnt(StatisticsVO paramVO) throws Exception;
+    
+    
+    //일일 처리 현황 오약 정보 Cnt 조회
+    public Map<String, Object> getDpmDailyProSummaryCnt(StatisticsVO paramVO) throws Exception;
     //일별 통계 조회
     public List<StatisticsVO> getDpmDayProInfo(StatisticsVO paramVO) throws Exception;
     //일별 통계 전체 cnt 조회

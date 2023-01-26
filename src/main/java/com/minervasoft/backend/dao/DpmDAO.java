@@ -247,7 +247,22 @@ public class DpmDAO extends AbstractDpmDAO {
     //일일 처리 현황 전체 cnt 조회
     public StatisticsVO getDpmDailyProInfoTotRowCnt(StatisticsVO paramVO) throws Exception {
         return (StatisticsVO) selectOne("getDpmDailyProInfoTotRowCnt",paramVO);
-    }    
+    }
+    
+    // 교정 검증 조회
+    public List<StatisticsVO> getDpmCalibVerifiInfo(StatisticsVO paramVO) throws Exception {
+        return (List<StatisticsVO>) selectList("getDpmCalibVerifiInfo", paramVO);
+    }
+    // 교정 검증 전체 cnt 조회
+    public StatisticsVO getDpmCalibVerifiTotRowCnt(StatisticsVO paramVO) throws Exception {
+        return (StatisticsVO) selectOne("getDpmCalibVerifiTotRowCnt",paramVO);
+    }
+    
+    //일일 처리 현황 오약 정보 Cnt 조회
+    public Map<String, Object> getDpmDailyProSummaryCnt(StatisticsVO paramVO) throws Exception {
+        return (Map<String, Object>) selectOne("getDpmDailyProSummaryCnt",paramVO);
+    }
+    
     //일별 통계 조회
     public List<StatisticsVO> getDpmDayProInfo(StatisticsVO paramVO) throws Exception {
         return (List<StatisticsVO>) selectList("getDpmDayProInfo", paramVO);

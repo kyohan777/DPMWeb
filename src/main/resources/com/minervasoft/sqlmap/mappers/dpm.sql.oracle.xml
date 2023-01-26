@@ -575,6 +575,160 @@ WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
 			</otherwise>
 		</choose>
     </select>
+        
+    
+    <select id="getDpmCalibVerifiInfo"
+        parameterType="com.minervasoft.backend.vo.StatisticsVO"
+        resultType="com.minervasoft.backend.vo.StatisticsVO"
+        >
+	SELECT *
+	FROM
+	(
+  		SELECT TA.*
+     		,ROWNUM RNUM
+  		FROM
+  	(   
+     	SELECT 
+			ELEMENTID AS ELEMENT_ID,
+			IMG_FILE_NAME ,
+			IMG_FORMAT_TYPE ,
+			MASK_PRG_STSC,
+			USER_CONFIRM,
+			USER_UPDATE_YN,	
+			INTVISION_IMR,
+			FST_IMR_PAGE, 
+			CUST_ID,
+			CONTRACT_ID,
+			PRC_DT,
+			RESULT_IMG_PATH,
+			IMG_PATH_ORG,
+			CASE 
+				WHEN MASK_PRG_STSC ='10' THEN '미처리'
+				WHEN MASK_PRG_STSC ='20' THEN '처리중'
+				WHEN MASK_PRG_STSC ='80' THEN '처리(완료)'
+				WHEN MASK_PRG_STSC ='90' THEN '탐지(완료)'
+				WHEN MASK_PRG_STSC ='99' THEN '반영(완료)'
+				WHEN MASK_PRG_STSC ='98' THEN '반영(실패)'
+				WHEN MASK_PRG_STSC ='95' THEN '검증(완료)'
+				ELSE '' 
+			END AS MASK_PRG_STSC_TXT,
+			CASE 
+				WHEN USER_CONFIRM  = '00' THEN '확인전'
+				WHEN USER_CONFIRM  = '99' THEN '확인완료'
+				ELSE '확인전' 
+			END AS USER_CONFIRM_TXT,
+			
+			CASE
+				WHEN USER_UPDATE_YN = '01' THEN '수정'
+				WHEN USER_UPDATE_YN = '02' THEN '유지'
+			ELSE '확인전' 
+			END AS USER_UPDATE_YN_TXT,	
+			INTVISION_JSON,
+			INTVISION_BPR_FMT,
+			CASE WHEN INTVISION_BPR_FMT IS NULL OR INTVISION_BPR_FMT = '' THEN '결과없음'
+			     WHEN INTVISION_BPR_FMT = BPR_IMR THEN '일치'
+			     WHEN INTVISION_BPR_FMT <![CDATA[ <> ]]> BPR_IMR THEN '불일치'       
+			     ELSE '' 
+			END COMPARE_RESULT  
+		FROM TB_EM_IMR_MASK_OBJ
+		WHERE 1=1
+		AND INTVISION_IMR IS NOT NULL
+		<if test='textPrcDt != null and textPrcDt !=""'>
+		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
+		</if>
+		<if test='custId != null and custId !=""'>
+			AND CUST_ID = #{custId}
+		</if>
+		<if test='contractId != null and contractId !=""'>
+			AND CONTRACT_ID = #{contractId}
+		</if>
+		<choose>
+			<when test='maskPrgStsc != null and maskPrgStsc !=""'>
+				<if test='maskPrgStsc == "Y"'>
+				AND (90 <![CDATA[<=]]> MASK_PRG_STSC AND MASK_PRG_STSC <![CDATA[<=]]> 99)
+				</if>
+				<if test='maskPrgStsc == "N"'>
+				AND (80 <![CDATA[<=]]> MASK_PRG_STSC AND MASK_PRG_STSC <![CDATA[<]]> 90)
+				</if>
+				<if test='maskPrgStsc == "E"'>
+				AND MASK_PRG_STSC >= 100
+				</if>
+			</when>
+			<otherwise>
+			AND MASK_PRG_STSC >= 10
+			</otherwise>
+		</choose>
+	<if test='columnName !="" and sortOrder !=""'>
+	ORDER BY ${columnName} ${sortOrder} 
+	</if>
+ 	) TA             
+    WHERE ROWNUM <![CDATA[<]]> ((#{pageNumber} * #{pageSize}) + 1)
+ 	)
+	WHERE RNUM <![CDATA[>=]]> (((#{pageNumber} - 1) * #{pageSize}) + 1)
+    </select> 
+    
+    <!-- 일일 처리 현황 전체 cnt 값  -->
+    <select id="getDpmCalibVerifiTotRowCnt"
+    	 parameterType="com.minervasoft.backend.vo.StatisticsVO"
+        resultType="com.minervasoft.backend.vo.StatisticsVO"
+        >
+        SELECT 
+			COUNT(*) TOT_ROW_CNT
+		FROM TB_EM_IMR_MASK_OBJ
+		WHERE 1=1
+		AND INTVISION_IMR IS NOT NULL
+		<if test='textPrcDt != null and textPrcDt !=""'>
+		AND PRC_DT = REPLACE(#{textPrcDt},'-','')
+		</if>
+		<if test='custId != null and custId !=""'>
+			AND CUST_ID = #{custId}
+		</if>
+		<if test='contractId != null and contractId !=""'>
+			AND CONTRACT_ID = #{contractId}
+		</if>
+		<choose>
+			<when test='maskPrgStsc != null and maskPrgStsc !=""'>
+				<if test='maskPrgStsc == "Y"'>
+				AND (90 <![CDATA[<=]]> MASK_PRG_STSC AND MASK_PRG_STSC <![CDATA[<=]]> 99)
+				</if>
+				<if test='maskPrgStsc == "N"'>
+				AND (80 <![CDATA[<=]]> MASK_PRG_STSC AND MASK_PRG_STSC <![CDATA[<]]> 90)
+				</if>
+				<if test='maskPrgStsc == "E"'>
+				AND MASK_PRG_STSC >= 100
+				</if>
+			</when>
+			<otherwise>
+			AND MASK_PRG_STSC >= 10
+			</otherwise>
+		</choose>
+    </select>
+    
+    
+    <!-- 일일 처리 현황 요약정보 cnt 값  -->
+    <select id="getDpmDailyProSummaryCnt"
+    	 parameterType="com.minervasoft.backend.vo.StatisticsVO"
+         resultType="java.util.Map">
+        
+       SELECT SUM(NOT_PRC_CN) NOT_PRC_CN, SUM(RECOG_CN) RECOG_CN, SUM(NO_RECOG_CN) NO_RECOG_CN, SUM(ERR_CN) ERR_CN, COUNT(MASK_PRG_STSC) TOT_CNT  FROM 
+		( SELECT  CASE WHEN MASK_PRG_STSC = 10 THEN 1  
+			ELSE 0 END AS NOT_PRC_CN,	
+			CASE WHEN MASK_PRG_STSC = 80 THEN 1
+			ELSE 0 END AS NO_RECOG_CN, 
+			CASE WHEN MASK_PRG_STSC = 90 THEN 1
+			ELSE 0 END AS RECOG_CN, 
+			CASE WHEN MASK_PRG_STSC >= 100 THEN 1
+			ELSE 0 END AS ERR_CN,
+			MASK_PRG_STSC
+			FROM TB_EM_IMR_MASK_OBJ
+		WHERE 1=1
+		 AND MASK_PRG_STSC >= 10
+		<if test='textPrcDt != null and textPrcDt !=""'>
+		 AND PRC_DT = REPLACE(#{textPrcDt},'-','')
+		</if>
+		) A
+		
+    </select>
     
     
     <select id="getDpmBatchInfo"

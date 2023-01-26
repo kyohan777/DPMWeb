@@ -226,6 +226,15 @@
     	$thumbnails.setImg("/showPathFile.do?filename=" + filename);
     }
     
+    function viewerSetImg(filename, elementid) {
+    	console.log("filename:" + filename);
+    	$thumbnails.empty();
+    	$view.clear(); 
+    	
+    	//$thumbnails.setImg("/sfview/show_file.jsp?filename=" + filename);
+    	$thumbnails.setImg("/showFile.do?filename=" + filename + "&elementid=" + elementid);
+    }
+    
     
 	function scrollToSeq(pageno) {
 		$thumbnails.scrollToSeq(pageno);

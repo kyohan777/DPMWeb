@@ -338,6 +338,12 @@ public class DpmServiceImpl implements DpmService {
 		// TODO Auto-generated method stub
 		return dpmDao.getDpmDayProInfoTotRowCnt(paramVO);
 	}
+	
+	 //일일 처리 현황 오약 정보 Cnt 조회
+	@Override
+    public Map<String, Object> getDpmDailyProSummaryCnt(StatisticsVO paramVO) throws Exception {
+		return dpmDao.getDpmDailyProSummaryCnt(paramVO);
+    }
 
 	@Override
 	public List<StatisticsVO> getDpmMonthProInfo(StatisticsVO paramVO) throws Exception {
@@ -408,8 +414,12 @@ public class DpmServiceImpl implements DpmService {
 	
 	@Override
 	public List<StatisticsVO> getDpmCalibVerifiInfo(StatisticsVO paramVO) throws Exception {
-		// TODO Auto-generated method stub
-		return dpmDao.getDpmDailyProInfo(paramVO);
+		return dpmDao.getDpmCalibVerifiInfo(paramVO);
+	}
+	
+	@Override
+	public StatisticsVO getDpmCalibVerifiTotRowCnt(StatisticsVO paramVO) throws Exception {
+		return dpmDao.getDpmCalibVerifiTotRowCnt(paramVO);
 	}
 	
 	//일일 처리 통계 배치 

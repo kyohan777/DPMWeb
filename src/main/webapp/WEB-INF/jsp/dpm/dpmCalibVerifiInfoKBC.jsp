@@ -77,6 +77,10 @@
 									     </select> 
                                     </div>
                                 </li>
+                                
+                                <li>
+                                    <label id="summaryCntTxt"></label>
+                                </li>
                             </ul>
                             
                         <input id="columnName" type="hidden" name="columnName">

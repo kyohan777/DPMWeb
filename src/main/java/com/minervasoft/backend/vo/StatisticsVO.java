@@ -86,7 +86,22 @@ public class StatisticsVO extends AbstractVO{
 	private String  columnName="";
 	private String  sortOrder="";
 	private String intvisionJson="";
+	private String intvisionBprFmt="";
+	private String compareResult="";
+
 	
+	public String getIntvisionBprFmt() {
+		return intvisionBprFmt;
+	}
+	public void setIntvisionBprFmt(String intvisionBprFmt) {
+		this.intvisionBprFmt = intvisionBprFmt;
+	}
+	public String getCompareResult() {
+		return compareResult;
+	}
+	public void setCompareResult(String compareResult) {
+		this.compareResult = compareResult;
+	}
 	public String getBprImr() {
 		return bprImr;
 	}
