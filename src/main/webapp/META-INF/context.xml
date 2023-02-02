@@ -40,7 +40,7 @@
                  driverClassName="com.mysql.cj.jdbc.Driver" 
                  username="root" 
                  password="123456"                  
-                 url="jdbc:mysql://192.168.0.157:3307/MINERVA?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8"
+                 url="jdbc:mysql://127.0.0.1:3307/MINERVA?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8"
                  maxIdle="1" 
                  maxWait="10000" 
                  maxActive="5"

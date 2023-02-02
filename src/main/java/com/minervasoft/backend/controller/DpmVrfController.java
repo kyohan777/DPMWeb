@@ -445,6 +445,7 @@ public class DpmVrfController {
 	        	response.put("NO_RECOG_CN", 0);
 	        	response.put("RECOG_CN", 0);
 	        	response.put("NOT_PRC_CN", 0);
+	        	response.put("ERR_CN", 0);
 	        }
 	        
 	        returnObj = new JSONObject(response);

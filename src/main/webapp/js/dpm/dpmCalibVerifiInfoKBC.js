@@ -318,7 +318,7 @@ var modDpmCalibVerifiInfo = (function(){
 			success: function(data) {				
 				if(!modComm.isEmpty(data) && data.hasOwnProperty("TOT_CNT")) {
 	
-					var txt = "전체건수 : " + data.TOT_CNT + "건,  인식 작업 완료 : " + (data.RECOG_CN + data.NO_RECOG_CN) + "건 (인식됨 : " + data.RECOG_CN + "건, 인식안됨 : " + data.NO_RECOG_CN + "건), 인식 작업 미완료 : " + data.NOT_PRC_CN + "건";
+					var txt = "전체건수 : " + data.TOT_CNT + "건,  인식 작업 완료 : " + (data.RECOG_CN + data.NO_RECOG_CN) + "건 (인식됨 : " + data.RECOG_CN + "건, 인식안됨 : " + data.NO_RECOG_CN + "건), 인식 작업 미완료 : " + data.NOT_PRC_CN + "건, 오류건 : " + data.ERR_CN + "건";
 					
 					$("#summaryCntTxt").text(txt);
 	   						

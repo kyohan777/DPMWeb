@@ -26,11 +26,15 @@ import lombok.extern.slf4j.Slf4j;
 public class MagicCryptoService {
 	
 		
-	private String magick = "1234";
-	private String magici = "magicLock";
-	private String magicp = "!@magicLock!@";
 	
+    @Value("${crypto.magick}")
+    private String magick;
 	
+    @Value("${crypto.magici}")
+    private String magici;
+    
+    @Value("${crypto.magick}")
+    private String magicp;
 	
 	public boolean DecryptFile(String sfile,String sDestFile)
 	{	
